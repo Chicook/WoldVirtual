@@ -1,3 +1,10 @@
+/** SECCIÓN PRINCIPAL DEL PROYECTO
+Mensaje de ejemplo de cómo se quedaría el.,
+Mensaje por defecto el mensaje de la rama.,
+Permanente de desarrollo.
+
+
+
 /** SECCIÓN DESARROLLADORES PERMANENTE
 este es un mensaje por defecto., 
 De inicio una vez se fusionó todas las funciones.
