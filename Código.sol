@@ -1,3 +1,12 @@
+/** SECCIÓN DESARROLLADORES PERMANENTE
+este es un mensaje por defecto., 
+De inicio una vez se fusionó todas las funciones.
+Se recomienda crear otra rama sobre esta y fusilnarla.,
+Con esta., Y meter en comentarios.,
+Los cambios describiendo la función.,
+Para evitar errores por coincidencias con otros.,
+Desarrolladores.
+
 /**
  *Submitted for verification at BscScan.com on 2021-11-22
 */
