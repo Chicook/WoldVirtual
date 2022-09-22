@@ -5,7 +5,7 @@ La sección de desarrollo., Una vez notificado todas.,
 Las actualizaciones.
 
 # CitycoinVirtual es una cryptomoneda.,
-Cuello límite será de 30.000.000,00000000 de 
+Cullo límite será de 30.000.000,00000000 de 
 Unidades
 
 # MENSAJE DE RAMA (DESARROLLADORES)
