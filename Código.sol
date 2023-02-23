@@ -1,34 +1,6 @@
-/** SECCIÓN PRINCIPAL DEL PROYECTO
-Mensaje de ejemplo de cómo se quedaría el.,
-Mensaje por defecto el mensaje de la rama.,
-Permanente de desarrollo.
-
-
-
-/** SECCIÓN DESARROLLADORES PERMANENTE
-este es un mensaje por defecto., 
-De inicio una vez se fusionó todas las funciones.
-Se recomienda crear otra rama sobre esta y fusilnarla.,
-Con esta., Y meter en comentarios.,
-Los cambios describiendo la función.,
-Para evitar errores por coincidencias con otros.,
-Desarrolladores.
-
-/**
- *Submitted for verification at BscScan.com on 2021-11-22
-*/
-
-/**
- *Submitted for verification at BscScan.com on 2021-06-15
-*/
-
 // SPDX-License-Identifier: MIT
 
-
-// File: @openzeppelin/contracts/token/ERC20/IERC20.sol
-
-
-pragma solidity ^0.8.0;
+pragma solidity ^ 0.8.0 ;
 
 /**
  * @dev Interface of the ERC20 standard as defined in the EIP.
