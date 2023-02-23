@@ -107,10 +107,6 @@ interface IERC20 {
 // File: @openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol
 
 
-
-pragma solidity ^0.8.0;
-
-
 /**
  * @dev Interface for the optional metadata functions from the ERC20 standard.
  *
@@ -137,7 +133,7 @@ interface IERC20Metadata is IERC20 {
 
 
 
-pragma solidity ^0.8.0;
+
 
 
 abstract contract Context {
@@ -155,7 +151,7 @@ abstract contract Context {
 
 
 
-pragma solidity ^0.8.0;
+
 
 
 
@@ -357,7 +353,7 @@ contract ERC20 is Context, IERC20, IERC20Metadata {
 
 
 
-pragma solidity ^0.8.0;
+
 
 
 
