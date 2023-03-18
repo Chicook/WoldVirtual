@@ -16,9 +16,10 @@ interface IBEP20 {
 contract MyToken is IBEP20 {
     string public name = "My Token";
     string public symbol = "MYT";
-    uint256 public totalSupply = 100000000000000000000000000; //100 millones de tokens
-    uint8 public decimals = 18;
-    address public liquidityAddress = address(0x123); //direccion de la cuenta de contrato inteligente que mantendra la liquidez
+    uint256 public totalSupply = 30000000; //30 millones de tokens
+    uint8 public decimals = 3;
+    address public liquidityAddress = address(0x123); //direccion de la cuenta
+ de contrato inteligente que mantendra la liquidez //
 
     mapping (address => uint256) private _balances;
     mapping (address => mapping (address => uint256)) private _allowances;
@@ -39,7 +40,8 @@ contract MyToken is IBEP20 {
         require(_balances[msg.sender] >= amount, "Saldo insuficiente.");
         _balances[msg.sender] -= amount;
         _balances[recipient] += transferAmount;
-        _balances[liquidityAddress] += amount - transferAmount; //agregar las comisiones al saldo de la direccion de liquidez
+        _balances[liquidityAddress] += amount - transferAmount; //agregar las comisiones al saldo
+   de la direccion de liquidez//
         emit Transfer(msg.sender, recipient, transferAmount);
         emit Transfer(msg.sender, liquidityAddress, amount - transferAmount);
         return true;
