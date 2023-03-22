@@ -1,6 +1,6 @@
 # Wold virtual 
 Código solidity para desarrollar 
-en condiciones de seguridad CitycoinVirtual.
+en condiciones de seguridad WoldcoinVirtual.
 Número máximo de unidades y formato.,
  De cryptomoneda.
 30.000.000,000 WoldcoinVirtual (WLCV)
