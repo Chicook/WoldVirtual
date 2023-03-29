@@ -1,72 +1,62 @@
-// SPDX-License-Identifier: GPL-3.0
+// SPDX-License-Identifier: MIT
+
 pragma solidity ^0.8.0;
 
-contract WoldcoinVirtual {
-    string public name = "WoldcoinVirtual";
-    string public symbol = "WLCV";
-    uint256 public decimals = 3;
-    uint256 public totalSupply = 15000000 * 10**decimals; //15 millones de WLCV
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-    mapping(address => uint256) public balanceOf;
-    mapping(address => mapping(address => uint256)) public allowance;
-
-    event Transfer(address indexed from, address indexed to, uint256 value);
-    event Approval(address indexed owner, address indexed spender, uint256 value);
-
-    constructor() {
-        balanceOf[msg.sender] = totalSupply;
+contract WoldcoinVirtual is ERC20, Ownable {
+    uint256 private constant MAX_SUPPLY = 15000000 * 10 ** 3; // max supply is 15 million tokens
+    uint256 private constant INITIAL_POOL_SUPPLY = 2000000 * 10 ** 3; // initial pool supply is 2 million tokens
+    
+    address private constant PANCAKE_ROUTER_ADDRESS = 0x10ED43C718714eb63d5aA57B78B54704E256024E;
+    address private constant DEAD_ADDRESS = 0x000000000000000000000000000000000000dEaD;
+    address private constant AUTO_LIQUIDITY_ADDRESS = 0x000000000000000000000000000000000000dEaD;
+    
+    bool private inSwapAndLiquify;
+    bool private swapAndLiquifyEnabled = true;
+    
+    uint256 private constant maxBuyTranscationAmount = 1000000 * 10 ** 3; // 1 million tokens
+    uint256 private constant maxSellTransactionAmount = 700000 * 10 ** 3; // 700,000 tokens
+    uint256 private constant numTokensSellToAddToLiquidity = 50000 * 10 ** 3; // 50,000 tokens
+    
+    uint256 private _liquidityFee = 3;
+    uint256 private _previousLiquidityFee = _liquidityFee;
+    
+    uint256 private _poolFee = 50;
+    uint256 private _previousPoolFee = _poolFee;
+    
+    uint256 private _bnbPoolFee = 25;
+    uint256 private _usdtPoolFee = 25;
+    uint256 private _previousBnbPoolFee = _bnbPoolFee;
+    uint256 private _previousUsdtPoolFee = _usdtPoolFee;
+    
+    IUniswapV2Router02 public immutable uniswapV2Router;
+    address public immutable uniswapV2Pair;
+    
+    mapping (address => bool) private _isExcludedFromFees;
+    mapping (address => bool) private _liquidityHolders;
+    
+    constructor () ERC20("WoldcoinVirtual", "WLCV") {
+        _mint(_msgSender(), MAX_SUPPLY);
+        
+        // exclude system contracts
+        _isExcludedFromFees[owner()] = true;
+        _isExcludedFromFees[address(this)] = true;
+        
+        // setup Uniswap router
+        IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(PANCAKE_ROUTER_ADDRESS);
+        uniswapV2Pair = IUniswapV2Factory(_uniswapV2Router.factory()).createPair(address(this), _uniswapV2Router.WETH());
+        uniswapV2Router = _uniswapV2Router;
+        _liquidityHolders[uniswapV2Pair] = true;
+        _isExcludedFromFees[uniswapV2Pair] = true;
+        
+        // transfer initial pool supply to contract
+        _transfer(_msgSender(), address(this), INITIAL_POOL_SUPPLY);
     }
-
-    function transfer(address _to, uint256 _value) public returns (bool success) {
-        require(_to != address(0), "La dirección del receptor no puede ser 0x0");
-        require(balanceOf[msg.sender] >= _value, "No tiene suficiente balance para realizar esta transferencia");
-
-        uint256 previousSenderBalance = balanceOf[msg.sender];
-        uint256 previousReceiverBalance = balanceOf[_to];
-
-        balanceOf[msg.sender] -= _value;
-        balanceOf[_to] += _value;
-
-        emit Transfer(msg.sender, _to, _value);
-        assert(balanceOf[msg.sender] == previousSenderBalance - _value);
-        assert(balanceOf[_to] == previousReceiverBalance + _value);
-        return true;
+    
+    function decimals() public pure override returns (uint8) {
+        return 3;
     }
-
-    function approve(address _spender, uint256 _value) public returns (bool success) {
-        require(_spender != address(0), "La dirección del spender no puede ser 0x0");
-        allowance[msg.sender][_spender] = _value;
-        emit Approval(msg.sender, _spender, _value);
-        return true;
-    }
-
-    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
-        require(_to != address(0), "La dirección del receptor no puede ser 0x0");
-        require(balanceOf[_from] >= _value, "No tiene suficiente balance para realizar esta transferencia");
-        require(allowance[_from][msg.sender] >= _value, "No está autorizado para realizar esta transferencia");
-
-        uint256 previousSenderBalance = balanceOf[_from];
-        uint256 previousReceiverBalance = balanceOf[_to];
-
-        balanceOf[_from] -= _value;
-        balanceOf[_to] += _value;
-        allowance[_from][msg.sender] -= _value;
-
-        emit Transfer(_from, _to, _value);
-        assert(balanceOf[_from] == previousSenderBalance - _value);
-        assert(balanceOf[_to] == previousReceiverBalance + _value);
-        return true;
-    }
-}
-
-contract WLCVTrading {
-    WoldcoinVirtual public token;
-    uint256 public constant maxBuyAmount = 1000000 * 10**3; //1 millón de WLCV
-    uint256 public constant maxSellAmount = 700000 * 10**3; //700,000 WLCV
-    uint256 public constant buyPriceIncrease = 3; //3% de aumento máximo en el precio de compra
-    uint256 public constant sellPriceDecrease = 7; //7% de disminución máxima en el precio de venta
-    uint256 public buyPrice;
-    uint256 public sellPrice;
-
-    event Buy(address indexed buyer, uint256 amount, uint256 price);
-    event Sell(address indexed seller, uint256 amount,
+    
+    function totalSupply() public view override
