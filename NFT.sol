@@ -1,92 +1,80 @@
 // SPDX-License-Identifier: MIT
+
 pragma solidity ^0.8.0;
 
 contract NFTMarketplace {
     
-    // Variables
-    uint256 public totalSupply;
-    uint256 public maxNFTs = 30000000;
-    uint256 public primaryCost = 1000000000000000; // 0.001 WLCV
-    address public poolAddress;
-    
-    // Structs
     struct NFT {
         uint256 id;
+        string name;
+        string description;
+        string imageURI;
         address owner;
         uint256 price;
-        bool forSale;
+        bool isPrimarySale;
+        bool isSold;
     }
     
-    // Arrays
-    NFT[] public nfts;
+    mapping(uint256 => NFT) public nfts;
+    uint256 public nftCount;
+    address public poolAddress;
+    uint256 public poolBalance;
     
-    // Events
-    event NewNFT(uint256 indexed id, address indexed owner, uint256 price, bool forSale);
-    event NFTSold(uint256 indexed id, address indexed owner, uint256 price);
-    
-    // Modifiers
-    modifier onlyOwner(uint256 _id) {
-        require(msg.sender == nfts[_id].owner, "You are not the owner of this NFT.");
-        _;
-    }
-    
-    modifier forSale(uint256 _id) {
-        require(nfts[_id].forSale == true, "This NFT is not for sale.");
-        _;
-    }
-    
-    modifier notForSale(uint256 _id) {
-        require(nfts[_id].forSale == false, "This NFT is already for sale.");
-        _;
-    }
-    
-    modifier validPrice(uint256 _price) {
-        require(_price > 0, "Price must be greater than 0.");
-        _;
-    }
-    
-    modifier underMaxNFTs() {
-        require(totalSupply < maxNFTs, "The maximum number of NFTs has already been reached.");
-        _;
-    }
-    
-    // Constructor
     constructor(address _poolAddress) {
         poolAddress = _poolAddress;
     }
     
-    // Functions
-    
-    function mint() public payable validPrice(msg.value) underMaxNFTs {
-        uint256 _id = totalSupply;
-        NFT memory newNFT = NFT(_id, msg.sender, msg.value, true);
-        nfts.push(newNFT);
-        totalSupply++;
-        emit NewNFT(_id, msg.sender, msg.value, true);
+    function createNFT(string memory _name, string memory _description, string memory _imageURI, uint256 _price) public {
+        require(_price > 0, "Price must be greater than zero");
+        require(nftCount < 30000000, "Max NFT limit reached");
+        nftCount++;
+        nfts[nftCount] = NFT(nftCount, _name, _description, _imageURI, msg.sender, _price, true, false);
+        uint256 poolFee = 1;
+        poolBalance += poolFee;
+        payable(poolAddress).transfer(poolFee * 10**18);
     }
     
-    function buyNFT(uint256 _id) public payable forSale(_id) validPrice(msg.value) {
-        require(msg.sender != nfts[_id].owner, "You already own this NFT.");
-        require(msg.value == nfts[_id].price, "The value sent does not match the NFT price.");
-        address payable oldOwner = payable(nfts[_id].owner);
-        oldOwner.transfer(msg.value);
-        nfts[_id].owner = msg.sender;
-        nfts[_id].forSale = false;
-        emit NFTSold(_id, msg.sender, msg.value);
-        if(totalSupply == 1) {
-            poolAddress.transfer(primaryCost);
+    function buyNFT(uint256 _nftId) public payable {
+        NFT memory nft = nfts[_nftId];
+        require(!nft.isSold, "NFT is already sold");
+        require(msg.value == nft.price, "Incorrect amount of ETH sent");
+        require(nft.isPrimarySale || msg.value >= 1 ether, "Minimum purchase amount for secondary sales is 1 ETH");
+        uint256 saleFee = nft.price / 4;
+        uint256 ownerPayment = nft.price - saleFee;
+        nfts[_nftId].owner = msg.sender;
+        nfts[_nftId].isPrimarySale = false;
+        nfts[_nftId].isSold = true;
+        payable(nfts[_nftId].owner).transfer(ownerPayment);
+        poolBalance += saleFee;
+        if (nft.isPrimarySale) {
+            uint256 poolFee = 1;
+            poolBalance += poolFee;
+            payable(poolAddress).transfer(poolFee * 10**18);
+            if (msg.value > 1 ether) {
+                uint256 excess = msg.value - 1 ether;
+                payable(msg.sender).transfer(excess);
+            }
         } else {
-            uint256 salePrice = msg.value - primaryCost;
-            uint256 rewardAmount = salePrice / 2;
-            poolAddress.transfer(rewardAmount);
+            if (msg.value > saleFee) {
+                uint256 excess = msg.value - saleFee;
+                payable(msg.sender).transfer(excess);
+            }
+        }
+        if (saleFee > 0) {
+            uint256 bnbAmount = (saleFee * 50) / nfts[_nftId].price;
+            uint256 usdtAmount = (saleFee * 50) / nfts[_nftId].price;
+            payable(poolAddress).transfer(bnbAmount * 10**18);
+            payable(poolAddress).transfer(usdtAmount * 10**18);
         }
     }
     
-    function sellNFT(uint256 _id, uint256 _price) public onlyOwner(_id) notForSale(_id) validPrice(_price) {
-        nfts[_id].price = _price;
-        nfts[_id].forSale = true;
+    function getNFT(uint256 _nftId) public view returns (NFT memory) {
+        return nfts[_nftId];
     }
     
-    function withdraw() public {
-        require(msg.sender == poolAddress, "You are not authorized to withdraw from this contract.");
-        payable(poolAddress).transfer(address(this).balance);
+    function getPoolBalance() public view returns (uint256) {
+        return poolBalance;
+    }
+    
+    function withdrawPoolFunds(uint256 _amount) public {
+        require(msg
