@@ -1,85 +1,82 @@
 // SPDX-License-Identifier: MIT
-
 pragma solidity ^0.8.0;
 
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.4/contracts/token/ERC20/ERC20.sol";
+interface IERC20 {
+    function transfer(address to, uint256 value) external returns (bool);
+    function balanceOf(address owner) external view returns (uint256);
+}
 
-contract WoldcoinVirtual is ERC20 {
-    address public owner;
-    address public internalPool;
-    uint256 public internalPoolAmount = 15000000 * 10 ** 3;
-    uint256 public liquidityPoolAmount = 5000000 * 10 ** 3;
-    uint256 public price = 0.0005 ether;
-    uint256 public maxTokensToSell = 10000000 * 10 ** 3;
+contract WoldcoinVirtual {
+    string public constant name = "WoldcoinVirtual";
+    string public constant symbol = "WLCV";
+    uint8 public constant decimals = 3;
+    uint256 public constant initialSupply = 30_000_000 * 10 ** uint256(decimals);
+    uint256 public totalSupply;
     uint256 public soldTokens;
-    uint256 public tokensToRelease = 1000000 * 10 ** 3;
-    uint256 public releaseDate = block.timestamp + 365 days;
+    uint256 public constant poolPercent = 50; // 50% of totalSupply
+    uint256 public constant transferPercent = 25; // 25% of received tokens to be automatically sold and added to liquidity pool
+    uint256 public constant poolWithdrawalPeriod = 365 days;
+    uint256 public poolWithdrawalStartTime;
+    uint256 public poolWithdrawalLastTimeWithdrawn;
 
-    constructor() ERC20("WoldcoinVirtual", "WLCV") {
-        _mint(msg.sender, 30000000 * 10 ** 3);
-        owner = msg.sender;
-    }
-    
-    function buyTokens() external payable {
-        require(soldTokens < maxTokensToSell, "All tokens sold");
-        require(msg.value >= price, "Insufficient ether sent");
-        
-        uint256 amount = msg.value / price;
-        
-        if (soldTokens + amount > maxTokensToSell) {
-            amount = maxTokensToSell - soldTokens;
-        }
-        
-        soldTokens += amount;
-        
-        if (soldTokens == maxTokensToSell) {
-            // Transfer tokens to liquidity pool
-            _transfer(owner, internalPool, internalPoolAmount);
-            _transfer(owner, address(this), liquidityPoolAmount);
-            _approve(address(this), owner, liquidityPoolAmount);
-            _transfer(owner, address(this), liquidityPoolAmount);
-            // Set price to 0 to prevent further purchases
-            price = 0;
-        }
-        
-        _transfer(owner, msg.sender, amount);
+    mapping(address => uint256) public balances;
+    mapping(address => mapping(address => uint256)) public allowed;
+
+    address payable public owner;
+
+    address public liquidityPool;
+
+    event Transfer(address indexed from, address indexed to, uint256 value);
+    event Approval(address indexed owner, address indexed spender, uint256 value);
+
+    constructor() {
+        owner = payable(msg.sender);
+        totalSupply = initialSupply;
+        balances[owner] = totalSupply / 2;
+        soldTokens = totalSupply / 2;
+        liquidityPool = address(this);
     }
 
-    function releaseTokens() external {
-        require(block.timestamp >= releaseDate, "Release date not reached yet");
-        require(tokensToRelease > 0, "All tokens released");
-        
-        _transfer(owner, internalPool, tokensToRelease);
-        tokensToRelease = 0;
+    function() external payable {
+        require(msg.value > 0, "Invalid ETH amount");
+        uint256 tokensToTransfer = calculateTokens(msg.value);
+        require(soldTokens + tokensToTransfer <= totalSupply, "Not enough tokens left to sell");
+        balances[msg.sender] += tokensToTransfer;
+        soldTokens += tokensToTransfer;
+        owner.transfer(msg.value);
+        emit Transfer(address(0), msg.sender, tokensToTransfer);
     }
-    
-    function setPrice(uint256 _price) external {
-        require(msg.sender == owner, "Only the owner can set the price");
-        price = _price;
+
+    function calculateTokens(uint256 weiAmount) private pure returns (uint256) {
+        return weiAmount * 1000; // 1 BTCB = 1000 WLCV
     }
-    
-    function withdraw(uint256 _amount) external {
-        require(msg.sender == owner, "Only the owner can withdraw funds");
-        require(address(this).balance >= _amount, "Insufficient balance");
-        payable(owner).transfer(_amount);
+
+    function transfer(address _to, uint256 _value) public returns (bool) {
+        require(_to != address(0), "Invalid address");
+        require(balances[msg.sender] >= _value, "Insufficient balance");
+        balances[msg.sender] -= _value;
+        balances[_to] += _value;
+        emit Transfer(msg.sender, _to, _value);
+
+        // Automatically sell and add 25% of received tokens to liquidity pool
+        uint256 transferAmount = _value * transferPercent / 100;
+        if (transferAmount > 0) {
+            require(IERC20(liquidityPool).balanceOf(address(this)) >= transferAmount, "Insufficient liquidity pool balance");
+            IERC20(liquidityPool).transfer(msg.sender, transferAmount);
+            uint256 liquidityPoolAmount = transferAmount / 2;
+            IERC20(liquidityPool).transfer(owner, liquidityPoolAmount);
+            IERC20(liquidityPool).transfer(address(this), liquidityPoolAmount);
+        }
+
+        return true;
     }
-    
-    function setInternalPool(address _internalPool) external {
-        require(msg.sender == owner, "Only the owner can set the internal pool address");
-        internalPool = _internalPool;
+
+    function approve(address _spender, uint256 _value) public returns (bool) {
+        allowed[msg.sender][_spender] = _value;
+        emit Approval(msg.sender, _spender, _value);
+        return true;
     }
-    
-    function setInternalPoolAmount(uint256 _internalPoolAmount) external {
-        require(msg.sender == owner, "Only the owner can set the internal pool amount");
-        internalPoolAmount = _internalPoolAmount;
-    }
-    
-    function setReleaseDate(uint256 _releaseDate) external {
-        require(msg.sender == owner, "Only the owner can set the release date");
-        require(_releaseDate > block.timestamp, "Release date must be in the future");
-        releaseDate = _releaseDate;
-    }
-    
-    function setTokensToRelease(uint256 _tokensToRelease) external {
-        require(msg.sender == owner, "Only the owner can set the tokens to release");
-        tokensToRelease = _tokensToRelease;
+
+    function allowance(address _owner, address _spender) public view returns (uint256) {
+        return allowed[_owner][_spender];
+   
