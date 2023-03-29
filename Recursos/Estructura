@@ -1,0 +1,51 @@
+ _________________________________________________________ 
+|                                                         |
+|     WoldcoinVirtual (WLCV) Farming Program               |
+|                                                         |
+|  Choose a Farming Pool:                                 |
+|                                                         |
+|  +-------------------------+------------------------+ |
+|  |    Pool Name             |    Total Locked Value   | |
+|  +-------------------------+------------------------+ |
+|  |    Pool 1                |    1,000 WLCV           | |
+|  |    Pool 2                |    2,500 WLCV           | |
+|  |    Pool 3                |    5,000 WLCV           | |
+|  +-------------------------+------------------------+ |
+|                                                         |
+|  Available rewards:                                      |
+|                                                         |
+|  +--------------------------------------+--------------+ |
+|  |             Reward Type              | Reward Value | |
+|  +--------------------------------------+--------------+ |
+|  |      WLCV Tokens                     |  50,000 WLCV | |
+|  |      BNB Tokens                      |    10 BNB    | |
+|  |      USDT Tokens                     |   500 USDT   | |
+|  +--------------------------------------+--------------+ |
+|                                                         |
+|  Total LP Tokens staked:                                |
+|                                                         |
+|  +-------------------------+------------------------+ |
+|  |    Pool Name             |    Total LP Tokens      | |
+|  +-------------------------+------------------------+ |
+|  |    Pool 1                |    100,000 LP Tokens    | |
+|  |    Pool 2                |    250,000 LP Tokens    | |
+|  |    Pool 3                |    500,000 LP Tokens    | |
+|  +-------------------------+------------------------+ |
+|                                                         |
+|  Total Value Locked:                                    |
+|                                                         |
+|  +-------------------------+------------------------+ |
+|  |    Pool Name             |    Total Value Locked   | |
+|  +-------------------------+------------------------+ |
+|  |    Pool 1                |    $10,000              | |
+|  |    Pool 2                |    $25,000              | |
+|  |    Pool 3                |    $50,000              | |
+|  +-------------------------+------------------------+ |
+|                                                         |
+|  Note: Rewards are distributed proportionally to LP     |
+|        tokens staked by each user in each pool.         |
+|                                                         |
+|  Participate in a pool by adding liquidity to a pair     |
+|  on the supported DEX platform and staking LP tokens    |
+|  in the corresponding pool.                             |
+|_________________________________________________________|
