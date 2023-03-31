@@ -1,38 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Puente de Blockchain</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+	<meta charset="utf-8">
+	<title>Puente de Blockchain</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="script.js"></script>
 </head>
 <body>
-  <div class="container">
-    <h1>Puente de Blockchain</h1>
-    <form>
-      <label for="coin">Criptomoneda:</label>
-      <select name="coin" id="coin">
-        <option value="ETH">Ethereum (ETH)</option>
-        <option value="BNB">Binance Coin (BNB)</option>
-        <option value="BTC">Bitcoin (BTC)</option>
-        <!-- Otras criptomonedas disponibles -->
-      </select>
-      <label for="amount">Cantidad:</label>
-      <input type="number" id="amount" name="amount" min="0" step="0.0001">
-      <label for="destination">Dirección de envío:</label>
-      <input type="text" id="destination" name="destination">
-      <label for="network">Red de destino:</label>
-      <select name="network" id="network">
-        <option value="ETH">Ethereum (ETH)</option>
-        <option value="BNB">Binance Smart Chain (BNB)</option>
-        <option value="BTC">Bitcoin (BTC)</option>
-        <!-- Otras redes de destino disponibles -->
-      </select>
-      <button type="submit">Enviar</button>
-    </form>
-    <div id="result"></div>
-  </div>
-  <script src="web3.min.js"></script>
-  <script src="app.js"></script>
+	<div class="container">
+		<h1>Puente de Blockchain</h1>
+		<p>Seleccione la red donde está la criptomoneda:</p>
+		<select id="redOrigen">
+			<option value="ethereum">Ethereum</option>
+			<option value="binance">Binance Smart Chain</option>
+			<option value="solana">Solana</option>
+			<option value="matic">Polygon (Matic)</option>
+			<option value="bsc-testnet">Binance Smart Chain Testnet</option>
+			<option value="rinkeby">Rinkeby Testnet</option>
+			<option value="ropsten">Ropsten Testnet</option>
+			<option value="kovan">Kovan Testnet</option>
+			<option value="goerli">Goerli Testnet</option>
+			<option value="bitcoin">Bitcoin</option>
+		</select>
+		<p>Seleccione la red donde desea enviar la criptomoneda:</p>
+		<select id="redDestino">
+			<option value="ethereum">Ethereum</option>
+			<option value="binance">Binance Smart Chain</option>
+			<option value="solana">Solana</option>
+			<option value="matic">Polygon (Matic)</option>
+			<option value="bsc-testnet">Binance Smart Chain Testnet</option>
+			<option value="rinkeby">Rinkeby Testnet</option>
+			<option value="ropsten">Ropsten Testnet</option>
+			<option value="kovan">Kovan Testnet</option>
+			<option value="goerli">Goerli Testnet</option>
+			<option value="bitcoin">Bitcoin</option>
+		</select>
+		<p>Seleccione la criptomoneda que desea enviar:</p>
+		<select id="cripto">
+			<option value="ETH">Ethereum (ETH)</option>
+			<option value="BNB">Binance Coin (BNB)</option>
+			<option value="SOL">Solana (SOL)</option>
+			<option value="MATIC">Polygon (MATIC)</option>
+			<option value="BTC">Bitcoin (BTC)</option>
+		</select>
+		<p>Introduzca la wallet donde desea recibir la criptomoneda:</p>
+		<input type="text" id="wallet" placeholder="Wallet de recepción">
+		<p>Introduzca el monto de la criptomoneda a enviar:</p>
+		<input type="number" id="monto" placeholder="Monto a enviar">
+		<button onclick="enviar()">Enviar</button>
+		<p id="resultado"></p>
+	</div>
 </body>
 </html>
