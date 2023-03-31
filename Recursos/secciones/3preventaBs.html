@@ -65,6 +65,19 @@
   </head>
 
   <body>
+    <button id="connect-metamask">Conectar con Metamask</button>
+    <script>
+      const connectButton = document.getElementById('connect-metamask');
+      connectButton.addEventListener('click', async () => {
+        try {
+          await ethereum.request({ method: 'eth_requestAccounts' });
+          alert('Billetera conectada exitosamente!');
+        } catch (error) {
+          console.error(error);
+          alert('Error al conectar la billetera.');
+        }
+      });
+    </script>
 
 <h1>Pre-venta de WoldcoinVirtual WLCV</h1>
 
