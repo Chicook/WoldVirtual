@@ -1,100 +1,100 @@
-<!DOCTYPEhtml>
+<!DOCTYPE html>
 
 <html>
 
-  <cabeza>
+  <head>
 
-<estilo>
+<style>
 
-      cuerpo {
+      body {
 
-        familia tipográfica: Arial, sans-serif;
+        font-family: Arial, sans-serif;
 
       }
 
       h1 {
 
-        alineación de texto: centro;
+        text-align: center;
 
       }
 
-      pag {
+      p {
 
-        margen inferior: 10px;
+        margin-bottom: 10px;
 
       }
 
-      botón {
+      button {
 
-        relleno: 10px 20px;
+        padding: 10px 20px;
 
-        color de fondo: #008CBA;
+        background-color: #008CBA;
 
-        borde: ninguno;
+        border: none;
 
         color: #FFFFFF;
 
-        tamaño de fuente: 16px;
+        font-size: 16px;
 
-        cursor: puntero;
-
-      }
-
-      botón: flotar {
-
-        color de fondo: #0077B5;
+        cursor: pointer;
 
       }
 
-      progreso {
+      button:hover {
 
-        bloqueo de pantalla;
-
-        ancho: 80%;
-
-        margen: 20px automático;
+        background-color: #0077B5;
 
       }
 
-    </estilo>
+      progress {
 
-    <juego de caracteres meta="UTF-8">
+        display: block;
+
+        width: 80%;
+
+        margin: 20px auto;
+
+      }
+
+    </style>
+
+    <meta charset="UTF-8">
 
     <title>Venta Inicial WoldcoinVirtual (WLCV)</title>
 
-  </cabeza>
+  </head>
 
-  <cuerpo>
+  <body>
 
-<h1>Preventa de WoldcoinVirtual WLCV</h1>
+<h1>Pre-venta de WoldcoinVirtual WLCV</h1>
 
-    <p>Precio: 0.0005/0.0006 BTC</p>
+    <p>Precio: 0.0005/0.0006 BTCB</p>
 
     <p>Máximo a comprar: 10,000,000 WLCV</p>
 
-    <button class="comprar-btn">Comprar</button>
+    
 
     
 
-    <progreso valor="10" max="100"></progreso>
+    <progress value="10" max="100"></progress>
 
     
 
     <script>
 
-      const progreso = documento.querySelector('progreso');
+      const progreso = document.querySelector('progress');
 
       const botonesCompra = document.querySelectorAll('.comprar-btn');
 
-      sea ​​faseActual = 0;
+      let faseActual = 0;
 
       botonesCompra.forEach(boton => {
 
-        botón.addEventListener('clic', () => {
+        boton.addEventListener('click', () => {
 
           faseActual++;
 
-          progreso.valor = faseActual * 10;
+          progreso.value = faseActual * 10;
 
         });
 
@@ -204,6 +204,6 @@
 
     </div>
 
-  </cuerpo>
+  </body>
 
 </html>
