@@ -1,45 +1,75 @@
 pragma solidity ^0.8.0;
 
-contract Bridge {
-    address public owner;
-    uint256 public fee = 10; // 0.001%
+interface ERC20 {
+    function transfer(address to, uint256 value) external returns (bool);
+    function balanceOf(address who) external view returns (uint256);
+    function allowance(address owner, address spender) external view returns (uint256);
+    function transferFrom(address from, address to, uint256 value) external returns (bool);
+    function approve(address spender, uint256 value) external returns (bool);
+}
 
-    mapping(address => bool) public allowedTokens;
+contract TokenBridge {
+    mapping (address => uint256) public balances;
+    mapping (address => mapping (address => uint256)) public allowed;
 
-    event Transfer(address indexed token, address indexed fromChain, address indexed toChain, uint256 amount);
-
-    constructor() {
-        owner = msg.sender;
+    address public token;
+    uint256 public rate;
+    uint256 public commission = 10;
+    address public commissionWallet;
+    
+    mapping (uint256 => address) public supportedTokens;
+    uint256 public supportedTokensCount;
+    
+    constructor(address _token, uint256 _rate, address _commissionWallet) {
+        token = _token;
+        rate = _rate;
+        commissionWallet = _commissionWallet;
+        
+        // Agregar la red principal de Bitcoin
+        supportedTokensCount = 1;
+        supportedTokens[0] = 0x0000000000000000000000000000000000000000; // Dirección de Bitcoin
     }
-
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Bridge: Only the owner can perform this action");
-        _;
+    
+    function transferToken(address _token, address _to, uint256 _value) private {
+        ERC20(_token).transfer(_to, _value);
     }
-
-    function setFee(uint256 _fee) external onlyOwner {
-        require(_fee <= 100, "Bridge: Fee cannot exceed 10%");
-        fee = _fee;
+    
+    function transferFromToken(address _token, address _from, address _to, uint256 _value) private {
+        ERC20(_token).transferFrom(_from, _to, _value);
     }
-
-    function allowToken(address token) external onlyOwner {
-        allowedTokens[token] = true;
+    
+    function setRate(uint256 _rate) public {
+        rate = _rate;
     }
-
-    function revokeToken(address token) external onlyOwner {
-        allowedTokens[token] = false;
+    
+    function setCommission(uint256 _commission) public {
+        commission = _commission;
     }
-
-    function transfer(address token, address toChain, uint256 amount) external {
-        require(allowedTokens[token], "Bridge: Token not allowed");
-        require(amount > 0, "Bridge: Amount must be greater than zero");
-
-        uint256 totalFee = (amount * fee) / 10000;
-        uint256 transferAmount = amount - totalFee;
-
-        // Transfer tokens to the destination chain
-        // (omitted for brevity)
-
-        emit Transfer(token, msg.sender, toChain, transferAmount);
+    
+    function setCommissionWallet(address _commissionWallet) public {
+        commissionWallet = _commissionWallet;
+    }
+    
+    function addSupportedToken(address _token) public {
+        supportedTokens[supportedTokensCount] = _token;
+        supportedTokensCount++;
+    }
+    
+    function convertTokens(uint256 _amount, uint256 _tokenIndex) public {
+        require(supportedTokens[_tokenIndex] != address(0), "Token no soportado");
+        
+        // Transferir tokens al contrato
+        transferFromToken(token, msg.sender, address(this), _amount);
+        
+        // Convertir tokens
+        uint256 convertedAmount = _amount * rate;
+        uint256 commissionAmount = (convertedAmount * commission) / 1000;
+        uint256 transferAmount = convertedAmount - commissionAmount;
+        
+        // Transferir tokens convertidos
+        transferToken(supportedTokens[_tokenIndex], msg.sender, transferAmount);
+        
+        // Transferir comisión
+        transferToken(supportedTokens[_tokenIndex], commissionWallet, commissionAmount);
     }
 }
