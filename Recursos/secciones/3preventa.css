@@ -89,3 +89,23 @@ botón: flotar {
   color de fondo: #3e8e41;
 
 }
+
+#connect-metamask {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #F6851B;
+  color: #fff;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+#connect-metamask:hover {
+  background-color: #E97613;
+}
+
+#connect-metamask:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #F6851B;
+}
+
