@@ -1,3 +1,9 @@
+//pip install vpython
+//Primero, es necesario instalar VPython.
+ Puedes hacerlo mediante el siguiente
+ comando en la terminal:///
+
+
 import bpy
 
 # Función para crear un esqueleto humano
