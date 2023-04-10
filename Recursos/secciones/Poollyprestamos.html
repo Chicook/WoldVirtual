@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Liquidity Pool</title>
+  </head>
+  <body>
+    <h1>Liquidity Pool</h1>
+    <p>Balance: <span id="balance"></span> ETH</p>
+    <p>Loan balance: <span id="loan-balance"></span> ETH</p>
+    <p>Interest rate: <span id="interest-rate"></span>%</p>
+    <p>Collateral ratio: <span id="collateral-ratio"></span>%</p>
+
+    <h2>Deposit</h2>
+    <form onsubmit="deposit(); return false;">
+      <label>Amount (ETH):</label>
+      <input type="number" id="deposit-amount" step="0.01" required>
+      <button type="submit">Deposit</button>
+    </form>
+
+    <h2>Withdraw</h2>
+    <form onsubmit="withdraw(); return false;">
+      <label>Amount (ETH):</label>
+      <input type="number" id="withdraw-amount" step="0.01" required>
+      <button type="submit">Withdraw</button>
+    </form>
+
+    <h2>Loan</h2>
+    <form onsubmit="applyLoan(); return false;">
+      <label>Amount (ETH):</label>
+      <input type="number" id="loan-amount" step="0.01" required>
+      <button type="submit">Apply loan</button>
+    </form>
+
+    <h2>Repay loan</h2>
+    <form onsubmit="repayLoan(); return false;">
+      <label>Amount (ETH):</label>
+      <input type="number" id="repay-amount" step="0.01" required>
+      <button type="submit">Repay loan</button>
+    </form>
+
+    <script src="./web3.min.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
