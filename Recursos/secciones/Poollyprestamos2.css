@@ -1,0 +1,45 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+}
+
+h2 {
+  margin-top: 20px;
+}
+
+.liquidity-pool {
+  border: 1px solid black;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.lp-buttons button {
+  margin-right: 10px;
+}
+
+.lp-balance {
+  margin-top: 20px;
+  border-top: 1px solid black;
+  padding-top: 10px;
+}
+
+.lp-balance span {
+  font-weight: bold;
+}
+
+.loan-button {
+  margin-top: 20px;
+}
+
+.loan-conditions {
+  margin-top: 20px;
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.loan-conditions li {
+  margin-bottom: 10px;
+}
