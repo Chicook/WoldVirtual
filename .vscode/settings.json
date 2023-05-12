@@ -1,5 +1,8 @@
 {
-    "editor.renderWhitespace": "all",
-    "editor.wordWrap": "on",
-    "editor.accessibilitySupport": "on"
+    "MutableAI.upsell": true,
+    "editor.tabCompletion": "on",
+    "diffEditor.codeLens": true,
+    "githubPullRequests.ignoredPullRequestBranches": [
+        "main"
+    ]
 }
