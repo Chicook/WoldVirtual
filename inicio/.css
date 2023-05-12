@@ -1,0 +1,54 @@
+/* Estilos generales */
+body {
+    margin: 0;
+        font-family: Arial, sans-serif;
+            font-size: 16px;
+            }
+
+            /* Estilos del encabezado */
+            header {
+                background-color: #333;
+                    color: #fff;
+                        padding: 10px;
+                            display: flex;
+                                justify-content: space-between;
+                                    align-items: center;
+                                    }
+
+                                    header h1 {
+                                        margin: 0;
+                                        }
+
+                                        nav ul {
+                                            margin: 0;
+                                                padding: 0;
+                                                    list-style: none;
+                                                        display: flex;
+                                                        }
+
+                                                        nav li {
+                                                            margin-right: 20px;
+                                                            }
+
+                                                            nav a {
+                                                                color: #fff;
+                                                                    text-decoration: none;
+                                                                    }
+
+                                                                    nav a:hover {
+                                                                        text-decoration: underline;
+                                                                        }
+
+                                                                        /* Estilos del contenido principal */
+                                                                        main {
+                                                                            margin: 20px;
+                                                                            }
+
+                                                                            /* Estilos del pie de página */
+                                                                            footer {
+                                                                                background-color: #333;
+                                                                                    color: #fff;
+                                                                                        padding: 10px;
+                                                                                            text-align: center;
+                                                                                            }
+                                                                                            
