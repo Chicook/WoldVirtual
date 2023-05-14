@@ -1,5 +1,5 @@
 {
-    "MutableAI.upsell": true,
+    "MutableAI.upsell": false,
     "editor.tabCompletion": "on",
     "diffEditor.codeLens": true,
     "githubPullRequests.ignoredPullRequestBranches": [
