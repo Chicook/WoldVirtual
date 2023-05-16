@@ -2,9 +2,7 @@
     "git-blame.gitWebUrl": "",
     "gitConfigUser.profiles": [
         {
-            "label": "chicook",
-            "email": "citylifevirtual@gmail.com",
-            "userName": "Chicook",
+
             "selected": false
         }
     ]
