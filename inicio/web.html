@@ -70,6 +70,47 @@
 </head>
 <body>
 
+    <script>
+        // Obtener referencia al formulario
+        const formulario = document.querySelector('form');
+    
+        // Obtener referencia al elemento contenedor de las propuestas
+        const proposalsContainer = document.querySelector('.proposals');
+    
+        // Función para publicar una nueva propuesta
+        function publicarPropuesta(event) {
+          event.preventDefault();
+    
+          // Obtener los valores del título y la descripción del formulario
+          const titulo = document.getElementById('titulo').value;
+          const descripcion = document.getElementById('propuesta').value;
+    
+          // Crear y agregar la nueva propuesta al contenedor
+          const proposalElement = document.createElement('div');
+          proposalElement.classList.add('proposal');
+    
+          const tituloElement = document.createElement('h3');
+          tituloElement.textContent = titulo;
+    
+          const descripcionElement = document.createElement('p');
+          descripcionElement.textContent = descripcion;
+    
+          const botonVotar = document.createElement('button');
+          botonVotar.classList.add('vote-btn');
+          botonVotar.textContent = 'Votar';
+    
+          proposalElement.appendChild(tituloElement);
+          proposalElement.appendChild(descripcionElement);
+          proposalElement.appendChild(botonVotar);
+    
+          proposalsContainer.appendChild(proposalElement);
+    
+          // Limpiar los campos del formulario
+          document.getElementById('titulo').value = '';
+          document.getElementById('propuesta').value = '';
+        }
+      </script>
+
       <!-- ... -->
 
   <section id="propuestas">
