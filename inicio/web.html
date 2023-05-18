@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="inicio.js"></script>
+
   <title>Mi Página de Presentación</title>
   <style>
     /* Estilos CSS para personalizar la página */
@@ -14,15 +16,102 @@
     }
 
     h1 {
-      color: #9b6767;
+      color: #333;
     }
 
     p {
-      color: #583636;
+      color: #666;
+    }
+
+    nav {
+      background-color: #f2f2f2;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+
+    nav a {
+      text-decoration: none;
+      margin: 0 10px;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .proposals {
+      margin-bottom: 40px;
+    }
+
+    .proposals h2 {
+      margin-bottom: 10px;
+    }
+
+    .proposal {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .proposal h3 {
+      margin: 0;
+    }
+
+    .proposal p {
+      margin-top: 5px;
+    }
+
+    .vote-btn {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 3px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
+
+    <script>
+        // Obtener referencia al formulario
+        const formulario = document.querySelector('form');
+    
+        // Obtener referencia al elemento contenedor de las propuestas
+        const proposalsContainer = document.querySelector('.proposals');
+    
+        // Función para publicar una nueva propuesta
+        function publicarPropuesta(event) {
+          event.preventDefault();
+    
+          // Obtener los valores del título y la descripción del formulario
+          const titulo = document.getElementById('titulo').value;
+          const descripcion = document.getElementById('propuesta').value;
+    
+          // Crear y agregar la nueva propuesta al contenedor
+          const proposalElement = document.createElement('div');
+          proposalElement.classList.add('proposal');
+    
+          const tituloElement = document.createElement('h3');
+          tituloElement.textContent = titulo;
+    
+          const descripcionElement = document.createElement('p');
+          descripcionElement.textContent = descripcion;
+    
+          const botonVotar = document.createElement('button');
+          botonVotar.classList.add('vote-btn');
+          botonVotar.textContent = 'Votar';
+    
+          proposalElement.appendChild(tituloElement);
+          proposalElement.appendChild(descripcionElement);
+          proposalElement.appendChild(botonVotar);
+    
+          proposalsContainer.appendChild(proposalElement);
+    
+          // Limpiar los campos del formulario
+          document.getElementById('titulo').value = '';
+          document.getElementById('propuesta').value = '';
+        }
+      </script>
 
       <!-- ... -->
 
