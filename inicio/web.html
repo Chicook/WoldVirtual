@@ -24,6 +24,48 @@
 </head>
 <body>
 
+      <!-- ... -->
+
+  <section id="propuestas">
+    <h2>Propuestas</h2>
+    <div class="proposals">
+      <!-- Las propuestas se agregarán dinámicamente con JavaScript -->
+    </div>
+  </section>
+
+  <!-- ... -->
+
+  <script>
+    // Obtener referencia al elemento contenedor de las propuestas
+    const proposalsContainer = document.querySelector('.proposals');
+
+    // Función para agregar una nueva propuesta al contenedor
+    function agregarPropuesta(titulo, descripcion) {
+      const proposalElement = document.createElement('div');
+      proposalElement.classList.add('proposal');
+
+      const tituloElement = document.createElement('h3');
+      tituloElement.textContent = titulo;
+
+      const descripcionElement = document.createElement('p');
+      descripcionElement.textContent = descripcion;
+
+      const botonVotar = document.createElement('button');
+      botonVotar.classList.add('vote-btn');
+      botonVotar.textContent = 'Votar';
+
+      proposalElement.appendChild(tituloElement);
+      proposalElement.appendChild(descripcionElement);
+      proposalElement.appendChild(botonVotar);
+
+      proposalsContainer.appendChild(proposalElement);
+    }
+
+    // Ejemplo de uso: agregar una propuesta
+    agregarPropuesta('Propuesta 1', 'Descripción de la propuesta 1');
+    agregarPropuesta('Propuesta 2', 'Descripción de la propuesta 2');
+  </script>
+
     <section id="propuestas">
         <h2>Propuestas</h2>
         <div class="proposals">
