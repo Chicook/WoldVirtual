@@ -7,11 +7,11 @@ interface IBEP20 {
                 function transfer(address recipient, uint256 amount) external returns (bool);
 }
 
-contract MyToken is IBEP20 {
-        string public name = "MyToken";
-            string public symbol = "MTK";
+contract WoldcoinVirtual is IBEP20 {
+        string public name = "WoldcoinVirtual";
+            string public symbol = "WCV";
                 uint8 public decimals = 3;
-                    uint256 public totalSupply = 30000000 * (10**uint256(decimals));
+                    uint256 public totalSupply = 30000000 * (3**uint256(decimals));
                         mapping(address => uint256) public balanceOf;
 
                             constructor() {
