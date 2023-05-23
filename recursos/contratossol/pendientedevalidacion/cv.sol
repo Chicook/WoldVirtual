@@ -10,7 +10,7 @@ contract WoldcoinVirtual is Ownable {
         string public name = "WoldcoinVirtual";
         string public symbol = "WLCV";
         uint8 public decimals = 3;
-        uint256 public totalSupply = 30000000000 * 10**uint256(decimals);
+        uint256 public totalSupply = 300000000 * 10**uint256(decimals);
 
                         
     mapping(address => uint256) public balanceOf;
