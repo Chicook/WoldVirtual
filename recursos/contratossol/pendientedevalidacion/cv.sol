@@ -8,12 +8,13 @@ contract WoldcoinVirtual is Ownable {
     using SafeMath for uint256;
 
         string public name = "WoldcoinVirtual";
-            string public symbol = "WLCV";
-                uint8 public decimals = 3;
-                    uint256 public totalSupply = 30000000000 * 10**uint256(decimals);
+        string public symbol = "WLCV";
+        uint8 public decimals = 3;
+        uint256 public totalSupply = 30000000000 * 10**uint256(decimals);
 
-                        mapping(address => uint256) public balanceOf;
-                            mapping(address => mapping(address => uint256)) public allowance;
+                        
+    mapping(address => uint256) public balanceOf;
+    mapping(address => mapping(address => uint256)) public allowance;
 
                                 event Transfer(address indexed from, address indexed to, uint256 value);
                                     event Approval(address indexed owner, address indexed spender, uint256 value);
