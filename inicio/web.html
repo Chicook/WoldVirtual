@@ -114,9 +114,54 @@
       border: 1px solid black;
 
     }
-        
-        
 
+    .menu ul {
+          list-style: none;
+            margin: 0;
+              padding: 0;
+              }
+
+              .menu ul li {
+                display: inline-block;
+                  position: relative;
+                  }
+
+                  .menu ul li a {
+                    display: block;
+                      padding: 10px 20px;
+                        text-decoration: none;
+                          color: #333;
+                          }
+
+                          .menu ul li:hover > ul {
+                            display: block;
+                            }
+
+                            .menu ul ul {
+                              display: none;
+                                position: absolute;
+                                  top: 100%;
+                                    left: 0;
+                                      background-color: #fff;
+                                        border: 1px solid #ccc;
+                                        }
+
+                                        .menu ul ul li {
+                                          display: block;
+                                          }
+
+                                          .menu ul ul li a {
+                                            padding: 5px 10px;
+                                            }
+
+                                            .menu ul ul ul {
+                                              top: 0;
+                                                left: 100%;
+                                                  border: 1px solid #ccc;
+                                                  }
+
+
+    }
 
 
 </style>
@@ -125,12 +170,25 @@
 
 
 
-<center><div class="recuadro"></div></center>
-
-        
+<center><div class="recuadro">
 
 
+<div class="menu">
+    <ul>
+        <li><a href="#">Inicio</a></li>
+            <li>
+                  <a href="#">Secciones</a>
+                        <ul>
+                                <li><a href="#">Sección 1</a></li>
+                                        <li><a href="#">Sección 2</a></li>
+                                                <li><a href="#">Sección 3</a></li>
+                                                      </ul>
+                                                          </li>
+                                                              <li><a href="#">Contacto</a></li>
+                                                                </ul>
+                                                                </div>
 
+</div></center>
 
 
     </body>
