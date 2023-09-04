@@ -15,6 +15,9 @@ Y la comisión dentro del metaverso de 0.001 WLCV
 Hira destinado al pooll de garantía de recompensas.
 Para que las recompensas nunca bajen del 50%
 
+además se desarrollara un protocolo de prueba de trabajo con tarjetas gráficas., como segunda capa de seguridad.
+y también para un mayor renderizado en tiempo real y mejorar la experiencia del usuario.
+
 
 
 
