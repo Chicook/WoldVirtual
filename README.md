@@ -25,6 +25,9 @@ se bloqueara el 50% del suministro total
 15.000.000,000 WLCV. Cada 12 meses se liberara 1 millón que se agregaran al pooll de liquidez principal del token.
 durante 15 años. y no habran mas WLCV.
 
+Desde el principio., habra un programa de re-compras de tokens del cual se bloqueara el 50% de lo que se compre
+y el resto para vender para gastos de gestión de la plataforma., y re-inversion en la empresa.
+
 
 
 
