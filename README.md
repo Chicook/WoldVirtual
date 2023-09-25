@@ -19,6 +19,11 @@ Para que las recompensas nunca bajen del 50%
 además se desarrollara un protocolo de prueba de trabajo con tarjetas gráficas., como segunda capa de seguridad.
 y también para un mayor renderizado en tiempo real y mejorar la experiencia del usuario.
 
+una vez minteado el token
+se bloqueara el 50% del suministro total
+15.000.000,000 WLCV. Cada 12 meses se liberara 1 millón que se agregaran al pooll de liquidez principal del token.
+durante 15 años. y no habran mas WLCV.
+
 
 
 
