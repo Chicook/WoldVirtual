@@ -38,8 +38,8 @@ class Bloque:
      for block in blockchain:
      print(f"Índice: {block.index}")
      print(f"Hash anterior: {block.previous_hash}")
-                                                                                                                print(f"Datos: {block.data}")
-                                                                                                                    print(f"Prueba de trabajo: {block.proof}")
-                                                                                                                        print(f"Prueba de participación: {block.stake}")
-                                                                                                                            print("\n")
+     print(f"Datos: {block.data}")
+     print(f"Prueba de trabajo: {block.proof}")
+     print(f"Prueba de participación: {block.stake}")
+     print("\n")
                                                                                                                             
