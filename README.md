@@ -1,4 +1,4 @@
-# Wold virtual 
+# Wold Virtual 
 Código solidity para desarrollar 
 en condiciones de seguridad WoldcoinVirtual.
 Número máximo de unidades y formato.,
