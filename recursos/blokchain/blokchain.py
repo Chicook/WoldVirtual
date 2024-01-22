@@ -693,13 +693,8 @@ def agregar_bloque(self, proof, hash_anterior=None, stake=None, espacio=None):
         # Agregar el bloque a la cadena
         self.bloques.append(bloque)
         return bloque
-
-
-
-
-
 	
-
+def prueba_de_espacio(self, espacio):
     """
         Validar la prueba de espacio: Comprobar si el participante tiene el espacio requerido.
 
