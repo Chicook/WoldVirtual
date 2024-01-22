@@ -16,10 +16,19 @@ class blokchain:
         nuevo_bloque.proof_of_work(self.dificultad)
         self.bloques.append(nuevo_bloque)
 
-      def generar_hash(self):
-        sha = hashlib.sha256()
-        sha.update((str(self.indice) + str(self.marca_tiempo) + str(self.datos) + str(self.hash_anterior)).encode('utf-8'))
-        return sha.hexdigest()
+      def __init__(self):
+        self.cadena = []
+        self.agregar_bloque(self.crear_bloque_genesis())
+
+    def crear_bloque_genesis(self):
+        return Bloque(0, time.time(), "Bloque Génesis", "0")
+
+    def agregar_bloque(self, nuevo_bloque):
+        nuevo_bloque.hash_anterior = self.cadena[-1].hash
+        self.cadena.append(nuevo_bloque)
+
+# Crear una instancia de la cadena de bloques
+mi_blockchain = Blockchain()
 
 
 app = Flask(__name__)
