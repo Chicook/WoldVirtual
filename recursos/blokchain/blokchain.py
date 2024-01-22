@@ -615,6 +615,34 @@ class Bloque:
 
 class CadenaBloques:
 
+def prueba_trabajo(self, last_proof):
+        """
+        Algoritmo de prueba de trabajo:
+        - Encontrar un número p' tal que hash(pp') contiene 4 ceros al inicio, donde p es la prueba anterior
+        - p es la prueba actual
+
+        :param last_proof: Prueba anterior
+        :return: Prueba actual
+        """
+        proof = 0
+        while self.validar_prueba(last_proof, proof) is False:
+            proof += 1
+
+        return proof
+
+    @staticmethod
+    def validar_prueba(last_proof, proof):
+        """
+        Validar si encontrar una prueba es exitoso, es decir, hash(last_proof, proof) contiene 4 ceros al inicio.
+
+        :param last_proof: Prueba anterior
+        :param proof: Prueba actual
+        :return: True si es válido, False si no lo es
+        """
+        guess = f'{last_proof}{proof}'.encode()
+        guess_hash = hashlib.sha256(guess).hexdigest()
+        return guess_hash[:4] == "0000"	
+
 def minar_bloque(self, minero):
         bloque_nuevo = Bloque(
             index=self.obtener_ultimo_bloque().index + 1,
