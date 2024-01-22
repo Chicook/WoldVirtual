@@ -512,15 +512,14 @@ contract_abi = " [
 contract = web3.eth.contract(abi=contract_abi, bytecode=contract_bytecode)
 
 # Configuración de la blockchain simple
-
-def crear_bloque_genesis():
+class Bloque:
+      def crear_bloque_genesis():
     return Bloque(0, datetime.datetime.now(), "Bloque Génesis", "0")
 
 cadena_bloques = [crear_bloque_genesis()]
 bloque_actual = cadena_bloques[0]
-
-class Bloque:
-    def __init__(self, index, previous_hash, data, proof, stake):
+      
+def __init__(self, index, previous_hash, data, proof, stake):
         self.index = index
         self.previous_hash = previous_hash
         self.data = data
