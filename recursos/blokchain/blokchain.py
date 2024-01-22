@@ -27,6 +27,27 @@ minero.minar_bloque("Datos del bloque 1")
 
 
 class blokchain:
+
+    def validar_cadena(self):
+        for i in range(1, len(self.cadena)):
+            bloque_actual = self.cadena[i]
+            bloque_anterior = self.cadena[i - 1]
+
+            if bloque_actual.hash != bloque_actual.generar_hash():
+                return False
+
+            if bloque_actual.hash_anterior != bloque_anterior.hash:
+                return False
+
+        return True
+
+# Uso de la función para validar la cadena
+if mi_blockchain.validar_cadena():
+    print("La cadena de bloques es válida.")
+else:
+    print("La cadena de bloques no es válida. ¡Alerta de manipulación!")
+
+	
      def minar_bloque(self, datos):
         nuevo_bloque = Bloque(
             index=len(self.bloques),
