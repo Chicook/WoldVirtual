@@ -667,6 +667,37 @@ print(f"La cadena es válida: {es_valida}")
 	    
 class CadenaBloques:
 
+	self.chain = [self.crear_bloque_genesis()]
+        self.transacciones_pendientes = []
+
+    # (código anterior)
+
+    def minar_bloque(self, minero):
+        # Obtener el último bloque
+        ultimo_bloque = self.obtener_ultimo_bloque()
+
+        # Crear un nuevo bloque con las transacciones pendientes y la recompensa del minero
+        nuevo_bloque = Bloque(
+            index=ultimo_bloque.index + 1,
+            transacciones=self.transacciones_pendientes.copy(),
+            marca_tiempo=time(),
+            hash_anterior=ultimo_bloque.hash,
+            minero=minero
+        )
+
+        # Limpiar las transacciones pendientes
+        self.transacciones_pendientes = []
+
+        # Agregar el bloque a la cadena
+        self.chain.append(nuevo_bloque)
+
+        return nuevo_bloque
+
+# (código anterior)
+
+# Minar un nuevo bloque con recompensa para 'Minero1'
+mi_cadena.minar_bloque('Minero1')
+
 def __init__(self):
         self.chain = [self.crear_bloque_genesis()]
         self.transacciones_pendientes = []
