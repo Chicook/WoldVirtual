@@ -666,6 +666,38 @@ print(f"La cadena es válida: {es_valida}")
         # (código anterior)
 	    
 class CadenaBloques:
+self.chain = [self.crear_bloque_genesis()]
+
+    def crear_bloque_genesis(self):
+        # (código anterior)
+
+    def agregar_bloque(self, datos):
+        # (código anterior)
+
+    def minar_bloque(self, dificultad):
+        # (código anterior)
+
+    def verificar_integridad(self):
+        for i in range(1, len(self.chain)):
+            bloque_actual = self.chain[i]
+            bloque_anterior = self.chain[i - 1]
+            
+            # Verificar que el hash del bloque actual sea correcto
+            if bloque_actual.hash != bloque_actual.calcular_hash():
+                return False
+            
+            # Verificar que el hash anterior coincida con el bloque anterior
+            if bloque_actual.hash_anterior != bloque_anterior.hash:
+                return False
+        
+        return True
+
+# (código anterior)
+
+# Verificar integridad
+integridad_correcta = mi_cadena.verificar_integridad()
+print(f"Integridad de la cadena: {integridad_correcta}")
+
 
 # Uso de la cadena de bloques
 mi_cadena = CadenaBloques()
