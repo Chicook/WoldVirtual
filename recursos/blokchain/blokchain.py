@@ -615,6 +615,28 @@ class Bloque:
 
 class CadenaBloques:
 
+def nuevo_bloque(self, proof, hash_anterior=None):
+        """
+        Crear un nuevo bloque en la cadena.
+
+        :param proof: Prueba de trabajo para el nuevo bloque
+        :param hash_anterior: Hash del bloque anterior (opcional)
+        :return: Nuevo bloque
+        """
+        bloque = {
+            'index': len(self.bloques) + 1,
+            'timestamp': time(),
+            'transacciones': self.transacciones,
+            'proof': proof,
+            'hash_anterior': hash_anterior or self.hash(self.bloques[-1]) if self.bloques else "1",
+        }
+
+        # Reiniciar la lista de transacciones actuales
+        self.transacciones = []
+
+        self.bloques.append(bloque)
+        return bloque
+
 @staticmethod
     def validar_prueba(prev_proof, proof, hash_anterior):
         """
