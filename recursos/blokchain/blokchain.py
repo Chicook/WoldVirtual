@@ -4,7 +4,6 @@ from flask import Flask, render_template
 from web3 import Web3
 import datetime
 
-
 class blokchain:
      def minar_bloque(self, datos):
         nuevo_bloque = Bloque(
