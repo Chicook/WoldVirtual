@@ -615,6 +615,42 @@ class Bloque:
 
 class CadenaBloques:
 
+    def agregar_transaccion(self, remitente, destinatario, cantidad):
+        """
+        Agregar una transacción al bloque actual
+
+        :param remitente: Dirección del remitente
+        :param destinatario: Dirección del destinatario
+        :param cantidad: Cantidad transferida
+        :return: El índice del bloque que contendrá esta transacción
+        """
+        self.transacciones.append({
+            'remitente': remitente,
+            'destinatario': destinatario,
+            'cantidad': cantidad,
+        })
+        return self.obtener_ultimo_bloque()['indice'] + 1
+
+    def agregar_bloque(self, prueba, previous_hash=None):
+        """
+        Agregar un nuevo bloque a la cadena de bloques
+
+        :param prueba: Prueba del nuevo bloque
+        :param previous_hash: Hash del bloque anterior
+        :return: Nuevo bloque agregado
+        """
+        bloque = {
+            'indice': len(self.cadena) + 1,
+            'timestamp': time(),
+            'transacciones': self.transacciones,
+            'prueba': prueba,
+            'previous_hash': previous_hash or self.hash(self.obtener_ultimo_bloque()),
+        }
+        # Reiniciar la lista de transacciones después de agregarlas al bloque
+        self.transacciones = []
+        self.cadena.append(bloque)
+        return bloque
+	    
 @staticmethod
     def validar_prueba(previous_proof, proof, previous_hash)
         Validar la prueba de trabajo: Comprobar si el hash cumple con los requisitos
