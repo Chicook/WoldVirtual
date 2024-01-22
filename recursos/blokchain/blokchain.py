@@ -685,6 +685,23 @@ print(f"La cadena es válida: {es_valida}")
 	    
 class CadenaBloques:
 
+def proof_of_work(self, ultimo_proof):
+        nuevo_proof = 1
+        verificar_proof = False
+
+        while not verificar_proof:
+            # Operación hash sha256 sobre la combinación de los proofs
+            operacion = hashlib.sha256(
+                str(nuevo_proof**2 - ultimo_proof**2).encode()).hexdigest()
+
+            # Verificar si el hash tiene 4 ceros al principio
+            if operacion[:4] == '0000':
+                verificar_proof = True
+            else:
+                nuevo_proof += 1
+
+        return nuevo_proof
+
 def agregar_transaccion(self, remitente, destinatario, cantidad):
         self.transacciones_pendientes.append({
             'remitente': remitente,
