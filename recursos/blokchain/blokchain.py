@@ -497,6 +497,9 @@ class Bloque:
         new_proof = proof_of_work(last_proof, data, difficulty)
         new_block = Bloque(new_block_index, last_block.hash(), data, new_proof, stake)
         blockchain.append(new_block)
+     def new_block(self, proof, previous_hash=None):
+     def new_transaction(self, sender, recipient, amount):
+	     
 
 # Resto de tu código para la blockchain...
 
