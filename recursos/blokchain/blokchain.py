@@ -4,6 +4,28 @@ from flask import Flask, render_template
 from web3 import Web3
 import datetime
 
+class Minero:
+    def __init__(self, blockchain):
+        self.blockchain = blockchain
+
+    def minar_bloque(self, datos):
+        nuevo_bloque = Bloque(len(self.blockchain.cadena), time.time(), datos, self.blockchain.cadena[-1].hash)
+        self.proof_of_work(nuevo_bloque)
+        self.blockchain.agregar_bloque(nuevo_bloque)
+
+    def proof_of_work(self, bloque):
+        while bloque.hash[:4] != "0000":
+            bloque.marca_tiempo = time.time()
+            bloque.hash = bloque.generar_hash()
+
+# Crear una instancia de la cadena de bloques y del minero
+mi_blockchain = Blockchain()
+minero = Minero(mi_blockchain)
+
+# Minar un bloque
+minero.minar_bloque("Datos del bloque 1")
+
+
 class blokchain:
      def minar_bloque(self, datos):
         nuevo_bloque = Bloque(
