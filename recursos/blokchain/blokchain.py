@@ -615,6 +615,33 @@ class Bloque:
 
 class CadenaBloques:
 
+@staticmethod
+    def validar_prueba(prev_proof, proof, hash_anterior):
+        """
+        Validar la prueba de trabajo: Comprobar si el hash cumple con los requisitos.
+
+        :param prev_proof: Prueba previa
+        :param proof: Prueba actual
+        :param hash_anterior: Hash del bloque anterior
+        :return: True si es válido, False si no lo es
+        """
+        guess = f'{prev_proof}{proof}{hash_anterior}'.encode()
+        guess_hash = hashlib.sha256(guess).hexdigest()
+        return guess_hash[:4] == "0000"  # Personaliza según los requisitos de tu cadena
+
+    def prueba_de_trabajo(self, prev_proof, hash_anterior):
+        """
+        Algoritmo de prueba de trabajo: Encontrar un número (proof) tal que cumpla con las condiciones.
+
+        :param prev_proof: Prueba previa
+        :param hash_anterior: Hash del bloque anterior
+        :return: Prueba válida
+        """
+        proof = 0
+        while not self.validar_prueba(prev_proof, proof, hash_anterior):
+            proof += 1
+        return proof
+	    
 def agregar_bloque(self, proof, hash_anterior=None):
         """
         Agregar un nuevo bloque a la cadena
