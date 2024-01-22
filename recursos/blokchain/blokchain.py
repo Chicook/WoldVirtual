@@ -136,120 +136,156 @@ contract_source_code = """
 
 //este es un ejemplo de contrato solidity//
 
-//Identificador-de-licencia-SPDX: MIT
-solidez pragma >= 0.8.23;
-importar "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-importar "@openzeppelin/contracts/utils/math/SafeMath.sol";
-importar "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-importar "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-importar "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-importar "@openzeppelin/contracts/access/Ownable.sol";
-importar "@openzeppelin/contracts/security/Pausable.sol";
-importar "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-importar "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-importar "@openzeppelin/contracts/access/Ownable.sol";
-importar "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-importar "@openzeppelin/contracts/security/Pausable.sol";
-importar "@openzeppelin/contracts/access/AccessControl.sol";
-importar "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-importar "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-importar "@openzeppelin/contracts/access/Ownable.sol";
-importar "@openzeppelin/contracts/security/Pausable.sol";
-importar "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-importar "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-importar "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-importar "@openzeppelin/contracts/access/Ownable.sol";
-importar "@pancakeswap/pancake-swap-lib/contracts/token/BEP20/IBEP20.sol";
-contrato Micontrato{
-usando SafeMath para uint256;
-usando SafeERC20 para IERC20;
-    usando SafeMath para uint256;
-    usando SafeERC20 para IERC20;
-Depósito de evento (dirección de usuario indexado, monto uint256);
-    retiro de evento (dirección del usuario indexado, monto uint256);
-        evento EmergencyWithdrawal (dirección del usuario indexado, monto uint256);
+//SPDX-License-Identifier: MIT
+pragma solidity >= 0.8.23;
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@pancakeswap/pancake-swap-lib/contracts/token/BEP20/IBEP20.sol";
+
+
+
+
+contract  Micontrato{
+using SafeMath for uint256;
+using SafeERC20 for IERC20;
+    using SafeMath for uint256;
+    using SafeERC20 for IERC20;
+event Deposit(address indexed user, uint256 amount);
+    event Withdrawal(address indexed user, uint256 amount);
+        event EmergencyWithdrawal(address indexed user, uint256 amount);
+
+
+    
+        
+                  
+
+
+
 constructor(){
-    dirección btcb = 0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c;
-    billetera permitida = 0xA8E670588bbB447c1e98557C64f740016d908085;
-    nombre = "WoldcoinVirtual";
-    símbolo = "WCV";
-    decimales = 3;
-    oferta total = 30000000;  
+    btcbAddress = 0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c;
+    allowedWallet = 0xA8E670588bbB447c1e98557C64f740016d908085;
+    name = "WoldcoinVirtual";
+    symbol = "WCV";
+    decimals = 3;
+    totalSupply = 30000000;  
 }
-  transferencia de función (dirección a, monto uint256) externo {
-    require(cantidad > 0, "La cantidad debe ser mayor que 0");
-    require(balanceOf[msg.sender] >= monto, "Saldo insuficiente");
+  function transfer(address to, uint256 amount) external {
+    require(amount > 0, "Amount must be greater than 0");
+    require(balanceOf[msg.sender] >= amount, "Insufficient balance");
 
-    balanceOf[msg.sender] -= monto;
-    saldoDe[a] += monto;
+    balanceOf[msg.sender] -= amount;
+    balanceOf[to] += amount;
 
-    emitir Transferir(msg.remitente, a, monto);
+    emit Transfer(msg.sender, to, amount);
   }
-Transferencia de eventos (dirección indexada desde, dirección indexada hacia, monto uint256);
-bytes32 constante pública ADMIN_ROLE = keccak256("ADMIN_ROLE");
-usando SafeMath para uint256;
-usando SafeERC20 para IERC20;
- dirección pública btcbAddress = 0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c;
- dirección pública permitidaWallet
-=0xA8E670588bbB447c1e98557C64f740016d908085;
-nombre público de cadena = "WoldcoinVirtual";
- símbolo público de cadena = "WCV";
- uint8 decimales públicos = 3;
-uint256 suministro total público = 30000000;
-mapeo (dirección => uint256) balance público de;
-    mapeo (dirección => uint256) liquidityPool público;
-    evento LiquidityAdded (proveedor indexado de dirección, monto uint256);
-    evento LiquidityRemoved (proveedor indexado de dirección, monto uint256);
-    función addLiquidity (monto uint256) externo {
-        require(cantidad > 0, "La cantidad debe ser mayor que 0");
-        balanceOf[msg.sender] -= monto;
-        oferta total += cantidad;
-        liquidityPool[msg.sender] += monto;
-        emitir LiquidityAdded(msg.sender, cantidad);
-        }
-    función removeLiquidity(cantidad uint256) externa {
-        require(cantidad > 0, "La cantidad debe ser mayor que 0");
-        require(liquidityPool[msg.sender] >= monto, "Liquidez insuficiente");
-        balanceOf[msg.sender] += monto;
-        oferta total -= cantidad;
-        liquidityPool[msg.sender] -= monto;
 
-        emitir LiquidityRemoved(msg.sender, monto);
+
+            
+
+
+
+event Transfer(address indexed from, address indexed to, uint256 amount);
+bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
+using SafeMath for uint256;
+using SafeERC20 for IERC20;
+ address public btcbAddress = 0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c;
+ address public allowedWallet
+=0xA8E670588bbB447c1e98557C64f740016d908085;
+string public name = "WoldcoinVirtual";
+ string public symbol = "WCV";
+ uint8 public decimals = 3;
+uint256 public totalSupply = 30000000  ;
+mapping(address => uint256) public balanceOf;
+    mapping(address => uint256) public liquidityPool;
+    event LiquidityAdded(address indexed provider, uint256 amount);
+    event LiquidityRemoved(address indexed provider, uint256 amount);
+    function addLiquidity(uint256 amount) external {
+        require(amount > 0, "Amount must be greater than 0");
+        balanceOf[msg.sender] -= amount;
+        totalSupply += amount;
+        liquidityPool[msg.sender] += amount;
+        emit LiquidityAdded(msg.sender, amount);
+    }
+    function removeLiquidity(uint256 amount) external {
+        require(amount > 0, "Amount must be greater than 0");
+        require(liquidityPool[msg.sender] >= amount, "Insufficient liquidity");
+        balanceOf[msg.sender] += amount;
+        totalSupply -= amount;
+        liquidityPool[msg.sender] -= amount;
+
+        emit LiquidityRemoved(msg.sender, amount);
         }
-    evento LiquidityAddedWithBTCB (proveedor indexado de dirección, monto uint256);
-    función getTokenPrice() vista externa devuelve (uint256) {
+    event LiquidityAddedWithBTCB(address indexed provider, uint256 amount);
+    function getTokenPrice() external view returns (uint256) {
     }
 }
-contrato de sueldo {
-    dirección pública titular;
-    mapeo(dirección => uint256) salarios públicos;
 
-    evento SalarioPagado(dirección del empleado indexado, monto uint256);
+contract sueldo {
+    address public owner;
+    mapping(address => uint256) public salaries;
 
-    modificador onlyOwner() {
-        require(msg.sender == propietario, "No es el propietario del contrato");
+    event SalaryPaid(address indexed employee, uint256 amount);
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not the contract owner");
         _;
     }
+
     constructor() {
-        propietario = mensaje.remitente;
+        owner = msg.sender;
     }
 
-    función setSalario (dirección del empleado, monto uint256) solo propietario externo {
-        salarios[empleado] = monto;
+    function setSalary(address employee, uint256 amount) external onlyOwner {
+        salaries[employee] = amount;
     }
 
-    función pagarSalario() externo {
-        uint256 salario = salarios[msg.sender];
-        require(salario > 0, "No se ha establecido salario para la persona que llama");
+    function paySalary() external {
+        uint256 salary = salaries[msg.sender];
+        require(salary > 0, "No salary set for the caller");
 
-        // Considere condiciones adicionales y controles de seguridad según sea necesario
+        // Consider additional conditions and security checks as needed
 
-        // Transferir el salario en criptomonedas (reemplazar 'tokenTransferFunction' con la función de transferencia real)
-        // tokenTransferFunction(msg.sender, salario);
+        // Transfer the salary in cryptocurrency (replace 'tokenTransferFunction' with the actual transfer function)
+        // tokenTransferFunction(msg.sender, salary);
 
-        emitir SalarioPagado(msg.sender, salario);
+        emit SalaryPaid(msg.sender, salary);
     }
 }
+
+contract SimpleBlockchain {
+        mapping(address => uint256) public balances;
+
+            event Transfer(address indexed from, address indexed to, uint256 value);
+
+                function transfer(address to, uint256 value) external {
+                        require(balances[msg.sender] >= value, "Saldo insuficiente");
+                                balances[msg.sender] -= value;
+                                        balances[to] += value;
+                                                emit Transfer(msg.sender, to, value);
+                                                    }
+                                                    }
+
+
+
 
 """
 
