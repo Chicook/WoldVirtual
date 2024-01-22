@@ -615,6 +615,33 @@ class Bloque:
 
 class CadenaBloques:
 
+@staticmethod
+    def prueba_de_trabajo(ultimo_proof):
+        """
+        Encuentra un número p' tal que hash(pp') contiene 4 ceros al principio, donde p es la prueba anterior
+        y p' es la nueva prueba.
+
+        :param ultimo_proof: Prueba anterior
+        :return: Nueva prueba
+        """
+        prueba = 0
+        while not CadenaBloques.validar_prueba(ultimo_proof, prueba):
+            prueba += 1
+        return prueba
+
+    @staticmethod
+    def validar_prueba(ultimo_proof, prueba):
+        """
+        Verifica si el hash(ultimo_proof, prueba) contiene 4 ceros al principio.
+
+        :param ultimo_proof: Prueba anterior
+        :param prueba: Prueba actual
+        :return: True si es válido, False si no
+        """
+        conjetura = f'{ultimo_proof}{prueba}'.encode()
+        hash_conjetura = hashlib.sha256(conjetura).hexdigest()
+        return hash_conjetura[:4] == "0000"
+	    
 def nuevo_bloque(self, proof, hash_anterior=None):
         """
         Crear un nuevo bloque en la cadena.
