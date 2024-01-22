@@ -129,12 +129,6 @@ contrato de sueldo {
     }
 }
 
-
-
-
-
-
-
 """
 
 # Desplegar el contrato
@@ -180,4 +174,62 @@ def index():
 
 if __name__ == '__main__':
     app.run(debug=True)
+--------------------------------------
+# Configuración del contrato inteligente en Solidity
+contract_source_code = """
+// ...
+
+# Desplegar el contrato
+contract_bytecode = "..."  # Reemplaza con el bytecode de tu contrato
+contract_abi = "..."  # Reemplaza con el ABI de tu contrato
+
+contract = web3.eth.contract(abi=contract_abi, bytecode=contract_bytecode)
+
+# Configuración de la blockchain simple
+class Bloque:
+    def __init__(self, index, previous_hash, data, proof, stake):
+        # ...
+
+    @staticmethod
+    def proof_of_work(last_proof, data, difficulty):
+        # ...
+
+    @staticmethod
+    def is_valid_proof(last_proof, data, proof, difficulty):
+        # ...
+
+    @staticmethod
+    def propose_block(data, stake, blockchain):
+        # Resto de tu código para la blockchain...
+
+# Resto de tu código...
+
+# Ruta principal que renderiza la interfaz web
+@app.route('/')
+def index():
+    return render_template('../recursos/blochain/WoldbkVirtual.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
+"""
+
+# Comentarios que indican lo que falta
+"""
+# 1. Reemplazar '...' con el bytecode real de tu contrato en contract_bytecode.
+# 2. Reemplazar '...' con el ABI real de tu contrato en contract_abi.
+# 3. Integrar las funciones de cadena de bloques (proof_of_work, is_valid_proof, propose_block) en la lógica de tu cadena de bloques.
+# 4. Asegurarse de que el nodo Ethereum local esté en ejecución en 'http://localhost:8545' o ajustar el proveedor Web3 según sea necesario.
+# 5. Eliminar las importaciones duplicadas y no utilizadas para mejorar la legibilidad del código.
+# 6. Reemplazar el comentario '# tokenTransferFunction(msg.sender, salario)' con la función real para transferir tokens en pagarSalario.
+
+# Después de realizar estos cambios, deberías tener un código más completo y ejecutable.
+"""
+
+
+
+
+
+
+
+
     
