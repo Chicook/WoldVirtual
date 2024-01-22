@@ -615,6 +615,29 @@ class Bloque:
 
 class CadenaBloques:
 
+def agregar_bloque(self, proof, hash_anterior=None):
+        """
+        Agregar un nuevo bloque a la cadena
+
+        :param proof: Prueba asociada al bloque
+        :param hash_anterior: Hash del bloque anterior (opcional para el bloque génesis)
+        :return: Nuevo bloque
+        """
+        bloque = {
+            'indice': len(self.cadena) + 1,
+            'timestamp': time(),
+            'transacciones': self.transacciones,
+            'proof': proof,
+            'hash_anterior': hash_anterior or self.hash(self.cadena[-1])
+        }
+
+        # Restablecer la lista de transacciones actuales
+        self.transacciones = []
+
+        # Agregar el bloque a la cadena
+        self.cadena.append(bloque)
+        return bloque
+
 @staticmethod
     def hash(bloque):
         """
