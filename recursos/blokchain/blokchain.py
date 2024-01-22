@@ -615,6 +615,28 @@ class Bloque:
 
 class CadenaBloques:
 
+def nuevo_bloque(self, prueba, hash_anterior=None):
+        """
+        Crea un nuevo bloque en la cadena de bloques.
+
+        :param prueba: Prueba de trabajo para este bloque
+        :param hash_anterior: Hash del bloque anterior (opcional)
+        :return: Nuevo bloque
+        """
+        bloque = {
+            'indice': len(self.cadena) + 1,
+            'marca_tiempo': time(),
+            'transacciones': self.transacciones,
+            'prueba': prueba,
+            'hash_anterior': hash_anterior or self.hash(self.ultimo_bloque),
+        }
+
+        # Restablecer la lista de transacciones actuales
+        self.transacciones = []
+
+        self.cadena.append(bloque)
+        return bloque
+
 @staticmethod
     def prueba_de_trabajo(ultimo_proof):
         """
