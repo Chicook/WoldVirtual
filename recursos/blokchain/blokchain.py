@@ -598,6 +598,21 @@ contract = web3.eth.contract(abi=contract_abi, bytecode=contract_bytecode)
 # Configuración de la blockchain simple
 class Bloque:
 
+     def proof_of_work(self):
+        dificultad_objetivo = "0000"  # Puedes ajustar la dificultad según tus necesidades
+        self.nonce = 0
+
+        while self.validar_prueba()[:len(dificultad_objetivo)] != dificultad_objetivo:
+            self.nonce += 1
+
+    def validar_prueba(self):
+        contenido = f"{self.index}{self.timestamp}{self.datos}{self.hash_anterior}{self.nonce}"
+        return hashlib.sha256(contenido.encode()).hexdigest()
+
+# Uso de la función de prueba de trabajo
+mi_bloque = Bloque(index=1, timestamp=time.time(), datos="Datos de ejemplo"
+
+
     def __init__(self, indice, marca_tiempo, datos, hash_anterior):
         self.indice = indice
         self.marca_tiempo = marca_tiempo
@@ -620,10 +635,6 @@ class Bloque:
         return hashlib.sha256(
             f"{self.index}{self.timestamp}{self.datos}{self.nonce}{self.hash_anterior}".encode()
         ).hexdigest()
-
-
-
-
 	
       def crear_bloque_genesis():
     return Bloque(0, datetime.datetime.now(), "Bloque Génesis", "0")
