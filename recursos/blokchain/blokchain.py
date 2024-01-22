@@ -3,6 +3,7 @@ import hashlib
 from flask import Flask, render_template
 from web3 import Web3
 import datetime
+import time
 
 class Minero:
     def __init__(self, blockchain):
@@ -25,8 +26,42 @@ minero = Minero(mi_blockchain)
 # Minar un bloque
 minero.minar_bloque("Datos del bloque 1")
 
-
 class blokchain:
+
+     def minar_bloque(self, datos):
+        nuevo_bloque = Bloque(
+            index=len(self.cadena),
+            timestamp=time.time(),
+            datos=datos,
+            hash_anterior=self.cadena[-1].hash
+        )
+        nuevo_bloque.proof_of_work()
+        self.cadena.append(nuevo_bloque)
+
+# Uso de la función para minar un bloque
+datos_a_guardar = "Datos importantes"
+mi_blockchain.minar_bloque(datos_a_guardar)
+
+    def validar_cadena(self):
+        for i in range(1, len(self.cadena)):
+            bloque_actual = self.cadena[i]
+            bloque_anterior = self.cadena[i - 1]
+
+            if bloque_actual.hash != bloque_actual.generar_hash():
+                return False
+
+            if bloque_actual.hash_anterior != bloque_anterior.hash:
+                return False
+
+        return True
+
+# Uso de la función para validar la cadena
+if mi_blockchain.validar_cadena():
+    print("La cadena de bloques es válida.")
+else:
+    print("La cadena de bloques no es válida. ¡Alerta de manipulación!")
+
+	
      def minar_bloque(self, datos):
         nuevo_bloque = Bloque(
             index=len(self.bloques),
@@ -563,6 +598,64 @@ contract = web3.eth.contract(abi=contract_abi, bytecode=contract_bytecode)
 # Configuración de la blockchain simple
 class Bloque:
 
+
+
+    def proof_of_work(self):
+        # (código anterior)
+
+    def validar_prueba(self):
+        # (código anterior)
+
+class CadenaBloques:
+    def __init__(self):
+        self.chain = []
+        self.crear_bloque_genesis()
+
+    def crear_bloque_genesis(self):
+        bloque_genesis = Bloque(index=0, timestamp=time.time(), datos="Bloque Génesis", hash_anterior="0")
+        bloque_genesis.proof_of_work()
+        self.chain.append(bloque_genesis)
+
+    def agregar_bloque(self, datos):
+        ultimo_bloque = self.chain[-1]
+        nuevo_index = ultimo_bloque.index + 1
+        nuevo_timestamp = time.time()
+        nuevo_hash_anterior = ultimo_bloque.hash
+        nuevo_bloque = Bloque(nuevo_index, nuevo_timestamp, datos, nuevo_hash_anterior)
+        nuevo_bloque.proof_of_work()
+        self.chain.append(nuevo_bloque)
+
+# Uso de la cadena de bloques
+mi_cadena = CadenaBloques()
+mi_cadena.agregar_bloque("Datos del bloque 1")
+mi_cadena.agregar_bloque("Datos del bloque 2")
+
+# Imprimir la cadena de bloques
+for bloque in mi_cadena.chain:
+    print(bloque.__dict__)
+
+
+
+
+
+	
+
+def proof_of_work(self):
+        dificultad_objetivo = "0000"  # Puedes ajustar la dificultad según tus necesidades
+        self.nonce = 0
+
+        while self.validar_prueba()[:len(dificultad_objetivo)] != dificultad_objetivo:
+            self.nonce += 1
+
+    def validar_prueba(self):
+        contenido = f"{self.index}{self.timestamp}{self.datos}{self.hash_anterior}{self.nonce}"
+        return hashlib.sha256(contenido.encode()).hexdigest()
+
+# Uso de la función de prueba de trabajo
+mi_bloque = Bloque(index=1, timestamp=time.time(), datos="Datos de ejemplo", hash_anterior="hash_anterior")
+mi_bloque.proof_of_work()
+print(f"Prueba de trabajo exitosa. Nonce: {mi_bloque.nonce}")
+
     def __init__(self, indice, marca_tiempo, datos, hash_anterior):
         self.indice = indice
         self.marca_tiempo = marca_tiempo
@@ -585,10 +678,6 @@ class Bloque:
         return hashlib.sha256(
             f"{self.index}{self.timestamp}{self.datos}{self.nonce}{self.hash_anterior}".encode()
         ).hexdigest()
-
-
-
-
 	
       def crear_bloque_genesis():
     return Bloque(0, datetime.datetime.now(), "Bloque Génesis", "0")
@@ -624,7 +713,6 @@ def __init__(self, index, previous_hash, data, proof, stake):
      def new_block(self, proof, previous_hash=None):
      def new_transaction(self, sender, recipient, amount):
 	     
-
 # Resto de tu código para la blockchain...
 
 # Ruta principal que renderiza la interfaz web
