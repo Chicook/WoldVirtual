@@ -685,6 +685,21 @@ print(f"La cadena es válida: {es_valida}")
 	    
 class CadenaBloques:
 
+def agregar_bloque(self, proof, hash_anterior=None):
+        bloque = {
+            'index': len(self.bloques) + 1,
+            'timestamp': time(),
+            'transacciones': self.transacciones,
+            'proof': proof,
+            'hash_anterior': hash_anterior or self.hash(self.bloques[-1]),
+        }
+
+        # Reiniciar lista de transacciones
+        self.transacciones = []
+
+        self.bloques.append(bloque)
+        return bloque
+
 def proof_of_work(self, ultimo_proof):
         nuevo_proof = 1
         verificar_proof = False
