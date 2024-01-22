@@ -666,6 +666,37 @@ print(f"La cadena es válida: {es_valida}")
         # (código anterior)
 	    
 class CadenaBloques:
+
+def __init__(self):
+        self.chain = [self.crear_bloque_genesis()]
+        self.transacciones_pendientes = []
+
+    def crear_bloque_genesis(self):
+        # (código anterior)
+
+    def obtener_ultimo_bloque(self):
+        return self.chain[-1]
+
+    def agregar_transaccion(self, remitente, destinatario, cantidad):
+        self.transacciones_pendientes.append({
+            'remitente': remitente,
+            'destinatario': destinatario,
+            'cantidad': cantidad
+        })
+
+    def agregar_bloque(self, minero):
+        # (código anterior)
+
+# (código anterior)
+
+# Agregar transacciones
+mi_cadena.agregar_transaccion('Juan', 'Maria', 1.5)
+mi_cadena.agregar_transaccion('Ana', 'Carlos', 2.3)
+
+# Mostrar transacciones pendientes y último bloque
+print("Transacciones pendientes:", mi_cadena.transacciones_pendientes)
+print("Último bloque:", mi_cadena.obtener_ultimo_bloque().hash)
+
 self.chain = [self.crear_bloque_genesis()]
 
     def crear_bloque_genesis(self):
