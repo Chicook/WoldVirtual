@@ -598,6 +598,10 @@ contract = web3.eth.contract(abi=contract_abi, bytecode=contract_bytecode)
 # Configuración de la blockchain simple
 class Bloque:
 
+    def calcular_hash(self):
+        datos_codificados = str(self.index) + str(self.timestamp) + str(self.datos) + str(self.hash_anterior)
+        return hashlib.sha256(datos_codificados.encode('utf-8')).hexdigest()
+
     def __init__(self, index, timestamp, datos, hash_anterior):
         # (código anterior)
 
@@ -657,6 +661,24 @@ print(f"La cadena es válida: {es_valida}")
         # (código anterior)
 	    
 class CadenaBloques:
+
+    for i in range(1, len(self.chain)):
+            bloque_actual = self.chain[i]
+            bloque_anterior = self.chain[i - 1]
+
+            if bloque_actual.hash_anterior != bloque_anterior.calcular_hash():
+                return False
+
+        return True
+
+# Uso de la cadena de bloques
+mi_cadena = CadenaBloques()
+mi_cadena.agregar_bloque("Datos del bloque 1")
+mi_cadena.agregar_bloque("Datos del bloque 2")
+
+# Verificar integridad
+integridad_correcta = mi_cadena.verificar_integridad()
+print(f"Integridad de la cadena: {integridad_correcta}")
 
      def mostrar_cadena(self):
         for bloque in self.chain:
