@@ -660,6 +660,47 @@ class Bloque:
 
 class CadenaBloques:
 
+def prueba_de_participacion(self, participante):
+        """
+        Determinar la cantidad de participación que un participante tiene en la cadena.
+
+        :param participante: Dirección del participante
+        :return: Cantidad de participación del participante
+        """
+        # Aquí puedes implementar la lógica para determinar la participación del participante
+        # Puede involucrar consultar su saldo, historial de participación, etc.
+        # Devuelve la cantidad de participación.
+        pass
+
+    def prueba_de_participacion_y_trabajo(self, prev_proof, hash_anterior, participante):
+        """
+        Algoritmo de prueba de trabajo y participación combinado.
+
+        :param prev_proof: Prueba previa
+        :param hash_anterior: Hash del bloque anterior
+        :param participante: Dirección del participante
+        :return: Prueba válida
+        """
+        proof = 0
+        while not self.validar_prueba(prev_proof, proof, hash_anterior, participante):
+            proof += 1
+        return proof
+
+    def validar_prueba(self, prev_proof, proof, hash_anterior, participante):
+        """
+        Validar la prueba de trabajo y participación: Comprobar si el hash cumple con los requisitos.
+
+        :param prev_proof: Prueba previa
+        :param proof: Prueba actual
+        :param hash_anterior: Hash del bloque anterior
+        :param participante: Dirección del participante
+        :return: True si es válido, False si no lo es
+        """
+        # Aquí debes implementar la lógica de validación que incluye la participación
+        # Puedes utilizar la cantidad de participación y otros factores en la validación.
+        # Devuelve True si la prueba es válida y False si no lo es.
+        pass
+
 def nuevo_bloque(self, prueba, hash_anterior=None):
         """
         Crea un nuevo bloque en la cadena de bloques.
