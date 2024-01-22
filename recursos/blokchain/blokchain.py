@@ -660,6 +660,17 @@ class Bloque:
 
 class CadenaBloques:
 
+    """
+        Validar la prueba de espacio: Comprobar si el participante tiene el espacio requerido.
+
+        :param espacio: Espacio requerido para la prueba
+        :return: True si tiene suficiente espacio, False si no lo tiene
+        """
+        # Aquí puedes implementar la lógica para validar el espacio del participante
+        # Puedes utilizar la capacidad de almacenamiento del participante u otros factores.
+        # Devuelve True si tiene suficiente espacio y False si no lo tiene.
+        pass	
+
 def prueba_de_participacion(self, participante):
         """
         Determinar la cantidad de participación que un participante tiene en la cadena.
