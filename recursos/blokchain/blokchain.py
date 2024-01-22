@@ -615,6 +615,114 @@ class Bloque:
 
 class CadenaBloques:
 
+    def agregar_transaccion(self, remitente, destinatario, cantidad):
+        """
+        Agregar una transacción al bloque actual
+
+        :param remitente: Dirección del remitente
+        :param destinatario: Dirección del destinatario
+        :param cantidad: Cantidad transferida
+        :return: El índice del bloque que contendrá esta transacción
+        """
+        self.transacciones.append({
+            'remitente': remitente,
+            'destinatario': destinatario,
+            'cantidad': cantidad,
+        })
+        return self.obtener_ultimo_bloque()['indice'] + 1
+
+    def agregar_bloque(self, prueba, previous_hash=None):
+        """
+        Agregar un nuevo bloque a la cadena de bloques
+
+        :param prueba: Prueba del nuevo bloque
+        :param previous_hash: Hash del bloque anterior
+        :return: Nuevo bloque agregado
+        """
+        bloque = {
+            'indice': len(self.cadena) + 1,
+            'timestamp': time(),
+            'transacciones': self.transacciones,
+            'prueba': prueba,
+            'previous_hash': previous_hash or self.hash(self.obtener_ultimo_bloque()),
+        }
+        # Reiniciar la lista de transacciones después de agregarlas al bloque
+        self.transacciones = []
+        self.cadena.append(bloque)
+        return bloque
+	    
+@staticmethod
+    def validar_prueba(previous_proof, proof, previous_hash)
+        Validar la prueba de trabajo: Comprobar si el hash cumple con los requisitos
+
+        :param previous_proof: Prueba del bloque anterior
+        :param proof: Prueba actual
+        :param previous_hash: Hash del bloque anterior
+        :return: True si es válido, False si no lo es
+        """
+        guess = f"{previous_proof}{proof}{previous_hash}".encode()
+        guess_hash = hashlib.sha256(guess).hexdigest()
+        return guess_hash[:4] == "0000"  # Puedes ajustar el requisito según la dificultad
+
+    def prueba_de_trabajo(self, previous_proof, previous_hash):
+        """
+        Algoritmo de prueba de trabajo: Encontrar un número que cumpla con la validación
+
+        :param previous_proof: Prueba del bloque anterior
+        :param previous_hash: Hash del bloque anterior
+        :return: Nueva prueba
+        """
+        proof = 0
+        while not self.validar_prueba(previous_proof, proof, previous_hash):
+            proof += 1
+        return proof 
+
+  def agregar_bloque(self, proof, previous_hash=None):
+        """
+        Añadir un bloque a la cadena de bloques
+
+        :param proof: Prueba generada por el algoritmo de prueba de trabajo
+        :param previous_hash: Hash del bloque anterior
+        :return: Nuevo bloque
+        """
+        bloque = Bloque(
+            index=len(self.chain) + 1,
+            timestamp=time(),
+            proof=proof,
+            previous_hash=previous_hash or self.hash(self.chain[-1]),
+        )
+
+        self.chain.append(bloque)
+        return bloque
+	
+def prueba_trabajo(self, last_proof):
+        """
+        Algoritmo de prueba de trabajo:
+        - Encontrar un número p' tal que hash(pp') contiene 4 ceros al inicio, donde p es la prueba anterior
+        - p es la prueba actual
+
+        :param last_proof: Prueba anterior
+        :return: Prueba actual
+        """
+        proof = 0
+        while self.validar_prueba(last_proof, proof) is False:
+            proof += 1
+
+        return proof
+
+    @staticmethod
+    def validar_prueba(last_proof, proof):
+        """
+        Validar si encontrar una prueba es exitoso, es decir, hash(last_proof, proof) contiene 4 ceros al inicio.
+
+        :param last_proof: Prueba anterior
+        :param proof: Prueba actual
+        :return: True si es válido, False si no lo es
+        """
+        guess = f'{last_proof}{proof}'.encode()
+        guess_hash = hashlib.sha256(guess).hexdigest()
+        return guess_hash[:4] == "0000"	
+
 def minar_bloque(self, minero):
         bloque_nuevo = Bloque(
             index=self.obtener_ultimo_bloque().index + 1,
@@ -682,7 +790,29 @@ print(f"La cadena es válida: {es_valida}")
 	    
 class CadenaBloques:
 
-@staticmethod
+def nuevo_bloque(self, proof, previous_hash=None):
+        """
+        Crea un nuevo bloque en la cadena
+
+        :param proof: La prueba dada por el algoritmo de prueba de trabajo
+        :param previous_hash: Hash del bloque anterior
+        :return: Nuevo bloque
+        """
+        bloque = {
+            'index': len(self.cadena) + 1,
+            'timestamp': time(),
+            'transacciones': self.transacciones,
+            'proof': proof,
+            'previous_hash': previous_hash or self.hash(self.cadena[-1]) if self.cadena else None
+        }
+
+        # Reiniciar la lista de transacciones
+        self.transacciones = []
+
+        self.cadena.append(bloque)
+        return bloque
+
+  @staticmethod
     def prueba_de_trabajo(last_proof):
         """
         Encuentra un número p' tal que hash(pp') contenga 4 ceros al principio, donde p es el proof anterior
