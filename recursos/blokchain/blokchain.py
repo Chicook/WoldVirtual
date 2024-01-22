@@ -655,8 +655,25 @@ print(f"La cadena es válida: {es_valida}")
 
     def validar_prueba(self):
         # (código anterior)
-
+	    
 class CadenaBloques:
+
+     def mostrar_cadena(self):
+        for bloque in self.chain:
+            print(f"Index: {bloque.index}")
+            print(f"Timestamp: {bloque.timestamp}")
+            print(f"Datos: {bloque.datos}")
+            print(f"Hash: {bloque.hash}")
+            print(f"Hash Anterior: {bloque.hash_anterior}")
+            print("----")
+
+# Uso de la cadena de bloques
+mi_cadena = CadenaBloques()
+mi_cadena.agregar_bloque("Datos del bloque 1")
+mi_cadena.agregar_bloque("Datos del bloque 2")
+
+# Mostrar la cadena
+mi_cadena.mostrar_cadena()
     def __init__(self):
         self.chain = []
         self.crear_bloque_genesis()
