@@ -2,6 +2,7 @@ import tkinter as tk
 import hashlib
 from flask import Flask, render_template
 from web3 import Web3
+import datetime
 
 app = Flask(__name__)
 class InterfazCompartirRecursos:
@@ -26,6 +27,8 @@ class InterfazCompartirRecursos:
 
         self.boton_compartir = tk.Button(master, text="Compartir Recurso", command=self.compartir_recurso)
         self.boton_compartir.pack()
+	    
+     
 
     def compartir_recurso(self):
         nombre = self.entry_nombre.get()
@@ -509,6 +512,13 @@ contract_abi = " [
 contract = web3.eth.contract(abi=contract_abi, bytecode=contract_bytecode)
 
 # Configuración de la blockchain simple
+
+def crear_bloque_genesis():
+    return Bloque(0, datetime.datetime.now(), "Bloque Génesis", "0")
+
+cadena_bloques = [crear_bloque_genesis()]
+bloque_actual = cadena_bloques[0]
+
 class Bloque:
     def __init__(self, index, previous_hash, data, proof, stake):
         self.index = index
