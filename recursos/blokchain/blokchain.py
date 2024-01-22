@@ -667,6 +667,16 @@ print(f"La cadena es válida: {es_valida}")
 	    
 class CadenaBloques:
 
+def agregar_transaccion(self, remitente, destinatario, cantidad):
+        self.transacciones_pendientes.append({
+            'remitente': remitente,
+            'destinatario': destinatario,
+            'cantidad': cantidad
+        })
+
+        # Devolver el índice del bloque que contendrá esta transacción
+        return self.obtener_ultimo_bloque().index + 1
+
 def minar_bloque(self, recompensa_minero):
         # Crear un bloque con las transacciones pendientes y la recompensa para el minero
         nuevo_bloque = Bloque(
