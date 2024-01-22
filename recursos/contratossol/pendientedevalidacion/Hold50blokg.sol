@@ -2,16 +2,16 @@
 
 pragma solidity ^0.8.0;
 
-contract MyToken {
-    string public name = "My Token";
-    string public symbol = "MT";
+contract WoldcoinVirtual {
+    string public name = "WoldcoinVirtual";
+    string public symbol = "WCV";
     uint256 public totalSupply = 30000000 * 10 ** 3; // 30,000,000 tokens with 3 decimals
     uint8 public decimals = 3;
     
     mapping(address => uint256) public balanceOf;
     mapping(address => mapping(address => uint256)) public allowance;
     
-    uint256 public constant transferFee = 30; // 3% fee
+    uint256 public constant transferFee = 1; // 1% fee
     
     uint256 public releaseTime; // Timestamp when tokens can be released
     address public lockContract; // Address of the lock contract
