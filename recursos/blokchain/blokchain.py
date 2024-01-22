@@ -16,6 +16,11 @@ class blokchain:
         nuevo_bloque.proof_of_work(self.dificultad)
         self.bloques.append(nuevo_bloque)
 
+      def generar_hash(self):
+        sha = hashlib.sha256()
+        sha.update((str(self.indice) + str(self.marca_tiempo) + str(self.datos) + str(self.hash_anterior)).encode('utf-8'))
+        return sha.hexdigest()
+
 
 app = Flask(__name__)
 class InterfazCompartirRecursos:
