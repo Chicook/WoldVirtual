@@ -541,6 +541,18 @@ contract = web3.eth.contract(abi=contract_abi, bytecode=contract_bytecode)
 # Configuración de la blockchain simple
 class Bloque:
 
+    def __init__(self, indice, marca_tiempo, datos, hash_anterior):
+        self.indice = indice
+        self.marca_tiempo = marca_tiempo
+        self.datos = datos
+        self.hash_anterior = hash_anterior
+        self.hash = self.generar_hash()
+
+    def generar_hash(self):
+        sha = hashlib.sha256()
+        sha.update((str(self.indice) + str(self.marca_tiempo) + str(self.datos) + str(self.hash_anterior)).encode('utf-8'))
+        return sha.hexdigest()
+
     def proof_of_work(self, dificultad):
         self.nonce = 0
         while self.hash[:dificultad] != "0" * dificultad:
