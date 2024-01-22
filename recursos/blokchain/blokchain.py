@@ -136,120 +136,156 @@ contract_source_code = """
 
 //este es un ejemplo de contrato solidity//
 
-//Identificador-de-licencia-SPDX: MIT
-solidez pragma >= 0.8.23;
-importar "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-importar "@openzeppelin/contracts/utils/math/SafeMath.sol";
-importar "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-importar "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-importar "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-importar "@openzeppelin/contracts/access/Ownable.sol";
-importar "@openzeppelin/contracts/security/Pausable.sol";
-importar "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-importar "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-importar "@openzeppelin/contracts/access/Ownable.sol";
-importar "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-importar "@openzeppelin/contracts/security/Pausable.sol";
-importar "@openzeppelin/contracts/access/AccessControl.sol";
-importar "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-importar "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-importar "@openzeppelin/contracts/access/Ownable.sol";
-importar "@openzeppelin/contracts/security/Pausable.sol";
-importar "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-importar "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-importar "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-importar "@openzeppelin/contracts/access/Ownable.sol";
-importar "@pancakeswap/pancake-swap-lib/contracts/token/BEP20/IBEP20.sol";
-contrato Micontrato{
-usando SafeMath para uint256;
-usando SafeERC20 para IERC20;
-    usando SafeMath para uint256;
-    usando SafeERC20 para IERC20;
-Depósito de evento (dirección de usuario indexado, monto uint256);
-    retiro de evento (dirección del usuario indexado, monto uint256);
-        evento EmergencyWithdrawal (dirección del usuario indexado, monto uint256);
+//SPDX-License-Identifier: MIT
+pragma solidity >= 0.8.23;
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@pancakeswap/pancake-swap-lib/contracts/token/BEP20/IBEP20.sol";
+
+
+
+
+contract  Micontrato{
+using SafeMath for uint256;
+using SafeERC20 for IERC20;
+    using SafeMath for uint256;
+    using SafeERC20 for IERC20;
+event Deposit(address indexed user, uint256 amount);
+    event Withdrawal(address indexed user, uint256 amount);
+        event EmergencyWithdrawal(address indexed user, uint256 amount);
+
+
+    
+        
+                  
+
+
+
 constructor(){
-    dirección btcb = 0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c;
-    billetera permitida = 0xA8E670588bbB447c1e98557C64f740016d908085;
-    nombre = "WoldcoinVirtual";
-    símbolo = "WCV";
-    decimales = 3;
-    oferta total = 30000000;  
+    btcbAddress = 0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c;
+    allowedWallet = 0xA8E670588bbB447c1e98557C64f740016d908085;
+    name = "WoldcoinVirtual";
+    symbol = "WCV";
+    decimals = 3;
+    totalSupply = 30000000;  
 }
-  transferencia de función (dirección a, monto uint256) externo {
-    require(cantidad > 0, "La cantidad debe ser mayor que 0");
-    require(balanceOf[msg.sender] >= monto, "Saldo insuficiente");
+  function transfer(address to, uint256 amount) external {
+    require(amount > 0, "Amount must be greater than 0");
+    require(balanceOf[msg.sender] >= amount, "Insufficient balance");
 
-    balanceOf[msg.sender] -= monto;
-    saldoDe[a] += monto;
+    balanceOf[msg.sender] -= amount;
+    balanceOf[to] += amount;
 
-    emitir Transferir(msg.remitente, a, monto);
+    emit Transfer(msg.sender, to, amount);
   }
-Transferencia de eventos (dirección indexada desde, dirección indexada hacia, monto uint256);
-bytes32 constante pública ADMIN_ROLE = keccak256("ADMIN_ROLE");
-usando SafeMath para uint256;
-usando SafeERC20 para IERC20;
- dirección pública btcbAddress = 0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c;
- dirección pública permitidaWallet
-=0xA8E670588bbB447c1e98557C64f740016d908085;
-nombre público de cadena = "WoldcoinVirtual";
- símbolo público de cadena = "WCV";
- uint8 decimales públicos = 3;
-uint256 suministro total público = 30000000;
-mapeo (dirección => uint256) balance público de;
-    mapeo (dirección => uint256) liquidityPool público;
-    evento LiquidityAdded (proveedor indexado de dirección, monto uint256);
-    evento LiquidityRemoved (proveedor indexado de dirección, monto uint256);
-    función addLiquidity (monto uint256) externo {
-        require(cantidad > 0, "La cantidad debe ser mayor que 0");
-        balanceOf[msg.sender] -= monto;
-        oferta total += cantidad;
-        liquidityPool[msg.sender] += monto;
-        emitir LiquidityAdded(msg.sender, cantidad);
-        }
-    función removeLiquidity(cantidad uint256) externa {
-        require(cantidad > 0, "La cantidad debe ser mayor que 0");
-        require(liquidityPool[msg.sender] >= monto, "Liquidez insuficiente");
-        balanceOf[msg.sender] += monto;
-        oferta total -= cantidad;
-        liquidityPool[msg.sender] -= monto;
 
-        emitir LiquidityRemoved(msg.sender, monto);
+
+            
+
+
+
+event Transfer(address indexed from, address indexed to, uint256 amount);
+bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
+using SafeMath for uint256;
+using SafeERC20 for IERC20;
+ address public btcbAddress = 0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c;
+ address public allowedWallet
+=0xA8E670588bbB447c1e98557C64f740016d908085;
+string public name = "WoldcoinVirtual";
+ string public symbol = "WCV";
+ uint8 public decimals = 3;
+uint256 public totalSupply = 30000000  ;
+mapping(address => uint256) public balanceOf;
+    mapping(address => uint256) public liquidityPool;
+    event LiquidityAdded(address indexed provider, uint256 amount);
+    event LiquidityRemoved(address indexed provider, uint256 amount);
+    function addLiquidity(uint256 amount) external {
+        require(amount > 0, "Amount must be greater than 0");
+        balanceOf[msg.sender] -= amount;
+        totalSupply += amount;
+        liquidityPool[msg.sender] += amount;
+        emit LiquidityAdded(msg.sender, amount);
+    }
+    function removeLiquidity(uint256 amount) external {
+        require(amount > 0, "Amount must be greater than 0");
+        require(liquidityPool[msg.sender] >= amount, "Insufficient liquidity");
+        balanceOf[msg.sender] += amount;
+        totalSupply -= amount;
+        liquidityPool[msg.sender] -= amount;
+
+        emit LiquidityRemoved(msg.sender, amount);
         }
-    evento LiquidityAddedWithBTCB (proveedor indexado de dirección, monto uint256);
-    función getTokenPrice() vista externa devuelve (uint256) {
+    event LiquidityAddedWithBTCB(address indexed provider, uint256 amount);
+    function getTokenPrice() external view returns (uint256) {
     }
 }
-contrato de sueldo {
-    dirección pública titular;
-    mapeo(dirección => uint256) salarios públicos;
 
-    evento SalarioPagado(dirección del empleado indexado, monto uint256);
+contract sueldo {
+    address public owner;
+    mapping(address => uint256) public salaries;
 
-    modificador onlyOwner() {
-        require(msg.sender == propietario, "No es el propietario del contrato");
+    event SalaryPaid(address indexed employee, uint256 amount);
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not the contract owner");
         _;
     }
+
     constructor() {
-        propietario = mensaje.remitente;
+        owner = msg.sender;
     }
 
-    función setSalario (dirección del empleado, monto uint256) solo propietario externo {
-        salarios[empleado] = monto;
+    function setSalary(address employee, uint256 amount) external onlyOwner {
+        salaries[employee] = amount;
     }
 
-    función pagarSalario() externo {
-        uint256 salario = salarios[msg.sender];
-        require(salario > 0, "No se ha establecido salario para la persona que llama");
+    function paySalary() external {
+        uint256 salary = salaries[msg.sender];
+        require(salary > 0, "No salary set for the caller");
 
-        // Considere condiciones adicionales y controles de seguridad según sea necesario
+        // Consider additional conditions and security checks as needed
 
-        // Transferir el salario en criptomonedas (reemplazar 'tokenTransferFunction' con la función de transferencia real)
-        // tokenTransferFunction(msg.sender, salario);
+        // Transfer the salary in cryptocurrency (replace 'tokenTransferFunction' with the actual transfer function)
+        // tokenTransferFunction(msg.sender, salary);
 
-        emitir SalarioPagado(msg.sender, salario);
+        emit SalaryPaid(msg.sender, salary);
     }
 }
+
+contract SimpleBlockchain {
+        mapping(address => uint256) public balances;
+
+            event Transfer(address indexed from, address indexed to, uint256 value);
+
+                function transfer(address to, uint256 value) external {
+                        require(balances[msg.sender] >= value, "Saldo insuficiente");
+                                balances[msg.sender] -= value;
+                                        balances[to] += value;
+                                                emit Transfer(msg.sender, to, value);
+                                                    }
+                                                    }
+
+
+
 
 """
 
@@ -257,20 +293,9 @@ contrato de sueldo {
 contract_bytecode = "6080604052737130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c5f806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555073a8e670588bbb447c1e98557c64f740016d90808560015f6101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506040518060400160405280600f81526020017f576f6c64636f696e5669727475616c000000000000000000000000000000000081525060029081620000f191906200052e565b506040518060400160405280600381526020017f5743560000000000000000000000000000000000000000000000000000000000815250600390816200013891906200052e565b50600360045f6101000a81548160ff021916908360ff1602179055506301c9c38060055534801562000168575f80fd5b50737130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c5f806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555073a8e670588bbb447c1e98557c64f740016d90808560015f6101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506040518060400160405280600f81526020017f576f6c64636f696e5669727475616c0000000000000000000000000000000000815250600290816200025691906200052e565b506040518060400160405280600381526020017f5743560000000000000000000000000000000000000000000000000000000000815250600390816200029d91906200052e565b50600360045f6101000a81548160ff021916908360ff1602179055506301c9c38060058190555062000612565b5f81519050919050565b7f4e487b71000000000000000000000000000000000000000000000000000000005f52604160045260245ffd5b7f4e487b71000000000000000000000000000000000000000000000000000000005f52602260045260245ffd5b5f60028204905060018216806200034657607f821691505b6020821081036200035c576200035b62000301565b5b50919050565b5f819050815f5260205f209050919050565b5f6020601f8301049050919050565b5f82821b905092915050565b5f60088302620003c07fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8262000383565b620003cc868362000383565b95508019841693508086168417925050509392505050565b5f819050919050565b5f819050919050565b5f62000416620004106200040a84620003e4565b620003ed565b620003e4565b9050919050565b5f819050919050565b6200043183620003f6565b6200044962000440826200041d565b8484546200038f565b825550505050565b5f90565b6200045f62000451565b6200046c81848462000426565b505050565b5b818110156200049357620004875f8262000455565b60018101905062000472565b5050565b601f821115620004e257620004ac8162000362565b620004b78462000374565b81016020851015620004c7578190505b620004df620004d68562000374565b83018262000471565b50505b505050565b5f82821c905092915050565b5f620005045f1984600802620004e7565b1980831691505092915050565b5f6200051e8383620004f3565b9150826002028217905092915050565b6200053982620002ca565b67ffffffffffffffff811115620005555762000554620002d4565b5b6200056182546200032e565b6200056e82828562000497565b5f60209050601f831160018114620005a4575f84156200058f578287015190505b6200059b858262000511565b8655506200060a565b601f198416620005b48662000362565b5f5b82811015620005dd57848901518255600182019150602085019450602081019050620005b6565b86831015620005fd5784890151620005f9601f891682620004f3565b8355505b6001600288020188555050505b505050505050565b610e1480620006205f395ff3fe608060405234801561000f575f80fd5b50600436106100cd575f3560e01c806375b238fc1161008a5780639c8f9f23116100645780639c8f9f23146101ef578063a9059cbb1461020b578063b7c7863c14610227578063c0806db614610245576100cd565b806375b238fc1461019557806395d89b41146101b35780639a993120146101d1576100cd565b806306fdde03146100d157806318160ddd146100ef578063313ce5671461010d5780634b94f50e1461012b57806351c6590a1461014957806370a0823114610165575b5f80fd5b6100d9610275565b6040516100e691906109bc565b60405180910390f35b6100f7610301565b60405161010491906109f4565b60405180910390f35b610115610307565b6040516101229190610a28565b60405180910390f35b610133610319565b60405161014091906109f4565b60405180910390f35b610163600480360381019061015e9190610a6f565b61031d565b005b61017f600480360381019061017a9190610af4565b61046e565b60405161018c91906109f4565b60405180910390f35b61019d610483565b6040516101aa9190610b37565b60405180910390f35b6101bb6104a7565b6040516101c891906109bc565b60405180910390f35b6101d9610533565b6040516101e69190610b5f565b60405180910390f35b61020960048036038101906102049190610a6f565b610558565b005b61022560048036038101906102209190610b78565b610729565b005b61022f6108fa565b60405161023c9190610b5f565b60405180910390f35b61025f600480360381019061025a9190610af4565b61091d565b60405161026c91906109f4565b60405180910390f35b6002805461028290610be3565b80601f01602080910402602001604051908101604052809291908181526020018280546102ae90610be3565b80156102f95780601f106102d0576101008083540402835291602001916102f9565b820191905f5260205f20905b8154815290600101906020018083116102dc57829003601f168201915b505050505081565b60055481565b60045f9054906101000a900460ff1681565b5f90565b5f811161035f576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040161035690610c5d565b60405180910390fd5b8060065f3373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020015f205f8282546103ab9190610ca8565b925050819055508060055f8282546103c39190610cdb565b925050819055508060075f3373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020015f205f8282546104169190610cdb565b925050819055503373ffffffffffffffffffffffffffffffffffffffff167fc17cea59c2955cb181b03393209566960365771dbba9dc3d510180e7cb3120888260405161046391906109f4565b60405180910390a250565b6006602052805f5260405f205f915090505481565b7fa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c2177581565b600380546104b490610be3565b80601f01602080910402602001604051908101604052809291908181526020018280546104e090610be3565b801561052b5780601f106105025761010080835404028352916020019161052b565b820191905f5260205f20905b81548152906001019060200180831161050e57829003601f168201915b505050505081565b60015f9054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b5f811161059a576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040161059190610c5d565b60405180910390fd5b8060075f3373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020015f2054101561061a576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040161061190610d58565b60405180910390fd5b8060065f3373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020015f205f8282546106669190610cdb565b925050819055508060055f82825461067e9190610ca8565b925050819055508060075f3373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020015f205f8282546106d19190610ca8565b925050819055503373ffffffffffffffffffffffffffffffffffffffff167fc2c3f06e49b9f15e7b4af9055e183b0d73362e033ad82a07dec9bf98401717198260405161071e91906109f4565b60405180910390a250565b5f811161076b576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040161076290610c5d565b60405180910390fd5b8060065f3373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020015f205410156107eb576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004016107e290610dc0565b60405180910390fd5b8060065f3373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020015f205f8282546108379190610ca8565b925050819055508060065f8473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020015f205f82825461088a9190610cdb565b925050819055508173ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff167fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef836040516108ee91906109f4565b60405180910390a35050565b5f8054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6007602052805f5260405f205f915090505481565b5f81519050919050565b5f82825260208201905092915050565b5f5b8381101561096957808201518184015260208101905061094e565b5f8484015250505050565b5f601f19601f8301169050919050565b5f61098e82610932565b610998818561093c565b93506109a881856020860161094c565b6109b181610974565b840191505092915050565b5f6020820190508181035f8301526109d48184610984565b905092915050565b5f819050919050565b6109ee816109dc565b82525050565b5f602082019050610a075f8301846109e5565b92915050565b5f60ff82169050919050565b610a2281610a0d565b82525050565b5f602082019050610a3b5f830184610a19565b92915050565b5f80fd5b610a4e816109dc565b8114610a58575f80fd5b50565b5f81359050610a6981610a45565b92915050565b5f60208284031215610a8457610a83610a41565b5b5f610a9184828501610a5b565b91505092915050565b5f73ffffffffffffffffffffffffffffffffffffffff82169050919050565b5f610ac382610a9a565b9050919050565b610ad381610ab9565b8114610add575f80fd5b50565b5f81359050610aee81610aca565b92915050565b5f60208284031215610b0957610b08610a41565b5b5f610b1684828501610ae0565b91505092915050565b5f819050919050565b610b3181610b1f565b82525050565b5f602082019050610b4a5f830184610b28565b92915050565b610b5981610ab9565b82525050565b5f602082019050610b725f830184610b50565b92915050565b5f8060408385031215610b8e57610b8d610a41565b5b5f610b9b85828601610ae0565b9250506020610bac85828601610a5b565b9150509250929050565b7f4e487b71000000000000000000000000000000000000000000000000000000005f52602260045260245ffd5b5f6002820490506001821680610bfa57607f821691505b602082108103610c0d57610c0c610bb6565b5b50919050565b7f416d6f756e74206d7573742062652067726561746572207468616e20300000005f82015250565b5f610c47601d8361093c565b9150610c5282610c13565b602082019050919050565b5f6020820190508181035f830152610c7481610c3b565b9050919050565b7f4e487b71000000000000000000000000000000000000000000000000000000005f52601160045260245ffd5b5f610cb2826109dc565b9150610cbd836109dc565b9250828203905081811115610cd557610cd4610c7b565b5b92915050565b5f610ce5826109dc565b9150610cf0836109dc565b9250828201905080821115610d0857610d07610c7b565b5b92915050565b7f496e73756666696369656e74206c6971756964697479000000000000000000005f82015250565b5f610d4260168361093c565b9150610d4d82610d0e565b602082019050919050565b5f6020820190508181035f830152610d6f81610d36565b9050919050565b7f496e73756666696369656e742062616c616e63650000000000000000000000005f82015250565b5f610daa60148361093c565b9150610db582610d76565b602082019050919050565b5f6020820190508181035f830152610dd781610d9e565b905091905056fea26469706673582212208041078a9b319c16b9ea7a27c087e2a3b4ccfdaeb75548bc43e3adbec4776e5b64736f6c63430008170033  "  # Reemplaza con el bytecode de tu contrato
 
 
-contract_abi = " [
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "addLiquidity",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
+contract_abi = "
+
+[
 	{
 		"inputs": [],
 		"stateMutability": "nonpayable",
@@ -372,37 +397,6 @@ contract_abi = " [
 		"type": "event"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "removeLiquidity",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "transfer",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -457,6 +451,19 @@ contract_abi = " [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "addLiquidity",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -563,6 +570,19 @@ contract_abi = " [
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "removeLiquidity",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "symbol",
 		"outputs": [
@@ -587,8 +607,33 @@ contract_abi = " [
 		],
 		"stateMutability": "view",
 		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "transfer",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	}
-]"  # Reemplaza con el ABI de tu contrato
+]
+
+
+
+
+
+
+"  # Reemplaza con el ABI de tu contrato
 
 contract = web3.eth.contract(abi=contract_abi, bytecode=contract_bytecode)
 
@@ -614,6 +659,167 @@ class Bloque:
         # (código anterior)
 
 class CadenaBloques:
+
+def nuevo_bloque(self, prueba, hash_anterior=None):
+        """
+        Crea un nuevo bloque en la cadena de bloques.
+
+        :param prueba: Prueba de trabajo para este bloque
+        :param hash_anterior: Hash del bloque anterior (opcional)
+        :return: Nuevo bloque
+        """
+        bloque = {
+            'indice': len(self.cadena) + 1,
+            'marca_tiempo': time(),
+            'transacciones': self.transacciones,
+            'prueba': prueba,
+            'hash_anterior': hash_anterior or self.hash(self.ultimo_bloque),
+        }
+
+        # Restablecer la lista de transacciones actuales
+        self.transacciones = []
+
+        self.cadena.append(bloque)
+        return bloque
+
+@staticmethod
+    def prueba_de_trabajo(ultimo_proof):
+        """
+        Encuentra un número p' tal que hash(pp') contiene 4 ceros al principio, donde p es la prueba anterior
+        y p' es la nueva prueba.
+
+        :param ultimo_proof: Prueba anterior
+        :return: Nueva prueba
+        """
+        prueba = 0
+        while not CadenaBloques.validar_prueba(ultimo_proof, prueba):
+            prueba += 1
+        return prueba
+
+    @staticmethod
+    def validar_prueba(ultimo_proof, prueba):
+        """
+        Verifica si el hash(ultimo_proof, prueba) contiene 4 ceros al principio.
+
+        :param ultimo_proof: Prueba anterior
+        :param prueba: Prueba actual
+        :return: True si es válido, False si no
+        """
+        conjetura = f'{ultimo_proof}{prueba}'.encode()
+        hash_conjetura = hashlib.sha256(conjetura).hexdigest()
+        return hash_conjetura[:4] == "0000"
+	    
+def nuevo_bloque(self, proof, hash_anterior=None):
+        """
+        Crear un nuevo bloque en la cadena.
+
+        :param proof: Prueba de trabajo para el nuevo bloque
+        :param hash_anterior: Hash del bloque anterior (opcional)
+        :return: Nuevo bloque
+        """
+        bloque = {
+            'index': len(self.bloques) + 1,
+            'timestamp': time(),
+            'transacciones': self.transacciones,
+            'proof': proof,
+            'hash_anterior': hash_anterior or self.hash(self.bloques[-1]) if self.bloques else "1",
+        }
+
+        # Reiniciar la lista de transacciones actuales
+        self.transacciones = []
+
+        self.bloques.append(bloque)
+        return bloque
+
+@staticmethod
+    def validar_prueba(prev_proof, proof, hash_anterior):
+        """
+        Validar la prueba de trabajo: Comprobar si el hash cumple con los requisitos.
+
+        :param prev_proof: Prueba previa
+        :param proof: Prueba actual
+        :param hash_anterior: Hash del bloque anterior
+        :return: True si es válido, False si no lo es
+        """
+        guess = f'{prev_proof}{proof}{hash_anterior}'.encode()
+        guess_hash = hashlib.sha256(guess).hexdigest()
+        return guess_hash[:4] == "0000"  # Personaliza según los requisitos de tu cadena
+
+    def prueba_de_trabajo(self, prev_proof, hash_anterior):
+        """
+        Algoritmo de prueba de trabajo: Encontrar un número (proof) tal que cumpla con las condiciones.
+
+        :param prev_proof: Prueba previa
+        :param hash_anterior: Hash del bloque anterior
+        :return: Prueba válida
+        """
+        proof = 0
+        while not self.validar_prueba(prev_proof, proof, hash_anterior):
+            proof += 1
+        return proof
+	    
+def agregar_bloque(self, proof, hash_anterior=None):
+        """
+        Agregar un nuevo bloque a la cadena
+
+        :param proof: Prueba asociada al bloque
+        :param hash_anterior: Hash del bloque anterior (opcional para el bloque génesis)
+        :return: Nuevo bloque
+        """
+        bloque = {
+            'indice': len(self.cadena) + 1,
+            'timestamp': time(),
+            'transacciones': self.transacciones,
+            'proof': proof,
+            'hash_anterior': hash_anterior or self.hash(self.cadena[-1])
+        }
+
+        # Restablecer la lista de transacciones actuales
+        self.transacciones = []
+
+        # Agregar el bloque a la cadena
+        self.cadena.append(bloque)
+        return bloque
+
+@staticmethod
+    def hash(bloque):
+        """
+        Crear un hash SHA-256 del bloque
+
+        :param bloque: Bloque
+        :return: Hash del bloque
+        """
+        # Asegurarnos de que el diccionario esté ordenado para obtener el mismo hash
+        bloque_string = json.dumps(bloque, sort_keys=True).encode()
+        return hashlib.sha256(bloque_string).hexdigest()
+
+    def prueba_de_trabajo(self, last_proof):
+        """
+        Algoritmo simple de prueba de trabajo:
+        - Encuentra un número p' tal que hash(pp') contenga 4 ceros al principio, donde p es la prueba anterior
+        - p es la prueba actual, p' es la nueva prueba
+
+        :param last_proof: Prueba anterior
+        :return: Nueva prueba
+        """
+        proof = 0
+        while self.validar_prueba(last_proof, proof) is False:
+            proof += 1
+        return proof
+
+    @staticmethod
+    def validar_prueba(last_proof, proof):
+        """
+        Verificar si la prueba es válida:
+        - ¿El hash(last_proof, proof) contiene 4 ceros al principio?
+
+        :param last_proof: Prueba anterior
+        :param proof: Prueba actual
+        :return: True si es válido, False si no lo es
+        """
+        guess = f'{last_proof}{proof}'.encode()
+        guess_hash = hashlib.sha256(guess).hexdigest()
+        return guess_hash[:4] == "0000"
 
     def agregar_transaccion(self, remitente, destinatario, cantidad):
         """
