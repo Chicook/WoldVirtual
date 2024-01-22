@@ -1,8 +1,46 @@
+import tkinter as tk
 import hashlib
 from flask import Flask, render_template
 from web3 import Web3
 
 app = Flask(__name__)
+class InterfazCompartirRecursos:
+    def __init__(self, master):
+        self.master = master
+        master.title("Compartir Recursos")
+
+        self.etiqueta = tk.Label(master, text="Ingrese la información del recurso:")
+        self.etiqueta.pack()
+
+        self.etiqueta_nombre = tk.Label(master, text="Nombre:")
+        self.etiqueta_nombre.pack()
+
+        self.entry_nombre = tk.Entry(master)
+        self.entry_nombre.pack()
+
+        self.etiqueta_descripcion = tk.Label(master, text="Descripción:")
+        self.etiqueta_descripcion.pack()
+
+        self.entry_descripcion = tk.Entry(master)
+        self.entry_descripcion.pack()
+
+        self.boton_compartir = tk.Button(master, text="Compartir Recurso", command=self.compartir_recurso)
+        self.boton_compartir.pack()
+
+    def compartir_recurso(self):
+        nombre = self.entry_nombre.get()
+        descripcion = self.entry_descripcion.get()
+
+        # Aquí puedes realizar las acciones necesarias para agregar el recurso a la cadena de bloques
+        print(f"Recurso compartido - Nombre: {nombre}, Descripción: {descripcion}")
+
+# Crear la ventana principal
+root = tk.Tk()
+interfaz = InterfazCompartirRecursos(root)
+
+# Mantener la ventana abierta
+root.mainloop()
+
 
 web3 = Web3(Web3.HTTPProvider('http://localhost:8545'))
 
