@@ -598,7 +598,17 @@ contract = web3.eth.contract(abi=contract_abi, bytecode=contract_bytecode)
 # Configuración de la blockchain simple
 class Bloque:
 
+    def minar_bloque(self, dificultad):
+        while self.hash[:dificultad] != '0' * dificultad:
+            self.nonce += 1
+            self.hash = self.calcular_hash()
 
+    def calcular_hash(self):
+        datos_codificados = str(self.index) + str(self.timestamp) + str(self.datos) + str(self.hash_anterior)
+        return hashlib.sha256(datos_codificados.encode('utf-8')).hexdigest()
+
+    def __init__(self, index, timestamp, datos, hash_anterior):
+        # (código anterior)
 
     def proof_of_work(self):
         # (código anterior)
@@ -625,6 +635,102 @@ class CadenaBloques:
         nuevo_bloque.proof_of_work()
         self.chain.append(nuevo_bloque)
 
+    def validar_cadena(self):
+        for i in range(1, len(self.chain)):
+            bloque_actual = self.chain[i]
+            bloque_anterior = self.chain[i - 1]
+
+            # Verificar el hash anterior
+            if bloque_actual.hash_anterior != bloque_anterior.hash:
+                return False
+
+            # Verificar la prueba de trabajo
+            if not bloque_actual.validar_prueba():
+                return False
+
+        return True
+
+# Uso de la cadena de bloques
+mi_cadena = CadenaBloques()
+mi_cadena.agregar_bloque("Datos del bloque 1")
+mi_cadena.agregar_bloque("Datos del bloque 2")
+
+# Validar la cadena
+es_valida = mi_cadena.validar_cadena()
+print(f"La cadena es válida: {es_valida}")
+
+    def proof_of_work(self):
+        # (código anterior)
+
+    def validar_prueba(self):
+        # (código anterior)
+	    
+class CadenaBloques:
+
+# Uso de la cadena de bloques
+mi_cadena = CadenaBloques()
+mi_cadena.agregar_bloque("Datos del bloque 1")
+mi_cadena.agregar_bloque("Datos del bloque 2")
+
+# Minar un nuevo bloque
+mi_cadena.minar_bloque(2)  # La dificultad se puede ajustar según la potencia computacional disponible
+
+# Verificar integridad
+integridad_correcta = mi_cadena.verificar_integridad()
+print(f"Integridad de la cadena: {integridad_correcta}")
+
+    for i in range(1, len(self.chain)):
+            bloque_actual = self.chain[i]
+            bloque_anterior = self.chain[i - 1]
+
+            if bloque_actual.hash_anterior != bloque_anterior.calcular_hash():
+                return False
+
+        return True
+
+# Uso de la cadena de bloques
+mi_cadena = CadenaBloques()
+mi_cadena.agregar_bloque("Datos del bloque 1")
+mi_cadena.agregar_bloque("Datos del bloque 2")
+
+# Verificar integridad
+integridad_correcta = mi_cadena.verificar_integridad()
+print(f"Integridad de la cadena: {integridad_correcta}")
+
+     def mostrar_cadena(self):
+        for bloque in self.chain:
+            print(f"Index: {bloque.index}")
+            print(f"Timestamp: {bloque.timestamp}")
+            print(f"Datos: {bloque.datos}")
+            print(f"Hash: {bloque.hash}")
+            print(f"Hash Anterior: {bloque.hash_anterior}")
+            print("----")
+
+# Uso de la cadena de bloques
+mi_cadena = CadenaBloques()
+mi_cadena.agregar_bloque("Datos del bloque 1")
+mi_cadena.agregar_bloque("Datos del bloque 2")
+
+# Mostrar la cadena
+mi_cadena.mostrar_cadena()
+    def __init__(self):
+        self.chain = []
+        self.crear_bloque_genesis()
+
+    def crear_bloque_genesis(self):
+        bloque_genesis = Bloque(index=0, timestamp=time.time(), datos="Bloque Génesis", hash_anterior="0")
+        bloque_genesis.proof_of_work()
+        self.chain.append(bloque_genesis)
+
+    def agregar_bloque(self, datos):
+        ultimo_bloque = self.chain[-1]
+        nuevo_index = ultimo_bloque.index + 1
+        nuevo_timestamp = time.time()
+        nuevo_hash_anterior = ultimo_bloque.hash
+        nuevo_bloque = Bloque(nuevo_index, nuevo_timestamp, datos, nuevo_hash_anterior)
+        nuevo_bloque.proof_of_work()
+        self.chain.append(nuevo_bloque)
+
 # Uso de la cadena de bloques
 mi_cadena = CadenaBloques()
 mi_cadena.agregar_bloque("Datos del bloque 1")
@@ -632,13 +738,7 @@ mi_cadena.agregar_bloque("Datos del bloque 2")
 
 # Imprimir la cadena de bloques
 for bloque in mi_cadena.chain:
-    print(bloque.__dict__)
-
-
-
-
-
-	
+    print(bloque.__dict__)	
 
 def proof_of_work(self):
         dificultad_objetivo = "0000"  # Puedes ajustar la dificultad según tus necesidades
