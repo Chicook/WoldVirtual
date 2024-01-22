@@ -615,6 +615,24 @@ class Bloque:
 
 class CadenaBloques:
 
+def agregar_bloque(self, proof, previous_hash=None):
+        """
+        Añadir un bloque a la cadena de bloques
+
+        :param proof: Prueba generada por el algoritmo de prueba de trabajo
+        :param previous_hash: Hash del bloque anterior
+        :return: Nuevo bloque
+        """
+        bloque = Bloque(
+            index=len(self.chain) + 1,
+            timestamp=time(),
+            proof=proof,
+            previous_hash=previous_hash or self.hash(self.chain[-1]),
+        )
+
+        self.chain.append(bloque)
+        return bloque
+	
 def prueba_trabajo(self, last_proof):
         """
         Algoritmo de prueba de trabajo:
