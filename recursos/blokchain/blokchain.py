@@ -682,7 +682,29 @@ print(f"La cadena es válida: {es_valida}")
 	    
 class CadenaBloques:
 
-@staticmethod
+def nuevo_bloque(self, proof, previous_hash=None):
+        """
+        Crea un nuevo bloque en la cadena
+
+        :param proof: La prueba dada por el algoritmo de prueba de trabajo
+        :param previous_hash: Hash del bloque anterior
+        :return: Nuevo bloque
+        """
+        bloque = {
+            'index': len(self.cadena) + 1,
+            'timestamp': time(),
+            'transacciones': self.transacciones,
+            'proof': proof,
+            'previous_hash': previous_hash or self.hash(self.cadena[-1]) if self.cadena else None
+        }
+
+        # Reiniciar la lista de transacciones
+        self.transacciones = []
+
+        self.cadena.append(bloque)
+        return bloque
+
+  @staticmethod
     def prueba_de_trabajo(last_proof):
         """
         Encuentra un número p' tal que hash(pp') contenga 4 ceros al principio, donde p es el proof anterior
