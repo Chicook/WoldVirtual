@@ -660,6 +660,93 @@ class Bloque:
 
 class CadenaBloques:
 
+def agregar_bloque(self, proof, hash_anterior=None, stake=None, espacio=None):
+        """
+        Agregar un nuevo bloque a la cadena.
+
+        :param proof: Prueba asociada al bloque
+        :param hash_anterior: Hash del bloque anterior (opcional para el bloque génesis)
+        :param stake: Participación del participante (opcional)
+        :param espacio: Espacio del participante (opcional)
+        :return: Nuevo bloque
+        """
+        bloque = {
+            'index': len(self.bloques) + 1,
+            'timestamp': time(),
+            'transacciones': self.transacciones,
+            'proof': proof,
+            'hash_anterior': hash_anterior or self.hash(self.bloques[-1]) if self.bloques else "1",
+            'stake': stake,
+            'espacio': espacio
+        }
+
+        # Restablecer la lista de transacciones actuales
+        self.transacciones = []
+
+        # Validar prueba de participación y espacio si se proporcionan
+        if stake is not None and not self.prueba_de_participacion_y_trabajo(self.bloques[-1]['proof'], proof, bloque['hash_anterior'], stake):
+            raise ValueError("La prueba de participación y trabajo no es válida.")
+
+        if espacio is not None and not self.prueba_de_espacio(espacio):
+            raise ValueError("El participante no tiene suficiente espacio para la prueba de espacio.")
+
+        # Agregar el bloque a la cadena
+        self.bloques.append(bloque)
+        return bloque
+	
+def prueba_de_espacio(self, espacio):
+    """
+        Validar la prueba de espacio: Comprobar si el participante tiene el espacio requerido.
+
+        :param espacio: Espacio requerido para la prueba
+        :return: True si tiene suficiente espacio, False si no lo tiene
+        """
+        # Aquí puedes implementar la lógica para validar el espacio del participante
+        # Puedes utilizar la capacidad de almacenamiento del participante u otros factores.
+        # Devuelve True si tiene suficiente espacio y False si no lo tiene.
+        pass	
+
+def prueba_de_participacion(self, participante):
+        """
+        Determinar la cantidad de participación que un participante tiene en la cadena.
+
+        :param participante: Dirección del participante
+        :return: Cantidad de participación del participante
+        """
+        # Aquí puedes implementar la lógica para determinar la participación del participante
+        # Puede involucrar consultar su saldo, historial de participación, etc.
+        # Devuelve la cantidad de participación.
+        pass
+
+    def prueba_de_participacion_y_trabajo(self, prev_proof, hash_anterior, participante):
+        """
+        Algoritmo de prueba de trabajo y participación combinado.
+
+        :param prev_proof: Prueba previa
+        :param hash_anterior: Hash del bloque anterior
+        :param participante: Dirección del participante
+        :return: Prueba válida
+        """
+        proof = 0
+        while not self.validar_prueba(prev_proof, proof, hash_anterior, participante):
+            proof += 1
+        return proof
+
+    def validar_prueba(self, prev_proof, proof, hash_anterior, participante):
+        """
+        Validar la prueba de trabajo y participación: Comprobar si el hash cumple con los requisitos.
+
+        :param prev_proof: Prueba previa
+        :param proof: Prueba actual
+        :param hash_anterior: Hash del bloque anterior
+        :param participante: Dirección del participante
+        :return: True si es válido, False si no lo es
+        """
+        # Aquí debes implementar la lógica de validación que incluye la participación
+        # Puedes utilizar la cantidad de participación y otros factores en la validación.
+        # Devuelve True si la prueba es válida y False si no lo es.
+        pass
+
 def nuevo_bloque(self, prueba, hash_anterior=None):
         """
         Crea un nuevo bloque en la cadena de bloques.
