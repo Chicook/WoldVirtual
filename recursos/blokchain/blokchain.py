@@ -4,6 +4,20 @@ from flask import Flask, render_template
 from web3 import Web3
 import datetime
 
+
+class blokchain:
+     def minar_bloque(self, datos):
+        nuevo_bloque = Bloque(
+            index=len(self.bloques),
+            datos=datos,
+            timestamp=time(),
+            hash_anterior=self.bloques[-1].hash,
+        )
+
+        nuevo_bloque.proof_of_work(self.dificultad)
+        self.bloques.append(nuevo_bloque)
+
+
 app = Flask(__name__)
 class InterfazCompartirRecursos:
     def __init__(self, master):
