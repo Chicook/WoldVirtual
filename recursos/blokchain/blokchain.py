@@ -685,6 +685,58 @@ print(f"La cadena es válida: {es_valida}")
 	    
 class CadenaBloques:
 
+@staticmethod
+    def prueba_de_trabajo(last_proof):
+        """
+        Encuentra un número p' tal que hash(pp') contenga 4 ceros al principio, donde p es el proof anterior
+        """
+        proof = 0
+        while not CadenaBloques.validar_prueba(last_proof, proof):
+            proof += 1
+
+        return proof
+
+    @staticmethod
+    def validar_prueba(last_proof, proof):
+        """
+        Valida la prueba: ¿hash(last_proof, proof) contiene 4 ceros al principio?
+        """
+        guess = f'{last_proof}{proof}'.encode()
+        guess_hash = hashlib.sha256(guess).hexdigest()
+        return guess_hash[:4] == "0000"
+
+def agregar_bloque(self, proof, hash_anterior=None):
+        bloque = {
+            'index': len(self.bloques) + 1,
+            'timestamp': time(),
+            'transacciones': self.transacciones,
+            'proof': proof,
+            'hash_anterior': hash_anterior or self.hash(self.bloques[-1]),
+        }
+
+        # Reiniciar lista de transacciones
+        self.transacciones = []
+
+        self.bloques.append(bloque)
+        return bloque
+
+def proof_of_work(self, ultimo_proof):
+        nuevo_proof = 1
+        verificar_proof = False
+
+        while not verificar_proof:
+            # Operación hash sha256 sobre la combinación de los proofs
+            operacion = hashlib.sha256(
+                str(nuevo_proof**2 - ultimo_proof**2).encode()).hexdigest()
+
+            # Verificar si el hash tiene 4 ceros al principio
+            if operacion[:4] == '0000':
+                verificar_proof = True
+            else:
+                nuevo_proof += 1
+
+        return nuevo_proof
+
 def agregar_transaccion(self, remitente, destinatario, cantidad):
         self.transacciones_pendientes.append({
             'remitente': remitente,
