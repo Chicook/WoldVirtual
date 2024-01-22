@@ -598,6 +598,48 @@ contract = web3.eth.contract(abi=contract_abi, bytecode=contract_bytecode)
 # Configuración de la blockchain simple
 class Bloque:
 
+
+
+    def proof_of_work(self):
+        # (código anterior)
+
+    def validar_prueba(self):
+        # (código anterior)
+
+class CadenaBloques:
+    def __init__(self):
+        self.chain = []
+        self.crear_bloque_genesis()
+
+    def crear_bloque_genesis(self):
+        bloque_genesis = Bloque(index=0, timestamp=time.time(), datos="Bloque Génesis", hash_anterior="0")
+        bloque_genesis.proof_of_work()
+        self.chain.append(bloque_genesis)
+
+    def agregar_bloque(self, datos):
+        ultimo_bloque = self.chain[-1]
+        nuevo_index = ultimo_bloque.index + 1
+        nuevo_timestamp = time.time()
+        nuevo_hash_anterior = ultimo_bloque.hash
+        nuevo_bloque = Bloque(nuevo_index, nuevo_timestamp, datos, nuevo_hash_anterior)
+        nuevo_bloque.proof_of_work()
+        self.chain.append(nuevo_bloque)
+
+# Uso de la cadena de bloques
+mi_cadena = CadenaBloques()
+mi_cadena.agregar_bloque("Datos del bloque 1")
+mi_cadena.agregar_bloque("Datos del bloque 2")
+
+# Imprimir la cadena de bloques
+for bloque in mi_cadena.chain:
+    print(bloque.__dict__)
+
+
+
+
+
+	
+
 def proof_of_work(self):
         dificultad_objetivo = "0000"  # Puedes ajustar la dificultad según tus necesidades
         self.nonce = 0
@@ -671,7 +713,6 @@ def __init__(self, index, previous_hash, data, proof, stake):
      def new_block(self, proof, previous_hash=None):
      def new_transaction(self, sender, recipient, amount):
 	     
-
 # Resto de tu código para la blockchain...
 
 # Ruta principal que renderiza la interfaz web
