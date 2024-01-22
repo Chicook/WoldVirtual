@@ -3,6 +3,7 @@ import hashlib
 from flask import Flask, render_template
 from web3 import Web3
 import datetime
+import time
 
 class Minero:
     def __init__(self, blockchain):
@@ -25,8 +26,21 @@ minero = Minero(mi_blockchain)
 # Minar un bloque
 minero.minar_bloque("Datos del bloque 1")
 
-
 class blokchain:
+
+     def minar_bloque(self, datos):
+        nuevo_bloque = Bloque(
+            index=len(self.cadena),
+            timestamp=time.time(),
+            datos=datos,
+            hash_anterior=self.cadena[-1].hash
+        )
+        nuevo_bloque.proof_of_work()
+        self.cadena.append(nuevo_bloque)
+
+# Uso de la función para minar un bloque
+datos_a_guardar = "Datos importantes"
+mi_blockchain.minar_bloque(datos_a_guardar)
 
     def validar_cadena(self):
         for i in range(1, len(self.cadena)):
