@@ -1,8 +1,76 @@
+import tkinter as tk
 import hashlib
 from flask import Flask, render_template
 from web3 import Web3
+import datetime
+
+class blokchain:
+     def minar_bloque(self, datos):
+        nuevo_bloque = Bloque(
+            index=len(self.bloques),
+            datos=datos,
+            timestamp=time(),
+            hash_anterior=self.bloques[-1].hash,
+        )
+
+        nuevo_bloque.proof_of_work(self.dificultad)
+        self.bloques.append(nuevo_bloque)
+
+      def __init__(self):
+        self.cadena = []
+        self.agregar_bloque(self.crear_bloque_genesis())
+
+    def crear_bloque_genesis(self):
+        return Bloque(0, time.time(), "Bloque Génesis", "0")
+
+    def agregar_bloque(self, nuevo_bloque):
+        nuevo_bloque.hash_anterior = self.cadena[-1].hash
+        self.cadena.append(nuevo_bloque)
+
+# Crear una instancia de la cadena de bloques
+mi_blockchain = Blockchain()
+
 
 app = Flask(__name__)
+class InterfazCompartirRecursos:
+    def __init__(self, master):
+        self.master = master
+        master.title("Compartir Recursos")
+
+        self.etiqueta = tk.Label(master, text="Ingrese la información del recurso:")
+        self.etiqueta.pack()
+
+        self.etiqueta_nombre = tk.Label(master, text="Nombre:")
+        self.etiqueta_nombre.pack()
+
+        self.entry_nombre = tk.Entry(master)
+        self.entry_nombre.pack()
+
+        self.etiqueta_descripcion = tk.Label(master, text="Descripción:")
+        self.etiqueta_descripcion.pack()
+
+        self.entry_descripcion = tk.Entry(master)
+        self.entry_descripcion.pack()
+
+        self.boton_compartir = tk.Button(master, text="Compartir Recurso", command=self.compartir_recurso)
+        self.boton_compartir.pack()
+	    
+     
+
+    def compartir_recurso(self):
+        nombre = self.entry_nombre.get()
+        descripcion = self.entry_descripcion.get()
+
+        # Aquí puedes realizar las acciones necesarias para agregar el recurso a la cadena de bloques
+        print(f"Recurso compartido - Nombre: {nombre}, Descripción: {descripcion}")
+
+# Crear la ventana principal
+root = tk.Tk()
+interfaz = InterfazCompartirRecursos(root)
+
+# Mantener la ventana abierta
+root.mainloop()
+
 
 web3 = Web3(Web3.HTTPProvider('http://localhost:8545'))
 
@@ -472,7 +540,29 @@ contract = web3.eth.contract(abi=contract_abi, bytecode=contract_bytecode)
 
 # Configuración de la blockchain simple
 class Bloque:
-    def __init__(self, index, previous_hash, data, proof, stake):
+
+    def proof_of_work(self, dificultad):
+        self.nonce = 0
+        while self.hash[:dificultad] != "0" * dificultad:
+            self.nonce += 1
+            self.hash = self.calcular_hash()
+
+    def calcular_hash(self):
+        return hashlib.sha256(
+            f"{self.index}{self.timestamp}{self.datos}{self.nonce}{self.hash_anterior}".encode()
+        ).hexdigest()
+
+
+
+
+	
+      def crear_bloque_genesis():
+    return Bloque(0, datetime.datetime.now(), "Bloque Génesis", "0")
+
+cadena_bloques = [crear_bloque_genesis()]
+bloque_actual = cadena_bloques[0]
+      
+def __init__(self, index, previous_hash, data, proof, stake):
         self.index = index
         self.previous_hash = previous_hash
         self.data = data
