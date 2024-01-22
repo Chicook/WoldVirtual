@@ -666,7 +666,36 @@ print(f"La cadena es válida: {es_valida}")
         # (código anterior)
 	    
 class CadenaBloques:
+	
+hain = [self.crear_bloque_genesis()]
+        self.transacciones_pendientes = []
 
+    # (código anterior)
+
+    def agregar_transaccion(self, remitente, destinatario, cantidad):
+        # Crear un diccionario con la información de la transacción
+        transaccion = {
+            'remitente': remitente,
+            'destinatario': destinatario,
+            'cantidad': cantidad
+        }
+
+        # Agregar la transacción a las transacciones pendientes
+        self.transacciones_pendientes.append(transaccion)
+
+        # Devolver el índice del bloque que contendrá esta transacción
+        return self.obtener_ultimo_bloque().index + 1
+
+# (código anterior)
+
+# Agregar una transacción a la cadena de bloques
+indice_bloque_siguiente = mi_cadena.agregar_transaccion('UsuarioA', 'UsuarioB', 1.5)
+
+# Mostrar la cadena de bloques después de agregar la transacción
+print(f"\nCadena de bloques después de agregar transacción:")
+for bloque in mi_cadena.chain:
+    print(bloque.__dict__)
+	
 	self.chain = [self.crear_bloque_genesis()]
         self.transacciones_pendientes = []
 
