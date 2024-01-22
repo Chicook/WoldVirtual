@@ -666,7 +666,31 @@ print(f"La cadena es válida: {es_valida}")
         # (código anterior)
 	    
 class CadenaBloques:
-	
+
+def minar_bloque(self, recompensa_minero):
+        # Crear un bloque con las transacciones pendientes y la recompensa para el minero
+        nuevo_bloque = Bloque(
+            len(self.chain) + 1,
+            self.transacciones_pendientes,
+            time(),
+            self.obtener_ultimo_bloque().hash
+        )
+
+        # Reiniciar las transacciones pendientes
+        self.transacciones_pendientes = []
+
+        # Agregar el bloque a la cadena
+        self.chain.append(nuevo_bloque)
+
+        # Agregar una transacción de recompensa para el minero
+        self.agregar_transaccion(
+            remitente="Red",
+            destinatario=recompensa_minero,
+            cantidad=1.0
+        )
+
+        return nuevo_bloque
+		
 hain = [self.crear_bloque_genesis()]
         self.transacciones_pendientes = []
 
