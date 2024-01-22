@@ -660,6 +660,46 @@ class Bloque:
 
 class CadenaBloques:
 
+def agregar_bloque(self, proof, hash_anterior=None, stake=None, espacio=None):
+        """
+        Agregar un nuevo bloque a la cadena.
+
+        :param proof: Prueba asociada al bloque
+        :param hash_anterior: Hash del bloque anterior (opcional para el bloque génesis)
+        :param stake: Participación del participante (opcional)
+        :param espacio: Espacio del participante (opcional)
+        :return: Nuevo bloque
+        """
+        bloque = {
+            'index': len(self.bloques) + 1,
+            'timestamp': time(),
+            'transacciones': self.transacciones,
+            'proof': proof,
+            'hash_anterior': hash_anterior or self.hash(self.bloques[-1]) if self.bloques else "1",
+            'stake': stake,
+            'espacio': espacio
+        }
+
+        # Restablecer la lista de transacciones actuales
+        self.transacciones = []
+
+        # Validar prueba de participación y espacio si se proporcionan
+        if stake is not None and not self.prueba_de_participacion_y_trabajo(self.bloques[-1]['proof'], proof, bloque['hash_anterior'], stake):
+            raise ValueError("La prueba de participación y trabajo no es válida.")
+
+        if espacio is not None and not self.prueba_de_espacio(espacio):
+            raise ValueError("El participante no tiene suficiente espacio para la prueba de espacio.")
+
+        # Agregar el bloque a la cadena
+        self.bloques.append(bloque)
+        return bloque
+
+
+
+
+
+	
+
     """
         Validar la prueba de espacio: Comprobar si el participante tiene el espacio requerido.
 
