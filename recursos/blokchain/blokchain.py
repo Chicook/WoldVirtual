@@ -615,6 +615,46 @@ class Bloque:
 
 class CadenaBloques:
 
+@staticmethod
+    def hash(bloque):
+        """
+        Crear un hash SHA-256 del bloque
+
+        :param bloque: Bloque
+        :return: Hash del bloque
+        """
+        # Asegurarnos de que el diccionario esté ordenado para obtener el mismo hash
+        bloque_string = json.dumps(bloque, sort_keys=True).encode()
+        return hashlib.sha256(bloque_string).hexdigest()
+
+    def prueba_de_trabajo(self, last_proof):
+        """
+        Algoritmo simple de prueba de trabajo:
+        - Encuentra un número p' tal que hash(pp') contenga 4 ceros al principio, donde p es la prueba anterior
+        - p es la prueba actual, p' es la nueva prueba
+
+        :param last_proof: Prueba anterior
+        :return: Nueva prueba
+        """
+        proof = 0
+        while self.validar_prueba(last_proof, proof) is False:
+            proof += 1
+        return proof
+
+    @staticmethod
+    def validar_prueba(last_proof, proof):
+        """
+        Verificar si la prueba es válida:
+        - ¿El hash(last_proof, proof) contiene 4 ceros al principio?
+
+        :param last_proof: Prueba anterior
+        :param proof: Prueba actual
+        :return: True si es válido, False si no lo es
+        """
+        guess = f'{last_proof}{proof}'.encode()
+        guess_hash = hashlib.sha256(guess).hexdigest()
+        return guess_hash[:4] == "0000"
+
     def agregar_transaccion(self, remitente, destinatario, cantidad):
         """
         Agregar una transacción al bloque actual
