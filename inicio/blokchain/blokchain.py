@@ -9,6 +9,46 @@ import json
 from threading import Thread
 from flask_cors import CORS
 from eth_account import Account
+from flask_sockets import Sockets
+
+app = Flask(__name__)
+sockets = Sockets(app)
+
+# Lista de usuarios conectados
+usuarios_conectados = []
+
+# Función para enviar mensajes a todos los usuarios
+def enviar_mensaje(mensaje):
+    for usuario in usuarios_conectados:
+        try:
+            usuario['cliente'].send(jsonify({'mensaje': mensaje}))
+        except:
+            pass
+
+# Ruta principal que renderiza la interfaz web
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+# Ruta para que los usuarios se conecten al servidor
+@sockets.route('/conectar')
+def conectar(ws):
+    usuarios_conectados.append({'cliente': ws})
+    print('Nuevo usuario conectado.')
+
+    while not ws.closed:
+        mensaje = ws.receive()
+        if mensaje:
+            print(f"Mensaje recibido: {mensaje}")
+            enviar_mensaje(mensaje)
+
+if __name__ == '__main__':
+    from gevent import pywsgi
+    from geventwebsocket.handler import WebSocketHandler
+
+    server = pywsgi.WSGIServer(('localhost', 5000), app, handler_class=WebSocketHandler)
+    print("Servidor iniciado en http://localhost:5000")
+    server.serve_forever()
 
 app = Flask(__name__)
 CORS(app)
