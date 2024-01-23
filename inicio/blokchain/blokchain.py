@@ -12,6 +12,49 @@ from eth_account import Account
 from flask_sockets import Sockets
 
 app = Flask(__name__)
+
+# Mockup de datos de blockchain
+blockchain_data = {
+    'owner_address': '0x123456789ABCDEF123456789ABCDEF123456789A',
+    'contract_address': '0x987654321ABCDEF987654321ABCDEF9876543210',
+    'private_key': 'tu_clave_privada',
+    'abi': [...]  # Coloca aquí el ABI del contrato NFT
+}
+
+# Funciones de la blockchain (métodos mockup)
+def mint_avatar_nft(owner_address):
+    # Implementa la lógica real aquí (llamada a la función mintAvatarNFT)
+    print(f"NFT creado exitosamente para el avatar: {owner_address}")
+    return "Acción completada en la blockchain"
+
+def transfer_avatar_nft(owner_address, to_address, token_id):
+    # Implementa la lógica real aquí (llamada a la función transferNFT)
+    print(f"NFT transferido exitosamente de {owner_address} a {to_address}")
+    return "Acción completada en la blockchain"
+
+# Rutas de la interfaz web
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/mint_nft', methods=['POST'])
+def mint_nft():
+    owner_address = request.form.get('owner_address')
+    result = mint_avatar_nft(owner_address)
+    return result
+
+@app.route('/transfer_nft', methods=['POST'])
+def transfer_nft():
+    owner_address = request.form.get('owner_address')
+    to_address = request.form.get('to_address')
+    token_id = request.form.get('token_id')
+    result = transfer_avatar_nft(owner_address, to_address, token_id)
+    return result
+
+if __name__ == '__main__':
+    app.run(debug=True)
+	
+app = Flask(__name__)
 sockets = Sockets(app)
 
 # Lista de usuarios conectados
