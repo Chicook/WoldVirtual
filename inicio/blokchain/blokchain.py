@@ -8,6 +8,7 @@ import requests
 import json
 from threading import Thread
 from flask_cors import CORS
+from eth_account import Account
 
 app = Flask(__name__)
 CORS(app)
@@ -1193,11 +1194,32 @@ contract = web3.eth.contract(abi=contract_abi, bytecode=contract_bytecode)
 
 # Configuración de la blockchain simple
 
-
-
-
 class Bloque:
 
+class Bloque:
+    def minar_bloque(self, dificultad):
+        while self.hash[:dificultad] != '0' * dificultad:
+            self.nonce += 1
+            self.hash = self.calcular_hash()
+
+    def calcular_hash(self):
+        datos_codificados = str(self.index) + str(self.timestamp) + str(self.datos) + str(self.hash_anterior)
+        return hashlib.sha256(datos_codificados.encode('utf-8')).hexdigest()
+
+    def __init__(self, index, timestamp, datos, hash_anterior):
+        self.index = index
+        self.timestamp = timestamp
+        self.datos = datos
+        self.hash_anterior = hash_anterior
+        self.nonce = 0
+        self.hash = self.calcular_hash()
+
+    def proof_of_work(self):
+        # (código anterior)
+
+    def validar_prueba(self):
+        # (código anterior)
+	
 def minar_bloque(self, dificultad):
         while self.hash[:dificultad] != '0' * dificultad:
             self.nonce += 1
@@ -1293,6 +1315,130 @@ def minar_bloque(self, dificultad):
         # (código anterior)
 
 class CadenaBloques:
+
+def __init__(self):
+        self.cadena = []
+        self.transacciones = []
+        self.w3 = Web3(Web3.HTTPProvider('http://localhost:8545'))
+
+    def generar_billetera(self):
+        clave_privada = Account.create().privateKey
+        direccion = Account.privateKeyToAccount(clave_privada).address
+        return clave_privada, direccion
+
+    def recibir_ether(self, direccion):
+        balance_wei = self.w3.eth.getBalance(direccion)
+        balance_ether = self.w3.fromWei(balance_wei, 'ether')
+        return balance_ether
+
+    def enviar_ether(self, clave_privada_destino, cantidad):
+        cuenta_envio = Account.privateKeyToAccount(clave_privada_destino)
+        transaccion = {
+            'to': cuenta_envio.address,
+            'value': self.w3.toWei(cantidad, 'ether'),
+            'gas': 2000000,
+            'gasPrice': self.w3.toWei('50', 'gwei'),
+            'nonce': self.w3.eth.getTransactionCount(cuenta_envio.address),
+        }
+
+        firma = Account.sign_transaction(transaccion, self.w3.toBytes(hexstr=cuenta_envio.privateKey))
+        tx_hash = self.w3.eth.sendRawTransaction(firma.rawTransaction)
+
+        return tx_hash
+
+    def historial_transacciones(self, direccion):
+        historial = []
+        for bloque in self.cadena:
+            for transaccion in bloque.datos:
+                if transaccion['from'] == direccion or transaccion['to'] == direccion:
+                    historial.append(transaccion)
+        return historial
+
+    # Resto de las funciones de tu clase...
+
+# Ejemplo de uso:
+mi_cadena = CadenaBloques()
+
+# Generar una nueva billetera
+clave_privada_emisor, direccion_emisor = mi_cadena.generar_billetera()
+print(f'Dirección Ethereum del emisor: {direccion_emisor}')
+
+# Generar otra billetera para recibir Ether
+clave_privada_receptor, direccion_receptor = mi_cadena.generar_billetera()
+print(f'Dirección Ethereum del receptor: {direccion_receptor}')
+
+# Verificar el saldo inicial del emisor
+saldo_inicial_emisor = mi_cadena.recibir_ether(direccion_emisor)
+print(f'Saldo inicial del emisor: {saldo_inicial_emisor} Ether')
+
+# Enviar Ether del emisor al receptor
+cantidad_a_enviar = 1.5
+tx_hash = mi_cadena.enviar_ether(clave_privada_receptor, cantidad_a_enviar)
+print(f'Transacción enviada. Hash: {tx_hash}')
+
+# Verificar el saldo actual del emisor y receptor
+saldo_actual_emisor = mi_cadena.recibir_ether(direccion_emisor)
+saldo_actual_receptor = mi_cadena.recibir_ether(direccion_receptor)
+print(f'Saldo actual del emisor: {saldo_actual_emisor} Ether')
+print(f'Saldo actual del receptor: {saldo_actual_receptor} Ether')
+
+# Obtener el historial de transacciones del emisor
+historial_emisor = mi_cadena.historial_transacciones(direccion_emisor)
+print(f'Historial de transacciones del emisor: {historial_emisor}')
+
+def __init__(self):
+        self.cadena = []
+        self.transacciones = []
+        self.w3 = Web3(Web3.HTTPProvider('http://localhost:8545'))
+
+    def generar_billetera(self):
+        clave_privada = Account.create().privateKey
+        direccion = Account.privateKeyToAccount(clave_privada).address
+        return clave_privada, direccion
+
+    def recibir_ether(self, direccion):
+        balance_wei = self.w3.eth.getBalance(direccion)
+        balance_ether = self.w3.fromWei(balance_wei, 'ether')
+        return balance_ether
+
+    def minar_bloque(self, proof, hash_anterior=None):
+        nuevo_bloque = Bloque(
+            index=len(self.cadena) + 1,
+            timestamp=time.time(),
+            datos=self.transacciones,
+            proof=proof,
+            hash_anterior=hash_anterior or self.hash(self.cadena[-1]) if self.cadena else "1",
+        )
+
+        # Reiniciar la lista de transacciones actuales
+        self.transacciones = []
+
+        # Agregar el bloque a la cadena
+        self.cadena.append(nuevo_bloque)
+        return nuevo_bloque
+
+    @staticmethod
+    def validar_prueba(prev_proof, proof, hash_anterior):
+        guess = f'{prev_proof}{proof}{hash_anterior}'.encode()
+        guess_hash = hashlib.sha256(guess).hexdigest()
+        return guess_hash[:4] == "0000"  # Personaliza según los requisitos de tu cadena
+
+# Ejemplo de uso:
+mi_cadena = CadenaBloques()
+
+# Generar una nueva billetera
+clave_privada, direccion = mi_cadena.generar_billetera()
+print(f'Dirección Ethereum: {direccion}')
+
+# Verificar el saldo actual
+saldo_actual = mi_cadena.recibir_ether(direccion)
+print(f'Saldo actual: {saldo_actual} Ether')
+
+# Minar un bloque con una prueba de trabajo
+proof = 12345  # Reemplaza esto con tu lógica de prueba de trabajo
+mi_cadena.minar_bloque(proof)
+
+# Puedes seguir utilizando las funciones de billetera y blockchain según tus necesidades
 
 def nuevo_bloque(self, proof, previous_hash=None, espacio_reservado=None):
         nuevo_bloque = Bloque(
