@@ -1055,6 +1055,32 @@ contract = web3.eth.contract(abi=contract_abi, bytecode=contract_bytecode)
 # Configuración de la blockchain simple
 class Bloque:
 
+def minar_bloque(self, dificultad):
+        while self.hash[:dificultad] != '0' * dificultad:
+            self.nonce += 1
+            self.hash = self.calcular_hash()
+
+    def proof_of_work(self, dificultad):
+        self.nonce = 0  # Restablecer el nonce
+        while not self.validar_prueba(dificultad):
+            self.nonce += 1
+            self.hash = self.calcular_hash()
+
+    def validar_prueba(self, dificultad):
+        return self.hash[:dificultad] == '0' * dificultad
+
+    def calcular_hash(self):
+        datos_codificados = str(self.index) + str(self.timestamp) + str(self.datos) + str(self.hash_anterior)
+        return hashlib.sha256(datos_codificados.encode('utf-8')).hexdigest()
+
+    def __init__(self, index, timestamp, datos, hash_anterior):
+        self.index = index
+        self.timestamp = timestamp
+        self.datos = datos
+        self.hash_anterior = hash_anterior
+        self.nonce = 0
+        self.hash = self.calcular_hash()
+	
     def minar_bloque(self, dificultad):
         while self.hash[:dificultad] != '0' * dificultad:
             self.nonce += 1
@@ -1074,6 +1100,25 @@ class Bloque:
         # (código anterior)
 
 class CadenaBloques:
+
+def __init__(self):
+        self.bloques = []
+
+    def agregar_bloque(self, datos, dificultad=4):
+        hash_anterior = self.bloques[-1].hash if self.bloques else "1"
+        bloque = Bloque(index=len(self.bloques) + 1, timestamp=time.time(), datos=datos, hash_anterior=hash_anterior)
+        bloque.proof_of_work(dificultad)
+        self.bloques.append(bloque)
+        return bloque
+
+# Ejemplo de uso
+cadena = CadenaBloques()
+cadena.agregar_bloque("Datos del bloque 1")
+cadena.agregar_bloque("Datos del bloque 2")
+
+for bloque in cadena.bloques:
+    print(f"Bloque {bloque.index}: Hash {bloque.hash}")
+	
 
 def agregar_bloque(self, proof, hash_anterior=None, stake=None, espacio=None):
         """
