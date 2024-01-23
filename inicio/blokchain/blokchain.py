@@ -1331,6 +1331,76 @@ def __init__(self):
         balance_ether = self.w3.fromWei(balance_wei, 'ether')
         return balance_ether
 
+    def enviar_ether(self, clave_privada_destino, cantidad):
+        cuenta_envio = Account.privateKeyToAccount(clave_privada_destino)
+        transaccion = {
+            'to': cuenta_envio.address,
+            'value': self.w3.toWei(cantidad, 'ether'),
+            'gas': 2000000,
+            'gasPrice': self.w3.toWei('50', 'gwei'),
+            'nonce': self.w3.eth.getTransactionCount(cuenta_envio.address),
+        }
+
+        firma = Account.sign_transaction(transaccion, self.w3.toBytes(hexstr=cuenta_envio.privateKey))
+        tx_hash = self.w3.eth.sendRawTransaction(firma.rawTransaction)
+
+        return tx_hash
+
+    def historial_transacciones(self, direccion):
+        historial = []
+        for bloque in self.cadena:
+            for transaccion in bloque.datos:
+                if transaccion['from'] == direccion or transaccion['to'] == direccion:
+                    historial.append(transaccion)
+        return historial
+
+    # Resto de las funciones de tu clase...
+
+# Ejemplo de uso:
+mi_cadena = CadenaBloques()
+
+# Generar una nueva billetera
+clave_privada_emisor, direccion_emisor = mi_cadena.generar_billetera()
+print(f'Dirección Ethereum del emisor: {direccion_emisor}')
+
+# Generar otra billetera para recibir Ether
+clave_privada_receptor, direccion_receptor = mi_cadena.generar_billetera()
+print(f'Dirección Ethereum del receptor: {direccion_receptor}')
+
+# Verificar el saldo inicial del emisor
+saldo_inicial_emisor = mi_cadena.recibir_ether(direccion_emisor)
+print(f'Saldo inicial del emisor: {saldo_inicial_emisor} Ether')
+
+# Enviar Ether del emisor al receptor
+cantidad_a_enviar = 1.5
+tx_hash = mi_cadena.enviar_ether(clave_privada_receptor, cantidad_a_enviar)
+print(f'Transacción enviada. Hash: {tx_hash}')
+
+# Verificar el saldo actual del emisor y receptor
+saldo_actual_emisor = mi_cadena.recibir_ether(direccion_emisor)
+saldo_actual_receptor = mi_cadena.recibir_ether(direccion_receptor)
+print(f'Saldo actual del emisor: {saldo_actual_emisor} Ether')
+print(f'Saldo actual del receptor: {saldo_actual_receptor} Ether')
+
+# Obtener el historial de transacciones del emisor
+historial_emisor = mi_cadena.historial_transacciones(direccion_emisor)
+print(f'Historial de transacciones del emisor: {historial_emisor}')
+
+def __init__(self):
+        self.cadena = []
+        self.transacciones = []
+        self.w3 = Web3(Web3.HTTPProvider('http://localhost:8545'))
+
+    def generar_billetera(self):
+        clave_privada = Account.create().privateKey
+        direccion = Account.privateKeyToAccount(clave_privada).address
+        return clave_privada, direccion
+
+    def recibir_ether(self, direccion):
+        balance_wei = self.w3.eth.getBalance(direccion)
+        balance_ether = self.w3.fromWei(balance_wei, 'ether')
+        return balance_ether
+
     def minar_bloque(self, proof, hash_anterior=None):
         nuevo_bloque = Bloque(
             index=len(self.cadena) + 1,
