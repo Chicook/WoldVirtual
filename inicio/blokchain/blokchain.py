@@ -170,11 +170,6 @@ if __name__ == '__main__':
     app.register_error_handler(404, pagina_no_encontrada)
     app.run(debug=True, port=5000)
 
-
-
-
-
-
 app = Flask(__name__)
 
 # Mockup de datos de blockchain
