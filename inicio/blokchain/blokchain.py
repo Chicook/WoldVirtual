@@ -17,9 +17,9 @@ def get_network_config():
     # Define los detalles de tu blockchain de desarrollo
     network_config = {
         'chainId': 1337,  # Cambia esto según tu configuración
-        'chainName': 'My Development Chain',
+        'chainName': 'woldbkvirtual',
         'rpcUrls': ['http://localhost:8545'],  # Cambia la URL según tu nodo RPC
-        'nativeCurrency': {'name': 'WoldcoinVirtual', 'symbol': 'WV', 'decimals': 18},
+        'nativeCurrency': {'name': 'WoldcoinVirtual', 'symbol': 'Wcv', 'decimals': 3},
         'blockExplorerUrls': ['http://localhost:8545']  # Cambia la URL según tu explorador de bloques
     }
     return jsonify(network_config)
