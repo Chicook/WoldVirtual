@@ -10,6 +10,81 @@ from threading import Thread
 
 web3 = Web3(Web3.HTTPProvider('tu_url_de_ethereum'))
 
+# Direcciones y claves privadas (actualiza según tus necesidades)
+contract_address = '0x123456789ABCDEF123456789ABCDEF123456789A'
+sender_address = '0x987654321ABCDEF987654321ABCDEF9876543210'
+private_key = 'tu_clave_privada'
+
+# (opcional) # abi = [...]  # Coloca aquí el ABI del contrato NFT
+
+# Contrato NFT
+
+contract = web3.eth.contract(address=contract_address, abi=abi)
+
+# Conexión a la blockchain
+def connect_to_blockchain():
+    if web3.isConnected():
+        print("Conexión exitosa con la blockchain")
+    else:
+        print("Error: No se pudo conectar a la blockchain")
+
+# Función para mintear un nuevo NFT
+def mint_avatar_nft(owner_address):
+    try:
+        transaction = contract.functions.mintAvatarNFT(owner_address).buildTransaction({
+            'from': sender_address,
+            'gas': 200000,
+            'gasPrice': web3.toWei('50', 'gwei'),
+            'nonce': web3.eth.getTransactionCount(sender_address),
+        })
+
+        signed_transaction = web3.eth.account.signTransaction(transaction, private_key)
+        tx_hash = web3.eth.sendRawTransaction(signed_transaction.rawTransaction)
+
+        web3.eth.waitForTransactionReceipt(tx_hash)
+
+        print(f"NFT creado exitosamente para el avatar: {owner_address}")
+        return "Acción completada en la blockchain"
+    except Exception as e:
+        print(f"Error en la transacción: {e}")
+        return "Error en la transacción"
+
+# Función para transferir un NFT
+def transfer_avatar_nft(owner_address, to_address, token_id):
+    try:
+        transaction = contract.functions.transferNFT(to_address, token_id).buildTransaction({
+            'from': owner_address,
+            'gas': 200000,
+            'gasPrice': web3.toWei('50', 'gwei'),
+            'nonce': web3.eth.getTransactionCount(owner_address),
+        })
+
+        signed_transaction = web3.eth.account.signTransaction(transaction, private_key)
+        tx_hash = web3.eth.sendRawTransaction(signed_transaction.rawTransaction)
+
+        web3.eth.waitForTransactionReceipt(tx_hash)
+
+        print(f"NFT transferido exitosamente de {owner_address} a {to_address}")
+        return "Acción completada en la blockchain"
+    except Exception as e:
+        print(f"Error en la transacción: {e}")
+        return "Error en la transacción"
+
+# Conexión a la blockchain al inicio
+connect_to_blockchain()
+
+# Supongamos que esto se activa cuando un avatar realiza una acción especial en OpenSim
+def special_action_triggered(owner_address):
+    print("Acción especial en OpenSim detectada.")
+    mint_avatar_nft(owner_address)
+
+# Supongamos que esto se activa cuando un avatar decide transferir su NFT a otra dirección
+def transfer_nft_triggered(owner_address, to_address, token_id):
+    print(f"Transferencia de NFT iniciada desde {owner_address} a {to_address}.")
+    transfer_avatar_nft(owner_address, to_address, token_id)
+
+web3 = Web3(Web3.HTTPProvider('tu_url_de_ethereum'))
+
 # Contrato NFT
 contract_address = '0x123456789ABCDEF123456789ABCDEF123456789A'
 sender_address = '0x987654321ABCDEF987654321ABCDEF9876543210'
