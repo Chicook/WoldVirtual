@@ -450,6 +450,47 @@ if __name__ == '__main__':
 
 class Minero:
 
+def __init__(self, blockchain):
+        self.blockchain = blockchain
+
+    def minar_bloque(self, datos, espacio_reservado=None):
+        nuevo_bloque = Bloque(
+            index=len(self.blockchain.bloques) + 1,
+            timestamp=time.time(),
+            datos=datos,
+            hash_anterior=self.blockchain.bloques[-1].hash,
+            espacio_reservado=espacio_reservado
+        )
+
+        self.proof_of_work(nuevo_bloque)
+        self.blockchain.agregar_bloque(nuevo_bloque)
+
+    def proof_of_work(self, bloque):
+        while bloque.hash[:4] != "0000":
+            bloque.nonce += 1
+            bloque.hash = bloque.calcular_hash()
+
+    def proof_of_space(self, espacio_reservado_actual, espacio_reservado_nuevo):
+        """
+        Verificar si el nuevo espacio reservado es mayor al actual.
+
+        :param espacio_reservado_actual: Espacio reservado actual
+        :param espacio_reservado_nuevo: Espacio reservado nuevo
+        :return: True si es válido, False si no lo es
+        """
+        return espacio_reservado_nuevo > espacio_reservado_actual
+
+# Uso de la clase CadenaBloques y Minero
+mi_blockchain = CadenaBloques()
+mi_minero = Minero(mi_blockchain)
+datos_del_bloque = "Datos importantes"
+espacio_reservado_actual = "espacio_anterior"  # Reemplaza esto con tu implementación real de espacio reservado
+
+# Minar un bloque con datos y espacio reservado
+mi_minero.minar_bloque(datos_del_bloque, espacio_reservado_actual)
+
+	
+
 class Bloque:
     def minar_bloque(self, dificultad):
         while self.hash[:dificultad] != '0' * dificultad:
@@ -1132,7 +1173,38 @@ contract_abi = "
 contract = web3.eth.contract(abi=contract_abi, bytecode=contract_bytecode)
 
 # Configuración de la blockchain simple
+
+
+
+
 class Bloque:
+
+def minar_bloque(self, dificultad):
+        while self.hash[:dificultad] != '0' * dificultad:
+            self.nonce += 1
+            self.hash = self.calcular_hash()
+
+    def calcular_hash(self):
+        datos_codificados = (
+            str(self.index)
+            + str(self.timestamp)
+            + str(self.datos)
+            + str(self.hash_anterior)
+            + str(self.espacio_reservado)
+        )
+        return hashlib.sha256(datos_codificados.encode('utf-8')).hexdigest()
+
+    def __init__(self, index, timestamp, datos, hash_anterior, espacio_reservado=None):
+        self.index = index
+        self.timestamp = timestamp
+        self.datos = datos
+        self.hash_anterior = hash_anterior
+        self.nonce = 0
+        self.espacio_reservado = espacio_reservado
+        self.hash = self.calcular_hash()
+	
+
+	
 
 def __init__(self, index, timestamp, data, proof, previous_hash, resource_logs=None):
         # Otras inicializaciones...
@@ -1202,6 +1274,24 @@ def minar_bloque(self, dificultad):
         # (código anterior)
 
 class CadenaBloques:
+
+def nuevo_bloque(self, proof, previous_hash=None, espacio_reservado=None):
+        nuevo_bloque = Bloque(
+            index=len(self.bloques) + 1,
+            timestamp=time.time(),
+            datos=self.transacciones,
+            hash_anterior=previous_hash or self.hash(self.bloques[-1]) if self.bloques else "1",
+            espacio_reservado=espacio_reservado
+        )
+        self.transacciones = []
+        self.bloques.append(nuevo_bloque)
+        return nuevo_bloque
+
+    def validar_prueba(self, prev_proof, proof, hash_anterior):
+        guess = f'{prev_proof}{proof}{hash_anterior}'.encode()
+        guess_hash = hashlib.sha256(guess).hexdigest()
+        return guess_hash[:4] == "0000"
+	
 
 n nuevo bloque en la cadena.
 
