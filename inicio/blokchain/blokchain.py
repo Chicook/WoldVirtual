@@ -227,8 +227,10 @@ private_key = 'tu_clave_privada'
 contract = web3.eth.contract(address=contract_address, abi=abi)
 
 # Función para mintear un nuevo NFT
+# Función para mintear un nuevo NFT
 def mint_avatar_nft(owner_address):
     try:
+        # Construir la transacción para mintear un NFT
         transaction = contract.functions.mintAvatarNFT(owner_address).buildTransaction({
             'from': sender_address,
             'gas': 200000,
@@ -236,15 +238,17 @@ def mint_avatar_nft(owner_address):
             'nonce': web3.eth.getTransactionCount(sender_address),
         })
 
+        # Firmar y enviar la transacción
         signed_transaction = web3.eth.account.signTransaction(transaction, private_key)
         tx_hash = web3.eth.sendRawTransaction(signed_transaction.rawTransaction)
 
+        # Esperar a la confirmación de la transacción
         web3.eth.waitForTransactionReceipt(tx_hash)
 
         print(f"NFT creado exitosamente para el avatar: {owner_address}")
         return "Acción completada en la blockchain"
     except Exception as e:
-        print(f"Error en la transacción: {e}")
+        print(f"Error en la transacción al mintear NFT: {e}")
         return "Error en la transacción"
 
 # Función para transferir un NFT
