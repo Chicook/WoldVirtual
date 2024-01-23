@@ -6,6 +6,412 @@ import datetime
 import time
 import requests
 import json
+from threading import Thread
+
+web3 = Web3(Web3.HTTPProvider('tu_url_de_ethereum'))
+
+# Direcciones y claves privadas (actualiza según tus necesidades)
+contract_address = '0x123456789ABCDEF123456789ABCDEF123456789A'
+sender_address = '0x987654321ABCDEF987654321ABCDEF9876543210'
+private_key = 'tu_clave_privada'
+abi = [...]  # Coloca aquí el ABI del contrato NFT
+
+# Contrato NFT
+contract = web3.eth.contract(address=contract_address, abi=abi)
+
+# Conexión a la blockchain
+def connect_to_blockchain():
+    try:
+        if web3.isConnected():
+            print("Conexión exitosa con la blockchain")
+        else:
+            print("Error: No se pudo conectar a la blockchain")
+    except Exception as e:
+        print(f"Error en la conexión a la blockchain: {e}")
+    finally:
+        # Cierra la conexión si es necesario
+        # web3.close()
+
+# Función para mintear un nuevo NFT
+def mint_avatar_nft(owner_address):
+    try:
+        transaction = contract.functions.mintAvatarNFT(owner_address).buildTransaction({
+            'from': sender_address,
+            'gas': 200000,
+            'gasPrice': web3.toWei('50', 'gwei'),
+            'nonce': web3.eth.getTransactionCount(sender_address),
+        })
+
+        signed_transaction = web3.eth.account.signTransaction(transaction, private_key)
+        tx_hash = web3.eth.sendRawTransaction(signed_transaction.rawTransaction)
+        print(f"Transacción exitosa. Hash: {tx_hash.hex()}")
+    except Exception as e:
+        print(f"Error al mintear NFT: {e}")
+
+# Cierra la conexión al finalizar el programa
+# web3.close()
+
+        web3.eth.waitForTransactionReceipt(tx_hash)
+# Función para mintear un nuevo NFT
+def mint_avatar_nft(owner_address):
+    try:
+        # Construir la transacción para mintear un NFT
+        transaction = contract.functions.mintAvatarNFT(owner_address).buildTransaction({
+            'from': sender_address,
+            'gas': 200000,
+            'gasPrice': web3.toWei('50', 'gwei'),
+            'nonce': web3.eth.getTransactionCount(sender_address),
+        })
+
+        # Firmar y enviar la transacción
+        signed_transaction = web3.eth.account.signTransaction(transaction, private_key)
+        tx_hash = web3.eth.sendRawTransaction(signed_transaction.rawTransaction)
+
+        # Esperar a la confirmación de la transacción
+        web3.eth.waitForTransactionReceipt(tx_hash)
+
+        print(f"NFT creado exitosamente para el avatar: {owner_address}")
+        return "Acción completada en la blockchain"
+    except Exception as e:
+        print(f"Error al mintear NFT: {e}")
+        return "Error en la transacción"
+
+# Función para transferir un NFT
+def transfer_avatar_nft(owner_address, to_address, token_id):
+    try:
+        # Construir la transacción para transferir un NFT
+        transaction = contract.functions.transferNFT(to_address, token_id).buildTransaction({
+            'from': owner_address,
+            'gas': 200000,
+            'gasPrice': web3.toWei('50', 'gwei'),
+            'nonce': web3.eth.getTransactionCount(owner_address),
+        })
+
+        # Firmar y enviar la transacción
+        signed_transaction = web3.eth.account.signTransaction(transaction, private_key)
+        tx_hash = web3.eth.sendRawTransaction(signed_transaction.rawTransaction)
+
+        # Esperar a la confirmación de la transacción
+        web3.eth.waitForTransactionReceipt(tx_hash)
+
+        print(f"NFT transferido exitosamente de {owner_address} a {to_address}")
+        return "Acción completada en la blockchain"
+    except Exception as e:
+        print(f"Error en la transferencia de NFT: {e}")
+        return "Error en la transacción"
+
+        signed_transaction = web3.eth.account.signTransaction(transaction, private_key)
+        tx_hash = web3.eth.sendRawTransaction(signed_transaction.rawTransaction)
+
+        web3.eth.waitForTransactionReceipt(tx_hash)
+
+        print(f"NFT transferido exitosamente de {owner_address} a {to_address}")
+        return "Acción completada en la blockchain"
+    except Exception as e:
+        print(f"Error en la transacción: {e}")
+        return "Error en la transacción"
+
+# Supongamos que estas funciones representan eventos en OpenSim que se activan al mover el avatar
+def avatar_moved_to_location(location):
+    # Lógica para manejar el evento de movimiento del avatar
+    special_action_triggered(owner_address)
+
+def avatar_reached_transfer_location(owner_address, to_address, token_id):
+    # Lógica para manejar el evento cuando el avatar llega a la ubicación de transferencia
+    transfer_nft_triggered(owner_address, to_address, token_id)
+
+# Supongamos que estas funciones se activan en respuesta a eventos en OpenSim
+def handle_avatar_events():
+    # Lógica para manejar eventos del avatar en OpenSim
+    # Por ejemplo, detectar ubicaciones y activar funciones correspondientes
+
+    # Supongamos que el avatar se mueve a una ubicación específica
+    avatar_moved_to_location("UbicacionA")
+
+    # Supongamos que el avatar llega a la ubicación de transferencia
+    avatar_reached_transfer_location(owner_address, to_address, token_id)
+
+# Conexión a la blockchain al inicio
+connect_to_blockchain()
+
+# Supongamos que esto se ejecuta continuamente para manejar eventos del avatar
+while True:
+    handle_avatar_events()
+    # Otros procesos y lógica en OpenSim
+
+web3 = Web3(Web3.HTTPProvider('tu_url_de_ethereum'))
+
+# Direcciones y claves privadas (actualiza según tus necesidades)
+contract_address = '0x123456789ABCDEF123456789ABCDEF123456789A'
+sender_address = '0x987654321ABCDEF987654321ABCDEF9876543210'
+private_key = 'tu_clave_privada'
+
+# (opcional) # abi = [...]  # Coloca aquí el ABI del contrato NFT
+
+# Contrato NFT
+
+contract = web3.eth.contract(address=contract_address, abi=abi)
+
+# Conexión a la blockchain
+def connect_to_blockchain():
+    if web3.isConnected():
+        print("Conexión exitosa con la blockchain")
+    else:
+        print("Error: No se pudo conectar a la blockchain")
+
+# Función para mintear un nuevo NFT
+def mint_avatar_nft(owner_address):
+    try:
+        transaction = contract.functions.mintAvatarNFT(owner_address).buildTransaction({
+            'from': sender_address,
+            'gas': 200000,
+            'gasPrice': web3.toWei('50', 'gwei'),
+            'nonce': web3.eth.getTransactionCount(sender_address),
+        })
+
+        signed_transaction = web3.eth.account.signTransaction(transaction, private_key)
+        tx_hash = web3.eth.sendRawTransaction(signed_transaction.rawTransaction)
+
+        web3.eth.waitForTransactionReceipt(tx_hash)
+
+        print(f"NFT creado exitosamente para el avatar: {owner_address}")
+        return "Acción completada en la blockchain"
+    except Exception as e:
+        print(f"Error en la transacción: {e}")
+        return "Error en la transacción"
+
+# Función para transferir un NFT
+def transfer_avatar_nft(owner_address, to_address, token_id):
+    try:
+        transaction = contract.functions.transferNFT(to_address, token_id).buildTransaction({
+            'from': owner_address,
+            'gas': 200000,
+            'gasPrice': web3.toWei('50', 'gwei'),
+            'nonce': web3.eth.getTransactionCount(owner_address),
+        })
+
+        signed_transaction = web3.eth.account.signTransaction(transaction, private_key)
+        tx_hash = web3.eth.sendRawTransaction(signed_transaction.rawTransaction)
+
+        web3.eth.waitForTransactionReceipt(tx_hash)
+
+        print(f"NFT transferido exitosamente de {owner_address} a {to_address}")
+        return "Acción completada en la blockchain"
+    except Exception as e:
+        print(f"Error en la transacción: {e}")
+        return "Error en la transacción"
+
+# Conexión a la blockchain al inicio
+connect_to_blockchain()
+
+# Supongamos que esto se activa cuando un avatar realiza una acción especial en OpenSim
+def special_action_triggered(owner_address):
+    print("Acción especial en OpenSim detectada.")
+    mint_avatar_nft(owner_address)
+
+# Supongamos que esto se activa cuando un avatar decide transferir su NFT a otra dirección
+def transfer_nft_triggered(owner_address, to_address, token_id):
+    print(f"Transferencia de NFT iniciada desde {owner_address} a {to_address}.")
+    transfer_avatar_nft(owner_address, to_address, token_id)
+
+web3 = Web3(Web3.HTTPProvider('tu_url_de_ethereum'))
+
+# Contrato NFT
+contract_address = '0x123456789ABCDEF123456789ABCDEF123456789A'
+sender_address = '0x987654321ABCDEF987654321ABCDEF9876543210'
+private_key = 'tu_clave_privada'
+
+# (opcional) # abi = [...]  # Coloca aquí el ABI del contrato NFT
+
+# Contrato NFT
+contract = web3.eth.contract(address=contract_address, abi=abi)
+
+# Función para mintear un nuevo NFT
+# Función para mintear un nuevo NFT
+def mint_avatar_nft(owner_address):
+    try:
+        # Construir la transacción para mintear un NFT
+        transaction = contract.functions.mintAvatarNFT(owner_address).buildTransaction({
+            'from': sender_address,
+            'gas': 200000,
+            'gasPrice': web3.toWei('50', 'gwei'),
+            'nonce': web3.eth.getTransactionCount(sender_address),
+        })
+
+        # Firmar y enviar la transacción
+        signed_transaction = web3.eth.account.signTransaction(transaction, private_key)
+        tx_hash = web3.eth.sendRawTransaction(signed_transaction.rawTransaction)
+
+        # Esperar a la confirmación de la transacción
+        web3.eth.waitForTransactionReceipt(tx_hash)
+
+        print(f"NFT creado exitosamente para el avatar: {owner_address}")
+        return "Acción completada en la blockchain"
+    except Exception as e:
+        print(f"Error en la transacción al mintear NFT: {e}")
+        return "Error en la transacción"
+
+# Función para transferir un NFT
+def transfer_avatar_nft(owner_address, to_address, token_id):
+    try:
+        transaction = contract.functions.transferNFT(to_address, token_id).buildTransaction({
+            'from': owner_address,
+            'gas': 200000,
+            'gasPrice': web3.toWei('50', 'gwei'),
+            'nonce': web3.eth.getTransactionCount(owner_address),
+        })
+
+        signed_transaction = web3.eth.account.signTransaction(transaction, private_key)
+        tx_hash = web3.eth.sendRawTransaction(signed_transaction.rawTransaction)
+
+        web3.eth.waitForTransactionReceipt(tx_hash)
+
+        print(f"NFT transferido exitosamente de {owner_address} a {to_address}")
+        return "Acción completada en la blockchain"
+    except Exception as e:
+        print(f"Error en la transacción: {e}")
+        return "Error en la transacción"
+
+# Supongamos que esto se activa cuando un avatar realiza una acción especial en OpenSim
+def special_action_triggered(owner_address):
+    mint_avatar_nft(owner_address)
+
+# Supongamos que esto se activa cuando un avatar decide transferir su NFT a otra dirección
+def transfer_nft_triggered(owner_address, to_address, token_id):
+    transfer_avatar_nft(owner_address, to_address, token_id)
+
+web3 = Web3(Web3.HTTPProvider('tu_url_de_ethereum'))
+
+# Contrato NFT
+contract_address = '0x123456789ABCDEF123456789ABCDEF123456789A'
+sender_address = '0x987654321ABCDEF987654321ABCDEF9876543210'
+private_key = 'tu_clave_privada'
+abi = [...]  # Coloca aquí el ABI del contrato NFT
+
+# Contrato NFT
+contract = web3.eth.contract(address=contract_address, abi=abi)
+
+# Función para mintear un nuevo NFT
+# Contrato NFT
+contract_address = '0x123456789ABCDEF123456789ABCDEF123456789A'
+sender_address = '0x987654321ABCDEF987654321ABCDEF9876543210'
+private_key = 'tu_clave_privada'
+abi = [...]  # Coloca aquí el ABI del contrato NFT
+
+# Conectarse a una red de Ethereum (puede ser una red de prueba o la red principal)
+web3 = Web3(Web3.HTTPProvider('tu_url_de_ethereum'))
+
+# Configuración de la blockchain y contrato NFT
+contract_address = '0x123456789ABCDEF123456789ABCDEF123456789A'
+sender_address = '0x987654321ABCDEF987654321ABCDEF9876543210'
+private_key = 'tu_clave_privada'
+abi = [...]  # Coloca aquí el ABI del contrato NFT
+
+# Instanciar el contrato NFT después de la conexión
+contract = web3.eth.contract(address=contract_address, abi=abi)
+
+# Función para mintear un nuevo NFT
+def mint_avatar_nft(owner_address):
+    try:
+        # Construir la transacción para mintear un NFT
+        transaction = contract.functions.mintAvatarNFT(owner_address).buildTransaction({
+            'from': sender_address,
+            'gas': 200000,
+            'gasPrice': web3.toWei('50', 'gwei'),
+            'nonce': web3.eth.getTransactionCount(sender_address),
+        })
+
+        # Firmar y enviar la transacción
+        signed_transaction = web3.eth.account.signTransaction(transaction, private_key)
+        tx_hash = web3.eth.sendRawTransaction(signed_transaction.rawTransaction)
+
+        # Esperar a la confirmación de la transacción
+        web3.eth.waitForTransactionReceipt(tx_hash)
+
+        print(f"NFT creado exitosamente para el avatar: {owner_address}")
+        return "Acción completada en la blockchain"
+    except Exception as e:
+        print(f"Error en la transacción al mintear NFT: {e}")
+        return "Error en la transacción"
+
+def special_action_triggered(owner_address):
+    mint_avatar_nft(owner_address)
+
+def perform_blockchain_action(location):
+    try:
+        contract_address = '0x123456789ABCDEF123456789ABCDEF123456789A'
+        sender_address = '0x987654321ABCDEF987654321ABCDEF9876543210'
+        private_key = 'tu_clave_privada'
+        abi = [...]  # Coloca aquí el ABI del contrato inteligente
+        contract = web3.eth.contract(address=contract_address, abi=abi)
+
+        transaction = contract.functions.performAction(location).buildTransaction({
+            'from': sender_address,
+            'gas': 200000,
+            'gasPrice': web3.toWei('50', 'gwei'),
+            'nonce': web3.eth.getTransactionCount(sender_address),
+        })
+
+        signed_transaction = web3.eth.account.signTransaction(transaction, private_key)
+        tx_hash = web3.eth.sendRawTransaction(signed_transaction.rawTransaction)
+
+        web3.eth.waitForTransactionReceipt(tx_hash)
+
+        print(f"Acción en la blockchain realizada exitosamente en la ubicación: {location}")
+        return "Acción completada en la blockchain"
+    except Exception as e:
+        print(f"Error en la transacción en la blockchain: {e}")
+        return "Error en la transacción"
+
+
+app = Flask(__name__)
+
+# Endpoint para recibir solicitudes desde OpenSim
+@app.route('/opensim-interaction', methods=['POST'])
+def opensim_interaction():
+    data = request.get_json()
+
+    if "action" in data and data["action"] == "avatar_moved":
+        location = data.get("location", "")
+        if location:
+            # Lógica para realizar acciones en la blockchain según la ubicación del avatar
+            blockchain_action_result = perform_blockchain_action(location)
+
+            # Devolver una respuesta a OpenSim
+            response = {"status": "success", "message": "Interacción exitosa en la blockchain"}
+            return jsonify(response)
+        else:
+            return jsonify({"status": "error", "message": "Falta la ubicación en la solicitud"})
+
+    return jsonify({"status": "error", "message": "Acción no reconocida"})
+
+def perform_blockchain_action(location):
+    # Lógica para realizar acciones en la blockchain según la ubicación del avatar
+    # Puedes invocar contratos inteligentes, realizar transacciones, etc.
+    # Implementa esta función según los detalles de tu blockchain
+    print(f"Realizando acción en la blockchain para la ubicación: {location}")
+    # Aquí puedes agregar la lógica específica de tu blockchain
+    return "Acción completada en la blockchain"
+
+if __name__ == '__main__':
+    # Iniciar el servidor Flask en segundo plano
+    server_thread = Thread(target=app.run, kwargs={'port': 5000})
+    server_thread.start()
+
+    # Simular solicitud desde OpenSim
+    url = 'http://localhost:5000/opensim-interaction'
+    data = {"action": "avatar_moved", "location": "Coordenadas_X_Y_Z"}
+
+    response = requests.post(url, json=data)
+
+    if response.status_code == 200:
+        result = response.json()
+        print(result)
+    else:
+        print("Error en la solicitud:", response.status_code)
+
+    # Detener el servidor Flask al finalizar
+    server_thread.join()
 
 app = Flask(__name__)
 
@@ -43,6 +449,126 @@ if __name__ == '__main__':
     server_thread.join()
 
 class Minero:
+
+def __init__(self, blockchain):
+        self.blockchain = blockchain
+
+    def minar_bloque(self, datos, espacio_reservado=None):
+        nuevo_bloque = Bloque(
+            index=len(self.blockchain.bloques) + 1,
+            timestamp=time.time(),
+            datos=datos,
+            hash_anterior=self.blockchain.bloques[-1].hash,
+            espacio_reservado=espacio_reservado
+        )
+
+        self.proof_of_work(nuevo_bloque)
+        self.blockchain.agregar_bloque(nuevo_bloque)
+
+    def proof_of_work(self, bloque):
+        while bloque.hash[:4] != "0000":
+            bloque.nonce += 1
+            bloque.hash = bloque.calcular_hash()
+
+    def proof_of_space(self, espacio_reservado_actual, espacio_reservado_nuevo):
+        """
+        Verificar si el nuevo espacio reservado es mayor al actual.
+
+        :param espacio_reservado_actual: Espacio reservado actual
+        :param espacio_reservado_nuevo: Espacio reservado nuevo
+        :return: True si es válido, False si no lo es
+        """
+        return espacio_reservado_nuevo > espacio_reservado_actual
+
+# Uso de la clase CadenaBloques y Minero
+mi_blockchain = CadenaBloques()
+mi_minero = Minero(mi_blockchain)
+datos_del_bloque = "Datos importantes"
+espacio_reservado_actual = "espacio_anterior"  # Reemplaza esto con tu implementación real de espacio reservado
+
+# Minar un bloque con datos y espacio reservado
+mi_minero.minar_bloque(datos_del_bloque, espacio_reservado_actual)
+
+	
+
+class Bloque:
+    def minar_bloque(self, dificultad):
+        while self.hash[:dificultad] != '0' * dificultad:
+            self.nonce += 1
+            self.hash = self.calcular_hash()
+
+    def calcular_hash(self):
+        datos_codificados = str(self.index) + str(self.timestamp) + str(self.datos) + str(self.hash_anterior)
+        return hashlib.sha256(datos_codificados.encode('utf-8')).hexdigest()
+
+    def __init__(self, index, timestamp, datos, hash_anterior, resource_logs=None, compensacion=None):
+        self.index = index
+        self.timestamp = timestamp
+        self.datos = datos
+        self.hash_anterior = hash_anterior
+        self.nonce = 0
+        self.hash = self.calcular_hash()
+        self.resource_logs = resource_logs or []
+        self.compensacion = compensacion
+
+class CadenaBloques:
+    def nuevo_bloque(self, proof, previous_hash=None, resource_logs=None):
+        nuevo_bloque = Bloque(
+            index=len(self.bloques) + 1,
+            timestamp=time.time(),
+            datos=self.transacciones,
+            hash_anterior=previous_hash or self.hash(self.bloques[-1]) if self.bloques else "1",
+            resource_logs=resource_logs
+        )
+        self.transacciones = []
+        self.bloques.append(nuevo_bloque)
+        return nuevo_bloque
+
+    def validar_prueba(self, prev_proof, proof, hash_anterior):
+        guess = f'{prev_proof}{proof}{hash_anterior}'.encode()
+        guess_hash = hashlib.sha256(guess).hexdigest()
+        return guess_hash[:4] == "0000"
+
+    def __init__(self, blockchain):
+        self.blockchain = blockchain
+
+    def minar_bloque(self, datos, resource_logs=None):
+        if not self.validar_recursos(resource_logs):
+            print("Registros de recursos inválidos. No se puede minar el bloque.")
+            return
+
+        compensacion = self.calcular_compensacion(resource_logs)
+        nuevo_bloque = Bloque(
+            index=len(self.blockchain.bloques) + 1,
+            timestamp=time.time(),
+            datos=datos,
+            hash_anterior=self.blockchain.bloques[-1].hash,
+            resource_logs=resource_logs,
+            compensacion=compensacion
+        )
+
+        self.proof_of_work(nuevo_bloque)
+        self.blockchain.agregar_bloque(nuevo_bloque)
+
+    def proof_of_work(self, bloque):
+        while bloque.hash[:4] != "0000":
+            bloque.nonce += 1
+            bloque.hash = bloque.calcular_hash()
+
+    def validar_recursos(self, resource_logs):
+        return all(log['amount'] > 0 for log in resource_logs)
+
+    def calcular_compensacion(self, resource_logs):
+        return sum(log['amount'] for log in resource_logs)
+
+# Uso de la clase CadenaBloques y Minero
+mi_blockchain = CadenaBloques()
+mi_minero = Minero(mi_blockchain)
+datos_del_bloque = "Datos importantes"
+registros_de_recursos = [{'user': 'Alice', 'amount': 5, 'timestamp': time.time()}]
+
+mi_minero.minar_bloque(datos_del_bloque, registros_de_recursos)
+
     def __init__("self, blockchain"):
         self.blockchain = blockchain
 
@@ -647,8 +1173,88 @@ contract_abi = "
 contract = web3.eth.contract(abi=contract_abi, bytecode=contract_bytecode)
 
 # Configuración de la blockchain simple
+
+
+
+
 class Bloque:
 
+def minar_bloque(self, dificultad):
+        while self.hash[:dificultad] != '0' * dificultad:
+            self.nonce += 1
+            self.hash = self.calcular_hash()
+
+    def calcular_hash(self):
+        datos_codificados = (
+            str(self.index)
+            + str(self.timestamp)
+            + str(self.datos)
+            + str(self.hash_anterior)
+            + str(self.espacio_reservado)
+        )
+        return hashlib.sha256(datos_codificados.encode('utf-8')).hexdigest()
+
+    def __init__(self, index, timestamp, datos, hash_anterior, espacio_reservado=None):
+        self.index = index
+        self.timestamp = timestamp
+        self.datos = datos
+        self.hash_anterior = hash_anterior
+        self.nonce = 0
+        self.espacio_reservado = espacio_reservado
+        self.hash = self.calcular_hash()
+	
+
+	
+
+def __init__(self, index, timestamp, data, proof, previous_hash, resource_logs=None):
+        # Otras inicializaciones...
+
+        # Inicializa los registros de recursos si no se proporcionan
+        self.resource_logs = resource_logs or []
+
+    def add_resource_log(self, user, amount):
+        """
+        Agrega un registro de recursos al bloque.
+
+        :param user: Usuario que utilizó los recursos
+        :param amount: Cantidad de recursos utilizados
+        """
+        resource_log = {
+            'user': user,
+            'amount': amount,
+            'timestamp': time.time()
+        }
+        self.resource_logs.append(resource_log)
+
+# Modifica la clase CadenaBloques para incluir registros de recursos
+	
+
+def minar_bloque(self, dificultad):
+        while self.hash[:dificultad] != '0' * dificultad:
+            self.nonce += 1
+            self.hash = self.calcular_hash()
+
+    def proof_of_work(self, dificultad):
+        self.nonce = 0  # Restablecer el nonce
+        while not self.validar_prueba(dificultad):
+            self.nonce += 1
+            self.hash = self.calcular_hash()
+
+    def validar_prueba(self, dificultad):
+        return self.hash[:dificultad] == '0' * dificultad
+
+    def calcular_hash(self):
+        datos_codificados = str(self.index) + str(self.timestamp) + str(self.datos) + str(self.hash_anterior)
+        return hashlib.sha256(datos_codificados.encode('utf-8')).hexdigest()
+
+    def __init__(self, index, timestamp, datos, hash_anterior):
+        self.index = index
+        self.timestamp = timestamp
+        self.datos = datos
+        self.hash_anterior = hash_anterior
+        self.nonce = 0
+        self.hash = self.calcular_hash()
+	
     def minar_bloque(self, dificultad):
         while self.hash[:dificultad] != '0' * dificultad:
             self.nonce += 1
@@ -668,6 +1274,81 @@ class Bloque:
         # (código anterior)
 
 class CadenaBloques:
+
+def nuevo_bloque(self, proof, previous_hash=None, espacio_reservado=None):
+        nuevo_bloque = Bloque(
+            index=len(self.bloques) + 1,
+            timestamp=time.time(),
+            datos=self.transacciones,
+            hash_anterior=previous_hash or self.hash(self.bloques[-1]) if self.bloques else "1",
+            espacio_reservado=espacio_reservado
+        )
+        self.transacciones = []
+        self.bloques.append(nuevo_bloque)
+        return nuevo_bloque
+
+    def validar_prueba(self, prev_proof, proof, hash_anterior):
+        guess = f'{prev_proof}{proof}{hash_anterior}'.encode()
+        guess_hash = hashlib.sha256(guess).hexdigest()
+        return guess_hash[:4] == "0000"
+	
+
+n nuevo bloque en la cadena.
+
+        :param proof: Prueba de trabajo para el nuevo bloque
+        :param previous_hash: Hash del bloque anterior (opcional)
+        :param resource_logs: Registros de recursos para el bloque
+        :return: Nuevo bloque
+        """
+        nuevo_bloque = Bloque(
+            index=len(self.bloques) + 1,
+            timestamp=time.time(),
+            data=self.transacciones,  # Puedes ajustar esto según tu implementación
+            proof=proof,
+            previous_hash=previous_hash or self.hash(self.bloques[-1]) if self.bloques else "1",
+            resource_logs=resource_logs
+        )
+
+        # Restablecer la lista de transacciones actuales
+        self.transacciones = []
+
+        # Agregar el bloque a la cadena
+        self.bloques.append(nuevo_bloque)
+        return nuevo_bloque
+
+    # Otras funciones de la cadena de bloques...
+
+# Ahora, cuando minas un bloque, puedes agregar registros de recursos
+# Supongamos que 'user' utilizó 'amount' de recursos
+user = "Alice"
+amount = 5
+
+# Antes de minar, puedes registrar el uso de recursos
+resource_logs = [{'user': user, 'amount': amount, 'timestamp': time.time()}]
+
+# Minar el bloque con los registros de recursos
+mi_blockchain.minar_bloque("Datos del bloque", resource_logs)
+
+	
+
+def __init__(self):
+        self.bloques = []
+
+    def agregar_bloque(self, datos, dificultad=4):
+        hash_anterior = self.bloques[-1].hash if self.bloques else "1"
+        bloque = Bloque(index=len(self.bloques) + 1, timestamp=time.time(), datos=datos, hash_anterior=hash_anterior)
+        bloque.proof_of_work(dificultad)
+        self.bloques.append(bloque)
+        return bloque
+
+# Ejemplo de uso
+cadena = CadenaBloques()
+cadena.agregar_bloque("Datos del bloque 1")
+cadena.agregar_bloque("Datos del bloque 2")
+
+for bloque in cadena.bloques:
+    print(f"Bloque {bloque.index}: Hash {bloque.hash}")
+	
 
 def agregar_bloque(self, proof, hash_anterior=None, stake=None, espacio=None):
         """
