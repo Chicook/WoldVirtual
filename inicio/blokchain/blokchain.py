@@ -5,6 +5,21 @@ from web3 import Web3
 import datetime
 import time
 
+
+
+#zona para aplicar cambios
+
+
+
+
+
+
+
+
+
+
+
+
 class Minero:
     def __init__("self, blockchain"):
         self.blockchain = blockchain
