@@ -19,9 +19,9 @@ class Minero:
             bloque.marca_tiempo = time.time()
             bloque.hash = bloque.generar_hash()
 
-# Crear una instancia de la cadena de bloques y del minero
-mi_blockchain = Blockchain()
-minero = Minero(mi_blockchain)
+  # Crear una instancia de la cadena de bloques y del minero
+   mi_blockchain = Blockchain()
+   minero = Minero(mi_blockchain)
 
 # Minar un bloque
 minero.minar_bloque("Datos del bloque 1")
