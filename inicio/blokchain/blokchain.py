@@ -334,28 +334,18 @@ def mint_avatar_nft(owner_address):
         print(f"Error en la transacción al mintear NFT: {e}")
         return "Error en la transacción"
 
-# Supongamos que esto se activa cuando un avatar realiza una acción especial en OpenSim
 def special_action_triggered(owner_address):
     mint_avatar_nft(owner_address)
 
 def perform_blockchain_action(location):
-    # Dirección del contrato inteligente en Ethereum
-    contract_address = '0x123456789ABCDEF123456789ABCDEF123456789A'
-
-    # Dirección de la cuenta que realizará la transacción
-    sender_address = '0x987654321ABCDEF987654321ABCDEF9876543210'
-
-    # Clave privada de la cuenta (¡mantén esto seguro y no la compartas!)
-    private_key = 'tu_clave_privada'
-
-    # Crear una instancia del contrato inteligente
-    abi = [...]  # Coloca aquí el ABI (interfaz del contrato inteligente)
-    contract = web3.eth.contract(address=contract_address, abi=abi)
-
-    # Lógica de la transacción
     try:
-        # Simular una transacción que llama a una función en el contrato
-        transaction = contract.functions.avatarMoved(location).buildTransaction({
+        contract_address = '0x123456789ABCDEF123456789ABCDEF123456789A'
+        sender_address = '0x987654321ABCDEF987654321ABCDEF9876543210'
+        private_key = 'tu_clave_privada'
+        abi = [...]  # Coloca aquí el ABI del contrato inteligente
+        contract = web3.eth.contract(address=contract_address, abi=abi)
+
+        transaction = contract.functions.performAction(location).buildTransaction({
             'from': sender_address,
             'gas': 200000,
             'gasPrice': web3.toWei('50', 'gwei'),
@@ -365,14 +355,14 @@ def perform_blockchain_action(location):
         signed_transaction = web3.eth.account.signTransaction(transaction, private_key)
         tx_hash = web3.eth.sendRawTransaction(signed_transaction.rawTransaction)
 
-        # Esperar la confirmación de la transacción
         web3.eth.waitForTransactionReceipt(tx_hash)
 
-        print(f"Transacción exitosa en la blockchain para la ubicación: {location}")
+        print(f"Acción en la blockchain realizada exitosamente en la ubicación: {location}")
         return "Acción completada en la blockchain"
     except Exception as e:
-        print(f"Error en la transacción: {e}")
+        print(f"Error en la transacción en la blockchain: {e}")
         return "Error en la transacción"
+
 
 app = Flask(__name__)
 
