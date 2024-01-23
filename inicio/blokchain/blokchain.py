@@ -1055,6 +1055,29 @@ contract = web3.eth.contract(abi=contract_abi, bytecode=contract_bytecode)
 # Configuración de la blockchain simple
 class Bloque:
 
+def __init__(self, index, timestamp, data, proof, previous_hash, resource_logs=None):
+        # Otras inicializaciones...
+
+        # Inicializa los registros de recursos si no se proporcionan
+        self.resource_logs = resource_logs or []
+
+    def add_resource_log(self, user, amount):
+        """
+        Agrega un registro de recursos al bloque.
+
+        :param user: Usuario que utilizó los recursos
+        :param amount: Cantidad de recursos utilizados
+        """
+        resource_log = {
+            'user': user,
+            'amount': amount,
+            'timestamp': time.time()
+        }
+        self.resource_logs.append(resource_log)
+
+# Modifica la clase CadenaBloques para incluir registros de recursos
+	
+
 def minar_bloque(self, dificultad):
         while self.hash[:dificultad] != '0' * dificultad:
             self.nonce += 1
@@ -1100,6 +1123,44 @@ def minar_bloque(self, dificultad):
         # (código anterior)
 
 class CadenaBloques:
+
+n nuevo bloque en la cadena.
+
+        :param proof: Prueba de trabajo para el nuevo bloque
+        :param previous_hash: Hash del bloque anterior (opcional)
+        :param resource_logs: Registros de recursos para el bloque
+        :return: Nuevo bloque
+        """
+        nuevo_bloque = Bloque(
+            index=len(self.bloques) + 1,
+            timestamp=time.time(),
+            data=self.transacciones,  # Puedes ajustar esto según tu implementación
+            proof=proof,
+            previous_hash=previous_hash or self.hash(self.bloques[-1]) if self.bloques else "1",
+            resource_logs=resource_logs
+        )
+
+        # Restablecer la lista de transacciones actuales
+        self.transacciones = []
+
+        # Agregar el bloque a la cadena
+        self.bloques.append(nuevo_bloque)
+        return nuevo_bloque
+
+    # Otras funciones de la cadena de bloques...
+
+# Ahora, cuando minas un bloque, puedes agregar registros de recursos
+# Supongamos que 'user' utilizó 'amount' de recursos
+user = "Alice"
+amount = 5
+
+# Antes de minar, puedes registrar el uso de recursos
+resource_logs = [{'user': user, 'amount': amount, 'timestamp': time.time()}]
+
+# Minar el bloque con los registros de recursos
+mi_blockchain.minar_bloque("Datos del bloque", resource_logs)
+
+	
 
 def __init__(self):
         self.bloques = []
