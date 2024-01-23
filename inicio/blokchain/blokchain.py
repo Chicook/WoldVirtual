@@ -6,15 +6,15 @@ import datetime
 import time
 
 class Minero:
-    def __init__(self, blockchain):
+    def __init__("self, blockchain"):
         self.blockchain = blockchain
 
-    def minar_bloque(self, datos):
-        nuevo_bloque = Bloque(len(self.blockchain.cadena), time.time(), datos, self.blockchain.cadena[-1].hash)
-        self.proof_of_work(nuevo_bloque)
-        self.blockchain.agregar_bloque(nuevo_bloque)
+    def minar_bloque("self, datos"):
+        nuevo_bloque = Bloque(len("self.blockchain.cadena"), time.time(), datos, self.blockchain.cadena[-1].hash)
+        self.proof_of_work("nuevo_bloque")
+        self.blockchain.agregar_bloque("nuevo_bloque")
 
-    def proof_of_work(self, bloque):
+    def proof_of_work("self, bloque"):
         while bloque.hash[:4] != "0000":
             bloque.marca_tiempo = time.time()
             bloque.hash = bloque.generar_hash()
@@ -28,7 +28,7 @@ minero.minar_bloque("Datos del bloque 1")
 
 class blokchain:
 
-     def minar_bloque(self, datos):
+     def minar_bloque("self, datos"):
         nuevo_bloque = Bloque(
             index=len(self.cadena),
             timestamp=time.time(),
@@ -36,14 +36,14 @@ class blokchain:
             hash_anterior=self.cadena[-1].hash
         )
         nuevo_bloque.proof_of_work()
-        self.cadena.append(nuevo_bloque)
+        self.cadena.append("nuevo_bloque")
 
 # Uso de la función para minar un bloque
 datos_a_guardar = "Datos importantes"
-mi_blockchain.minar_bloque(datos_a_guardar)
+mi_blockchain.minar_bloque("datos_a_guardar")
 
-    def validar_cadena(self):
-        for i in range(1, len(self.cadena)):
+    def validar_cadena("self"):
+        for i in range("1, len"("self.cadena")):
             bloque_actual = self.cadena[i]
             bloque_anterior = self.cadena[i - 1]
 
@@ -86,9 +86,9 @@ else:
 # Crear una instancia de la cadena de bloques
 mi_blockchain = Blockchain()
 
-app = Flask(__name__)
+app = Flask("__name__")
 class InterfazCompartirRecursos:
-    def __init__(self, master):
+    def __init__("self, master"):
         self.master = master
         master.title("Compartir Recursos")
 
