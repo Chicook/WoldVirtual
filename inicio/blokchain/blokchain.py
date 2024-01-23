@@ -6,6 +6,56 @@ import datetime
 import time
 import requests
 import json
+from threading import Thread
+
+app = Flask(__name__)
+
+# Endpoint para recibir solicitudes desde OpenSim
+@app.route('/opensim-interaction', methods=['POST'])
+def opensim_interaction():
+    data = request.get_json()
+
+    if "action" in data and data["action"] == "avatar_moved":
+        location = data.get("location", "")
+        if location:
+            # Lógica para realizar acciones en la blockchain según la ubicación del avatar
+            blockchain_action_result = perform_blockchain_action(location)
+
+            # Devolver una respuesta a OpenSim
+            response = {"status": "success", "message": "Interacción exitosa en la blockchain"}
+            return jsonify(response)
+        else:
+            return jsonify({"status": "error", "message": "Falta la ubicación en la solicitud"})
+
+    return jsonify({"status": "error", "message": "Acción no reconocida"})
+
+def perform_blockchain_action(location):
+    # Lógica para realizar acciones en la blockchain según la ubicación del avatar
+    # Puedes invocar contratos inteligentes, realizar transacciones, etc.
+    # Implementa esta función según los detalles de tu blockchain
+    print(f"Realizando acción en la blockchain para la ubicación: {location}")
+    # Aquí puedes agregar la lógica específica de tu blockchain
+    return "Acción completada en la blockchain"
+
+if __name__ == '__main__':
+    # Iniciar el servidor Flask en segundo plano
+    server_thread = Thread(target=app.run, kwargs={'port': 5000})
+    server_thread.start()
+
+    # Simular solicitud desde OpenSim
+    url = 'http://localhost:5000/opensim-interaction'
+    data = {"action": "avatar_moved", "location": "Coordenadas_X_Y_Z"}
+
+    response = requests.post(url, json=data)
+
+    if response.status_code == 200:
+        result = response.json()
+        print(result)
+    else:
+        print("Error en la solicitud:", response.status_code)
+
+    # Detener el servidor Flask al finalizar
+    server_thread.join()
 
 app = Flask(__name__)
 
