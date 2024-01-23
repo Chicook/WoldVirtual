@@ -1,6 +1,6 @@
 import tkinter as tk
 import hashlib
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, url_for
 from web3 import Web3
 import datetime
 import time
@@ -10,6 +10,119 @@ from threading import Thread
 from flask_cors import CORS
 from eth_account import Account
 from flask_sockets import Sockets
+from flask_mysqldb import MySQL
+
+app = Flask(__name__)
+
+# Configuración MySQL y otras funciones
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = '123456'
+app.config['MYSQL_DB'] = 'base_datos'
+conexion = MySQL(app)
+
+@app.before_request
+def before_request():
+    print("Antes de la petición...")
+
+@app.after_request
+def after_request(response):
+    print("Después de la petición")
+    return response
+
+# Estructura HTML para index.html
+html_index = """
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ data.titulo }}</title>
+</head>
+<body>
+    <h1>{{ data.bienvenida }}</h1>
+    <p>Número de cursos: {{ data.numero_cursos }}</p>
+    <ul>
+        {% for curso in data.cursos %}
+            <li>{{ curso.nombre }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+"""
+
+# Estructura HTML para contacto.html
+html_contacto = """
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ data.titulo }}</title>
+</head>
+<body>
+    <h1>{{ data.titulo }}</h1>
+    <p>Nombre: {{ data.nombre }}</p>
+    <p>Edad: {{ data.edad }}</p>
+</body>
+</html>
+"""
+
+@app.route('/')
+def index():
+    cursos = ['PHP', 'Python', 'Java', 'Kotlin', 'Dart', 'JavaScript']
+    data = {
+        'titulo': 'Index123',
+        'bienvenida': '¡Saludos!',
+        'cursos': cursos,
+        'numero_cursos': len(cursos)
+    }
+    return render_template_string(html_index, data=data)
+
+@app.route('/contacto/<nombre>/<int:edad>')
+def contacto(nombre, edad):
+    data = {
+        'titulo': 'Contacto',
+        'nombre': nombre,
+        'edad': edad
+    }
+    return render_template_string(html_contacto, data=data)
+
+def query_string():
+    print(request)
+    print(request.args)
+    print(request.args.get('param1'))
+    print(request.args.get('param2'))
+    return "Ok"
+
+@app.route('/cursos')
+def listar_cursos():
+    data = {}
+    try:
+        cursor = conexion.connection.cursor()
+        sql = "SELECT codigo, nombre, creditos FROM curso ORDER BY nombre ASC"
+        cursor.execute(sql)
+        cursos = cursor.fetchall()
+        data['cursos'] = cursos
+        data['mensaje'] = 'Exito'
+    except Exception as ex:
+        data['mensaje'] = 'Error...'
+    return jsonify(data)
+
+def pagina_no_encontrada(error):
+    return redirect(url_for('index'))
+
+if __name__ == '__main__':
+    app.add_url_rule('/query_string', view_func=query_string)
+    app.register_error_handler(404, pagina_no_encontrada)
+    app.run(debug=True, port=5000)
+
+
+
+
+
 
 app = Flask(__name__)
 
@@ -591,8 +704,6 @@ espacio_reservado_actual = "espacio_anterior"  # Reemplaza esto con tu implement
 
 # Minar un bloque con datos y espacio reservado
 mi_minero.minar_bloque(datos_del_bloque, espacio_reservado_actual)
-
-	
 
 class Bloque:
     def minar_bloque(self, dificultad):
@@ -1326,10 +1437,7 @@ def minar_bloque(self, dificultad):
         self.nonce = 0
         self.espacio_reservado = espacio_reservado
         self.hash = self.calcular_hash()
-	
-
-	
-
+	    
 def __init__(self, index, timestamp, data, proof, previous_hash, resource_logs=None):
         # Otras inicializaciones...
 
@@ -1352,7 +1460,6 @@ def __init__(self, index, timestamp, data, proof, previous_hash, resource_logs=N
 
 # Modifica la clase CadenaBloques para incluir registros de recursos
 	
-
 def minar_bloque(self, dificultad):
         while self.hash[:dificultad] != '0' * dificultad:
             self.nonce += 1
@@ -1540,8 +1647,7 @@ def nuevo_bloque(self, proof, previous_hash=None, espacio_reservado=None):
         guess_hash = hashlib.sha256(guess).hexdigest()
         return guess_hash[:4] == "0000"
 	
-
-n nuevo bloque en la cadena.
+ nuevo bloque en la cadena.
 
         :param proof: Prueba de trabajo para el nuevo bloque
         :param previous_hash: Hash del bloque anterior (opcional)
@@ -1577,8 +1683,6 @@ resource_logs = [{'user': user, 'amount': amount, 'timestamp': time.time()}]
 # Minar el bloque con los registros de recursos
 mi_blockchain.minar_bloque("Datos del bloque", resource_logs)
 
-	
-
 def __init__(self):
         self.bloques = []
 
@@ -1597,7 +1701,6 @@ cadena.agregar_bloque("Datos del bloque 2")
 for bloque in cadena.bloques:
     print(f"Bloque {bloque.index}: Hash {bloque.hash}")
 	
-
 def agregar_bloque(self, proof, hash_anterior=None, stake=None, espacio=None):
         """
         Agregar un nuevo bloque a la cadena.
