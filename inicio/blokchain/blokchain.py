@@ -449,6 +449,85 @@ if __name__ == '__main__':
     server_thread.join()
 
 class Minero:
+
+class Bloque:
+    def minar_bloque(self, dificultad):
+        while self.hash[:dificultad] != '0' * dificultad:
+            self.nonce += 1
+            self.hash = self.calcular_hash()
+
+    def calcular_hash(self):
+        datos_codificados = str(self.index) + str(self.timestamp) + str(self.datos) + str(self.hash_anterior)
+        return hashlib.sha256(datos_codificados.encode('utf-8')).hexdigest()
+
+    def __init__(self, index, timestamp, datos, hash_anterior, resource_logs=None, compensacion=None):
+        self.index = index
+        self.timestamp = timestamp
+        self.datos = datos
+        self.hash_anterior = hash_anterior
+        self.nonce = 0
+        self.hash = self.calcular_hash()
+        self.resource_logs = resource_logs or []
+        self.compensacion = compensacion
+
+class CadenaBloques:
+    def nuevo_bloque(self, proof, previous_hash=None, resource_logs=None):
+        nuevo_bloque = Bloque(
+            index=len(self.bloques) + 1,
+            timestamp=time.time(),
+            datos=self.transacciones,
+            hash_anterior=previous_hash or self.hash(self.bloques[-1]) if self.bloques else "1",
+            resource_logs=resource_logs
+        )
+        self.transacciones = []
+        self.bloques.append(nuevo_bloque)
+        return nuevo_bloque
+
+    def validar_prueba(self, prev_proof, proof, hash_anterior):
+        guess = f'{prev_proof}{proof}{hash_anterior}'.encode()
+        guess_hash = hashlib.sha256(guess).hexdigest()
+        return guess_hash[:4] == "0000"
+
+    def __init__(self, blockchain):
+        self.blockchain = blockchain
+
+    def minar_bloque(self, datos, resource_logs=None):
+        if not self.validar_recursos(resource_logs):
+            print("Registros de recursos inválidos. No se puede minar el bloque.")
+            return
+
+        compensacion = self.calcular_compensacion(resource_logs)
+        nuevo_bloque = Bloque(
+            index=len(self.blockchain.bloques) + 1,
+            timestamp=time.time(),
+            datos=datos,
+            hash_anterior=self.blockchain.bloques[-1].hash,
+            resource_logs=resource_logs,
+            compensacion=compensacion
+        )
+
+        self.proof_of_work(nuevo_bloque)
+        self.blockchain.agregar_bloque(nuevo_bloque)
+
+    def proof_of_work(self, bloque):
+        while bloque.hash[:4] != "0000":
+            bloque.nonce += 1
+            bloque.hash = bloque.calcular_hash()
+
+    def validar_recursos(self, resource_logs):
+        return all(log['amount'] > 0 for log in resource_logs)
+
+    def calcular_compensacion(self, resource_logs):
+        return sum(log['amount'] for log in resource_logs)
+
+# Uso de la clase CadenaBloques y Minero
+mi_blockchain = CadenaBloques()
+mi_minero = Minero(mi_blockchain)
+datos_del_bloque = "Datos importantes"
+registros_de_recursos = [{'user': 'Alice', 'amount': 5, 'timestamp': time.time()}]
+
+mi_minero.minar_bloque(datos_del_bloque, registros_de_recursos)
+
     def __init__("self, blockchain"):
         self.blockchain = blockchain
 
