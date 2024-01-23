@@ -8,6 +8,45 @@ import requests
 import json
 from threading import Thread
 
+# Conectarse a una red de Ethereum (puede ser una red de prueba o la red principal)
+web3 = Web3(Web3.HTTPProvider('tu_url_de_ethereum'))
+
+def perform_blockchain_action(location):
+    # Dirección del contrato inteligente en Ethereum
+    contract_address = '0x123456789ABCDEF123456789ABCDEF123456789A'
+
+    # Dirección de la cuenta que realizará la transacción
+    sender_address = '0x987654321ABCDEF987654321ABCDEF9876543210'
+
+    # Clave privada de la cuenta (¡mantén esto seguro y no la compartas!)
+    private_key = 'tu_clave_privada'
+
+    # Crear una instancia del contrato inteligente
+    abi = [...]  # Coloca aquí el ABI (interfaz del contrato inteligente)
+    contract = web3.eth.contract(address=contract_address, abi=abi)
+
+    # Lógica de la transacción
+    try:
+        # Simular una transacción que llama a una función en el contrato
+        transaction = contract.functions.avatarMoved(location).buildTransaction({
+            'from': sender_address,
+            'gas': 200000,
+            'gasPrice': web3.toWei('50', 'gwei'),
+            'nonce': web3.eth.getTransactionCount(sender_address),
+        })
+
+        signed_transaction = web3.eth.account.signTransaction(transaction, private_key)
+        tx_hash = web3.eth.sendRawTransaction(signed_transaction.rawTransaction)
+
+        # Esperar la confirmación de la transacción
+        web3.eth.waitForTransactionReceipt(tx_hash)
+
+        print(f"Transacción exitosa en la blockchain para la ubicación: {location}")
+        return "Acción completada en la blockchain"
+    except Exception as e:
+        print(f"Error en la transacción: {e}")
+        return "Error en la transacción"
+
 app = Flask(__name__)
 
 # Endpoint para recibir solicitudes desde OpenSim
