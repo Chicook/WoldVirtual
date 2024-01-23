@@ -1,24 +1,46 @@
 import tkinter as tk
 import hashlib
-from flask import Flask, render_template
+from flask import Flask, request, jsonify, render_template
 from web3 import Web3
 import datetime
 import time
+import requests
+import json
 
+app = Flask(__name__)
 
+# Endpoint para recibir solicitudes desde OpenSim
+@app.route('/opensim-interaction', methods=['POST'])
+def opensim_interaction():
+    data = request.get_json()
 
-#zona para aplicar cambios
+    # Procesar la solicitud y realizar acciones en tu blockchain
+    # Aquí puedes llamar a funciones relacionadas con contratos inteligentes, por ejemplo
 
+    # Devolver una respuesta a OpenSim
+    response = {"status": "success", "message": "Interacción exitosa"}
+    return jsonify(response)
 
+if __name__ == '__main__':
+    # Iniciar el servidor Flask en segundo plano
+    from threading import Thread
+    server_thread = Thread(target=app.run, kwargs={'port': 5000})
+    server_thread.start()
 
+    # Simular solicitud desde OpenSim
+    url = 'http://localhost:5000/opensim-interaction'
+    data = {"key": "value"}  # Puedes ajustar los datos según tus necesidades
 
+    response = requests.post(url, json=data)
 
+    if response.status_code == 200:
+        result = response.json()
+        print(result)
+    else:
+        print("Error en la solicitud:", response.status_code)
 
-
-
-
-
-
+    # Detener el servidor Flask al finalizar
+    server_thread.join()
 
 class Minero:
     def __init__("self, blockchain"):
