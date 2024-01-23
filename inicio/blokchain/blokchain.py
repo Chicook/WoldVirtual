@@ -298,7 +298,16 @@ sender_address = '0x987654321ABCDEF987654321ABCDEF9876543210'
 private_key = 'tu_clave_privada'
 abi = [...]  # Coloca aquí el ABI del contrato NFT
 
-# Instanciar el contrato NFT
+# Conectarse a una red de Ethereum (puede ser una red de prueba o la red principal)
+web3 = Web3(Web3.HTTPProvider('tu_url_de_ethereum'))
+
+# Configuración de la blockchain y contrato NFT
+contract_address = '0x123456789ABCDEF123456789ABCDEF123456789A'
+sender_address = '0x987654321ABCDEF987654321ABCDEF9876543210'
+private_key = 'tu_clave_privada'
+abi = [...]  # Coloca aquí el ABI del contrato NFT
+
+# Instanciar el contrato NFT después de la conexión
 contract = web3.eth.contract(address=contract_address, abi=abi)
 
 # Función para mintear un nuevo NFT
@@ -324,13 +333,10 @@ def mint_avatar_nft(owner_address):
     except Exception as e:
         print(f"Error en la transacción al mintear NFT: {e}")
         return "Error en la transacción"
-	    
+
 # Supongamos que esto se activa cuando un avatar realiza una acción especial en OpenSim
 def special_action_triggered(owner_address):
     mint_avatar_nft(owner_address)
-
-# Conectarse a una red de Ethereum (puede ser una red de prueba o la red principal)
-web3 = Web3(Web3.HTTPProvider('tu_url_de_ethereum'))
 
 def perform_blockchain_action(location):
     # Dirección del contrato inteligente en Ethereum
