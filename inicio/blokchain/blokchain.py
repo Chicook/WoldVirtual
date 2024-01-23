@@ -8,6 +8,42 @@ import requests
 import json
 from threading import Thread
 
+web3 = Web3(Web3.HTTPProvider('tu_url_de_ethereum'))
+
+# Contrato NFT
+contract_address = '0x123456789ABCDEF123456789ABCDEF123456789A'
+sender_address = '0x987654321ABCDEF987654321ABCDEF9876543210'
+private_key = 'tu_clave_privada'
+abi = [...]  # Coloca aquí el ABI del contrato NFT
+
+# Contrato NFT
+contract = web3.eth.contract(address=contract_address, abi=abi)
+
+# Función para mintear un nuevo NFT
+def mint_avatar_nft(owner_address):
+    try:
+        transaction = contract.functions.mintAvatarNFT(owner_address).buildTransaction({
+            'from': sender_address,
+            'gas': 200000,
+            'gasPrice': web3.toWei('50', 'gwei'),
+            'nonce': web3.eth.getTransactionCount(sender_address),
+        })
+
+        signed_transaction = web3.eth.account.signTransaction(transaction, private_key)
+        tx_hash = web3.eth.sendRawTransaction(signed_transaction.rawTransaction)
+
+        web3.eth.waitForTransactionReceipt(tx_hash)
+
+        print(f"NFT creado exitosamente para el avatar: {owner_address}")
+        return "Acción completada en la blockchain"
+    except Exception as e:
+        print(f"Error en la transacción: {e}")
+        return "Error en la transacción"
+
+# Supongamos que esto se activa cuando un avatar realiza una acción especial en OpenSim
+def special_action_triggered(owner_address):
+    mint_avatar_nft(owner_address)
+
 # Conectarse a una red de Ethereum (puede ser una red de prueba o la red principal)
 web3 = Web3(Web3.HTTPProvider('tu_url_de_ethereum'))
 
