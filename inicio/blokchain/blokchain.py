@@ -7,6 +7,25 @@ import time
 import requests
 import json
 from threading import Thread
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)
+
+@app.route('/network_config', methods=['GET'])
+def get_network_config():
+    # Define los detalles de tu blockchain de desarrollo
+    network_config = {
+        'chainId': 1337,  # Cambia esto según tu configuración
+        'chainName': 'My Development Chain',
+        'rpcUrls': ['http://localhost:8545'],  # Cambia la URL según tu nodo RPC
+        'nativeCurrency': {'name': 'WoldcoinVirtual', 'symbol': 'WV', 'decimals': 18},
+        'blockExplorerUrls': ['http://localhost:8545']  # Cambia la URL según tu explorador de bloques
+    }
+    return jsonify(network_config)
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 web3 = Web3(Web3.HTTPProvider('tu_url_de_ethereum'))
 
