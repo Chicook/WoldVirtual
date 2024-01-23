@@ -52,22 +52,53 @@ def mint_avatar_nft(owner_address):
 # web3.close()
 
         web3.eth.waitForTransactionReceipt(tx_hash)
+# Función para mintear un nuevo NFT
+def mint_avatar_nft(owner_address):
+    try:
+        # Construir la transacción para mintear un NFT
+        transaction = contract.functions.mintAvatarNFT(owner_address).buildTransaction({
+            'from': sender_address,
+            'gas': 200000,
+            'gasPrice': web3.toWei('50', 'gwei'),
+            'nonce': web3.eth.getTransactionCount(sender_address),
+        })
+
+        # Firmar y enviar la transacción
+        signed_transaction = web3.eth.account.signTransaction(transaction, private_key)
+        tx_hash = web3.eth.sendRawTransaction(signed_transaction.rawTransaction)
+
+        # Esperar a la confirmación de la transacción
+        web3.eth.waitForTransactionReceipt(tx_hash)
 
         print(f"NFT creado exitosamente para el avatar: {owner_address}")
         return "Acción completada en la blockchain"
     except Exception as e:
-        print(f"Error en la transacción: {e}")
+        print(f"Error al mintear NFT: {e}")
         return "Error en la transacción"
 
 # Función para transferir un NFT
 def transfer_avatar_nft(owner_address, to_address, token_id):
     try:
+        # Construir la transacción para transferir un NFT
         transaction = contract.functions.transferNFT(to_address, token_id).buildTransaction({
             'from': owner_address,
             'gas': 200000,
             'gasPrice': web3.toWei('50', 'gwei'),
             'nonce': web3.eth.getTransactionCount(owner_address),
         })
+
+        # Firmar y enviar la transacción
+        signed_transaction = web3.eth.account.signTransaction(transaction, private_key)
+        tx_hash = web3.eth.sendRawTransaction(signed_transaction.rawTransaction)
+
+        # Esperar a la confirmación de la transacción
+        web3.eth.waitForTransactionReceipt(tx_hash)
+
+        print(f"NFT transferido exitosamente de {owner_address} a {to_address}")
+        return "Acción completada en la blockchain"
+    except Exception as e:
+        print(f"Error en la transferencia de NFT: {e}")
+        return "Error en la transacción"
 
         signed_transaction = web3.eth.account.signTransaction(transaction, private_key)
         tx_hash = web3.eth.sendRawTransaction(signed_transaction.rawTransaction)
