@@ -21,10 +21,16 @@ contract = web3.eth.contract(address=contract_address, abi=abi)
 
 # Conexión a la blockchain
 def connect_to_blockchain():
-    if web3.isConnected():
-        print("Conexión exitosa con la blockchain")
-    else:
-        print("Error: No se pudo conectar a la blockchain")
+    try:
+        if web3.isConnected():
+            print("Conexión exitosa con la blockchain")
+        else:
+            print("Error: No se pudo conectar a la blockchain")
+    except Exception as e:
+        print(f"Error en la conexión a la blockchain: {e}")
+    finally:
+        # Cierra la conexión si es necesario
+        # web3.close()
 
 # Función para mintear un nuevo NFT
 def mint_avatar_nft(owner_address):
@@ -38,6 +44,12 @@ def mint_avatar_nft(owner_address):
 
         signed_transaction = web3.eth.account.signTransaction(transaction, private_key)
         tx_hash = web3.eth.sendRawTransaction(signed_transaction.rawTransaction)
+        print(f"Transacción exitosa. Hash: {tx_hash.hex()}")
+    except Exception as e:
+        print(f"Error al mintear NFT: {e}")
+
+# Cierra la conexión al finalizar el programa
+# web3.close()
 
         web3.eth.waitForTransactionReceipt(tx_hash)
 
