@@ -1,6 +1,6 @@
 import tkinter as tk
 import hashlib
-from flask import Flask, request, jsonify, render_template, url_for
+from flask import Flask, request, jsonify, render_template, url_for, render_template_string
 from web3 import Web3
 import datetime
 import time
@@ -11,6 +11,57 @@ from flask_cors import CORS
 from eth_account import Account
 from flask_sockets import Sockets
 from flask_mysqldb import MySQL
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    # CSS y JavaScript incluidos directamente en el código Python
+    contenido_html = """
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Título de la Página</title>
+        
+        <style>
+            body {
+                background-color: #f4f4f4;
+                font-family: Arial, sans-serif;
+            }
+
+            h1 {
+                color: #333;
+            }
+
+            /* Agrega más estilos según tus necesidades */
+        </style>
+
+        <script>
+            // Tu código JavaScript aquí
+            function saludar() {
+                alert("¡Hola desde JavaScript!");
+            }
+
+            // Agrega más funciones según tus necesidades
+        </script>
+    </head>
+    <body>
+        <h1>Hola Mundo</h1>
+        
+        <!-- Contenido del cuerpo del HTML -->
+
+        <button onclick="saludar()">Saludar</button>
+    </body>
+    </html>
+    """
+
+    return render_template_string(contenido_html)
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 app = Flask(__name__)
 
@@ -118,11 +169,6 @@ if __name__ == '__main__':
     app.add_url_rule('/query_string', view_func=query_string)
     app.register_error_handler(404, pagina_no_encontrada)
     app.run(debug=True, port=5000)
-
-
-
-
-
 
 app = Flask(__name__)
 
