@@ -12,6 +12,72 @@ from eth_account import Account
 from flask_sockets import Sockets
 from flask_mysqldb import MySQL
 
+web3 = Web3(Web3.HTTPProvider('tu_url_de_ethereum'))
+
+# Direcciones y claves privadas (actualiza según tus necesidades)
+contract_address = '0x123456789ABCDEF123456789ABCDEF123456789A'
+sender_address = '0x987654321ABCDEF987654321ABCDEF9876543210'
+private_key = 'tu_clave_privada'
+abi = [...]  # Coloca aquí el ABI del contrato NFT
+
+# Contrato NFT
+contract = web3.eth.contract(address=contract_address, abi=abi)
+
+app = Flask(__name__)
+
+# Conexión a la blockchain
+def connect_to_blockchain():
+    try:
+        if web3.isConnected():
+            print("Conexión exitosa con la blockchain")
+        else:
+            raise Exception("Error: No se pudo conectar a la blockchain")
+    except Exception as e:
+        print(f"Error en la conexión a la blockchain: {e}")
+
+# Función para mintear un nuevo NFT
+def mint_avatar_nft(owner_address):
+    try:
+        transaction = contract.functions.mintAvatarNFT(owner_address).buildTransaction({
+            'from': sender_address,
+            'gas': 200000,
+            'gasPrice': web3.toWei('50', 'gwei'),
+            'nonce': web3.eth.getTransactionCount(sender_address),
+        })
+
+        signed_transaction = web3.eth.account.signTransaction(transaction, private_key)
+        tx_hash = web3.eth.sendRawTransaction(signed_transaction.rawTransaction)
+
+        web3.eth.waitForTransactionReceipt(tx_hash)
+
+        print(f"NFT creado exitosamente para el avatar: {owner_address}")
+        return "Acción completada en la blockchain"
+    except Exception as e:
+        print(f"Error en la transacción al mintear NFT: {e}")
+        return "Error en la transacción"
+
+# ... (otras funciones)
+
+@app.route('/network_config', methods=['GET'])
+def get_network_config():
+    try:
+        network_config = {
+            'chainId': 1337,
+            'chainName': 'My Development Chain',
+            'rpcUrls': ['http://localhost:8545'],
+            'nativeCurrency': {'name': 'WoldcoinVirtual', 'symbol': 'WV', 'decimals': 18},
+            'blockExplorerUrls': ['http://localhost:8545']
+        }
+        return jsonify(network_config)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+if __name__ == '__main__':
+    connect_thread = Thread(target=connect_to_blockchain)
+    connect_thread.start()
+
+    app.run(debug=True)
+	
 class InterfazEmpresa:
     def __init__(self, master):
         self.master = master
