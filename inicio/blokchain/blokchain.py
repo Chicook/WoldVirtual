@@ -1140,6 +1140,28 @@ interfaz = InterfazCompartirRecursos(root)
 # Mantener la ventana abierta
 root.mainloop()
 
+# Blokchain.py
+
+class ContratoA:
+    def __init__(self):
+        # Lógica del contrato A
+        pass
+
+class ContratoB:
+    def __init__(self):
+        # Lógica del contrato B
+        pass
+
+class Blokchain:
+    def __init__(self):
+        self.contratoA = ContratoA()
+        self.contratoB = ContratoB()
+
+    # Puedes agregar funciones adicionales o lógica específica aquí
+
+# Ejemplo de uso
+blokchain = Blokchain()
+
 web3 = Web3(Web3.HTTPProvider('http://localhost:8545'))
 
 # Configuración del contrato inteligente en Solidity
