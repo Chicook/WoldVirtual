@@ -12,6 +12,43 @@ from eth_account import Account
 from flask_sockets import Sockets
 from flask_mysqldb import MySQL
 
+class InterfazEmpresa:
+    def __init__(self, master):
+        self.master = master
+        master.title("Interfaz Empresa")
+
+        # Etiqueta para mostrar porcentajes de recursos
+        self.etiqueta_porcentajes = tk.Label(master, text="Porcentajes de Recursos:")
+        self.etiqueta_porcentajes.pack()
+
+        # Mostrar porcentajes en una etiqueta (puedes personalizar esto según tu lógica)
+        porcentaje_procesador = 80
+        porcentaje_discos_duros = 60
+        porcentaje_tarjetas_graficas = 75
+        porcentaje_memoria_ram = 90
+        porcentaje_ancho_banda = 50
+
+        texto_porcentajes = f"Procesador: {porcentaje_procesador}%\nDiscos Duros: {porcentaje_discos_duros}%\nTarjetas Gráficas: {porcentaje_tarjetas_graficas}%\nMemoria RAM: {porcentaje_memoria_ram}%\nAncho de Banda: {porcentaje_ancho_banda}%"
+        self.etiqueta_porcentajes_info = tk.Label(master, text=texto_porcentajes)
+        self.etiqueta_porcentajes_info.pack()
+
+        # Botón para obtener detalles de la cadena de bloques
+        self.boton_detalle_cadena = tk.Button(master, text="Detalles de la Cadena de Bloques", command=self.mostrar_detalles_cadena)
+        self.boton_detalle_cadena.pack()
+
+    def mostrar_detalles_cadena(self):
+        # Aquí puedes agregar la lógica para obtener y mostrar detalles de la cadena de bloques
+        detalles_cadena = "Detalles de la Cadena de Bloques:\n(Información detallada aquí)"
+        # Puedes mostrar los detalles en una nueva ventana, etiquetas, o personalizar según tus necesidades
+        tk.messagebox.showinfo("Detalles de la Cadena de Bloques", detalles_cadena)
+
+# Crear la ventana principal para la interfaz de la empresa
+root_empresa = tk.Tk()
+interfaz_empresa = InterfazEmpresa(root_empresa)
+
+# Mantener la ventana abierta
+root_empresa.mainloop()
+
 class InterfazCompartirRecursos:
     def __init__(self, master):
         self.master = master
