@@ -12,6 +12,63 @@ from eth_account import Account
 from flask_sockets import Sockets
 from flask_mysqldb import MySQL
 
+class InterfazCompartirRecursos:
+    def __init__(self, master):
+        self.master = master
+        master.title("Compartir Recursos")
+
+        # Campos para el procesador
+        self.etiqueta_procesador = tk.Label(master, text="Procesador:")
+        self.etiqueta_procesador.pack()
+        self.entry_procesador = tk.Entry(master)
+        self.entry_procesador.pack()
+
+        # Campos para discos duros
+        self.etiqueta_discos_duros = tk.Label(master, text="Discos Duros:")
+        self.etiqueta_discos_duros.pack()
+        self.entry_discos_duros = tk.Entry(master)
+        self.entry_discos_duros.pack()
+
+        # Campos para tarjetas gráficas
+        self.etiqueta_tarjetas_graficas = tk.Label(master, text="Tarjetas Gráficas:")
+        self.etiqueta_tarjetas_graficas.pack()
+        self.entry_tarjetas_graficas = tk.Entry(master)
+        self.entry_tarjetas_graficas.pack()
+
+        # Campos para memoria RAM
+        self.etiqueta_memoria_ram = tk.Label(master, text="Memoria RAM:")
+        self.etiqueta_memoria_ram.pack()
+        self.entry_memoria_ram = tk.Entry(master)
+        self.entry_memoria_ram.pack()
+
+        # Campos para ancho de banda
+        self.etiqueta_ancho_banda = tk.Label(master, text="Ancho de Banda:")
+        self.etiqueta_ancho_banda.pack()
+        self.entry_ancho_banda = tk.Entry(master)
+        self.entry_ancho_banda.pack()
+
+        # Botón para compartir recursos
+        self.boton_compartir = tk.Button(master, text="Compartir Recursos", command=self.compartir_recursos)
+        self.boton_compartir.pack()
+
+    def compartir_recursos(self):
+        # Obtener los valores de los campos
+        procesador = self.entry_procesador.get()
+        discos_duros = self.entry_discos_duros.get()
+        tarjetas_graficas = self.entry_tarjetas_graficas.get()
+        memoria_ram = self.entry_memoria_ram.get()
+        ancho_banda = self.entry_ancho_banda.get()
+
+        # Aquí puedes realizar las acciones necesarias para agregar los recursos a la cadena de bloques
+        print(f"Recursos compartidos - Procesador: {procesador}, Discos Duros: {discos_duros}, Tarjetas Gráficas: {tarjetas_graficas}, Memoria RAM: {memoria_ram}, Ancho de Banda: {ancho_banda}")
+
+# Crear la ventana principal
+root = tk.Tk()
+interfaz = InterfazCompartirRecursos(root)
+
+# Mantener la ventana abierta
+root.mainloop()
+
 app = Flask(__name__)
 
 # Diccionario para almacenar los saldos de los usuarios en la versión demo
