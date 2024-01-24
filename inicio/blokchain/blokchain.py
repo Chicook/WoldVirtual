@@ -12,6 +12,33 @@ from eth_account import Account
 from flask_sockets import Sockets
 from flask_mysqldb import MySQL
 
+app = Flask(__name__)
+
+# Diccionario para almacenar los saldos de los usuarios en la versión demo
+saldos_demo = {}
+
+# Ruta para que los usuarios vean su saldo en la versión demo
+@app.route('/ver_saldo_demo/<usuario>')
+def ver_saldo_demo(usuario):
+    saldo = saldos_demo.get(usuario, 0)
+    return f"Saldo en la versión demo para {usuario}: {saldo}"
+
+# Ruta para que los usuarios migren a la versión de producción
+@app.route('/migrar/<usuario>')
+def migrar(usuario):
+    saldo_demo = saldos_demo.get(usuario, 0)
+
+    # Realizar acciones necesarias para verificar la validez de la migración
+    # ...
+
+    # Ejemplo: Proceso de migración
+    saldo_comercial = saldo_demo  # En la realidad, aquí deberías quemar tokens de prueba y emitir tokens comerciales
+
+    return f"Migración exitosa. Saldo en la versión comercial para {usuario}: {saldo_comercial}"
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
 # seccion opensim. # visor web #
 app = Flask(__name__)
 
