@@ -11,6 +11,47 @@ from flask_cors import CORS
 from eth_account import Account
 from flask_sockets import Sockets
 from flask_mysqldb import MySQL
+import jwt
+import datetime
+from functools import wraps
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'tu_clave_secreta'  # Reemplaza con una clave segura en un entorno de producción
+
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = request.args.get('token')  # Puedes obtener el token desde la solicitud, ajusta según tus necesidades
+
+        if not token:
+            return jsonify({'mensaje': 'Token faltante'}), 401
+
+        try:
+            data = jwt.decode(token, app.config['SECRET_KEY'])
+        except jwt.ExpiredSignatureError:
+            return jsonify({'mensaje': 'Token ha expirado'}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({'mensaje': 'Token inválido'}), 401
+
+        return f(*args, **kwargs)
+
+    return decorated
+
+@app.route('/login')
+def login():
+    # Aquí verificarías las credenciales del usuario y, si son válidas, generas un token
+    user = {'username': 'usuario_ejemplo'}
+    token = jwt.encode({'user': user['username'], 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
+                      app.config['SECRET_KEY'])
+    return jsonify({'token': token.decode('UTF-8')})
+
+@app.route('/recurso_protgido')
+@token_required
+def recurso_protgido():
+    return jsonify({'mensaje': 'Este es un recurso protegido'})
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 web3 = Web3(Web3.HTTPProvider('tu_url_de_ethereum'))
 
