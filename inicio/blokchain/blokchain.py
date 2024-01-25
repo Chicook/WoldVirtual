@@ -42,7 +42,7 @@ def login():
     # Aquí verificarías las credenciales del usuario y, si son válidas, generas un token
     user = {'username': 'usuario_ejemplo'}
     token = jwt.encode({'user': user['username'], 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},
-                      app.config['SECRET_KEY'])
+    app.config['SECRET_KEY'])
     return jsonify({'token': token.decode('UTF-8')})
 
 @app.route('/recurso_protgido')
