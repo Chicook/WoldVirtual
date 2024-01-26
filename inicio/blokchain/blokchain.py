@@ -1873,6 +1873,26 @@ def minar_bloque(self, dificultad):
         # (código anterior)
 
 class CadenaBloques:
+	
+    def __init__(self):
+        # ... (otras inicializaciones)
+        self.total_supply = 30000000
+        self.mining_reward = 0.010  # recompensa por bloque minado
+
+    def nuevo_bloque(self, prueba, hash_anterior=None):
+        # ... (lógica existente)
+
+        # Calcular la recompensa de minería y actualizar el total de suministro
+        recompensa = self.mining_reward
+        self.total_supply -= recompensa
+
+        # Asegurarse de que el total de suministro no sea negativo
+        if self.total_supply < 0:
+            raise Exception("Total de suministro insuficiente")
+
+        # Resto de la lógica para añadir el bloque a la cadena
+        # ...
+        # ... (otras funciones)
 
 def __init__(self):
         self.cadena = []
