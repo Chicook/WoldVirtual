@@ -15,6 +15,75 @@ import jwt
 import datetime
 from functools import wraps
 
+class Bloque:
+    def __init__(self, index, timestamp, datos, hash_anterior):
+        self.index = index
+        self.timestamp = timestamp
+        self.datos = datos
+        self.hash_anterior = hash_anterior
+        self.nonce = 0
+        self.hash = self.calcular_hash()
+
+    def minar_bloque(self, dificultad):
+        while self.hash[:dificultad] != '0' * dificultad:
+            self.nonce += 1
+            self.hash = self.calcular_hash()
+
+    def calcular_hash(self):
+        datos_codificados = str(self.index) + str(self.timestamp) + str(self.datos) + str(self.hash_anterior) + str(self.nonce)
+        return hashlib.sha256(datos_codificados.encode('utf-8')).hexdigest()
+
+class Blockchain:
+    def __init__(self):
+        self.cadena = []
+        self.transacciones = []
+        self.mutex = threading.Lock()
+
+    def agregar_bloque(self, datos):
+        with self.mutex:
+            indice = len(self.cadena) + 1
+            timestamp = time.time()
+            hash_anterior = self.obtener_hash_anterior()
+            nuevo_bloque = Bloque(indice, timestamp, datos, hash_anterior)
+            self.transacciones = []  # Reiniciar lista de transacciones actuales
+            self.cadena.append(nuevo_bloque)
+            return nuevo_bloque
+
+    def obtener_hash_anterior(self):
+        if len(self.cadena) == 0:
+            return "1"  # Bloque génesis
+        return self.cadena[-1].hash
+
+    def imprimir_cadena(self):
+        with self.mutex:
+            for bloque in self.cadena:
+                print(f"Índice: {bloque.index}, Hash: {bloque.hash}")
+
+def minar_bloques(blockchain, dificultad, datos):
+    for _ in range(5):
+        bloque = blockchain.agregar_bloque(datos)
+        bloque.minar_bloque(dificultad)
+        print(f"Bloque minado - Índice: {bloque.index}, Hash: {bloque.hash}")
+        time.sleep(2)
+
+# Ejemplo de uso
+blockchain = Blockchain()
+
+# Crear dos threads para minar bloques simultáneamente
+thread1 = threading.Thread(target=minar_bloques, args=(blockchain, 2, "Transacción 1"))
+thread2 = threading.Thread(target=minar_bloques, args=(blockchain, 2, "Transacción 2"))
+
+# Iniciar los threads
+thread1.start()
+thread2.start()
+
+# Esperar a que ambos threads terminen
+thread1.join()
+thread2.join()
+
+# Imprimir la cadena después de la minería simultánea
+blockchain.imprimir_cadena()
+
 class Transaccion:
     def __init__(self, remitente, destinatario, cantidad, tipo_moneda):
         self.remitente = remitente
