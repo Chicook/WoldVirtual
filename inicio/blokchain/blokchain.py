@@ -15,6 +15,38 @@ import jwt
 import datetime
 from functools import wraps
 
+# Clase ContratoIngresoCripto
+class ContratoIngresoCripto:
+    def __init__(self, web3, contrato_address, propietario_address):
+        self.web3 = web3
+        self.contrato_address = contrato_address
+        self.propietario_address = propietario_address
+        # Asumiendo que ya tienes el ABI del contrato compilado
+        self.contrato = self.web3.eth.contract(address=self.contrato_address, abi=ABI_CONTRATO_INGRESO)
+
+    def depositar(self, cantidad):
+        # Asumiendo que el contrato tiene la función 'depositar' y el token es ERC-20
+        # Debes ajustar esto según tu contrato real
+        transaccion = {
+            'from': self.propietario_address,
+            'gas': 200000,
+            'gasPrice': self.web3.toWei('50', 'gwei'),
+        }
+        self.contrato.functions.depositar(cantidad).transact(transaccion)
+
+    # Otros métodos según las funciones de tu contrato...
+
+# Uso en la aplicación
+cadena_bloques = CadenaBloques()
+contrato_ingreso = ContratoIngresoCripto(cadena_bloques.web3, 'DIRECCION_DEL_CONTRATO', 'DIRECCION_DEL_PROPIETARIO')
+
+# Ejemplo de depósito
+cantidad_a_depositar = 10  # Ajusta según tu caso
+contrato_ingreso.depositar(cantidad_a_depositar)
+
+# Otro código de la aplicación...
+
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'tu_clave_secreta'  # Reemplaza con una clave segura en un entorno de producción
 
@@ -1052,6 +1084,18 @@ espacio_reservado_actual = "espacio_anterior"  # Reemplaza esto con tu implement
 mi_minero.minar_bloque(datos_del_bloque, espacio_reservado_actual)
 
 class Bloque:
+
+	
+
+# Clase Bloque
+class Bloque:
+    def __init__(self):
+        # Inicialización del bloque
+
+    # Otras funciones del bloque...
+
+
+	    
     def minar_bloque(self, dificultad):
         while self.hash[:dificultad] != '0' * dificultad:
             self.nonce += 1
@@ -1873,6 +1917,38 @@ def minar_bloque(self, dificultad):
         # (código anterior)
 
 class CadenaBloques:
+
+
+# Clase CadenaBloques
+
+    def __init__(self):
+        # Configurar la conexión a un nodo Ethereum (o Infura)
+        self.web3 = Web3(Web3.HTTPProvider('URL_DEL_NODO_O_INFURA'))
+        if not self.web3.isConnected():
+            raise Exception("No se pudo conectar al nodo Ethereum o Infura")
+
+        # Otras configuraciones de la cadena de bloques...
+
+	
+    def __init__(self):
+        # ... (otras inicializaciones)
+        self.total_supply = 30000000
+        self.mining_reward = 0.010  # recompensa por bloque minado
+
+    def nuevo_bloque(self, prueba, hash_anterior=None):
+        # ... (lógica existente)
+
+        # Calcular la recompensa de minería y actualizar el total de suministro
+        recompensa = self.mining_reward
+        self.total_supply -= recompensa
+
+        # Asegurarse de que el total de suministro no sea negativo
+        if self.total_supply < 0:
+            raise Exception("Total de suministro insuficiente")
+
+        # Resto de la lógica para añadir el bloque a la cadena
+        # ...
+        # ... (otras funciones)
 
 def __init__(self):
         self.cadena = []
