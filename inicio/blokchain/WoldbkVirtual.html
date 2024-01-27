@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,11 +15,11 @@
                 if (typeof window.ethereum !== 'undefined') {
                     // Solicitar permisos de Metamask
                     await window.ethereum.enable();
-                    
+
                     // Obtener la dirección del usuario
                     const accounts = await web3.eth.getAccounts();
                     const userAddress = accounts[0];
-                    
+
                     // Realizar acciones con la dirección del usuario, como interactuar con contratos
                     console.log('Conexión exitosa con Metamask. Dirección del usuario:', userAddress);
                 } else {
@@ -33,7 +34,12 @@
         connectToMetamask();
     </script>
 </head>
+
 <body>
     <!-- Contenido de tu aplicación -->
+    <h1>
+        <centre>AQUI ESTARÁ AQUI</centre>
+    </h1>
 </body>
+
 </html>
