@@ -15,6 +15,61 @@ import jwt
 import datetime
 from functools import wraps
 
+class Transaccion:
+    def __init__(self, remitente, destinatario, cantidad, tipo_moneda):
+        self.remitente = remitente
+        self.destinatario = destinatario
+        self.cantidad = cantidad
+        self.tipo_moneda = tipo_moneda
+
+class Usuario:
+    def __init__(self, direccion, saldo):
+        self.direccion = direccion
+        self.saldo = saldo
+
+class PlataformaBlockchain:
+    def __init__(self):
+        self.usuarios = []
+        self.transacciones = []
+
+    def agregar_usuario(self, direccion, saldo):
+        nuevo_usuario = Usuario(direccion, saldo)
+        self.usuarios.append(nuevo_usuario)
+
+    def realizar_transaccion(self, remitente, destinatario, cantidad, tipo_moneda):
+        # Verifica que el remitente tenga fondos suficientes
+        remitente_obj = next((u for u in self.usuarios if u.direccion == remitente), None)
+        if remitente_obj and remitente_obj.saldo >= cantidad:
+            # Actualiza saldos
+            remitente_obj.saldo -= cantidad
+            destinatario_obj = next((u for u in self.usuarios if u.direccion == destinatario), None)
+            if destinatario_obj:
+                destinatario_obj.saldo += cantidad
+
+                # Agrega la transacción a la lista
+                nueva_transaccion = Transaccion(remitente, destinatario, cantidad, tipo_moneda)
+                self.transacciones.append(nueva_transaccion)
+                return True
+        return False
+
+# Ejemplo de uso
+plataforma = PlataformaBlockchain()
+plataforma.agregar_usuario("direccion_usuario1", 100)
+plataforma.agregar_usuario("direccion_usuario2", 50)
+
+# Realizar transacción de 10 unidades desde usuario1 a usuario2
+resultado = plataforma.realizar_transaccion("direccion_usuario1", "direccion_usuario2", 10, "WoldcoinVirtual")
+
+if resultado:
+    print("Transacción exitosa")
+    for usuario in plataforma.usuarios:
+        print(f"Dirección: {usuario.direccion}, Saldo: {usuario.saldo}")
+
+    for transaccion in plataforma.transacciones:
+        print(f"De: {transaccion.remitente}, A: {transaccion.destinatario}, Cantidad: {transaccion.cantidad}, Moneda: {transaccion.tipo_moneda}")
+else:
+    print("Transacción fallida. Fondos insuficientes.")
+	
 # Clase ContratoIngresoCripto
 class ContratoIngresoCripto:
     def __init__(self, web3, contrato_address, propietario_address):
