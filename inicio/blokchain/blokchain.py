@@ -19,6 +19,21 @@ import random
 import string
 from datetime import datetime
 
+class NFT:
+    def __init__(self, identificador_unico, propiedades):
+        self.identificador_unico = identificador_unico
+        self.propiedades = propiedades
+
+# Crear una isla como NFT único
+isla1_nft = NFT(identificador_unico="ID_ISLA_1", propiedades={"nombre": "Isla 1", "ubicacion": "Coordenadas XYZ"})
+
+# Guardar la isla en una lista o estructura de datos similar
+islas_nfts = [isla1_nft]
+
+# Acceder a las propiedades de la isla
+for isla_nft in islas_nfts:
+    print(f"Isla: {isla_nft.propiedades['nombre']}, Ubicación: {isla_nft.propiedades['ubicacion']}")
+
 class GeneradorAvatar:
     def __init__(self):
         self.colores = ['rojo', 'azul', 'verde', 'amarillo', 'naranja']
