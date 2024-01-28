@@ -20,6 +20,28 @@ import string
 from datetime import datetime
 
 class NFT:
+	
+    def __init__(self, id_unica, nombre, coordenadas, propietario=None):
+        self.id_unica = id_unica
+        self.nombre = nombre
+        self.coordenadas = coordenadas
+        self.propietario = propietario
+        self.timestamp_creacion = time.time()
+        self.hash = self.calcular_hash()
+
+    def calcular_hash(self):
+        datos_codificados = str(self.id_unica) + str(self.nombre) + str(self.coordenadas) + str(self.propietario) + str(self.timestamp_creacion)
+        return hashlib.sha256(datos_codificados.encode('utf-8')).hexdigest()
+
+# Crear una isla como NFT único
+isla1_nft = NFT(id_unica="ID_ISLA_1", nombre="Isla 1", coordenadas="Coordenadas XYZ")
+
+# Acceder a las propiedades de la isla
+print(f"Isla: {isla1_nft.nombre}, Ubicación: {isla1_nft.coordenadas}")
+
+# Acceder al hash único generado
+print(f"Hash único: {isla1_nft.hash}")
+	
     def __init__(self, identificador_unico, propiedades):
         self.identificador_unico = identificador_unico
         self.propiedades = propiedades
