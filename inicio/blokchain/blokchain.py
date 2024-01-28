@@ -16,6 +16,33 @@ import datetime
 from functools import wraps
 import bpy
 
+# Clase Sincronizador en el código principal
+
+class Sincronizador:
+
+    def __init__(self):
+        self.estado = "Inicial"
+
+    def obtener_estado(self):
+        return self.estado
+
+    def actualizar_estado(self, nuevo_estado):
+        self.estado = nuevo_estado
+
+# Uso del Sincronizador
+
+sincronizador = Sincronizador()
+
+estado_inicial = sincronizador.obtener_estado()
+print(f"Estado Inicial: {estado_inicial}")
+
+nuevo_estado = "Conectado a Unity"
+sincronizador.actualizar_estado(nuevo_estado)
+print(f"Nuevo Estado: {sincronizador.obtener_estado()}")
+
+# para trabajar con unity y Unreal #
+
+
 # Para trabajar en blender #
 
 # Borra todos los objetos en la escena
