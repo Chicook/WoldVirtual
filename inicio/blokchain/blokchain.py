@@ -14,6 +14,32 @@ from flask_mysqldb import MySQL
 import jwt
 import datetime
 from functools import wraps
+import bpy
+
+# Para trabajar en blender #
+
+# Borra todos los objetos en la escena
+bpy.ops.object.select_all(action='DESELECT')
+bpy.ops.object.select_by_type(type='MESH')
+bpy.ops.object.delete()
+
+# Crear un suelo cuadrado de color azul metálico
+bpy.ops.mesh.primitive_plane_add(size=10, enter_editmode=False, align='WORLD', location=(0, 0, 0))
+bpy.ops.object.shade_smooth()
+material = bpy.data.materials.new(name="BlueMetallic")
+material.use_nodes = True
+material.node_tree.nodes.new(type='ShaderNodeBsdfPrincipled')
+material.node_tree.nodes["Principled BSDF"].base_color = (0, 0, 1, 1)  # Color azul
+material.node_tree.nodes["Principled BSDF"].metallic = 1  # Superficie metálica
+bpy.context.object.data.materials.append(material)
+
+# Configurar la vista de la cámara
+bpy.ops.object.camera_add(enter_editmode=False, align='VIEW', location=(0, 0, 5), rotation=(0, 0, 0))
+bpy.ops.object.select_by_type(type='CAMERA')
+bpy.context.scene.camera = bpy.context.selected_objects[0]
+
+# Configurar la iluminación
+bpy.ops.object.light_add(type='SUN', radius=1, align='WORLD', location=(5, 5, 5))
 
 class Bloque:
     def __init__(self, index, timestamp, datos, hash_anterior):
