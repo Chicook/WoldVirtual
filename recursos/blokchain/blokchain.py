@@ -5,6 +5,40 @@ from web3 import Web3
 import datetime
 import time
 
+
+
+# colocar código en blender., 
+primero antes de integrar aqui.#
+
+
+# import bpy
+
+# Limpiar la escena actual
+# bpy.ops.object.select_all(action='DESELECT')
+# bpy.ops.object.select_by_type(type='MESH')
+# bpy.ops.object.delete()
+
+# Crear una esfera
+# bpy.ops.mesh.primitive_uv_sphere_add(segments=32, ring_count=16, radius=5)
+# esfera = bpy.context.active_object
+
+# Crear una estación espacial
+# bpy.ops.mesh.primitive_cube_add(size=2)
+# estacion_espacial = bpy.context.active_object
+
+# Colocar la estación espacial alrededor de la esfera
+# estacion_espacial.location = (10, 0, 0)  # Puedes ajustar las coordenadas según tus necesidades
+
+# Seleccionar la esfera y la estación espacial y agruparlas
+# bpy.ops.object.select_all(action='DESELECT')
+# esfera.select_set(True)
+# estacion_espacial.select_set(True)
+# bpy.context.view_layer.objects.active = esfera
+# bpy.ops.object.join()
+
+# Guardar el archivo de Blender
+# bpy.ops.wm.save_as_mainfile(filepath='/ruta/a/tu/archivo.blend')
+
 class Minero:
     def __init__(self, blockchain):
         self.blockchain = blockchain

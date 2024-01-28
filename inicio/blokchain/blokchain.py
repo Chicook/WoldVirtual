@@ -15,6 +15,23 @@ import jwt
 import datetime
 from functools import wraps
 import bpy
+import random
+import string
+from datetime import datetime
+
+class GeneradorAvatar:
+    def __init__(self):
+        self.colores = ['rojo', 'azul', 'verde', 'amarillo', 'naranja']
+        self.formas = ['círculo', 'cuadrado', 'triángulo', 'estrella', 'corazón']
+        self.elementos = ['gafas', 'sombrero', 'barba', 'bigote', 'pendientes']
+
+    def generar_avatar(self):
+        color = random.choice(self.colores)
+        forma = random.choice(self.formas)
+        elemento = random.choice(self.elementos)
+        nombre = ''.join(random.choice(string.ascii_letters) for _ in range(8))
+        avatar_info = f"Avatar de {nombre}: {color}, {forma}, con {elemento}"
+        return avatar_info
 
 # Clase Sincronizador en el código principal
 
@@ -1262,10 +1279,8 @@ mi_minero.minar_bloque(datos_del_bloque, espacio_reservado_actual)
 
 class Bloque:
 
-	
-
 # Clase Bloque
-class Bloque:
+
     def __init__(self):
         # Inicialización del bloque
 
@@ -1293,6 +1308,28 @@ class Bloque:
         self.compensacion = compensacion
 
 class CadenaBloques:
+
+    def __init__(self):
+        self.cadena = []
+
+    def agregar_bloque(self, nuevo_bloque):
+        self.cadena.append(nuevo_bloque)
+
+# Uso del GeneradorAvatar y la CadenaBloques
+generador_avatar = GeneradorAvatar()
+cadena_bloques = CadenaBloques()
+
+for i in range(5):  # Generar 5 avatares y agregar a la cadena de bloques
+    avatar_info = generador_avatar.generar_avatar()
+    timestamp = datetime.now()
+    hash_anterior = cadena_bloques.cadena[-1].hash if cadena_bloques.cadena else "1"
+    nuevo_bloque = Bloque(len(cadena_bloques.cadena) + 1, timestamp, avatar_info, hash_anterior)
+    cadena_bloques.agregar_bloque(nuevo_bloque)
+
+# Imprimir la cadena de bloques
+for bloque in cadena_bloques.cadena:
+    print(f"Índice: {bloque.index}, Timestamp: {bloque.timestamp}, Avatar: {bloque.avatar_info}, Hash: {bloque.hash}")
+
     def nuevo_bloque(self, proof, previous_hash=None, resource_logs=None):
         nuevo_bloque = Bloque(
             index=len(self.bloques) + 1,
@@ -1978,8 +2015,20 @@ contract = web3.eth.contract(abi=contract_abi, bytecode=contract_bytecode)
 # Configuración de la blockchain simple
 
 class Bloque:
+	
+    def __init__(self, index, timestamp, avatar_info, hash_anterior):
+        self.index = index
+        self.timestamp = timestamp
+        self.avatar_info = avatar_info
+        self.hash_anterior = hash_anterior
+        self.nonce = 0
+        self.hash = self.calcular_hash()
 
-class Bloque:
+    def calcular_hash(self):
+        datos_codificados = str(self.index) + str(self.timestamp) + str(self.avatar_info) + str(self.hash_anterior) + str(self.nonce)
+        return hashlib.sha256(datos_codificados.encode('utf-8')).hexdigest()
+
+
     def minar_bloque(self, dificultad):
         while self.hash[:dificultad] != '0' * dificultad:
             self.nonce += 1
