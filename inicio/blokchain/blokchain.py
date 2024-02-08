@@ -18,7 +18,36 @@ import bpy
 import random
 import string
 from datetime import datetime
+from flask import Flask, jsonify, request
+import threading  # Necesario para ejecutar la blockchain en un hilo separado
 
+# Importa aquí todas las clases y funciones de tu código de blockchain
+
+app = Flask(__name__)
+
+# Inicializar la blockchain
+mi_blockchain = Blockchain()  # Asegúrate de adaptar esto según la estructura de tu código
+
+# Implementar endpoints de Flask para interactuar con la blockchain
+@app.route('/nuevo_bloque', methods=['GET'])
+def nuevo_bloque():
+    prueba = request.args.get('prueba')  # Ajusta según tus necesidades
+    hash_anterior = request.args.get('hash_anterior')
+    
+    nuevo_bloque = mi_blockchain.nuevo_bloque(prueba, hash_anterior)
+    respuesta = {'mensaje': 'Nuevo bloque creado', 'bloque': nuevo_bloque}
+    return jsonify(respuesta), 200
+
+# Define más endpoints según lo que necesites
+
+if __name__ == '__main__':
+    # Ejecutar la blockchain en un hilo separado
+    blockchain_thread = threading.Thread(target=mi_blockchain.ejecutar)
+    blockchain_thread.start()
+
+    # Ejecutar Flask en el hilo principal
+    app.run(port=5000)
+	
 class NFT:
 	
     def __init__(self, id_unica, nombre, coordenadas, propietario=None):
