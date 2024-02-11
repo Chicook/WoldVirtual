@@ -22,6 +22,36 @@ from flask import Flask, jsonify, request
 import threading  # Necesario para ejecutar la blockchain en un hilo separado
 from flask import Flask, render_template_string
 
+class Blockchain:
+    def __init__(self):
+        self.current_key_version = 1
+        self.key_rotation_interval = 30  # en segundos
+
+    def generate_new_block(self):
+        # Lógica para generar un nuevo bloque
+        # ...
+
+    def rotate_keys(self):
+        while True:
+            time.sleep(self.key_rotation_interval)
+            self.current_key_version += 1
+            print(f"Rotación de claves: Nueva versión {self.current_key_version}")
+
+    def run(self):
+        # Iniciar hilo para la rotación de claves en segundo plano
+        import threading
+        rotation_thread = threading.Thread(target=self.rotate_keys)
+        rotation_thread.start()
+
+        # Tu lógica principal aquí (ej. generar bloques)
+        while True:
+            self.generate_new_block()
+            time.sleep(5)  # Intervalo ficticio para la demostración
+
+# Crear una instancia de la Blockchain y ejecutarla
+blockchain = Blockchain()
+blockchain.run()
+
 app = Flask(__name__)
 
 html_code = '''
