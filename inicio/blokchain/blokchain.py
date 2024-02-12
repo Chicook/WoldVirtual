@@ -190,7 +190,9 @@ islas_nfts = [isla1_nft]
 
 # Acceder a las propiedades de la isla
 for isla_nft in islas_nfts:
-    print(f"Isla: {isla_nft.propiedades['nombre']}, Ubicación: {isla_nft.propiedades['ubicacion']}")
+    nombre = isla_nft.propiedades.get('nombre', 'Nombre no disponible')
+    ubicacion = isla_nft.propiedades.get('ubicacion', 'Ubicación no disponible')
+    print(f"Isla: {nombre}, Ubicación: {ubicacion}")
 
 class GeneradorAvatar:
     def __init__(self):
