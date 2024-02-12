@@ -21,6 +21,7 @@ from datetime import datetime
 from flask import Flask, jsonify, request
 import threading  # Necesario para ejecutar la blockchain en un hilo separado
 from flask import Flask, render_template_string
+import re
 
 # Importar las bibliotecas necesarias
 # Crear una instancia de la aplicación Flask
@@ -341,29 +342,58 @@ class Usuario:
         self.direccion = direccion
         self.saldo = saldo
 
+
+class Transaccion:
+    def __init__(self, remitente, destinatario, cantidad, tipo_moneda):
+        self.remitente = remitente
+        self.destinatario = destinatario
+        self.cantidad = cantidad
+        self.tipo_moneda = tipo_moneda
+
+class Usuario:
+    def __init__(self, direccion, saldo):
+        self.direccion = direccion
+        self.saldo = saldo
+
 class PlataformaBlockchain:
     def __init__(self):
         self.usuarios = []
         self.transacciones = []
 
+    def validar_direccion(self, direccion):
+        return re.match(r'^[a-fA-F0-9]{40}$', direccion) is not None
+
+    def autenticar_usuario(self, direccion):
+        # Implementa la lógica de autenticación según tus necesidades
+        return True
+
     def agregar_usuario(self, direccion, saldo):
-        nuevo_usuario = Usuario(direccion, saldo)
-        self.usuarios.append(nuevo_usuario)
+        if self.validar_direccion(direccion):
+            nuevo_usuario = Usuario(direccion, saldo)
+            self.usuarios.append(nuevo_usuario)
+        else:
+            print("Dirección no válida. Asegúrate de que sigue el formato correcto.")
 
     def realizar_transaccion(self, remitente, destinatario, cantidad, tipo_moneda):
-        # Verifica que el remitente tenga fondos suficientes
+        if not self.validar_direccion(remitente) or not self.validar_direccion(destinatario):
+            print("Dirección de remitente o destinatario no válida.")
+            return False
+
+        if not self.autenticar_usuario(remitente):
+            print("Autenticación de remitente fallida.")
+            return False
+
         remitente_obj = next((u for u in self.usuarios if u.direccion == remitente), None)
         if remitente_obj and remitente_obj.saldo >= cantidad:
-            # Actualiza saldos
             remitente_obj.saldo -= cantidad
             destinatario_obj = next((u for u in self.usuarios if u.direccion == destinatario), None)
             if destinatario_obj:
                 destinatario_obj.saldo += cantidad
-
-                # Agrega la transacción a la lista
                 nueva_transaccion = Transaccion(remitente, destinatario, cantidad, tipo_moneda)
                 self.transacciones.append(nueva_transaccion)
                 return True
+
+        print("Transacción fallida. Fondos insuficientes o dirección no encontrada.")
         return False
 
 # Ejemplo de uso
@@ -371,18 +401,15 @@ plataforma = PlataformaBlockchain()
 plataforma.agregar_usuario("direccion_usuario1", 100)
 plataforma.agregar_usuario("direccion_usuario2", 50)
 
-# Realizar transacción de 10 unidades desde usuario1 a usuario2
 resultado = plataforma.realizar_transaccion("direccion_usuario1", "direccion_usuario2", 10, "WoldcoinVirtual")
-
 if resultado:
     print("Transacción exitosa")
     for usuario in plataforma.usuarios:
         print(f"Dirección: {usuario.direccion}, Saldo: {usuario.saldo}")
-
     for transaccion in plataforma.transacciones:
         print(f"De: {transaccion.remitente}, A: {transaccion.destinatario}, Cantidad: {transaccion.cantidad}, Moneda: {transaccion.tipo_moneda}")
 else:
-    print("Transacción fallida. Fondos insuficientes.")
+    print("Transacción fallida. Fondos insuficientes o dirección no válida.")
 	
 # Clase ContratoIngresoCripto
 class ContratoIngresoCripto:
