@@ -1,3 +1,16 @@
+__version__ = "0.0.1"
+
+class MyCode:
+    def __init__(self):
+        pass
+
+    def run(self):
+        print(f"Ejecutando la versión: {__version__}")
+
+if __name__ == "__main__":
+    my_code_instance = MyCode()
+    my_code_instance.run()
+	
 import tkinter as tk
 import hashlib
 from flask import Flask, request, jsonify, render_template, url_for, render_template_string
