@@ -1,71 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
+
+
 <head>
+    <title>WoldbkVirtual</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        #contenedor {
-            border: 15px solid #333;
-            width: 100%;
-            height: 100vh;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
-        }
-
-        #encabezado {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-            background-color: #ddd;
-        }
-
-        #chat {
-            padding: 10px;
-            overflow-y: auto;
-            flex-grow: 1;
-            position: relative; /* Posición relativa para mensajes temporales */
-        }
-
-        .mensaje {
-            background-color: #f2f2f2;
-            padding: 5px 10px;
-            margin: 5px;
-            border-radius: 10px;
-            position: absolute; /* Posición absoluta para mensajes temporales */
-            bottom: 0; /* Aparecer en la parte inferior del área de chat */
-            opacity: 1;
-            transition: opacity 5s ease-in-out; /* Transición de opacidad en 5 segundos */
-        }
-
-        #pie {
-            padding: 10px;
-            background-color: #ddd;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        input {
-            padding: 5px;
-            flex-grow: 1;
-        }
-
-        button {
-            margin-left: 10px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="WoldbkVirtual.css">
 </head>
+
 <body>
+
     <div id="contenedor">
         <div id="encabezado">
             <h1>World Virtual</h1>
+
+            <nav>
+                <ul>
+                    <li><a href="/inicio/herramientas/descripción.html">Inicio</a></li>
+                    <li><a href="/inicio/herramientas/web.html">segunda seccion</a></li>
+                    <li><a href="/recursos/Ejemploswebs/Webejemplo.html">tercera seccion</a></li>
+                    <li><a href="/recursos/html/inicio1prb.html">cuarta seccion</a></li>
+                    <!-- Agrega más enlaces según las secciones y páginas de tu sitio -->
+                </ul>
+            </nav>
+
+
             <p>Iniciar sesión con metamask </p>
         </div>
         <div id="chat"></div>
@@ -74,6 +34,7 @@
                 <input type="text" id="mensajeInput" placeholder="Escribe tu mensaje">
                 <button type="submit">Enviar</button>
             </form>
+
         </div>
     </div>
 
@@ -81,7 +42,7 @@
         function enviarMensaje() {
             var mensajeInput = document.getElementById('mensajeInput');
             var mensaje = mensajeInput.value.trim();
-            
+
             if (mensaje !== '') {
                 var chatDiv = document.getElementById('chat');
                 var nuevoMensaje = document.createElement('div');
@@ -91,14 +52,22 @@
                 mensajeInput.value = '';
 
                 // Desvanecer después de 5 segundos
-                setTimeout(function () {
+                setTimeout(function() {
                     nuevoMensaje.style.opacity = '0';
-                    setTimeout(function () {
+                    setTimeout(function() {
                         nuevoMensaje.style.display = 'none';
                     }, 1000); // Retraso adicional para permitir que termine la transición
                 }, 5000);
             }
         }
     </script>
+    <script src="script.js"></script>
+
+    <!--<form action="save_message.php" method="post" onsubmit="enviarMensaje(); return false;">
+        <input type="text" id="mensajeInput" name="message" placeholder="Escribe tu mensaje">
+    <button type="submit">Enviar</button>
+    </form> -->
+
 </body>
+
 </html>
