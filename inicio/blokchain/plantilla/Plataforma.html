@@ -10,9 +10,24 @@
 </head>
 
 <body>
+
+
+
     <div id="contenedor">
         <div id="encabezado">
             <h1>World Virtual</h1>
+
+            <nav>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#chat">Chat</a></li>
+                    <li><a href="otra_pagina.html">Otra Página</a></li>
+                    <li><a href="https://www.otrodominio.com">Otro Dominio</a></li>
+                    <!-- Agrega más enlaces según las secciones y páginas de tu sitio -->
+                </ul>
+            </nav>
+
+
             <p>Iniciar sesión con metamask </p>
         </div>
         <div id="chat"></div>
@@ -21,6 +36,7 @@
                 <input type="text" id="mensajeInput" placeholder="Escribe tu mensaje">
                 <button type="submit">Enviar</button>
             </form>
+
         </div>
     </div>
 
@@ -49,10 +65,10 @@
     </script>
     <script src="script.js"></script>
 
-    <form action="save_message.php" method="post" onsubmit="enviarMensaje(); return false;">
-        // <input type="text" id="mensajeInput" name="message" placeholder="Escribe tu mensaje">
-        <button type="submit">Enviar</button>
-    </form>
+    <!--<form action="save_message.php" method="post" onsubmit="enviarMensaje(); return false;">
+        <input type="text" id="mensajeInput" name="message" placeholder="Escribe tu mensaje">
+    <button type="submit">Enviar</button>
+    </form> -->
 
 </body>
 

@@ -3,6 +3,32 @@
 
 /* plataforma principal */
 
+
+/* Añade esto a tu archivo styles.css */
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav li {
+    margin-right: 15px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.3s ease-in-out;
+}
+
+nav a:hover {
+    color: #555;
+}
+
 body {
     margin: 0;
     padding: 0;
