@@ -10,7 +10,7 @@ body {
 }
 
 #contenedor {
-    border: 15px solid #99b30a;
+    border: 15px solid #939e53;
     width: 100%;
     height: 100vh;
     box-sizing: border-box;
@@ -23,7 +23,7 @@ body {
     display: flex;
     justify-content: space-between;
     padding: 10px;
-    background-color: #ddd;
+    background-color: #dab94f;
 }
 
 #chat {
@@ -34,7 +34,7 @@ body {
 }
 
 .mensaje {
-    background-color: #f2f2f2;
+    background-color: #a0ada6;
     padding: 5px 10px;
     margin: 5px;
     border-radius: 10px;
