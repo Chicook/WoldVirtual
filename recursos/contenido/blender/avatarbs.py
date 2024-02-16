@@ -56,9 +56,10 @@ class AvatarSettingsPanel(bpy.types.Panel):
                                                     row = layout.row()
                                                             row.prop(obj, "scale", index=2)
 
-                                                                    row = layout.row()
-                                                                            row.prop(obj, "scale", index=0)
-                                                                                    row.prop(obj, "scale", index=1)
+                                                     row = layout.row()
+                                                             row.prop(obj, "scale", index=0)
+                                                                            
+                                                        row.prop(obj, "scale", index=1)
 
                                                                                     # Registramos la interfaz de usuario
                                                                                     bpy.utils.register_class(AvatarSettingsPanel)
@@ -68,8 +69,7 @@ class AvatarSettingsPanel(bpy.types.Panel):
                                                                                     bpy.context.scene.frame_end = 10
 
                                                                                     bpy.ops.object.mode_set(mode='POSE')
-                                                                                    for bone in armature.bones:
-                                                                                        bone.rotation_mode = 'XYZ'
-                                                                                            if bone.name.endswith('.L'):
-                                                                                                    bone.rotation_euler.x = 0.5
-                                                                                                    
+                                                                                    for bone in armature.bones:                                                                     bone.rotation_mode = 'XYZ'
+                                                                                 if bone.name.endswith('.L'):
+                                                                                 bone.rotation_euler.x = 0.5
+                                                                           

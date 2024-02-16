@@ -3301,16 +3301,3 @@ def index():
 
 if __name__ == '__main__':
     app.run(debug=True)
-"""
-
-# Comentarios que indican lo que falta
-"""
-# 1. Reemplazar '...' con el bytecode real de tu contrato en contract_bytecode.
-# 2. Reemplazar '...' con el ABI real de tu contrato en contract_abi.
-# 3. Integrar las funciones de cadena de bloques (proof_of_work, is_valid_proof, propose_block) en la lógica de tu cadena de bloques.
-# 4. Asegurarse de que el nodo Ethereum local esté en ejecución en 'http://localhost:8545' o ajustar el proveedor Web3 según sea necesario.
-# 5. Eliminar las importaciones duplicadas y no utilizadas para mejorar la legibilidad del código.
-# 6. Reemplazar el comentario '# tokenTransferFunction(msg.sender, salario)' con la función real para transferir tokens en pagarSalario.
-
-# Después de realizar estos cambios, deberías tener un código más completo y ejecutable.
-"""
