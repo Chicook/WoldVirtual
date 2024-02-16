@@ -1748,9 +1748,107 @@ web3 = Web3(Web3.HTTPProvider('http://localhost:8545'))
 contract_source_code = """
 
 //este es un ejemplo de contrato solidity//
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
 
-//SPDX-License-Identifier: MIT
-pragma solidity >= 0.8.23;
+contract WoldcoinVirtual {
+        string public name = "WoldcoinVirtual";
+            string public symbol = "WCV";
+                uint8 public decimals = 3;
+                    uint256 public totalSupply = 30000000 * (10 ** uint256(decimals));
+                        address public owner;
+                            uint256 public commission = 1 * (10 ** uint256(decimals - 3)); // 0.001 tokens
+
+                                mapping(address => uint256) public balanceOf;
+                                    mapping(address => mapping(address => uint256)) public allowance;
+                                        mapping(address => uint256) public stakedBalance;
+                                            mapping(address => uint256) public stakedTimestamp;
+
+                                                event Transfer(address indexed from, address indexed to, uint256 value);
+                                                    event Approval(address indexed owner, address indexed spender, uint256 value);
+                                                        event Staked(address indexed user, uint256 amount);
+                                                            event Unstaked(address indexed user, uint256 amount);
+
+                                                                constructor() {
+                                                                            owner = msg.sender;
+                                                                                    balanceOf[msg.sender] = totalSupply;
+                                                                }
+
+                                                                    modifier onlyOwner() {
+                                                                                require(msg.sender == owner, "Only owner can call this function");
+                                                                                        _;
+                                                                    }
+
+                                                                        function transfer(address to, uint256 value) public returns (bool) {
+                                                                                    require(to != address(0), "Invalid address");
+                                                                                            require(balanceOf[msg.sender] >= value, "Insufficient balance");
+
+                                                                                                    uint256 fee = (value * commission) / (10 ** uint256(decimals));
+                                                                                                            uint256 netValue = value - fee;
+
+                                                                                                                    balanceOf[msg.sender] -= value;
+                                                                                                                            balanceOf[to] += netValue;
+                                                                                                                                    balanceOf[owner] += fee;
+
+                                                                                                                                            emit Transfer(msg.sender, to, netValue);
+                                                                                                                                                    emit Transfer(msg.sender, owner, fee);
+
+                                                                                                                                                            return true;
+                                                                        }
+
+                                                                            function approve(address spender, uint256 value) public returns (bool) {
+                                                                                        allowance[msg.sender][spender] = value;
+                                                                                                emit Approval(msg.sender, spender, value);
+                                                                                                        return true;
+                                                                            }
+
+                                                                                function transferFrom(address from, address to, uint256 value) public returns (bool) {
+                                                                                            require(from != address(0), "Invalid address");
+                                                                                                    require(to != address(0), "Invalid address");
+                                                                                                            require(balanceOf[from] >= value, "Insufficient balance");
+                                                                                                                    require(allowance[from][msg.sender] >= value, "Allowance exceeded");
+
+                                                                                                                            uint256 fee = (value * commission) / (10 ** uint256(decimals));
+                                                                                                                                    uint256 netValue = value - fee;
+
+                                                                                                                                            balanceOf[from] -= value;
+                                                                                                                                                    balanceOf[to] += netValue;
+                                                                                                                                                            balanceOf[owner] += fee;
+                                                                                                                                                                    allowance[from][msg.sender] -= value;
+
+                                                                                                                                                                            emit Transfer(from, to, netValue);
+                                                                                                                                                                                    emit Transfer(from, owner, fee);
+
+                                                                                                                                                                                            return true;
+                                                                                }
+
+                                                                                    function stake(uint256 amount) public returns (bool) {
+                                                                                                require(amount > 0, "Amount must be greater than zero");
+                                                                                                        require(balanceOf[msg.sender] >= amount, "Insufficient balance");
+
+                                                                                                                balanceOf[msg.sender] -= amount;
+                                                                                                                        stakedBalance[msg.sender] += amount;
+                                                                                                                                stakedTimestamp[msg.sender] = block.timestamp;
+
+                                                                                                                                        emit Staked(msg.sender, amount);
+
+                                                                                                                                                return true;
+                                                                                    }
+
+                                                                                        function unstake(uint256 amount) public returns (bool) {
+                                                                                                    require(amount > 0, "Amount must be greater than zero");
+                                                                                                            require(stakedBalance[msg.sender] >= amount, "Insufficient staked balance");
+                                                                                                                    require(block.timestamp >= stakedTimestamp[msg.sender] + 1 days, "Staking duration not met");
+
+                                                                                                                            stakedBalance[msg.sender] -= amount;
+                                                                                                                                    balanceOf[msg.sender] += amount;
+                                                                                                                                            stakedTimestamp[msg.sender] = 0;
+
+                                                                                                                                                    emit Unstaked(msg.sender, amount);
+
+                                                                                            return true;
+    }
+}
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -1920,11 +2018,9 @@ contract AvatarMovementContract {
 """
 
 # Desplegar el contrato
-contract_bytecode = "608060405234801561000f575f80fd5b50335f806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506105ee8061005c5f395ff3fe608060405234801561000f575f80fd5b506004361061003f575f3560e01c80633a9ef6a814610043578063895c96cf1461005f5780638da5cb5b1461008f575b5f80fd5b61005d60048036038101906100589190610369565b6100ad565b005b6100796004803603810190610074919061040a565b6101dc565b604051610086919061044f565b60405180910390f35b6100976101f9565b6040516100a49190610477565b60405180910390f35b60015f3373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020015f205f9054906101000a900460ff1615610137576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040161012e90610510565b60405180910390fd5b6001805f3373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020015f205f6101000a81548160ff0219169083151502179055503373ffffffffffffffffffffffffffffffffffffffff167ff6f6c02a98adeca28116c9f85cadf2d87a76b025771729ce64dd76d45058757f826040516101d19190610598565b60405180910390a250565b6001602052805f5260405f205f915054906101000a900460ff1681565b5f8054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b5f604051905090565b5f80fd5b5f80fd5b5f80fd5b5f80fd5b5f601f19601f8301169050919050565b7f4e487b71000000000000000000000000000000000000000000000000000000005f52604160045260245ffd5b61027b82610235565b810181811067ffffffffffffffff8211171561029a57610299610245565b5b80604052505050565b5f6102ac61021c565b90506102b88282610272565b919050565b5f67ffffffffffffffff8211156102d7576102d6610245565b5b6102e082610235565b9050602081019050919050565b828183375f83830152505050565b5f61030d610308846102bd565b6102a3565b90508281526020810184848401111561032957610328610231565b5b6103348482856102ed565b509392505050565b5f82601f8301126103505761034f61022d565b5b81356103608482602086016102fb565b91505092915050565b5f6020828403121561037e5761037d610225565b5b5f82013567ffffffffffffffff81111561039b5761039a610229565b5b6103a78482850161033c565b91505092915050565b5f73ffffffffffffffffffffffffffffffffffffffff82169050919050565b5f6103d9826103b0565b9050919050565b6103e9816103cf565b81146103f3575f80fd5b50565b5f81359050610404816103e0565b92915050565b5f6020828403121561041f5761041e610225565b5b5f61042c848285016103f6565b91505092915050565b5f8115159050919050565b61044981610435565b82525050565b5f6020820190506104625f830184610440565b92915050565b610471816103cf565b82525050565b5f60208201905061048a5f830184610468565b92915050565b5f82825260208201905092915050565b7f41766174617220697320616c72656164792061742074686973206c6f636174695f8201527f6f6e000000000000000000000000000000000000000000000000000000000000602082015250565b5f6104fa602283610490565b9150610505826104a0565b604082019050919050565b5f6020820190508181035f830152610527816104ee565b9050919050565b5f81519050919050565b5f5b8381101561055557808201518184015260208101905061053a565b5f8484015250505050565b5f61056a8261052e565b6105748185610490565b9350610584818560208601610538565b61058d81610235565b840191505092915050565b5f6020820190508181035f8301526105b08184610560565b90509291505056fea264697066735822122040cab0da80067e835b0a8f7379505003ee6c7b208d48be583ec2691e8c63282464736f6c63430008170033"  # Reemplaza con el bytecode de tu contrato
+contract_bytecode = "608060405234801561000f575f80fd5b50335f806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506105ee8061005c5f395ff3fe608060405234801561000f575f80fd5b506004361061003f575f3560e01c80633a9ef6a814610043578063895c96cf1461005f5780638da5cb5b1461008f575b5f80fd5b61005d60048036038101906100589190610369565b6100ad565b005b6100796004803603810190610074919061040a565b6101dc565b604051610086919061044f565b60405180910390f35b6100976101f9565b6040516100a49190610477565b60405180910390f35b60015f3373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020015f205f9054906101000a900460ff1615610137576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040161012e90610510565b60405180910390fd5b6001805f3373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020015f205f6101000a81548160ff0219169083151502179055503373ffffffffffffffffffffffffffffffffffffffff167ff6f6c02a98adeca28116c9f85cadf2d87a76b025771729ce64dd76d45058757f826040516101d19190610598565b60405180910390a250565b6001602052805f5260405f205f915054906101000a900460ff1681565b5f8054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b5f604051905090565b5f80fd5b5f80fd5b5f80fd5b5f80fd5b5f601f19601f8301169050919050565b7f4e487b71000000000000000000000000000000000000000000000000000000005f52604160045260245ffd5b61027b82610235565b810181811067ffffffffffffffff8211171561029a57610299610245565b5b80604052505050565b5f6102ac61021c565b90506102b88282610272565b919050565b5f67ffffffffffffffff8211156102d7576102d6610245565b5b6102e082610235565b9050602081019050919050565b828183375f83830152505050565b5f61030d610308846102bd565b6102a3565b90508281526020810184848401111561032957610328610231565b5b6103348482856102ed565b509392505050565b5f82601f8301126103505761034f61022d565b5b81356103608482602086016102fb565b91505092915050565b5f6020828403121561037e5761037d610225565b5b5f82013567ffffffffffffffff81111561039b5761039a610229565b5b6103a78482850161033c565b91505092915050565b5f73ffffffffffffffffffffffffffffffffffffffff82169050919050565b5f6103d9826103b0565b9050919050565b6103e9816103cf565b81146103f3575f80fd5b50565b5f81359050610404816103e0565b92915050565b5f6020828403121561041f5761041e610225565b5b5f61042c848285016103f6565b91505092915050565b5f8115159050919050565b61044981610435565b82525050565b5f6020820190506104625f830184610440565b92915050565b610471816103cf565b82525050565b5f60208201905061048a5f830184610468565b92915050565b5f82825260208201905092915050565b7f41766174617220697320616c72656164792061742074686973206c6f636174695f8201527f6f6e000000000000000000000000000000000000000000000000000000000000602082015250565b5f6104fa602283610490565b9150610505826104a0565b604082019050919050565b5f6020820190508181035f830152610527816104ee565b9050919050565b5f81519050919050565b5f5b8381101561055557808201518184015260208101905061053a565b5f8484015250505050565b5f61056a8261052e565b6105748185610490565b9350610584818560208601610538565b61058d81610235565b840191505092915050565b5f6020820190508181035f8301526105b08184610560565b90509291505056fea26469706673582212201c4f2fc27e4c22d64aa5484861db8f419991287c80e6d019cb75a447712146bd64736f6c63430008180033"  # Reemplaza con el bytecode de tu contrato
 
-contract_abi = "
-
-[
+contract_abi = "[
 	{
 		"inputs": [],
 		"stateMutability": "nonpayable",
