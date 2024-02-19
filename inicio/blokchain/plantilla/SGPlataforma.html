@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>WoldbkVirtual</title>
+    <link rel="stylesheet" type="text/css" href="WoldbkVirtual.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        #contenedor {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        #encabezado {
+            text-align: center;
+            padding: 10px;
+            background-color: #f2f2f2;
+        }
+
+        #encabezado h1 {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+
+        #encabezado nav {
+            margin-top: 10px;
+        }
+
+        #encabezado nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        #encabezado nav ul li {
+            margin: 0 10px;
+        }
+
+        #chat {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        #pie {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #mensajeInput {
+            width: 70%;
+            padding: 5px;
+        }
+
+        #pie button {
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="contenedor">
+        <div id="encabezado">
+            <h1>World Virtual</h1>
+            <nav>
+                <ul>
+                    <li><a href="/inicio/herramientas/descripción.html">Inicio</a></li>
+                    <li><a href="/inicio/herramientas/web.html">Segunda Sección</a></li>
+                    <li><a href="/recursos/Ejemploswebs/Webejemplo.html">Tercera Sección</a></li>
+                    <li><a href="/recursos/html/inicio1prb.html">Cuarta Sección</a></li>
+                    <li><a href="/recursos/Ejemploswebs/Webejemplo1.html">Quinta Sección</a></li>
+                    <li><a href="/recursos/html/inicio2">Sexta Sección</a></li>
+                    <li><a href="/recursos/html/inicio3prb.html">Séptima Sección</a></li>
+                </ul>
+            </nav>
+            <p>Metamask</p>
+        </div>
+
+        <p>En esta página principal tendrás todo lo referente a la información del proyecto.</p>
+        <h2>WOLDBKVIRTUAL</h2>
+        <p>Una blockchain con múltiples funciones.</p>
+        <p>Código solidity para desarrollar en condiciones de seguridad WoldcoinVirtual. Número máximo de unidades y formato de criptomoneda.</p>
+        <!-- Añadir más contenido según sea necesario -->
+
+        <div id="chat">
+            <!-- Contenido del chat -->
+        </div>
+
+        <div id="pie">
+            <form onsubmit="enviarMensaje(); return false;">
+                <input type="text" id="mensajeInput" placeholder="Escribe tu mensaje">
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function enviarMensaje() {
+            var mensajeInput = document.getElementById('mensajeInput');
+            var mensaje = mensajeInput.value.trim();
+
+            if (mensaje !== '') {
+                var chatDiv = document.getElementById('chat');
+                var nuevoMensaje = document.createElement('div');
+                nuevoMensaje.className = 'mensaje';
+                nuevoMensaje.textContent = mensaje;
+                chatDiv.appendChild(nuevoMensaje);
+                mensajeInput.value = '';
+
+                // Desvanecer después de 5 segundos
+                setTimeout(function () {
+                    nuevoMensaje.style.opacity = '0';
+                    setTimeout(function () {
+                        nuevoMensaje.style.display = 'none';
+                    }, 1000); // Retraso adicional para permitir que termine la transición
+                }, 5000);
+            }
+        }
+    </script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
