@@ -1,53 +1,105 @@
 <!DOCTYPE html>
 <html lang="es">
 
-
 <head>
     <title>WoldbkVirtual</title>
     <link rel="stylesheet" type="text/css" href="WoldbkVirtual.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        #contenedor {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        #encabezado {
+            text-align: center;
+            padding: 10px;
+            background-color: #f2f2f2;
+        }
+
+        #encabezado h1 {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+
+        #encabezado nav {
+            margin-top: 10px;
+        }
+
+        #encabezado nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        #encabezado nav ul li {
+            margin: 0 10px;
+        }
+
+        #chat {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        #pie {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #mensajeInput {
+            width: 70%;
+            padding: 5px;
+        }
+
+        #pie button {
+            padding: 5px;
+        }
+    </style>
 </head>
 
 <body>
 
     <div id="contenedor">
         <div id="encabezado">
-            World Virtual
-
+            <h1>World Virtual</h1>
             <nav>
                 <ul>
                     <li><a href="/inicio/herramientas/descripción.html">Inicio</a></li>
-                    <li><a href="/inicio/herramientas/web.html">segunda seccion</a></li>
-                    <li><a href="/recursos/Ejemploswebs/Webejemplo.html">tercera seccion</a></li>
-                    <li><a href="/recursos/html/inicio1prb.html">cuarta seccion</a></li>
-
-                    <li><a href="/recursos/Ejemploswebs/Webejemplo1.html">quita sección</a></li>
-                    <li><a href="/recursos/html/inicio2">sexta seccion</a></li>
-                    <li><a href="/recursos/html/inicio3prb.html">seccion 7</a></li>
-
-
-                    <!-- Agrega más enlaces según las secciones y páginas de tu sitio -->
+                    <li><a href="/inicio/herramientas/web.html">Segunda Sección</a></li>
+                    <li><a href="/recursos/Ejemploswebs/Webejemplo.html">Tercera Sección</a></li>
+                    <li><a href="/recursos/html/inicio1prb.html">Cuarta Sección</a></li>
+                    <li><a href="/recursos/Ejemploswebs/Webejemplo1.html">Quinta Sección</a></li>
+                    <li><a href="/recursos/html/inicio2">Sexta Sección</a></li>
+                    <li><a href="/recursos/html/inicio3prb.html">Séptima Sección</a></li>
                 </ul>
             </nav>
-
-
-            <p>metamask</p>
+            <p>Metamask</p>
         </div>
 
-        En esta pagina principal tendreis todo lo referente a la informacion del proyecto.
-        <h1>WOLDBKVIRTUAL</h1>
-        <h2>una blokchain con múltiples funciones </h2>
-
-        Wold Virtual Código solidity para desarrollar en condiciones de seguridad WoldcoinVirtual. Número máximo de unidades y formato., De cryptomoneda. 30.000.000,000 WoldcoinVirtual (WLCV) las comisiones hiran en función de la red que estés conectado red de
-        ethereun Binance Smart chain polygon.... Etc. Y la comisión dentro del metaverso de 0.001 WLCV Hira destinado al pooll de garantía de recompensas. Formato del balance para el metaverso Crypto. "0,000" Para que las recompensas nunca bajen del 50%
+        <p>En esta página principal tendrás todo lo referente a la información del proyecto.</p>
+        <h2>WOLDBKVIRTUAL</h2>
+        <p>Una blockchain con múltiples funciones.</p>
+        <p>Código solidity para desarrollar en condiciones de seguridad WoldcoinVirtual. Número máximo de unidades y formato de criptomoneda.</p>
+        <!-- Añadir más contenido según sea necesario -->
 
         <div id="chat">
+            <!-- Contenido del chat -->
         </div>
+
         <div id="pie">
             <form onsubmit="enviarMensaje(); return false;">
                 <input type="text" id="mensajeInput" placeholder="Escribe tu mensaje">
                 <button type="submit">Enviar</button>
             </form>
-
         </div>
     </div>
 
@@ -65,9 +117,9 @@
                 mensajeInput.value = '';
 
                 // Desvanecer después de 5 segundos
-                setTimeout(function() {
+                setTimeout(function () {
                     nuevoMensaje.style.opacity = '0';
-                    setTimeout(function() {
+                    setTimeout(function () {
                         nuevoMensaje.style.display = 'none';
                     }, 1000); // Retraso adicional para permitir que termine la transición
                 }, 5000);
@@ -75,11 +127,6 @@
         }
     </script>
     <script src="script.js"></script>
-
-    <!--<form action="save_message.php" method="post" onsubmit="enviarMensaje(); return false;">
-        <input type="text" id="mensajeInput" name="message" placeholder="Escribe tu mensaje">
-    <button type="submit">Enviar</button>
-    </form> -->
 
 </body>
 
