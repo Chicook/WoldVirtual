@@ -31,10 +31,6 @@ import random
 import string
 import re
 
-
-# Importar las bibliotecas necesarias
-from flask import Flask, request, jsonify
-
 # Crear una instancia de la aplicación Flask
 app = Flask(__name__)
 
