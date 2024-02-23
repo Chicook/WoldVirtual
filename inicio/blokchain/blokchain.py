@@ -86,18 +86,21 @@ class Blockchain:
 
     def run(self):
         # Iniciar hilo para la rotación de claves en segundo plano
-        import threading
-        rotation_thread = threading.Thread(target=self.rotate_keys)
+        rotation_thread = threading.Thread(target=self.rotate_keys, daemon=True)
         rotation_thread.start()
 
-        # Tu lógica principal aquí (ej. generar bloques)
-        while True:
-            self.generate_new_block()
-            time.sleep(5)  # Intervalo ficticio para la demostración
+        try:
+            # Tu lógica principal aquí (ej. generar bloques)
+            while True:
+                self.generate_new_block()
+                time.sleep(5)  # Intervalo ficticio para la demostración
+        except KeyboardInterrupt:
+            print("Deteniendo la ejecución de la Blockchain.")
 
-# Crear una instancia de la Blockchain y ejecutarla
-blockchain = Blockchain()
-blockchain.run()
+if __name__ == "__main__":
+    # Crear una instancia de la Blockchain y ejecutarla
+    blockchain = Blockchain()
+    blockchain.run()
 
 app = Flask(__name__)
 
