@@ -324,12 +324,14 @@ blockchain = Blockchain()
 blockchain.agregar_bloque("Datos del bloque 1")
 blockchain.imprimir_cadena()
 
-def minar_bloques(blockchain, dificultad, datos):
-    for _ in range(5):
+# ... (Importaciones ya realizadas en la primera parte del código)
+
+def minar_bloques(blockchain, dificultad, datos, num_bloques=5, tiempo_entre_minado=2):
+    for _ in range(num_bloques):
         bloque = blockchain.agregar_bloque(datos)
         bloque.minar_bloque(dificultad)
         print(f"Bloque minado - Índice: {bloque.index}, Hash: {bloque.hash}")
-        time.sleep(2)
+        time.sleep(tiempo_entre_minado)
 
 # Ejemplo de uso
 blockchain = Blockchain()
@@ -360,7 +362,6 @@ class Usuario:
     def __init__(self, direccion, saldo):
         self.direccion = direccion
         self.saldo = saldo
-
 
 class Transaccion:
     def __init__(self, remitente, destinatario, cantidad, tipo_moneda):
