@@ -104,6 +104,8 @@ if __name__ == "__main__":
 
 app = Flask(__name__)
 
+# ... (Importaciones ya realizadas en la primera parte del código)
+
 html_code = '''
 <!DOCTYPE html>
 <html lang="en">
@@ -135,13 +137,6 @@ html_code = '''
 @app.route('/')
 def index():
     return render_template_string(html_code)
-
-if __name__ == '__main__':
-    app.run(debug=True)
-
-# Importa aquí todas las clases y funciones de tu código de blockchain
-
-app = Flask(__name__)
 
 # Inicializar la blockchain
 mi_blockchain = Blockchain()  # Asegúrate de adaptar esto según la estructura de tu código
