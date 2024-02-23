@@ -206,6 +206,8 @@ for isla_nft in islas_nfts:
         ubicacion = isla_nft.propiedades.get('ubicacion', 'Ubicación no disponible')
         print(f"Isla: {nombre}, Ubicación: {ubicacion}")
 
+# ... (Importaciones ya realizadas en la primera parte del código)
+
 class GeneradorAvatar:
     def __init__(self):
         self.colores = ['rojo', 'azul', 'verde', 'amarillo', 'naranja']
@@ -216,16 +218,14 @@ class GeneradorAvatar:
         color = random.choice(self.colores)
         forma = random.choice(self.formas)
         elemento = random.choice(self.elementos)
-        nombre = ''.join(random.choice(string.ascii_letters) for _ in range(8))
+        nombre = ''.join(random.choices(string.ascii_letters, k=8))  # Uso de random.choices para mayor claridad
         avatar_info = f"Avatar de {nombre}: {color}, {forma}, con {elemento}"
         return avatar_info
 
-# Clase Sincronizador en el código principal
-
 class Sincronizador:
 
-    def __init__(self):
-        self.estado = "Inicial"
+    def __init__(self, estado_inicial="Inicial"):
+        self.estado = estado_inicial
 
     def obtener_estado(self):
         return self.estado
@@ -233,8 +233,12 @@ class Sincronizador:
     def actualizar_estado(self, nuevo_estado):
         self.estado = nuevo_estado
 
-# Uso del Sincronizador
+# Uso del GeneradorAvatar
+generador = GeneradorAvatar()
+avatar_generado = generador.generar_avatar()
+print(avatar_generado)
 
+# Uso del Sincronizador
 sincronizador = Sincronizador()
 
 estado_inicial = sincronizador.obtener_estado()
@@ -243,9 +247,6 @@ print(f"Estado Inicial: {estado_inicial}")
 nuevo_estado = "Conectado a Unity"
 sincronizador.actualizar_estado(nuevo_estado)
 print(f"Nuevo Estado: {sincronizador.obtener_estado()}")
-
-# para trabajar con unity y Unreal #
-
 
 # Para trabajar en blender #
 
