@@ -162,20 +162,27 @@ if __name__ == '__main__':
     app.run(port=5000)
 	
 class NFT:
-	
-    def __init__(self, id_unica, nombre, coordenadas, propietario=None):
-        self.id_unica = id_unica
-        self.nombre = nombre
-        self.coordenadas = coordenadas
-        self.propietario = propietario
-        self.timestamp_creacion = time.time()
-        self.hash = self.calcular_hash()
+    def __init__(self, id_unica=None, nombre=None, coordenadas=None, propietario=None):
+        if id_unica and nombre and coordenadas:
+            # Caso 1: Crear un NFT con propiedades específicas
+            self.id_unica = id_unica
+            self.nombre = nombre
+            self.coordenadas = coordenadas
+            self.propietario = propietario
+            self.timestamp_creacion = time.time()
+            self.hash = self.calcular_hash()
+        elif id_unica and propiedades:
+            # Caso 2: Crear un NFT con un diccionario de propiedades
+            self.id_unica = id_unica
+            self.propiedades = propiedades
+        else:
+            raise ValueError("No se proporcionaron propiedades suficientes para crear el NFT")
 
     def calcular_hash(self):
         datos_codificados = str(self.id_unica) + str(self.nombre) + str(self.coordenadas) + str(self.propietario) + str(self.timestamp_creacion)
         return hashlib.sha256(datos_codificados.encode('utf-8')).hexdigest()
 
-# Crear una isla como NFT único
+# Caso 1: Crear una isla como NFT único con propiedades específicas
 isla1_nft = NFT(id_unica="ID_ISLA_1", nombre="Isla 1", coordenadas="Coordenadas XYZ")
 
 # Acceder a las propiedades de la isla
@@ -183,22 +190,21 @@ print(f"Isla: {isla1_nft.nombre}, Ubicación: {isla1_nft.coordenadas}")
 
 # Acceder al hash único generado
 print(f"Hash único: {isla1_nft.hash}")
-	
-    def __init__(self, identificador_unico, propiedades):
-        self.identificador_unico = identificador_unico
-        self.propiedades = propiedades
 
-# Crear una isla como NFT único
-isla1_nft = NFT(identificador_unico="ID_ISLA_1", propiedades={"nombre": "Isla 1", "ubicacion": "Coordenadas XYZ"})
+# Caso 2: Crear una isla como NFT único con un diccionario de propiedades
+isla2_nft = NFT(id_unica="ID_ISLA_2", propiedades={"nombre": "Isla 2", "ubicacion": "Coordenadas XYZ"})
 
 # Guardar la isla en una lista o estructura de datos similar
-islas_nfts = [isla1_nft]
+islas_nfts = [isla1_nft, isla2_nft]
 
-# Acceder a las propiedades de la isla
+# Acceder a las propiedades de las islas
 for isla_nft in islas_nfts:
-    nombre = isla_nft.propiedades.get('nombre', 'Nombre no disponible')
-    ubicacion = isla_nft.propiedades.get('ubicacion', 'Ubicación no disponible')
-    print(f"Isla: {nombre}, Ubicación: {ubicacion}")
+    if hasattr(isla_nft, 'nombre') and hasattr(isla_nft, 'coordenadas'):
+        print(f"Isla: {isla_nft.nombre}, Ubicación: {isla_nft.coordenadas}")
+    elif hasattr(isla_nft, 'propiedades'):
+        nombre = isla_nft.propiedades.get('nombre', 'Nombre no disponible')
+        ubicacion = isla_nft.propiedades.get('ubicacion', 'Ubicación no disponible')
+        print(f"Isla: {nombre}, Ubicación: {ubicacion}")
 
 class GeneradorAvatar:
     def __init__(self):
