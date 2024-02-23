@@ -292,7 +292,7 @@ class Bloque:
             self.hash = self.calcular_hash()
 
     def calcular_hash(self):
-        datos_codificados = str(self.index) + str(self.timestamp) + str(self.datos) + str(self.hash_anterior) + str(self.nonce)
+        datos_codificados = f"{self.index}{self.timestamp}{self.datos}{self.hash_anterior}{self.nonce}"
         return hashlib.sha256(datos_codificados.encode('utf-8')).hexdigest()
 
 class Blockchain:
@@ -312,14 +312,17 @@ class Blockchain:
             return nuevo_bloque
 
     def obtener_hash_anterior(self):
-        if len(self.cadena) == 0:
-            return "1"  # Bloque génesis
-        return self.cadena[-1].hash
+        return self.cadena[-1].hash if self.cadena else "1"  # Bloque génesis
 
     def imprimir_cadena(self):
         with self.mutex:
             for bloque in self.cadena:
                 print(f"Índice: {bloque.index}, Hash: {bloque.hash}")
+
+# Ejemplo de uso
+blockchain = Blockchain()
+blockchain.agregar_bloque("Datos del bloque 1")
+blockchain.imprimir_cadena()
 
 def minar_bloques(blockchain, dificultad, datos):
     for _ in range(5):
