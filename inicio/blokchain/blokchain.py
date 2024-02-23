@@ -10,7 +10,7 @@ class MyCode:
 if __name__ == "__main__":
     my_code_instance = MyCode()
     my_code_instance.run()
-	
+
 import tkinter as tk
 import hashlib
 from flask import Flask, request, jsonify, render_template, url_for, render_template_string
@@ -25,16 +25,12 @@ from eth_account import Account
 from flask_sockets import Sockets
 from flask_mysqldb import MySQL
 import jwt
-import datetime
 from functools import wraps
 import bpy
 import random
 import string
-from datetime import datetime
-from flask import Flask, jsonify, request
-import threading  # Necesario para ejecutar la blockchain en un hilo separado
-from flask import Flask, render_template_string
 import re
+
 
 # Importar las bibliotecas necesarias
 # Crear una instancia de la aplicación Flask
