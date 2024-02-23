@@ -363,18 +363,6 @@ class Usuario:
         self.direccion = direccion
         self.saldo = saldo
 
-class Transaccion:
-    def __init__(self, remitente, destinatario, cantidad, tipo_moneda):
-        self.remitente = remitente
-        self.destinatario = destinatario
-        self.cantidad = cantidad
-        self.tipo_moneda = tipo_moneda
-
-class Usuario:
-    def __init__(self, direccion, saldo):
-        self.direccion = direccion
-        self.saldo = saldo
-
 class PlataformaBlockchain:
     def __init__(self):
         self.usuarios = []
@@ -398,6 +386,11 @@ class PlataformaBlockchain:
         if not self.validar_direccion(remitente) or not self.validar_direccion(destinatario):
             print("Dirección de remitente o destinatario no válida.")
             return False
+        # Implementa la lógica para realizar la transacción según tus necesidades
+        nueva_transaccion = Transaccion(remitente, destinatario, cantidad, tipo_moneda)
+        self.transacciones.append(nueva_transaccion)
+        print("Transacción realizada con éxito.")
+        return True
 
         if not self.autenticar_usuario(remitente):
             print("Autenticación de remitente fallida.")
