@@ -258,20 +258,24 @@ bpy.ops.object.delete()
 # Crear un suelo cuadrado de color azul metálico
 bpy.ops.mesh.primitive_plane_add(size=10, enter_editmode=False, align='WORLD', location=(0, 0, 0))
 bpy.ops.object.shade_smooth()
+
+# Crear y asignar material
 material = bpy.data.materials.new(name="BlueMetallic")
 material.use_nodes = True
-material.node_tree.nodes.new(type='ShaderNodeBsdfPrincipled')
-material.node_tree.nodes["Principled BSDF"].base_color = (0, 0, 1, 1)  # Color azul
-material.node_tree.nodes["Principled BSDF"].metallic = 1  # Superficie metálica
+bsdf = material.node_tree.nodes.new(type='ShaderNodeBsdfPrincipled')
+bsdf.base_color = (0, 0, 1, 1)  # Color azul
+bsdf.metallic = 1  # Superficie metálica
 bpy.context.object.data.materials.append(material)
 
 # Configurar la vista de la cámara
 bpy.ops.object.camera_add(enter_editmode=False, align='VIEW', location=(0, 0, 5), rotation=(0, 0, 0))
+camera = bpy.context.object
 bpy.ops.object.select_by_type(type='CAMERA')
 bpy.context.scene.camera = bpy.context.selected_objects[0]
 
 # Configurar la iluminación
 bpy.ops.object.light_add(type='SUN', radius=1, align='WORLD', location=(5, 5, 5))
+light = bpy.context.object
 
 class Bloque:
     def __init__(self, index, timestamp, datos, hash_anterior):
