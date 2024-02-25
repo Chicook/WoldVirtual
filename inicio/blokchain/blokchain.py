@@ -455,7 +455,7 @@ contrato_ingreso = ContratoIngresoCripto(cadena_bloques.web3, 'DIRECCION_DEL_CON
 cantidad_a_depositar = 10  # Ajusta según tu caso
 contrato_ingreso.depositar(cantidad_a_depositar)
 
-# Otro código de la aplicación...
+# Código de la aplicación...
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'tu_clave_secreta'  # Reemplaza con una clave segura en un entorno de producción
@@ -494,7 +494,7 @@ def recurso_protgido():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
+	
 web3 = Web3(Web3.HTTPProvider('tu_url_de_ethereum'))
 
 # Direcciones y claves privadas (actualiza según tus necesidades)
