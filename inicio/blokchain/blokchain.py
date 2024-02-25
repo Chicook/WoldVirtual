@@ -10,7 +10,7 @@ class MyCode:
 if __name__ == "__main__":
     my_code_instance = MyCode()
     my_code_instance.run()
-	
+
 import tkinter as tk
 import hashlib
 from flask import Flask, request, jsonify, render_template, url_for, render_template_string
@@ -25,18 +25,12 @@ from eth_account import Account
 from flask_sockets import Sockets
 from flask_mysqldb import MySQL
 import jwt
-import datetime
 from functools import wraps
 import bpy
 import random
 import string
-from datetime import datetime
-from flask import Flask, jsonify, request
-import threading  # Necesario para ejecutar la blockchain en un hilo separado
-from flask import Flask, render_template_string
 import re
 
-# Importar las bibliotecas necesarias
 # Crear una instancia de la aplicación Flask
 app = Flask(__name__)
 
@@ -92,20 +86,25 @@ class Blockchain:
 
     def run(self):
         # Iniciar hilo para la rotación de claves en segundo plano
-        import threading
-        rotation_thread = threading.Thread(target=self.rotate_keys)
+        rotation_thread = threading.Thread(target=self.rotate_keys, daemon=True)
         rotation_thread.start()
 
-        # Tu lógica principal aquí (ej. generar bloques)
-        while True:
-            self.generate_new_block()
-            time.sleep(5)  # Intervalo ficticio para la demostración
+        try:
+            # Tu lógica principal aquí (ej. generar bloques)
+            while True:
+                self.generate_new_block()
+                time.sleep(5)  # Intervalo ficticio para la demostración
+        except KeyboardInterrupt:
+            print("Deteniendo la ejecución de la Blockchain.")
 
-# Crear una instancia de la Blockchain y ejecutarla
-blockchain = Blockchain()
-blockchain.run()
+if __name__ == "__main__":
+    # Crear una instancia de la Blockchain y ejecutarla
+    blockchain = Blockchain()
+    blockchain.run()
 
 app = Flask(__name__)
+
+# ... (Importaciones ya realizadas en la primera parte del código)
 
 html_code = '''
 <!DOCTYPE html>
@@ -139,13 +138,6 @@ html_code = '''
 def index():
     return render_template_string(html_code)
 
-if __name__ == '__main__':
-    app.run(debug=True)
-
-# Importa aquí todas las clases y funciones de tu código de blockchain
-
-app = Flask(__name__)
-
 # Inicializar la blockchain
 mi_blockchain = Blockchain()  # Asegúrate de adaptar esto según la estructura de tu código
 
@@ -170,20 +162,27 @@ if __name__ == '__main__':
     app.run(port=5000)
 	
 class NFT:
-	
-    def __init__(self, id_unica, nombre, coordenadas, propietario=None):
-        self.id_unica = id_unica
-        self.nombre = nombre
-        self.coordenadas = coordenadas
-        self.propietario = propietario
-        self.timestamp_creacion = time.time()
-        self.hash = self.calcular_hash()
+    def __init__(self, id_unica=None, nombre=None, coordenadas=None, propietario=None):
+        if id_unica and nombre and coordenadas:
+            # Caso 1: Crear un NFT con propiedades específicas
+            self.id_unica = id_unica
+            self.nombre = nombre
+            self.coordenadas = coordenadas
+            self.propietario = propietario
+            self.timestamp_creacion = time.time()
+            self.hash = self.calcular_hash()
+        elif id_unica and propiedades:
+            # Caso 2: Crear un NFT con un diccionario de propiedades
+            self.id_unica = id_unica
+            self.propiedades = propiedades
+        else:
+            raise ValueError("No se proporcionaron propiedades suficientes para crear el NFT")
 
     def calcular_hash(self):
         datos_codificados = str(self.id_unica) + str(self.nombre) + str(self.coordenadas) + str(self.propietario) + str(self.timestamp_creacion)
         return hashlib.sha256(datos_codificados.encode('utf-8')).hexdigest()
 
-# Crear una isla como NFT único
+# Caso 1: Crear una isla como NFT único con propiedades específicas
 isla1_nft = NFT(id_unica="ID_ISLA_1", nombre="Isla 1", coordenadas="Coordenadas XYZ")
 
 # Acceder a las propiedades de la isla
@@ -191,22 +190,23 @@ print(f"Isla: {isla1_nft.nombre}, Ubicación: {isla1_nft.coordenadas}")
 
 # Acceder al hash único generado
 print(f"Hash único: {isla1_nft.hash}")
-	
-    def __init__(self, identificador_unico, propiedades):
-        self.identificador_unico = identificador_unico
-        self.propiedades = propiedades
 
-# Crear una isla como NFT único
-isla1_nft = NFT(identificador_unico="ID_ISLA_1", propiedades={"nombre": "Isla 1", "ubicacion": "Coordenadas XYZ"})
+# Caso 2: Crear una isla como NFT único con un diccionario de propiedades
+isla2_nft = NFT(id_unica="ID_ISLA_2", propiedades={"nombre": "Isla 2", "ubicacion": "Coordenadas XYZ"})
 
 # Guardar la isla en una lista o estructura de datos similar
-islas_nfts = [isla1_nft]
+islas_nfts = [isla1_nft, isla2_nft]
 
-# Acceder a las propiedades de la isla
+# Acceder a las propiedades de las islas
 for isla_nft in islas_nfts:
-    nombre = isla_nft.propiedades.get('nombre', 'Nombre no disponible')
-    ubicacion = isla_nft.propiedades.get('ubicacion', 'Ubicación no disponible')
-    print(f"Isla: {nombre}, Ubicación: {ubicacion}")
+    if hasattr(isla_nft, 'nombre') and hasattr(isla_nft, 'coordenadas'):
+        print(f"Isla: {isla_nft.nombre}, Ubicación: {isla_nft.coordenadas}")
+    elif hasattr(isla_nft, 'propiedades'):
+        nombre = isla_nft.propiedades.get('nombre', 'Nombre no disponible')
+        ubicacion = isla_nft.propiedades.get('ubicacion', 'Ubicación no disponible')
+        print(f"Isla: {nombre}, Ubicación: {ubicacion}")
+
+# ... (Importaciones ya realizadas en la primera parte del código)
 
 class GeneradorAvatar:
     def __init__(self):
@@ -218,16 +218,14 @@ class GeneradorAvatar:
         color = random.choice(self.colores)
         forma = random.choice(self.formas)
         elemento = random.choice(self.elementos)
-        nombre = ''.join(random.choice(string.ascii_letters) for _ in range(8))
+        nombre = ''.join(random.choices(string.ascii_letters, k=8))  # Uso de random.choices para mayor claridad
         avatar_info = f"Avatar de {nombre}: {color}, {forma}, con {elemento}"
         return avatar_info
 
-# Clase Sincronizador en el código principal
-
 class Sincronizador:
 
-    def __init__(self):
-        self.estado = "Inicial"
+    def __init__(self, estado_inicial="Inicial"):
+        self.estado = estado_inicial
 
     def obtener_estado(self):
         return self.estado
@@ -235,8 +233,12 @@ class Sincronizador:
     def actualizar_estado(self, nuevo_estado):
         self.estado = nuevo_estado
 
-# Uso del Sincronizador
+# Uso del GeneradorAvatar
+generador = GeneradorAvatar()
+avatar_generado = generador.generar_avatar()
+print(avatar_generado)
 
+# Uso del Sincronizador
 sincronizador = Sincronizador()
 
 estado_inicial = sincronizador.obtener_estado()
@@ -245,9 +247,6 @@ print(f"Estado Inicial: {estado_inicial}")
 nuevo_estado = "Conectado a Unity"
 sincronizador.actualizar_estado(nuevo_estado)
 print(f"Nuevo Estado: {sincronizador.obtener_estado()}")
-
-# para trabajar con unity y Unreal #
-
 
 # Para trabajar en blender #
 
@@ -259,20 +258,24 @@ bpy.ops.object.delete()
 # Crear un suelo cuadrado de color azul metálico
 bpy.ops.mesh.primitive_plane_add(size=10, enter_editmode=False, align='WORLD', location=(0, 0, 0))
 bpy.ops.object.shade_smooth()
+
+# Crear y asignar material
 material = bpy.data.materials.new(name="BlueMetallic")
 material.use_nodes = True
-material.node_tree.nodes.new(type='ShaderNodeBsdfPrincipled')
-material.node_tree.nodes["Principled BSDF"].base_color = (0, 0, 1, 1)  # Color azul
-material.node_tree.nodes["Principled BSDF"].metallic = 1  # Superficie metálica
+bsdf = material.node_tree.nodes.new(type='ShaderNodeBsdfPrincipled')
+bsdf.base_color = (0, 0, 1, 1)  # Color azul
+bsdf.metallic = 1  # Superficie metálica
 bpy.context.object.data.materials.append(material)
 
 # Configurar la vista de la cámara
 bpy.ops.object.camera_add(enter_editmode=False, align='VIEW', location=(0, 0, 5), rotation=(0, 0, 0))
+camera = bpy.context.object
 bpy.ops.object.select_by_type(type='CAMERA')
 bpy.context.scene.camera = bpy.context.selected_objects[0]
 
 # Configurar la iluminación
 bpy.ops.object.light_add(type='SUN', radius=1, align='WORLD', location=(5, 5, 5))
+light = bpy.context.object
 
 class Bloque:
     def __init__(self, index, timestamp, datos, hash_anterior):
@@ -289,7 +292,7 @@ class Bloque:
             self.hash = self.calcular_hash()
 
     def calcular_hash(self):
-        datos_codificados = str(self.index) + str(self.timestamp) + str(self.datos) + str(self.hash_anterior) + str(self.nonce)
+        datos_codificados = f"{self.index}{self.timestamp}{self.datos}{self.hash_anterior}{self.nonce}"
         return hashlib.sha256(datos_codificados.encode('utf-8')).hexdigest()
 
 class Blockchain:
@@ -309,21 +312,26 @@ class Blockchain:
             return nuevo_bloque
 
     def obtener_hash_anterior(self):
-        if len(self.cadena) == 0:
-            return "1"  # Bloque génesis
-        return self.cadena[-1].hash
+        return self.cadena[-1].hash if self.cadena else "1"  # Bloque génesis
 
     def imprimir_cadena(self):
         with self.mutex:
             for bloque in self.cadena:
                 print(f"Índice: {bloque.index}, Hash: {bloque.hash}")
 
-def minar_bloques(blockchain, dificultad, datos):
-    for _ in range(5):
+# Ejemplo de uso
+blockchain = Blockchain()
+blockchain.agregar_bloque("Datos del bloque 1")
+blockchain.imprimir_cadena()
+
+# ... (Importaciones ya realizadas en la primera parte del código)
+
+def minar_bloques(blockchain, dificultad, datos, num_bloques=5, tiempo_entre_minado=2):
+    for _ in range(num_bloques):
         bloque = blockchain.agregar_bloque(datos)
         bloque.minar_bloque(dificultad)
         print(f"Bloque minado - Índice: {bloque.index}, Hash: {bloque.hash}")
-        time.sleep(2)
+        time.sleep(tiempo_entre_minado)
 
 # Ejemplo de uso
 blockchain = Blockchain()
@@ -342,19 +350,6 @@ thread2.join()
 
 # Imprimir la cadena después de la minería simultánea
 blockchain.imprimir_cadena()
-
-class Transaccion:
-    def __init__(self, remitente, destinatario, cantidad, tipo_moneda):
-        self.remitente = remitente
-        self.destinatario = destinatario
-        self.cantidad = cantidad
-        self.tipo_moneda = tipo_moneda
-
-class Usuario:
-    def __init__(self, direccion, saldo):
-        self.direccion = direccion
-        self.saldo = saldo
-
 
 class Transaccion:
     def __init__(self, remitente, destinatario, cantidad, tipo_moneda):
@@ -391,6 +386,11 @@ class PlataformaBlockchain:
         if not self.validar_direccion(remitente) or not self.validar_direccion(destinatario):
             print("Dirección de remitente o destinatario no válida.")
             return False
+        # Implementa la lógica para realizar la transacción según tus necesidades
+        nueva_transaccion = Transaccion(remitente, destinatario, cantidad, tipo_moneda)
+        self.transacciones.append(nueva_transaccion)
+        print("Transacción realizada con éxito.")
+        return True
 
         if not self.autenticar_usuario(remitente):
             print("Autenticación de remitente fallida.")
