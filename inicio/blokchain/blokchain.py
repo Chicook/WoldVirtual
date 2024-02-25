@@ -414,6 +414,7 @@ plataforma = PlataformaBlockchain()
 plataforma.agregar_usuario("direccion_usuario1", 100)
 plataforma.agregar_usuario("direccion_usuario2", 50)
 
+# Lógica básica de transferencia
 resultado = plataforma.realizar_transaccion("direccion_usuario1", "direccion_usuario2", 10, "WoldcoinVirtual")
 if resultado:
     print("Transacción exitosa")
@@ -423,7 +424,7 @@ if resultado:
         print(f"De: {transaccion.remitente}, A: {transaccion.destinatario}, Cantidad: {transaccion.cantidad}, Moneda: {transaccion.tipo_moneda}")
 else:
     print("Transacción fallida. Fondos insuficientes o dirección no válida.")
-	
+
 # Clase ContratoIngresoCripto
 class ContratoIngresoCripto:
     def __init__(self, web3, contrato_address, propietario_address):
@@ -442,6 +443,7 @@ class ContratoIngresoCripto:
             'gasPrice': self.web3.toWei('50', 'gwei'),
         }
         self.contrato.functions.depositar(cantidad).transact(transaccion)
+        print(f"Depósito de {cantidad} realizado por {self.propietario_address}")
 
     # Otros métodos según las funciones de tu contrato...
 
@@ -454,7 +456,6 @@ cantidad_a_depositar = 10  # Ajusta según tu caso
 contrato_ingreso.depositar(cantidad_a_depositar)
 
 # Otro código de la aplicación...
-
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'tu_clave_secreta'  # Reemplaza con una clave segura en un entorno de producción
