@@ -495,43 +495,33 @@ def recurso_protgido():
 if __name__ == '__main__':
     app.run(debug=True)
 	
-web3 = Web3(Web3.HTTPProvider('tu_url_de_ethereum'))
-
 # Direcciones y claves privadas (actualiza según tus necesidades)
 contract_address = '0x123456789ABCDEF123456789ABCDEF123456789A'
 sender_address = '0x987654321ABCDEF987654321ABCDEF9876543210'
 private_key = 'tu_clave_privada'
 abi = [...]  # Coloca aquí el ABI del contrato NFT
 
-# Contrato NFT
-contract = web3.eth.contract(address=contract_address, abi=abi)
-
 app = Flask(__name__)
 
 # Conexión a la blockchain
+web3 = Web3(Web3.HTTPProvider('tu_url_de_ethereum'))
+
 def connect_to_blockchain():
-    try:
-        if web3.isConnected():
-            print("Conexión exitosa con la blockchain")
-        else:
-            raise Exception("Error: No se pudo conectar a la blockchain")
-    except Exception as e:
-        print(f"Error en la conexión a la blockchain: {e}")
+    if web3.isConnected():
+        print("Conexión exitosa con la blockchain")
+    else:
+        print("Error: No se pudo conectar a la blockchain")
 
 # Función para mintear un nuevo NFT
 def mint_avatar_nft(owner_address):
     try:
-        transaction = contract.functions.mintAvatarNFT(owner_address).buildTransaction({
+        contract.functions.mintAvatarNFT(owner_address).transact({
             'from': sender_address,
             'gas': 200000,
             'gasPrice': web3.toWei('50', 'gwei'),
             'nonce': web3.eth.getTransactionCount(sender_address),
+            'privateKey': private_key,
         })
-
-        signed_transaction = web3.eth.account.signTransaction(transaction, private_key)
-        tx_hash = web3.eth.sendRawTransaction(signed_transaction.rawTransaction)
-
-        web3.eth.waitForTransactionReceipt(tx_hash)
 
         print(f"NFT creado exitosamente para el avatar: {owner_address}")
         return "Acción completada en la blockchain"
@@ -539,8 +529,21 @@ def mint_avatar_nft(owner_address):
         print(f"Error en la transacción al mintear NFT: {e}")
         return "Error en la transacción"
 
-# ... (otras funciones)
+# Función para obtener la información de un NFT
+def get_nft_info(token_id):
+    try:
+        info = contract.functions.getNFTInfo(token_id).call()
+        return {'owner': info[0], 'metadata': info[1]}  # Ajusta según la estructura real de tu contrato
+    except Exception as e:
+        print(f"Error al obtener información del NFT: {e}")
+        return {'error': 'Error al obtener información del NFT'}
 
+# Otras funciones y lógica...
+
+if __name__ == '__main__':
+    connect_to_blockchain()
+    app.run(debug=True)
+	
 @app.route('/network_config', methods=['GET'])
 def get_network_config():
     try:
