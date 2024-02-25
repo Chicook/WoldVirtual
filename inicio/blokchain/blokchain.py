@@ -543,7 +543,9 @@ def get_nft_info(token_id):
 if __name__ == '__main__':
     connect_to_blockchain()
     app.run(debug=True)
-	
+
+
+# partes a mejorar., red propia en wallets como metamask #
 @app.route('/network_config', methods=['GET'])
 def get_network_config():
     try:
