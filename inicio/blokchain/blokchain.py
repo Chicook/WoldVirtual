@@ -414,6 +414,7 @@ plataforma = PlataformaBlockchain()
 plataforma.agregar_usuario("direccion_usuario1", 100)
 plataforma.agregar_usuario("direccion_usuario2", 50)
 
+# Lógica básica de transferencia
 resultado = plataforma.realizar_transaccion("direccion_usuario1", "direccion_usuario2", 10, "WoldcoinVirtual")
 if resultado:
     print("Transacción exitosa")
@@ -423,7 +424,7 @@ if resultado:
         print(f"De: {transaccion.remitente}, A: {transaccion.destinatario}, Cantidad: {transaccion.cantidad}, Moneda: {transaccion.tipo_moneda}")
 else:
     print("Transacción fallida. Fondos insuficientes o dirección no válida.")
-	
+
 # Clase ContratoIngresoCripto
 class ContratoIngresoCripto:
     def __init__(self, web3, contrato_address, propietario_address):
@@ -442,6 +443,7 @@ class ContratoIngresoCripto:
             'gasPrice': self.web3.toWei('50', 'gwei'),
         }
         self.contrato.functions.depositar(cantidad).transact(transaccion)
+        print(f"Depósito de {cantidad} realizado por {self.propietario_address}")
 
     # Otros métodos según las funciones de tu contrato...
 
@@ -453,8 +455,7 @@ contrato_ingreso = ContratoIngresoCripto(cadena_bloques.web3, 'DIRECCION_DEL_CON
 cantidad_a_depositar = 10  # Ajusta según tu caso
 contrato_ingreso.depositar(cantidad_a_depositar)
 
-# Otro código de la aplicación...
-
+# Código de la aplicación...
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'tu_clave_secreta'  # Reemplaza con una clave segura en un entorno de producción
@@ -493,44 +494,34 @@ def recurso_protgido():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-web3 = Web3(Web3.HTTPProvider('tu_url_de_ethereum'))
-
+	
 # Direcciones y claves privadas (actualiza según tus necesidades)
 contract_address = '0x123456789ABCDEF123456789ABCDEF123456789A'
 sender_address = '0x987654321ABCDEF987654321ABCDEF9876543210'
 private_key = 'tu_clave_privada'
 abi = [...]  # Coloca aquí el ABI del contrato NFT
 
-# Contrato NFT
-contract = web3.eth.contract(address=contract_address, abi=abi)
-
 app = Flask(__name__)
 
 # Conexión a la blockchain
+web3 = Web3(Web3.HTTPProvider('tu_url_de_ethereum'))
+
 def connect_to_blockchain():
-    try:
-        if web3.isConnected():
-            print("Conexión exitosa con la blockchain")
-        else:
-            raise Exception("Error: No se pudo conectar a la blockchain")
-    except Exception as e:
-        print(f"Error en la conexión a la blockchain: {e}")
+    if web3.isConnected():
+        print("Conexión exitosa con la blockchain")
+    else:
+        print("Error: No se pudo conectar a la blockchain")
 
 # Función para mintear un nuevo NFT
 def mint_avatar_nft(owner_address):
     try:
-        transaction = contract.functions.mintAvatarNFT(owner_address).buildTransaction({
+        contract.functions.mintAvatarNFT(owner_address).transact({
             'from': sender_address,
             'gas': 200000,
             'gasPrice': web3.toWei('50', 'gwei'),
             'nonce': web3.eth.getTransactionCount(sender_address),
+            'privateKey': private_key,
         })
-
-        signed_transaction = web3.eth.account.signTransaction(transaction, private_key)
-        tx_hash = web3.eth.sendRawTransaction(signed_transaction.rawTransaction)
-
-        web3.eth.waitForTransactionReceipt(tx_hash)
 
         print(f"NFT creado exitosamente para el avatar: {owner_address}")
         return "Acción completada en la blockchain"
@@ -538,8 +529,23 @@ def mint_avatar_nft(owner_address):
         print(f"Error en la transacción al mintear NFT: {e}")
         return "Error en la transacción"
 
-# ... (otras funciones)
+# Función para obtener la información de un NFT
+def get_nft_info(token_id):
+    try:
+        info = contract.functions.getNFTInfo(token_id).call()
+        return {'owner': info[0], 'metadata': info[1]}  # Ajusta según la estructura real de tu contrato
+    except Exception as e:
+        print(f"Error al obtener información del NFT: {e}")
+        return {'error': 'Error al obtener información del NFT'}
 
+# Otras funciones y lógica...
+
+if __name__ == '__main__':
+    connect_to_blockchain()
+    app.run(debug=True)
+
+
+# partes a mejorar., red propia en wallets como metamask #
 @app.route('/network_config', methods=['GET'])
 def get_network_config():
     try:
