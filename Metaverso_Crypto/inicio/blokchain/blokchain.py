@@ -30,7 +30,39 @@ import bpy
 import random
 import string
 import re
+import gzip
 
+def comprimir_y_guardar_datos(datos, archivo_salida):
+    datos_serializados = json.dumps(datos).encode('utf-8')
+    datos_comprimidos = gzip.compress(datos_serializados)
+
+    with open(archivo_salida, 'wb') as archivo:
+        archivo.write(datos_comprimidos)
+
+def cargar_y_descomprimir_datos(archivo_entrada):
+    with open(archivo_entrada, 'rb') as archivo:
+        datos_comprimidos = archivo.read()
+
+    datos_descomprimidos = gzip.decompress(datos_comprimidos)
+    return json.loads(datos_descomprimidos)
+
+# Ejemplo de uso
+datos_isla_virtual = {
+    "nombre": "Isla Encantada",
+    "descripcion": "Una isla mágica creada por los usuarios",
+    "objetos": [
+        {"nombre": "Casa Principal", "tipo": "Edificio", "ubicacion": {"x": 10, "y": 5, "z": 8}},
+        {"nombre": "Jardín de Flores", "tipo": "Área", "ubicacion": {"x": 15, "y": 7, "z": 10}}
+    ]
+}
+
+# Escribir datos comprimidos
+comprimir_y_guardar_datos(datos_isla_virtual, 'isla_virtual_comprimida.gz')
+
+# Cargar y descomprimir datos
+datos_recuperados = cargar_y_descomprimir_datos('isla_virtual_comprimida.gz')
+print(datos_recuperados)
+	
 # Crear una instancia de la aplicación Flask
 app = Flask(__name__)
 
