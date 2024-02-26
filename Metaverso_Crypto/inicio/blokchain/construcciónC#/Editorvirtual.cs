@@ -1,6 +1,30 @@
 // Program.cs
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+// Program.cs
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("¡Hola desde C#!");
+
+        // Aquí puedes continuar agregando funcionalidades según tus necesidades.
+
+        // Por ejemplo, puedes pedir al usuario que ingrese su nombre:
+        Console.Write("Ingresa tu nombre: ");
+        string nombre = Console.ReadLine();
+
+        // Luego, puedes saludar al usuario por su nombre:
+        Console.WriteLine($"Hola, {nombre}!");
+
+        // Puedes seguir agregando más lógica y funcionalidades aquí.
+
+        Console.WriteLine("Presiona cualquier tecla para salir.");
+        Console.ReadKey();
+    }
+}
 
 public class Program
 {
