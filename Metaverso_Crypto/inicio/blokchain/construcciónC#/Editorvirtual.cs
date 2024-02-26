@@ -2,10 +2,51 @@
 // Controllers/EditorController.cs
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using System;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
+using System;
+
+public class EditorController : Controller
+{
+    // ... (contenido existente)
+
+    // Iniciar una animación en un elemento
+    [HttpPost]
+    public IActionResult IniciarAnimacion([FromBody] JObject animacion)
+    {
+        // Lógica para iniciar una animación en un elemento, por ejemplo, enviar comandos a un motor de animación.
+        // Aquí, simplemente mostramos la animación a iniciar en la consola.
+        Console.WriteLine("Iniciar animación:");
+        Console.WriteLine(animacion);
+
+        return Ok();
+    }
+
+    // Detener una animación en un elemento
+    [HttpPost]
+    public IActionResult DetenerAnimacion([FromBody] int index)
+    {
+        // Lógica para detener una animación en un elemento, por ejemplo, enviar comandos a un motor de animación.
+        // Aquí, simplemente mostramos el índice del elemento con la animación a detener en la consola.
+        Console.WriteLine("Detener animación en el índice: " + index);
+
+        return Ok();
+    }
+
+    // Manejar eventos específicos del videojuego
+    [HttpPost]
+    public IActionResult ManejarEventoVideojuego([FromBody] JObject evento)
+    {
+        // Lógica para manejar eventos específicos del videojuego, por ejemplo, desencadenar acciones en respuesta a eventos.
+        // Aquí, simplemente mostramos el evento del videojuego en la consola.
+        Console.WriteLine("Manejar evento de videojuego:");
+        Console.WriteLine(evento);
+
+        return Ok();
+    }
+}
 
 public class EditorController : Controller
 {
