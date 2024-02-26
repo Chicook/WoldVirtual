@@ -3,6 +3,66 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+
+[ApiController]
+[Route("api/[controller]")]
+public class EditorController : ControllerBase
+{
+    // ... (contenido existente)
+
+    // Crear un nuevo objeto en el editor
+    [HttpPost]
+    public IActionResult CrearObjeto([FromBody] JObject nuevoObjeto)
+    {
+        // Lógica para crear un nuevo objeto en el editor, por ejemplo, agregarlo a la lista de elementos.
+        // Aquí, simplemente mostramos el nuevo objeto en la consola.
+        Console.WriteLine("Nuevo objeto creado:");
+        Console.WriteLine(nuevoObjeto);
+
+        // Puedes agregar lógica adicional para manejar la creación del objeto, como agregarlo a una lista de objetos en memoria o almacenarlo en una base de datos.
+
+        return Ok();
+    }
+
+    // Escalar un objeto en el editor
+    [HttpPost]
+    public IActionResult EscalarObjeto([FromBody] JObject escala)
+    {
+        // Lógica para escalar un objeto en el editor, por ejemplo, ajustar su tamaño.
+        // Aquí, simplemente mostramos la escala en la consola.
+        Console.WriteLine("Escalar objeto:");
+        Console.WriteLine(escala);
+
+        // Puedes agregar lógica adicional para manejar el escalado del objeto, como actualizar su tamaño en la base de datos o aplicar la transformación en tiempo real.
+
+        return Ok();
+    }
+
+    // Obtener la representación del suelo de malla
+    [HttpGet]
+    public IActionResult ObtenerSueloMalla()
+    {
+        // Lógica para obtener la representación del suelo de malla, por ejemplo, devolver información sobre el suelo.
+        // Aquí, simplemente devolvemos un objeto ficticio que representa el suelo.
+        var sueloMalla = new { Tipo = "Malla", Dimensiones = new { Ancho = 10, Largo = 10, Altura = 0.1 } };
+
+        return Ok(sueloMalla);
+    }
+
+    // Otras funciones...
+
+    // ... (contenido adicional)
+
+    // Puedes seguir agregando más funciones según tus necesidades.
+
+    // Por ejemplo, funciones para rotar objetos, cambiar texturas, etc.
+
+    // ...
+}
 
 [ApiController]
 [Route("api/[controller]")]
