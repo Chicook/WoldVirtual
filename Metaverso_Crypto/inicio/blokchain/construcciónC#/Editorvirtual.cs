@@ -1,7 +1,38 @@
 // Program.cs
+// Controllers/EditorController.cs
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using System;
+using Microsoft.AspNetCore.Mvc;
+
+public class EditorController : Controller
+{
+    public IActionResult Index()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult GuardarEntorno([FromBody] string entorno)
+    {
+        // Lógica para guardar el entorno virtual, por ejemplo, almacenarlo en una base de datos.
+        // Aquí, simplemente mostramos el entorno en la consola.
+        Console.WriteLine("Entorno guardado:");
+        Console.WriteLine(entorno);
+
+        return Ok();
+    }
+
+    [HttpGet]
+    public IActionResult CargarEntorno()
+    {
+        // Lógica para cargar el entorno virtual, por ejemplo, desde una base de datos.
+        // Aquí, simplemente devolvemos un entorno de ejemplo.
+        string entornoEjemplo = "{ \"elementos\": [ { \"tipo\": \"cubo\", \"posicion\": { \"x\": 0, \"y\": 0, \"z\": 0 } } ] }";
+        
+        return Ok(entornoEjemplo);
+    }
+}
 
 class Program
 {
