@@ -4,6 +4,40 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using System;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+
+public class EditorController : Controller
+{
+    // ... (contenido existente)
+
+    // Obtener la lista actual de elementos
+    [HttpGet]
+    public IActionResult ObtenerElementos()
+    {
+        // Lógica para obtener la lista de elementos desde la base de datos o cualquier otra fuente.
+        // Aquí, simplemente devolvemos una lista ficticia.
+        var elementos = new List<object>
+        {
+            new { Tipo = "Cubo", Posicion = new { X = 0, Y = 0, Z = 0 } },
+            new { Tipo = "Esfera", Posicion = new { X = 1, Y = 1, Z = 1 } },
+        };
+
+        return Ok(elementos);
+    }
+
+    // Actualizar la posición de un elemento existente
+    [HttpPost]
+    public IActionResult ActualizarPosicion([FromBody] JObject actualizacion)
+    {
+        // Lógica para actualizar la posición de un elemento en la base de datos u otra fuente.
+        // Aquí, simplemente mostramos la actualización en la consola.
+        Console.WriteLine("Actualización de posición:");
+        Console.WriteLine(actualizacion);
+
+        return Ok();
+    }
+}
 
 public class EditorController : Controller
 {
