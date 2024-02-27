@@ -9,7 +9,23 @@
 <body>
   <!-- Dentro del div #app en tu archivo index.html -->
 <div id="app">
+  <!-- Actualizar el contenido del div #app en tu archivo index.html -->
+<div id="app">
   <h1>Mi Wallet Cripto</h1>
+  <div id="balance">
+    <p>Saldo: <span id="saldo">0 ETH</span></p>
+  </div>
+  <button id="conectarBtn" class="btn">Conectar Wallet</button>
+  <button id="enviarBtn" class="btn" disabled>Enviar ETH</button>
+  <div id="transaccion">
+    <label for="destino">Dirección de destino:</label>
+    <input type="text" id="destino" placeholder="Dirección Ethereum">
+    <label for="monto">Monto:</label>
+    <input type="text" id="monto" placeholder="Monto en ETH">
+    <button id="enviarTxBtn" class="btn" disabled>Enviar Transacción</button>
+  </div>
+</div>
+ <h1>Mi Wallet Cripto</h1>
   <div id="balance">
     <p>Saldo: <span id="saldo">0 ETH</span></p>
   </div>
