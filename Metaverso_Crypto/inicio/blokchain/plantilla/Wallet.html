@@ -7,9 +7,15 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="app">
-    <!-- Contenido de la aplicación va aquí -->
+  <!-- Dentro del div #app en tu archivo index.html -->
+<div id="app">
+  <h1>Mi Wallet Cripto</h1>
+  <div id="balance">
+    <p>Saldo: <span id="saldo">0 ETH</span></p>
   </div>
+  <button id="conectarBtn">Conectar Wallet</button>
+  <button id="enviarBtn">Enviar ETH</button>
+</div>
   <script src="web3.min.js"></script>
   <script src="app.js"></script>
 </body>
