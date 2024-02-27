@@ -98,3 +98,33 @@ function obtenerSaldoUsuario() {
       return 0;
     });
 }
+
+// Nueva referencia a elementos del DOM
+const transaccionesLista = document.getElementById('transaccionesLista');
+
+// Nueva función para agregar una transacción al historial
+function agregarTransaccionAlHistorial(destino, monto) {
+  const fecha = obtenerFechaActual();
+  const transaccion = `${fecha} - Enviado ${monto} ETH a ${destino}`;
+  const listItem = document.createElement('li');
+  listItem.textContent = transaccion;
+  transaccionesLista.appendChild(listItem);
+}
+
+// Nueva función para obtener la fecha actual formateada
+function obtenerFechaActual() {
+  const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+  return new Date().toLocaleDateString('es-ES', options);
+}
+
+// Modificar la función enviarTransaccion
+function enviarTransaccion(destino, monto) {
+  // Simular el envío de transacción
+  console.log(`Enviando ${monto} ETH a ${destino}...`);
+  // Actualizar el saldo después de enviar la transacción (simulado)
+  userBalance -= parseFloat(monto);
+  // Agregar la transacción al historial
+  agregarTransaccionAlHistorial(destino, monto);
+  // Actualizar la interfaz
+  actualizarInterfaz();
+    }
