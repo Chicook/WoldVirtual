@@ -32,6 +32,55 @@ import string
 import re
 import gzip
 
+app = Flask(__name__)
+
+# Mock usuarios autorizados (por ejemplo, utiliza una base de datos en la implementación real)
+usuarios_autorizados = {'usuario1': 'clave1', 'usuario2': 'clave2'}
+
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = request.args.get('token')
+
+        if not token:
+            return jsonify({'mensaje': 'Token faltante'}), 401
+
+        # Aquí deberías implementar la lógica de verificación del token
+        usuario_valido = verificar_token(token)
+        if not usuario_valido:
+            return jsonify({'mensaje': 'Token inválido'}), 401
+
+        return f(*args, **kwargs)
+
+    return decorated
+
+def verificar_token(token):
+    # Aquí deberías implementar la lógica real de verificación del token
+    return True  # Devuelve True si el token es válido
+
+@app.route('/login')
+def login():
+    usuario = request.args.get('usuario')
+    clave = request.args.get('clave')
+
+    if usuario in usuarios_autorizados and usuarios_autorizados[usuario] == clave:
+        token = generar_token(usuario)
+        return jsonify({'token': token})
+    else:
+        return jsonify({'mensaje': 'Credenciales inválidas'}), 401
+
+def generar_token(usuario):
+    # Aquí deberías implementar la lógica real para generar el token
+    return 'token_de_prueba'
+
+@app.route('/recurso_protegido')
+@token_required
+def recurso_protegido():
+    return jsonify({'mensaje': 'Este es un recurso protegido'})
+
+if __name__ == '__main__':
+    app.run(debug=True)
+		
 def comprimir_y_guardar_datos(datos, archivo_salida):
     datos_serializados = json.dumps(datos).encode('utf-8')
     datos_comprimidos = gzip.compress(datos_serializados)
