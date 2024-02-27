@@ -1780,6 +1780,48 @@ class Blokchain:
 # Ejemplo de uso
 blokchain = Blokchain()
 
+class BlockchainInteraction:
+    def __init__(self, node_url, contract_address, contract_abi):
+        self.w3 = Web3(Web3.HTTPProvider(node_url))
+        self.token_ico_address = contract_address
+        self.token_ico_abi = contract_abi
+        self.token_ico_contract = self.w3.eth.contract(address=self.token_ico_address, abi=self.token_ico_abi)
+
+    def check_owner(self):
+        owner = self.token_ico_contract.functions.owner().call()
+        print("Dueño del contrato TokenICO:", owner)
+
+    def purchase_tokens(self, amount):
+        transaction_hash = self.token_ico_contract.functions.purchaseTokens(amount).transact({'from': self.w3.eth.accounts[0]})
+        print("Compra de tokens realizada. Transaction Hash:", transaction_hash)
+
+    def run_cli(self):
+        print("CLI para interactuar con contratos inteligentes")
+        while True:
+            print("1. Verificar dueño del contrato")
+            print("2. Comprar tokens")
+            print("0. Salir")
+            choice = input("Ingrese su elección: ")
+
+            if choice == "1":
+                self.check_owner()
+            elif choice == "2":
+                amount_to_purchase = int(input("Ingrese la cantidad de tokens a comprar: "))
+                self.purchase_tokens(amount_to_purchase)
+            elif choice == "0":
+                break
+            else:
+                print("Opción no válida. Inténtelo de nuevo.")
+
+
+if __name__ == "__main__":
+    node_url = 'http://localhost:8545'  # Reemplaza con tu propia URL
+    contract_address = "0xYourTokenICOAddress"
+    contract_abi = [...]  # Reemplaza con el ABI de tu contrato
+
+    blockchain_interaction = BlockchainInteraction(node_url, contract_address, contract_abi)
+    blockchain_interaction.run_cli()
+	
 web3 = Web3(Web3.HTTPProvider('http://localhost:8545'))
 
 # Configuración del contrato inteligente en Solidity
