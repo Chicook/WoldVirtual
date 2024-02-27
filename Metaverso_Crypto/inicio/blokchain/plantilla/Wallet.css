@@ -23,3 +23,19 @@ button {
   cursor: pointer;
 }
 
+.btn {
+  padding: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+#transaccion {
+  margin-top: 20px;
+}
+
+#transaccion label, #transaccion input {
+  margin-bottom: 10px;
+  display: block;
+}
+
+
