@@ -31,7 +31,61 @@ import random
 import string
 import re
 import gzip
+import http.server
+import socketserver
+import os
 
+# Define el puerto en el que deseas ejecutar el servidor
+PORT = 8000
+
+# Obtén el directorio actual
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
+# Lee el contenido de los archivos HTML, CSS y JavaScript
+with open(os.path.join(dir_path, 'Wallet.html'), 'r') as file:
+    html_content = file.read()
+
+with open(os.path.join(dir_path, 'Wallet.css'), 'r') as file:
+    css_content = file.read()
+
+with open(os.path.join(dir_path, 'Wallet.js'), 'r') as file:
+    js_content = file.read()
+
+# Crea una instancia del manejador SimpleHTTPRequestHandler
+class MyHandler(http.server.SimpleHTTPRequestHandler):
+    def do_GET(self):
+        if self.path == '/':
+            # Responde con el contenido de index.html
+            self.send_response(200)
+            self.send_header('Content-type', 'Wallet/html')
+            self.end_headers()
+            self.wfile.write(html_content.encode())
+        elif self.path.endswith('.css'):
+            # Responde con el contenido del archivo CSS solicitado
+            self.send_response(200)
+            self.send_header('Content-type', 'Wallet/css')
+            self.end_headers()
+            self.wfile.write(css_content.encode())
+        elif self.path.endswith('.js'):
+            # Responde con el contenido del archivo JavaScript solicitado
+            self.send_response(200)
+            self.send_header('Content-type', 'Wallet/javascript')
+            self.end_headers()
+            self.wfile.write(js_content.encode())
+        else:
+            # Utiliza el manejador predeterminado para otros tipos de archivos
+            super().do_GET()
+
+# Configura el servidor en el puerto especificado
+with socketserver.TCPServer(("", PORT), MyHandler) as httpd:
+    print("Servidor en el puerto", PORT)
+    
+    # Establece el directorio raíz para el servidor
+    os.chdir(dir_path)
+    
+    # Inicia el servidor
+    httpd.serve_forever()
+	    
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'tu_clave_secreta'  # Reemplaza con una clave segura en un entorno de producción
 
