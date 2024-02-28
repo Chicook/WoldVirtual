@@ -1,3 +1,5 @@
+# bloque central de la plataforma #
+
 __version__ = "0.0.1"
 
 class MyCode:
