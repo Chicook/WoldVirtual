@@ -36,6 +36,35 @@ import socketserver
 import os
 from flask_socketio import SocketIO
 
+app = Flask(__name__)
+
+# Supongamos que tienes una instancia de la clase Blockchain
+class Blockchain:
+    def __init__(self):
+        self.chain = []  # Aquí guardas los bloques de tu cadena
+        # Otras inicializaciones y lógica de tu cadena de bloques
+
+    def obtener_informacion_cadena(self):
+        # Aquí implementas la lógica para obtener información de la cadena de bloques
+        informacion = {
+            'longitud': len(self.chain),
+            'bloques': [block.__dict__ for block in self.chain],  # Convertir bloques a diccionarios
+            # Otra información relevante de tu cadena de bloques
+        }
+        return informacion
+
+# Creas una instancia de tu blockchain
+mi_blockchain = Blockchain()
+
+# Ruta para obtener información de la cadena de bloques
+@app.route('/informacion_cadena', methods=['GET'])
+def informacion_cadena():
+    informacion = mi_blockchain.obtener_informacion_cadena()
+    return jsonify(informacion), 200
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
 #  inicio del código
 streaming de radio 📻 y tv 📺 #
 
