@@ -34,6 +34,27 @@ import gzip
 import http.server
 import socketserver
 import os
+from flask_socketio import SocketIO
+
+#  inicio del código
+streaming de radio 📻 y tv 📺 #
+
+app = Flask(__name__)
+socketio = SocketIO(app)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@socketio.on('audio_stream')
+def handle_audio(data):
+    # Procesa y transmite el audio a los clientes conectados
+    socketio.emit('audio_stream', data)
+
+if __name__ == '__main__':
+    socketio.run(app, debug=True)
+
+# servidor#
 
 # Define el puerto en el que deseas ejecutar el servidor
 PORT = 8000
