@@ -40,25 +40,34 @@ from flask_socketio import SocketIO
 
 app = Flask(__name__)
 
-# Supongamos que tienes una instancia de la clase Blockchain
+# Supongamos que tienes una instancia de la clase Blockchain #
+
 class Blockchain:
     def __init__(self):
         self.chain = []  # Aquí guardas los bloques de tu cadena
-        # Otras inicializaciones y lógica de tu cadena de bloques
+	    
+        # Otras inicializaciones y lógica de tu cadena de bloques #
 
     def obtener_informacion_cadena(self):
-        # Aquí implementas la lógica para obtener información de la cadena de bloques
+	    
+        # Aquí implementas la lógica para obtener información de la cadena de bloques #
+	    
         informacion = {
             'longitud': len(self.chain),
-            'bloques': [block.__dict__ for block in self.chain],  # Convertir bloques a diccionarios
-            # Otra información relevante de tu cadena de bloques
+            'bloques': [block.__dict__ for block in self.chain],  
+		
+		# Convertir bloques a diccionarios #
+            # Otra información relevante de tu cadena de bloques #
+		
         }
         return informacion
 
-# Creas una instancia de tu blockchain
+# Creas una instancia de tu blockchain #
+
 mi_blockchain = Blockchain()
 
-# Ruta para obtener información de la cadena de bloques
+# Ruta para obtener información de la cadena de bloques #
+
 @app.route('/informacion_cadena', methods=['GET'])
 def informacion_cadena():
     informacion = mi_blockchain.obtener_informacion_cadena()
@@ -67,8 +76,9 @@ def informacion_cadena():
 if __name__ == '__main__':
     app.run(debug=True)
 
-#  inicio del código
-streaming de radio 📻 y tv 📺 #
+#  inicio del código #
+
+# streaming de radio 📻 y tv 📺 #
 
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -90,10 +100,12 @@ if __name__ == '__main__':
 # Define el puerto en el que deseas ejecutar el servidor
 PORT = 8000
 
-# Obtén el directorio actual
+# Obtén el directorio actual#
+
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
-# Lee el contenido de los archivos HTML, CSS y JavaScript
+# Lee el contenido de los archivos HTML, CSS y JavaScript #
+
 with open(os.path.join(dir_path, 'Wallet.html'), 'r') as file:
     html_content = file.read()
 
@@ -103,7 +115,8 @@ with open(os.path.join(dir_path, 'Wallet.css'), 'r') as file:
 with open(os.path.join(dir_path, 'Wallet.js'), 'r') as file:
     js_content = file.read()
 
-# Crea una instancia del manejador SimpleHTTPRequestHandler
+# Crea una instancia del manejador SimpleHTTPRequestHandler #
+
 class MyHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path == '/':
@@ -128,7 +141,8 @@ class MyHandler(http.server.SimpleHTTPRequestHandler):
             # Utiliza el manejador predeterminado para otros tipos de archivos
             super().do_GET()
 
-# Configura el servidor en el puerto especificado
+# Configura el servidor en el puerto especificado #
+
 with socketserver.TCPServer(("", PORT), MyHandler) as httpd:
     print("Servidor en el puerto", PORT)
     
@@ -178,7 +192,8 @@ if __name__ == '__main__':
 
 app = Flask(__name__)
 
-# Mock usuarios autorizados (por ejemplo, utiliza una base de datos en la implementación real)
+# Mock usuarios autorizados (por ejemplo, utiliza una base de datos en la implementación real)#
+
 usuarios_autorizados = {'usuario1': 'clave1', 'usuario2': 'clave2'}
 
 def token_required(f):
@@ -239,7 +254,8 @@ def cargar_y_descomprimir_datos(archivo_entrada):
     datos_descomprimidos = gzip.decompress(datos_comprimidos)
     return json.loads(datos_descomprimidos)
 
-# Ejemplo de uso
+# Ejemplo de uso #
+
 datos_isla_virtual = {
     "nombre": "Isla Encantada",
     "descripcion": "Una isla mágica creada por los usuarios",
@@ -249,17 +265,21 @@ datos_isla_virtual = {
     ]
 }
 
-# Escribir datos comprimidos
+# Escribir datos comprimidos #
+
 comprimir_y_guardar_datos(datos_isla_virtual, 'isla_virtual_comprimida.gz')
 
-# Cargar y descomprimir datos
+# Cargar y descomprimir datos #
+
 datos_recuperados = cargar_y_descomprimir_datos('isla_virtual_comprimida.gz')
 print(datos_recuperados)
 	
-# Crear una instancia de la aplicación Flask
+# Crear una instancia de la aplicación Flask #
+
 app = Flask(__name__)
 
-# Definir la función para migrar contratos
+# Definir la función para migrar contratos #
+
 def migrar_contratos(contrato_actual, nuevo_contrato):
     """
     Lógica para migrar los contratos.
@@ -268,7 +288,8 @@ def migrar_contratos(contrato_actual, nuevo_contrato):
     # Implementar la migración de contratos
     # ...
 
-# Definir la ruta para la migración de contratos
+# Definir la ruta para la migración de contratos #
+
 @app.route('/migrar_contratos', methods=['POST'])
 def endpoint_migrar_contratos():
     # Obtener los datos del contrato actual y el nuevo contrato desde la solicitud
@@ -278,19 +299,23 @@ def endpoint_migrar_contratos():
     if 'contrato_actual' not in data or 'nuevo_contrato' not in data:
         return jsonify({'mensaje': 'Datos insuficientes para la migración de contratos'}), 400
 
-    # Obtener los contratos desde los datos
+    # Obtener los contratos desde los datos #
+	
     contrato_actual = data['contrato_actual']
     nuevo_contrato = data['nuevo_contrato']
 
-    # Llamar a la función de migración de contratos
+    # Llamar a la función de migración de contratos #
+	
     migrar_contratos(contrato_actual, nuevo_contrato)
 
-    # Devolver una respuesta exitosa
+    # Devolver una respuesta exitosa #
+	
     return jsonify({'mensaje': 'Migración de contratos exitosa'})
 
 # Incluir aquí otras rutas y funciones necesarias para la interoperabilidad
 
-# Iniciar la aplicación Flask
+# Iniciar la aplicación Flask #
+
 if __name__ == '__main__':
     app.run(debug=True)
 
@@ -300,6 +325,7 @@ class Blockchain:
         self.key_rotation_interval = 30  # en segundos
 
     def generate_new_block(self):
+	    
         # Lógica para generar un nuevo bloque
         # ...
 
@@ -310,12 +336,16 @@ class Blockchain:
             print(f"Rotación de claves: Nueva versión {self.current_key_version}")
 
     def run(self):
-        # Iniciar hilo para la rotación de claves en segundo plano
+	    
+        # Iniciar hilo para la rotación de claves en segundo plano #
+	    
         rotation_thread = threading.Thread(target=self.rotate_keys, daemon=True)
         rotation_thread.start()
 
         try:
+		
             # Tu lógica principal aquí (ej. generar bloques)
+		
             while True:
                 self.generate_new_block()
                 time.sleep(5)  # Intervalo ficticio para la demostración
@@ -323,13 +353,15 @@ class Blockchain:
             print("Deteniendo la ejecución de la Blockchain.")
 
 if __name__ == "__main__":
-    # Crear una instancia de la Blockchain y ejecutarla
+	
+    # Crear una instancia de la Blockchain y ejecutarla #
+	
     blockchain = Blockchain()
     blockchain.run()
 
 app = Flask(__name__)
 
-# ... (Importaciones ya realizadas en la primera parte del código)
+# ... (Importaciones ya realizadas en la primera parte del código) #
 
 html_code = '''
 <!DOCTYPE html>
@@ -376,14 +408,17 @@ def nuevo_bloque():
     respuesta = {'mensaje': 'Nuevo bloque creado', 'bloque': nuevo_bloque}
     return jsonify(respuesta), 200
 
-# Define más endpoints según lo que necesites
+# Define más endpoints según lo que necesites #
 
 if __name__ == '__main__':
-    # Ejecutar la blockchain en un hilo separado
+	
+    # Ejecutar la blockchain en un hilo separado #
+	
     blockchain_thread = threading.Thread(target=mi_blockchain.ejecutar)
     blockchain_thread.start()
 
-    # Ejecutar Flask en el hilo principal
+    # Ejecutar Flask en el hilo principal #
+	
     app.run(port=5000)
 	
 class NFT:
@@ -407,22 +442,28 @@ class NFT:
         datos_codificados = str(self.id_unica) + str(self.nombre) + str(self.coordenadas) + str(self.propietario) + str(self.timestamp_creacion)
         return hashlib.sha256(datos_codificados.encode('utf-8')).hexdigest()
 
-# Caso 1: Crear una isla como NFT único con propiedades específicas
+# Caso 1: Crear una isla como NFT único con propiedades específicas #
+
 isla1_nft = NFT(id_unica="ID_ISLA_1", nombre="Isla 1", coordenadas="Coordenadas XYZ")
 
-# Acceder a las propiedades de la isla
+# Acceder a las propiedades de la isla #
+
 print(f"Isla: {isla1_nft.nombre}, Ubicación: {isla1_nft.coordenadas}")
 
-# Acceder al hash único generado
+# Acceder al hash único generado #
+
 print(f"Hash único: {isla1_nft.hash}")
 
-# Caso 2: Crear una isla como NFT único con un diccionario de propiedades
+# Caso 2: Crear una isla como NFT único con un diccionario de propiedades #
+
 isla2_nft = NFT(id_unica="ID_ISLA_2", propiedades={"nombre": "Isla 2", "ubicacion": "Coordenadas XYZ"})
 
-# Guardar la isla en una lista o estructura de datos similar
+# Guardar la isla en una lista o estructura de datos similar #
+
 islas_nfts = [isla1_nft, isla2_nft]
 
-# Acceder a las propiedades de las islas
+# Acceder a las propiedades de las islas #
+
 for isla_nft in islas_nfts:
     if hasattr(isla_nft, 'nombre') and hasattr(isla_nft, 'coordenadas'):
         print(f"Isla: {isla_nft.nombre}, Ubicación: {isla_nft.coordenadas}")
@@ -431,7 +472,7 @@ for isla_nft in islas_nfts:
         ubicacion = isla_nft.propiedades.get('ubicacion', 'Ubicación no disponible')
         print(f"Isla: {nombre}, Ubicación: {ubicacion}")
 
-# ... (Importaciones ya realizadas en la primera parte del código)
+# ... (Importaciones ya realizadas en la primera parte del código) #
 
 class GeneradorAvatar:
     def __init__(self):
@@ -458,12 +499,14 @@ class Sincronizador:
     def actualizar_estado(self, nuevo_estado):
         self.estado = nuevo_estado
 
-# Uso del GeneradorAvatar
+# Uso del GeneradorAvatar #
+
 generador = GeneradorAvatar()
 avatar_generado = generador.generar_avatar()
 print(avatar_generado)
 
-# Uso del Sincronizador
+# Uso del Sincronizador #
+
 sincronizador = Sincronizador()
 
 estado_inicial = sincronizador.obtener_estado()
@@ -475,16 +518,19 @@ print(f"Nuevo Estado: {sincronizador.obtener_estado()}")
 
 # Para trabajar en blender #
 
-# Borra todos los objetos en la escena
+# Borra todos los objetos en la escena #
+
 bpy.ops.object.select_all(action='DESELECT')
 bpy.ops.object.select_by_type(type='MESH')
 bpy.ops.object.delete()
 
-# Crear un suelo cuadrado de color azul metálico
+# Crear un suelo cuadrado de color azul metálico #
+
 bpy.ops.mesh.primitive_plane_add(size=10, enter_editmode=False, align='WORLD', location=(0, 0, 0))
 bpy.ops.object.shade_smooth()
 
-# Crear y asignar material
+# Crear y asignar material #
+
 material = bpy.data.materials.new(name="BlueMetallic")
 material.use_nodes = True
 bsdf = material.node_tree.nodes.new(type='ShaderNodeBsdfPrincipled')
@@ -492,13 +538,15 @@ bsdf.base_color = (0, 0, 1, 1)  # Color azul
 bsdf.metallic = 1  # Superficie metálica
 bpy.context.object.data.materials.append(material)
 
-# Configurar la vista de la cámara
+# Configurar la vista de la cámara #
+
 bpy.ops.object.camera_add(enter_editmode=False, align='VIEW', location=(0, 0, 5), rotation=(0, 0, 0))
 camera = bpy.context.object
 bpy.ops.object.select_by_type(type='CAMERA')
 bpy.context.scene.camera = bpy.context.selected_objects[0]
 
-# Configurar la iluminación
+# Configurar la iluminación #
+
 bpy.ops.object.light_add(type='SUN', radius=1, align='WORLD', location=(5, 5, 5))
 light = bpy.context.object
 
@@ -544,7 +592,8 @@ class Blockchain:
             for bloque in self.cadena:
                 print(f"Índice: {bloque.index}, Hash: {bloque.hash}")
 
-# Ejemplo de uso
+# Ejemplo de uso #
+
 blockchain = Blockchain()
 blockchain.agregar_bloque("Datos del bloque 1")
 blockchain.imprimir_cadena()
@@ -558,22 +607,27 @@ def minar_bloques(blockchain, dificultad, datos, num_bloques=5, tiempo_entre_min
         print(f"Bloque minado - Índice: {bloque.index}, Hash: {bloque.hash}")
         time.sleep(tiempo_entre_minado)
 
-# Ejemplo de uso
+# Ejemplo de uso #
+
 blockchain = Blockchain()
 
-# Crear dos threads para minar bloques simultáneamente
+# Crear dos threads para minar bloques simultáneamente #
+
 thread1 = threading.Thread(target=minar_bloques, args=(blockchain, 2, "Transacción 1"))
 thread2 = threading.Thread(target=minar_bloques, args=(blockchain, 2, "Transacción 2"))
 
-# Iniciar los threads
+# Iniciar los threads #
+
 thread1.start()
 thread2.start()
 
-# Esperar a que ambos threads terminen
+# Esperar a que ambos threads terminen #
+
 thread1.join()
 thread2.join()
 
-# Imprimir la cadena después de la minería simultánea
+# Imprimir la cadena después de la minería simultánea #
+
 blockchain.imprimir_cadena()
 
 class Transaccion:
@@ -597,7 +651,9 @@ class PlataformaBlockchain:
         return re.match(r'^[a-fA-F0-9]{40}$', direccion) is not None
 
     def autenticar_usuario(self, direccion):
-        # Implementa la lógica de autenticación según tus necesidades
+	    
+        # Implementa la lógica de autenticación según tus necesidades #
+	    
         return True
 
     def agregar_usuario(self, direccion, saldo):
@@ -611,7 +667,9 @@ class PlataformaBlockchain:
         if not self.validar_direccion(remitente) or not self.validar_direccion(destinatario):
             print("Dirección de remitente o destinatario no válida.")
             return False
-        # Implementa la lógica para realizar la transacción según tus necesidades
+		
+        # Implementa la lógica para realizar la transacción según tus necesidades #
+	    
         nueva_transaccion = Transaccion(remitente, destinatario, cantidad, tipo_moneda)
         self.transacciones.append(nueva_transaccion)
         print("Transacción realizada con éxito.")
@@ -634,12 +692,14 @@ class PlataformaBlockchain:
         print("Transacción fallida. Fondos insuficientes o dirección no encontrada.")
         return False
 
-# Ejemplo de uso
+# Ejemplo de uso #
+
 plataforma = PlataformaBlockchain()
 plataforma.agregar_usuario("direccion_usuario1", 100)
 plataforma.agregar_usuario("direccion_usuario2", 50)
 
-# Lógica básica de transferencia
+# Lógica básica de transferencia #
+
 resultado = plataforma.realizar_transaccion("direccion_usuario1", "direccion_usuario2", 10, "WoldcoinVirtual")
 if resultado:
     print("Transacción exitosa")
@@ -650,7 +710,6 @@ if resultado:
 else:
     print("Transacción fallida. Fondos insuficientes o dirección no válida.")
 
-# Clase ContratoIngresoCripto
 class ContratoIngresoCripto:
     def __init__(self, web3, contrato_address, propietario_address):
         self.web3 = web3
@@ -670,17 +729,19 @@ class ContratoIngresoCripto:
         self.contrato.functions.depositar(cantidad).transact(transaccion)
         print(f"Depósito de {cantidad} realizado por {self.propietario_address}")
 
-    # Otros métodos según las funciones de tu contrato...
+    # Otros métodos según las funciones de tu contrato...#
 
-# Uso en la aplicación
+# Uso en la aplicación #
+
 cadena_bloques = CadenaBloques()
 contrato_ingreso = ContratoIngresoCripto(cadena_bloques.web3, 'DIRECCION_DEL_CONTRATO', 'DIRECCION_DEL_PROPIETARIO')
 
-# Ejemplo de depósito
+# Ejemplo de depósito #
+
 cantidad_a_depositar = 10  # Ajusta según tu caso
 contrato_ingreso.depositar(cantidad_a_depositar)
 
-# Código de la aplicación...
+# Código de la aplicación...#
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'tu_clave_secreta'  # Reemplaza con una clave segura en un entorno de producción
@@ -720,7 +781,10 @@ def recurso_protgido():
 if __name__ == '__main__':
     app.run(debug=True)
 	
-# Direcciones y claves privadas (actualiza según tus necesidades)
+# Direcciones y claves privadas (actualiza según tus necesidades) #
+
+# estas addres key son solo ejemplos #
+
 contract_address = '0x123456789ABCDEF123456789ABCDEF123456789A'
 sender_address = '0x987654321ABCDEF987654321ABCDEF9876543210'
 private_key = 'tu_clave_privada'
@@ -728,7 +792,8 @@ abi = [...]  # Coloca aquí el ABI del contrato NFT
 
 app = Flask(__name__)
 
-# Conexión a la blockchain
+# Conexión a la blockchain #
+
 web3 = Web3(Web3.HTTPProvider('tu_url_de_ethereum'))
 
 def connect_to_blockchain():
@@ -737,7 +802,8 @@ def connect_to_blockchain():
     else:
         print("Error: No se pudo conectar a la blockchain")
 
-# Función para mintear un nuevo NFT
+# Función para mintear un nuevo NFT #
+
 def mint_avatar_nft(owner_address):
     try:
         contract.functions.mintAvatarNFT(owner_address).transact({
@@ -754,7 +820,8 @@ def mint_avatar_nft(owner_address):
         print(f"Error en la transacción al mintear NFT: {e}")
         return "Error en la transacción"
 
-# Función para obtener la información de un NFT
+# Función para obtener la información de un NFT #
+
 def get_nft_info(token_id):
     try:
         info = contract.functions.getNFTInfo(token_id).call()
@@ -763,7 +830,8 @@ def get_nft_info(token_id):
         print(f"Error al obtener información del NFT: {e}")
         return {'error': 'Error al obtener información del NFT'}
 
-# Otras funciones y lógica...
+# Otras funciones y lógica...#
+
 
 if __name__ == '__main__':
     connect_to_blockchain()
@@ -771,6 +839,7 @@ if __name__ == '__main__':
 
 
 # partes a mejorar., red propia en wallets como metamask #
+
 @app.route('/network_config', methods=['GET'])
 def get_network_config():
     try:
@@ -796,11 +865,13 @@ class InterfazEmpresa:
         self.master = master
         master.title("Interfaz Empresa")
 
-        # Etiqueta para mostrar porcentajes de recursos
+        # Etiqueta para mostrar porcentajes de recursos #
+	    
         self.etiqueta_porcentajes = tk.Label(master, text="Porcentajes de Recursos:")
         self.etiqueta_porcentajes.pack()
 
-        # Mostrar porcentajes en una etiqueta (puedes personalizar esto según tu lógica)
+        # Mostrar porcentajes en una etiqueta (puedes personalizar esto según tu lógica)#
+	    
         porcentaje_procesador = 80
         porcentaje_discos_duros = 60
         porcentaje_tarjetas_graficas = 75
@@ -811,21 +882,28 @@ class InterfazEmpresa:
         self.etiqueta_porcentajes_info = tk.Label(master, text=texto_porcentajes)
         self.etiqueta_porcentajes_info.pack()
 
-        # Botón para obtener detalles de la cadena de bloques
+        # Botón para obtener detalles de la cadena de bloques#
+	    
         self.boton_detalle_cadena = tk.Button(master, text="Detalles de la Cadena de Bloques", command=self.mostrar_detalles_cadena)
         self.boton_detalle_cadena.pack()
 
     def mostrar_detalles_cadena(self):
-        # Aquí puedes agregar la lógica para obtener y mostrar detalles de la cadena de bloques
+	    
+        # Aquí puedes agregar la lógica para obtener y mostrar detalles de la cadena de bloques#
+	    
         detalles_cadena = "Detalles de la Cadena de Bloques:\n(Información detallada aquí)"
-        # Puedes mostrar los detalles en una nueva ventana, etiquetas, o personalizar según tus necesidades
-        tk.messagebox.showinfo("Detalles de la Cadena de Bloques", detalles_cadena)
+	    
+        # Puedes mostrar los detalles en una nueva ventana, etiquetas, o personalizar según tus necesidades#
+	    
+	 tk.messagebox.showinfo("Detalles de la Cadena de Bloques", detalles_cadena)
 
-# Crear la ventana principal para la interfaz de la empresa
+# Crear la ventana principal para la interfaz de la empresa #
+
 root_empresa = tk.Tk()
 interfaz_empresa = InterfazEmpresa(root_empresa)
 
-# Mantener la ventana abierta
+# Mantener la ventana abierta #
+
 root_empresa.mainloop()
 
 class InterfazCompartirRecursos:
@@ -833,70 +911,83 @@ class InterfazCompartirRecursos:
         self.master = master
         master.title("Compartir Recursos")
 
-        # Campos para el procesador
+        # Campos para el procesador #
+	    
         self.etiqueta_procesador = tk.Label(master, text="Procesador:")
         self.etiqueta_procesador.pack()
         self.entry_procesador = tk.Entry(master)
         self.entry_procesador.pack()
 
-        # Campos para discos duros
+        # Campos para discos duros #
+	    
         self.etiqueta_discos_duros = tk.Label(master, text="Discos Duros:")
         self.etiqueta_discos_duros.pack()
         self.entry_discos_duros = tk.Entry(master)
         self.entry_discos_duros.pack()
 
-        # Campos para tarjetas gráficas
+        # Campos para tarjetas gráficas #
+	    
         self.etiqueta_tarjetas_graficas = tk.Label(master, text="Tarjetas Gráficas:")
         self.etiqueta_tarjetas_graficas.pack()
         self.entry_tarjetas_graficas = tk.Entry(master)
         self.entry_tarjetas_graficas.pack()
 
-        # Campos para memoria RAM
+        # Campos para memoria RAM #
+	    
         self.etiqueta_memoria_ram = tk.Label(master, text="Memoria RAM:")
         self.etiqueta_memoria_ram.pack()
         self.entry_memoria_ram = tk.Entry(master)
         self.entry_memoria_ram.pack()
 
-        # Campos para ancho de banda
+        # Campos para ancho de banda #
+	    
         self.etiqueta_ancho_banda = tk.Label(master, text="Ancho de Banda:")
         self.etiqueta_ancho_banda.pack()
         self.entry_ancho_banda = tk.Entry(master)
         self.entry_ancho_banda.pack()
 
-        # Botón para compartir recursos
+        # Botón para compartir recursos #
+	    
         self.boton_compartir = tk.Button(master, text="Compartir Recursos", command=self.compartir_recursos)
         self.boton_compartir.pack()
 
     def compartir_recursos(self):
-        # Obtener los valores de los campos
+        # Obtener los valores de los campos #
+	    
         procesador = self.entry_procesador.get()
         discos_duros = self.entry_discos_duros.get()
         tarjetas_graficas = self.entry_tarjetas_graficas.get()
         memoria_ram = self.entry_memoria_ram.get()
         ancho_banda = self.entry_ancho_banda.get()
 
-        # Aquí puedes realizar las acciones necesarias para agregar los recursos a la cadena de bloques
+        # Aquí puedes realizar las acciones necesarias para agregar los recursos a la cadena de bloques #
+	    
         print(f"Recursos compartidos - Procesador: {procesador}, Discos Duros: {discos_duros}, Tarjetas Gráficas: {tarjetas_graficas}, Memoria RAM: {memoria_ram}, Ancho de Banda: {ancho_banda}")
 
-# Crear la ventana principal
+# Crear la ventana principal#
+
 root = tk.Tk()
 interfaz = InterfazCompartirRecursos(root)
 
-# Mantener la ventana abierta
+# Mantener la ventana abierta#
+
 root.mainloop()
 
 app = Flask(__name__)
 
-# Diccionario para almacenar los saldos de los usuarios en la versión demo
+# Diccionario para almacenar los saldos de los usuarios en la versión demo #
+
 saldos_demo = {}
 
-# Ruta para que los usuarios vean su saldo en la versión demo
+# Ruta para que los usuarios vean su saldo en la versión demo #
+
 @app.route('/ver_saldo_demo/<usuario>')
 def ver_saldo_demo(usuario):
     saldo = saldos_demo.get(usuario, 0)
     return f"Saldo en la versión demo para {usuario}: {saldo}"
 
-# Ruta para que los usuarios migren a la versión de producción
+# Ruta para que los usuarios migren a la versión de producción #
+
 @app.route('/migrar/<usuario>')
 def migrar(usuario):
     saldo_demo = saldos_demo.get(usuario, 0)
@@ -904,7 +995,8 @@ def migrar(usuario):
     # Realizar acciones necesarias para verificar la validez de la migración
     # ...
 
-    # Ejemplo: Proceso de migración
+    # Ejemplo: Proceso de migración #
+	
     saldo_comercial = saldo_demo  # En la realidad, aquí deberías quemar tokens de prueba y emitir tokens comerciales
 
     return f"Migración exitosa. Saldo en la versión comercial para {usuario}: {saldo_comercial}"
@@ -913,6 +1005,7 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 # seccion opensim. # visor web #
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -1037,7 +1130,8 @@ if __name__ == '__main__':
 
 app = Flask(__name__)
 
-# Configuración MySQL y otras funciones
+# Configuración MySQL y otras funciones #
+
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = '123456'
@@ -1053,7 +1147,8 @@ def after_request(response):
     print("Después de la petición")
     return response
 
-# Estructura HTML para index.html
+# Estructura HTML para index.html #
+
 html_index = """
 <!DOCTYPE html>
 <html lang="es">
@@ -1075,7 +1170,8 @@ html_index = """
 </html>
 """
 
-# Estructura HTML para contacto.html
+# Estructura HTML para contacto.html #
+
 html_contacto = """
 <!DOCTYPE html>
 <html lang="es">
@@ -1144,7 +1240,8 @@ if __name__ == '__main__':
 
 app = Flask(__name__)
 
-# Mockup de datos de blockchain
+# Mockup de datos de blockchain #
+
 blockchain_data = {
     'owner_address': '0x123456789ABCDEF123456789ABCDEF123456789A',
     'contract_address': '0x987654321ABCDEF987654321ABCDEF9876543210',
@@ -1152,18 +1249,23 @@ blockchain_data = {
     'abi': [...]  # Coloca aquí el ABI del contrato NFT
 }
 
-# Funciones de la blockchain (métodos mockup)
-def mint_avatar_nft(owner_address):
-    # Implementa la lógica real aquí (llamada a la función mintAvatarNFT)
+# Funciones de la blockchain (métodos mockup)#
+
+def mint_avatar_nft(owner_address): 
+	
+    # Implementa la lógica real aquí (llamada a la función mintAvatarNFT)#
+	
     print(f"NFT creado exitosamente para el avatar: {owner_address}")
     return "Acción completada en la blockchain"
 
 def transfer_avatar_nft(owner_address, to_address, token_id):
-    # Implementa la lógica real aquí (llamada a la función transferNFT)
+    # Implementa la lógica real aquí (llamada a la función transferNFT)#
+	
     print(f"NFT transferido exitosamente de {owner_address} a {to_address}")
     return "Acción completada en la blockchain"
 
-# Rutas de la interfaz web
+# Rutas de la interfaz web#
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -1191,7 +1293,8 @@ sockets = Sockets(app)
 # Lista de usuarios conectados
 usuarios_conectados = []
 
-# Función para enviar mensajes a todos los usuarios
+# Función para enviar mensajes a todos los usuarios#
+
 def enviar_mensaje(mensaje):
     for usuario in usuarios_conectados:
         try:
@@ -1199,12 +1302,14 @@ def enviar_mensaje(mensaje):
         except:
             pass
 
-# Ruta principal que renderiza la interfaz web
+# Ruta principal que renderiza la interfaz web#
+
 @app.route('/')
 def index():
     return render_template('index.html')
 
-# Ruta para que los usuarios se conecten al servidor
+# Ruta para que los usuarios se conecten al servidor#
+
 @sockets.route('/conectar')
 def conectar(ws):
     usuarios_conectados.append({'cliente': ws})
