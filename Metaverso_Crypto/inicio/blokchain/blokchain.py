@@ -38,6 +38,38 @@ import socketserver
 import os
 from flask_socketio import SocketIO
 import zipfile
+import psycopg2
+
+def conectar_base_datos():
+    """
+    Establece una conexión a la base de datos y ejecuta una consulta de ejemplo.
+    """
+    try:
+        # Configuración de conexión
+        conexion = psycopg2.connect(
+            database="tu_base_datos",
+            user="tu_usuario",
+            password="tu_contraseña",
+            host="tu_host",
+            port="tu_puerto"
+        )
+
+        # Consulta de ejemplo
+        with conexion.cursor() as cursor:
+            cursor.execute("SELECT * FROM usuarios")
+            resultados = cursor.fetchall()
+
+            for resultado in resultados:
+                print(resultado)
+
+    except Exception as e:
+        print(f"Error en la conexión a la base de datos: {e}")
+    finally:
+        if conexion:
+            conexion.close()
+
+# Llamada a la función
+conectar_base_datos()
 
 def comprimir_recursos():
     directorio_recursos = '/ruta/a/tus/recursos'
