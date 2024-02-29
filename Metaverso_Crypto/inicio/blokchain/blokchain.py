@@ -300,17 +300,34 @@ print(datos_recuperados)
 
 app = Flask(__name__)
 
-# Definir la función para migrar contratos #
+class ContratoMigracion:
+    def __init__(self, contrato_actual, nuevo_contrato):
+        self.contrato_actual = contrato_actual
+        self.nuevo_contrato = nuevo_contrato
 
-def migrar_contratos(contrato_actual, nuevo_contrato):
-    """
-    Lógica para migrar los contratos.
-    Puedes incluir aquí la lógica específica de migración.
-    """
-    # Implementar la migración de contratos
-    # ...
+    def obtener_datos_para_migracion(self):
+        # Implementar lógica para obtener datos del contrato actual
+        datos_a_migrar = self.contrato_actual.obtener_datos()
+        return datos_a_migrar
 
-# Definir la ruta para la migración de contratos #
+    def migrar_contratos(self, datos_a_migrar):
+        try:
+            # Implementar lógica de migración utilizando los datos obtenidos
+            self.nuevo_contrato.migrar(datos_a_migrar)
+            # Realizar otras acciones de migración si es necesario
+            # ...
+
+            print("Migración de contratos completada con éxito.")
+        except Exception as e:
+            print(f"Error durante la migración de contratos: {e}")
+
+# Ejemplo de uso
+contrato_actual = ContratoActual()  # Sustituir por tu implementación real
+nuevo_contrato = NuevoContrato()    # Sustituir por tu implementación real
+
+migrador = ContratoMigracion(contrato_actual, nuevo_contrato)
+datos_a_migrar = migrador.obtener_datos_para_migracion()
+migrador.migrar_contratos(datos_a_migrar)
 
 @app.route('/migrar_contratos', methods=['POST'])
 def endpoint_migrar_contratos():
