@@ -37,6 +37,28 @@ import http.server
 import socketserver
 import os
 from flask_socketio import SocketIO
+import zipfile
+
+def comprimir_recursos():
+    directorio_recursos = '/ruta/a/tus/recursos'
+    archivo_zip = '/ruta/del/archivo/recursos.zip'
+
+    with zipfile.ZipFile(archivo_zip, 'w') as zipf:
+        for carpeta, subcarpetas, archivos in os.walk(directorio_recursos):
+            for archivo in archivos:
+                ruta_completa = os.path.join(carpeta, archivo)
+                zipf.write(ruta_completa, os.path.relpath(ruta_completa, directorio_recursos))
+
+def renderizar_recursos():
+    archivo_zip = '/ruta/del/archivo/recursos.zip'
+    directorio_destino = '/ruta/destino/para/recursos'
+
+    with zipfile.ZipFile(archivo_zip, 'r') as zipf:
+        zipf.extractall(directorio_destino)
+
+# Llamadas a las funciones
+comprimir_recursos()
+renderizar_recursos()
 
 app = Flask(__name__)
 
