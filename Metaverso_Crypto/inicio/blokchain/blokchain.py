@@ -40,6 +40,43 @@ from flask_socketio import SocketIO
 import zipfile
 import psycopg2
 
+class RecursosUsuario:
+    def __init__(self, porcentaje_cpu, porcentaje_ancho_banda):
+        self.porcentaje_cpu = porcentaje_cpu
+        self.porcentaje_ancho_banda = porcentaje_ancho_banda
+
+def asignar_recursos_a_usuario(usuario, recursos_comunitarios):
+    recursos_asignados = {
+        'cpu': recursos_comunitarios['cpu'] * (usuario.porcentaje_cpu / 100),
+        'ancho_banda': recursos_comunitarios['ancho_banda'] * (usuario.porcentaje_ancho_banda / 100),
+    }
+    return recursos_asignados
+
+def monitorear_usuarios():
+    # Implementa lógica de monitoreo para conocer el uso de recursos de cada usuario
+    # Devuelve una estructura de datos con información sobre el uso de recursos
+
+# Ejemplo de uso
+usuarios = {
+    'usuario1': RecursosUsuario(porcentaje_cpu=10, porcentaje_ancho_banda=20),
+    'usuario2': RecursosUsuario(porcentaje_cpu=5, porcentaje_ancho_banda=15),
+    # Agrega más usuarios según sea necesario
+}
+
+recursos_comunitarios = {
+    'cpu': 100,  # Porcentaje basado en la capacidad total del servidor
+    'ancho_banda': 1000,  # Medido en MB/s
+}
+
+for nombre_usuario, usuario in usuarios.items():
+    recursos_asignados = asignar_recursos_a_usuario(usuario, recursos_comunitarios)
+    print(f"Recursos asignados para {nombre_usuario}: {recursos_asignados}")
+
+# Lógica de monitoreo (aquí es estática, debes implementar un sistema de monitoreo en tiempo real)
+monitoreo = monitorear_usuarios()
+print("Información de monitoreo de usuarios:")
+print(monitoreo)
+
 def conectar_base_datos():
     """
     Establece una conexión a la base de datos y ejecuta una consulta de ejemplo.
