@@ -40,42 +40,39 @@ from flask_socketio import SocketIO
 import zipfile
 import psycopg2
 
-class RecursosUsuario:
-    def __init__(self, porcentaje_cpu, porcentaje_ancho_banda):
-        self.porcentaje_cpu = porcentaje_cpu
-        self.porcentaje_ancho_banda = porcentaje_ancho_banda
+class MonitoreoRecursos:
+    def __init__(self):
+        self.recursos_usuarios = {}
 
-def asignar_recursos_a_usuario(usuario, recursos_comunitarios):
-    recursos_asignados = {
-        'cpu': recursos_comunitarios['cpu'] * (usuario.porcentaje_cpu / 100),
-        'ancho_banda': recursos_comunitarios['ancho_banda'] * (usuario.porcentaje_ancho_banda / 100),
-    }
-    return recursos_asignados
+    def actualizar_recursos(self, nombre_usuario, uso_cpu, uso_ancho_banda):
+        self.recursos_usuarios[nombre_usuario] = {
+            'uso_cpu': uso_cpu,
+            'uso_ancho_banda': uso_ancho_banda
+        }
 
-def monitorear_usuarios():
-    # Implementa lógica de monitoreo para conocer el uso de recursos de cada usuario
-    # Devuelve una estructura de datos con información sobre el uso de recursos
+    def obtener_informacion(self):
+        return self.recursos_usuarios
+
+# Función simulada para representar el uso de recursos por parte de un usuario
+def simular_uso_recursos(nombre_usuario):
+    # Simula el uso de CPU y ancho de banda de forma aleatoria (puedes reemplazar esto con datos reales)
+    import random
+    uso_cpu = random.uniform(0, 100)
+    uso_ancho_banda = random.uniform(0, 100)
+    return uso_cpu, uso_ancho_banda
 
 # Ejemplo de uso
-usuarios = {
-    'usuario1': RecursosUsuario(porcentaje_cpu=10, porcentaje_ancho_banda=20),
-    'usuario2': RecursosUsuario(porcentaje_cpu=5, porcentaje_ancho_banda=15),
-    # Agrega más usuarios según sea necesario
-}
+monitoreo = MonitoreoRecursos()
 
-recursos_comunitarios = {
-    'cpu': 100,  # Porcentaje basado en la capacidad total del servidor
-    'ancho_banda': 1000,  # Medido en MB/s
-}
+# Simula el monitoreo durante un período
+for nombre_usuario in usuarios:
+    uso_cpu, uso_ancho_banda = simular_uso_recursos(nombre_usuario)
+    monitoreo.actualizar_recursos(nombre_usuario, uso_cpu, uso_ancho_banda)
 
-for nombre_usuario, usuario in usuarios.items():
-    recursos_asignados = asignar_recursos_a_usuario(usuario, recursos_comunitarios)
-    print(f"Recursos asignados para {nombre_usuario}: {recursos_asignados}")
-
-# Lógica de monitoreo (aquí es estática, debes implementar un sistema de monitoreo en tiempo real)
-monitoreo = monitorear_usuarios()
+# Obtiene la información de monitoreo
+informacion_monitoreo = monitoreo.obtener_informacion()
 print("Información de monitoreo de usuarios:")
-print(monitoreo)
+print(informacion_monitoreo)
 
 def conectar_base_datos():
     """
