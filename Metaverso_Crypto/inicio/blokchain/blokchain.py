@@ -1111,6 +1111,74 @@ class InterfazCompartirRecursos:
 root = tk.Tk()
 interfaz = InterfazCompartirRecursos(root)
 
+# Supongamos que en la blockchain de la plataforma tienes información sobre usuarios y recursos #
+# pendiente de seguir desarrollando #
+usuarios_recursos_blockchain = {
+    'usuario1': {
+        'cpu': 10,
+        'ancho_banda': 50,
+    },
+    'usuario2': {
+        'cpu': 5,
+        'ancho_banda': 30,
+    },
+    # ... más usuarios y recursos
+}
+
+# Supongamos que en el servidor descentralizado comunitario también tienes información sobre usuarios y recursos
+usuarios_recursos_servidor = {
+    'usuario1': {
+        'cpu': 8,
+        'ancho_banda': 40,
+    },
+    'usuario2': {
+        'cpu': 6,
+        'ancho_banda': 25,
+    },
+    # ... más usuarios y recursos
+}
+
+# Supongamos que en el metaverso Crypto tienes una clase para manejar la conexión
+
+class ConexionMetaverso:
+    def __init__(self):
+        self.usuarios_recursos_blockchain = {}
+        self.usuarios_recursos_servidor = {}
+
+    def conectar_blockchain(self, usuarios_recursos_blockchain):
+        self.usuarios_recursos_blockchain = usuarios_recursos_blockchain
+
+    def conectar_servidor(self, usuarios_recursos_servidor):
+        self.usuarios_recursos_servidor = usuarios_recursos_servidor
+
+    def obtener_recursos_usuario(self, nombre_usuario):
+        recursos_blockchain = self.usuarios_recursos_blockchain.get(nombre_usuario, {})
+        recursos_servidor = self.usuarios_recursos_servidor.get(nombre_usuario, {})
+
+        # Combina los recursos de la blockchain y el servidor
+        recursos_combinados = {
+            'cpu': min(recursos_blockchain.get('cpu', 0), recursos_servidor.get('cpu', 0)),
+            'ancho_banda': min(recursos_blockchain.get('ancho_banda', 0), recursos_servidor.get('ancho_banda', 0)),
+        }
+
+        return recursos_combinados
+
+# Crear una instancia de la clase ConexionMetaverso en el servidor descentralizado
+conexion_metaverso = ConexionMetaverso()
+
+# Conectar los recursos desde la blockchain
+conexion_metaverso.conectar_blockchain(usuarios_recursos_blockchain)
+
+# Conectar los recursos desde el servidor descentralizado
+conexion_metaverso.conectar_servidor(usuarios_recursos_servidor)
+
+# En el metaverso Crypto, puedes obtener los recursos de un usuario específico
+nombre_usuario_buscar = 'usuario1'
+recursos_obtenidos = conexion_metaverso.obtener_recursos_usuario(nombre_usuario_buscar)
+
+# Ahora puedes usar los recursos obtenidos para la renderización u otras operaciones
+print(f"Recursos del usuario {nombre_usuario_buscar}: {recursos_obtenidos}")
+
 # Mantener la ventana abierta#
 
 root.mainloop()
