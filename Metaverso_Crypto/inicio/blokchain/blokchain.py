@@ -47,6 +47,8 @@ from pytorch3d.renderer import OpenGLPerspectiveCameras, RasterizationSettings, 
 from torchvision.transforms import functional as F
 from PIL import Image
 
+# esto es solo un punto de partida #
+
 usuarios = {}
 
 def registrar_usuario(username, password):
