@@ -47,6 +47,38 @@ from pytorch3d.renderer import OpenGLPerspectiveCameras, RasterizationSettings, 
 from torchvision.transforms import functional as F
 from PIL import Image
 
+usuarios = {}
+
+def registrar_usuario(username, password):
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+    usuarios[username] = hashed_password
+
+def verificar_credenciales(username, password):
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+    return usuarios.get(username) == hashed_password
+
+def manejar_accion(usuario, accion):
+    if accion == "explorar":
+        print(f"Bienvenido/a {usuario} al entorno de exploración.")
+    elif accion == "intercambiar":
+        print(f"Realizando intercambio para {usuario}.")
+    else:
+        print("Acción no reconocida.")
+
+# Ejemplo de registro de usuario
+registrar_usuario("usuario1", "contrasena_segura")
+
+# Ejemplo de verificación de credenciales y manejo de entorno virtual
+usuario_actual = "usuario1"
+contrasena_ingresada = "contrasena_segura"
+
+if verificar_credenciales(usuario_actual, contrasena_ingresada):
+    print("Inicio de sesión exitoso")
+    accion_usuario = "explorar"
+    manejar_accion(usuario_actual, accion_usuario)
+else:
+    print("Credenciales incorrectas")
+	
 # Punto de partida #
 # Instala las bibliotecas necesarias
 # pip install torch torchvision pytorch3d
