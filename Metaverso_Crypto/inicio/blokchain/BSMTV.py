@@ -229,3 +229,34 @@ if __name__ == '__main__':
         print("Credenciales incorrectas")
 
     app.run(debug=True)
+    
+    import hashlib
+
+# Función para calcular el hash de un bloque
+
+def calcular_hash(bloque):
+    bloque_str = str(bloque['index']) + str(bloque['data'])
+    return hashlib.sha256(bloque_str.encode()).hexdigest()
+
+# Validación de la cadena de bloques
+
+def validar_blockchain():
+    for i in range(1, len(blockchain)):
+        bloque_actual = blockchain[i]
+        bloque_anterior = blockchain[i - 1]
+        if bloque_actual['index'] != bloque_anterior['index'] + 1:
+            return False
+        if bloque_actual['hash_anterior'] != calcular_hash(bloque_anterior):
+            return False
+    return True
+    
+    # Ruta para agregar una transacción
+@app.route('/add_transaction', methods=['POST'])
+def add_transaction():
+    data = request.get_json()
+    if 'from' in data and 'to' in data and 'amount' in data:
+        # Agregar la transacción a un bloque pendiente
+        # ...
+        return jsonify({'message': 'Transacción agregada correctamente'})
+    else:
+        return jsonify({'error': 'Datos de transacción incompletos'})
