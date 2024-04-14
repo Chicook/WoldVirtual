@@ -46,15 +46,39 @@ def web_page():
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #o8h3f7;
+        }
+        .container {
+            max-width: 300px;
+            margin: 0 auto;
+            padding: 5px;
+            background-color: #fffhff;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 1px;
+        }
+    
+    body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
             background-color: #f0f0f0;
         }
         .container {
-            max-width: 800px;
+            max-width: 319px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 1px;
             background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 1px;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
         }
     
            body {
@@ -64,24 +88,24 @@ def web_page():
         }
 
         #contenedor {
-            max-width: 100px;
+            max-width: 1px;
             margin: 0 auto;
-            padding: 10px;
+            padding: 1px;
         }
 
         #encabezado {
             text-align: center;
-            padding: 5px;
-            background-color: #d1ca88;
+            padding: 1px;
+            background-color: #d1uu88;
         }
 
-        #encabezado h1 {
-            font-size: 12px;
-            margin: 4px 0;
+        #encabezado {
+            font-size: 1px;
+            margin: 1px 0;
         }
 
         #encabezado nav {
-            margin-top: 5px;
+            margin-top: 1px;
         }
 
         #encabezado nav ul {
@@ -93,27 +117,27 @@ def web_page():
         }
 
         #encabezado nav ul li {
-            margin: 0 5px;
+            margin: 0 1px;
         }
 
         #chat {
-            margin-top: 10px;
+            margin-top: 1px;
             border: 1px solid #ddd;
-            padding: 5px;
+            padding: 1px;
         }
 
         #pie {
-            margin-top: 10px;
+            margin-top: 1px;
             text-align: center;
         }
 
         #mensajeInput {
-            width: 40%;
-            padding: 3px;
+            width: 10%;
+            padding: 2px;
         }
 
         #pie button {
-            padding: 4px;
+            padding: 2px;
         }
     
         body {
@@ -122,13 +146,13 @@ def web_page():
             display: flex;
             justify-content: center; /* Centra horizontalmente */
             align-items: center; /* Centra verticalmente */
-            min-height: 100vh; /* Altura mínima para ocupar toda la pantalla */
+            min-height: 15vh; /* Altura mínima para ocupar toda la pantalla */
             background-color: #f0f0f0;
             font-family: Arial, sans-serif;
         }
         .color-box {
-            width: 80vw; /* Ancho relativo al viewport */
-            height: 80vw; /* Mismo alto que el ancho */
+            width: 15vw; /* Ancho relativo al viewport */
+            height: 15vw; /* Mismo alto que el ancho */
             border: 5px solid #ff5733; /* Cambia el color aquí */
             border-radius: 10px;
         }
@@ -141,13 +165,13 @@ def web_page():
             display: flex;
             justify-content: center; /* Centra horizontalmente */
             align-items: center; /* Centra verticalmente */
-            min-height: 100vh; /* Altura mínima para ocupar toda la pantalla */
+            min-height: 15vh; /* Altura mínima para ocupar toda la pantalla */
             background-color: #f0f0f0;
             font-family: Arial, sans-serif;
         }
         .color-box {
             width: 100vw; /* Ancho relativo al viewport */
-            height: 186vw; /* Mismo alto que el ancho */
+            height: 184vw; /* Mismo alto que el ancho */
             border: 9px solid #ff5733; /* Cambia el color aquí */
             border-radius: 10px;
         }
@@ -174,20 +198,77 @@ def web_page():
                 .catch(error => console.error('Error:', error));
         }
         
-    </script></div>
+        <div>
+        
+        <!-- ... (código HTML existente) ... -->
+
+<h2>Agregar un Bloque a la Blockchain</h2>
+<form id="addBlockForm">
+    <label for="blockData">Datos del Bloque:</label>
+    <input type="text" id="blockData" name="blockData" placeholder="Introduce los datos del bloque">
+    <button type="button" onclick="agregarBloque()">Agregar Bloque</button>
+</form>
+
+<div id="resultado"></div>
+
+<script>
+    function agregarBloque() {
+        const datos = document.getElementById('blockData').value;
+        fetch('/add_block', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ data: datos })
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('resultado').innerText = data.message;
+        })
+        .catch(error => {
+            console.error('Error al agregar el bloque:', error);
+        });
+    }
+</script>
+
+<!-- ... (código HTML existente) ... --></div>
+        
+        
+        
+        
+        
+    </script><div></div>
     
             
-    <div>
+    <div></div>
     
     
     <div class="container">
-        <h1>Mi Aplicación Blockchain</h1>
-        <p>Bienvenido/a al entorno de exploración de la blockchain.</p>
-        <!-- Aquí puedes agregar más contenido, como formularios, tablas, etc. -->
-    </div
-    
-    
+        Mi Aplicación Blockchain
+        <p>Bienvenido/a al entorno de exploración de la blockchain.</p></div>
+        
+<div class="container">
+        Capacidades del Servidor Blockchain
+        <ul>
+            <li><strong>Verificación de Transacciones:</strong> El servidor puede verificar transacciones en la cadena de bloques.</li>
+            <li><strong>Generación de Claves:</strong> Puede generar claves criptográficas para usuarios y transacciones.</li>
+            <li><strong>Consulta de Saldo:</strong> Permite consultar el saldo de una dirección de billetera específica.</li>
+            <li><strong>Creación de Bloques:</strong> El servidor puede crear nuevos bloques y agregarlos a la cadena.</li>
+            <li><strong>Validación de Firma:</strong> Verifica la autenticidad de las firmas digitales en las transacciones.</li>
+        </ul>
     </div>
+    <div>
+    Ejemplos de Funciones
+        <p>A continuación, algunos ejemplos de cómo usar estas funciones:</p>
+        <ul>
+            <li>Para verificar una transacción, llama a la función <code>verificar_transaccion(id_transaccion)</code>.</li>
+            <li>Genera una clave pública y privada con <code>generar_claves()</code>.</li>
+            <li>Consulta el saldo de una dirección con <code>consultar_saldo(direccion)</code>.</li>
+            <li>Crea un nuevo bloque con <code>crear_bloque(datos)</code>.</li>
+            <li>Valida una firma digital usando <code>validar_firma(firma, mensaje, clave_publica)</code>.</li>
+        </ul><a href="#" class="button">Ver más detalles</a>
+    </div>
+    
     
 </body>
 </html>
