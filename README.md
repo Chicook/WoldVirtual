@@ -1,41 +1,88 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
- 
- Wold Virtual 
-Código solidity para desarrollar 
-en condiciones de seguridad WoldcoinVirtual.
-Número máximo de unidades y formato.,
- De cryptomoneda.
-30.000.000,000 WoldcoinVirtual (WLCV)
- 
-  <header>
-    <!-- Contenido del encabezado -->
-    <h1>las comisiones hiran en función 
-de la red que estés conectado red de ethereun
-Binance Smart chain polygon.... Etc.
-Y la comisión dentro del metaverso de 0.001 WLCV
-Hira destinado al pooll de garantía de recompensas.</h1>
-  </header>
+# Wold Virtual
 
-  <main>
-    <!-- Contenido principal -->
-    <p>Formato del balance para el metaverso
-Crypto.  "0,000"
+## Overview
 
-Para que las recompensas nunca bajen del 50%
+Wold Virtual is a blockchain project with multiple functionalities. It includes a cryptocurrency called WoldcoinVirtual (WLCV) with a maximum supply of 30,000,000.000 WLCV. The project aims to provide a secure and efficient platform for various blockchain-based applications.
 
-además se desarrollara un protocolo de prueba de trabajo con tarjetas gráficas., como segunda capa de seguridad.
-y también para un mayor renderizado en tiempo real y mejorar la experiencia del usuario.</p>
-  </main>
+## Features
 
-  <footer>
-    <!-- Contenido del pie de página -->
-    <p>Pie de página</p>
-  </footer>
-</body>
-</html>
+- **Cryptocurrency**: WoldcoinVirtual (WLCV) with a maximum supply of 30,000,000.000 WLCV.
+- **Commissions**: Commissions will vary based on the connected network (e.g., Ethereum, Binance Smart Chain, Polygon, etc.). Within the metaverse, a commission of 0.001 WLCV will be allocated to the reward guarantee pool.
+- **Balance Format**: The balance format for the metaverse is "0,000".
+- **Reward Protocol**: Ensures that rewards never drop below 50%.
+- **Proof of Work**: A second layer of security with proof of work using graphics cards for real-time rendering and improved user experience.
+
+## Directory Structure
+
+The repository is organized into the following directories:
+
+- **contracts**: Contains Solidity smart contracts.
+  - `Blokchain.sol`
+  - `Blokchain2.sol`
+- **scripts**: Contains Python scripts for various functionalities.
+  - `blockchain.py`
+  - `BSMTV.py`
+  - `BSnts.py`
+- **csharp**: Contains C# projects.
+  - `Editorvirtual.cs`
+
+## Setup and Running the Code
+
+### Prerequisites
+
+- Python 3.x
+- Node.js
+- Solidity compiler
+- Web3.js
+- Flask
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Chicook/WoldVirtual.git
+   cd WoldVirtual
+   ```
+
+2. Install Python dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Install Node.js dependencies:
+   ```bash
+   npm install
+   ```
+
+### Running the Code
+
+1. Start the Flask server:
+   ```bash
+   python scripts/blockchain.py
+   ```
+
+2. Deploy the smart contracts:
+   ```bash
+   npx hardhat run scripts/deploy.js
+   ```
+
+3. Start the C# project:
+   Open the `csharp/Editorvirtual.cs` file in your preferred C# IDE and run the project.
+
+## Contributing
+
+We welcome contributions to improve Wold Virtual. Please follow these steps to contribute:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bugfix.
+3. Commit your changes and push the branch to your fork.
+4. Create a pull request with a detailed description of your changes.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+For any questions or inquiries, please contact us at [contact@woldvirtual.com](mailto:contact@woldvirtual.com).
+
