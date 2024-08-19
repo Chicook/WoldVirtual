@@ -1,6 +1,6 @@
-from flask import Flask, jsonify, request
+# from flask import Flask, jsonify, request
 
-app = Flask(__name__)
+# app = Flask(__name__)
 
 # Datos simulados de una blockchain (para fines de ejemplo)
 blockchain = []
@@ -12,7 +12,7 @@ def get_blockchain():
 
 # Ruta para agregar un bloque a la blockchain
 @app.route('/add_block', methods=['POST'])
-def add_block():
+# def add_block():
     data = request.get_json()
     if 'data' in data:
         new_block = {'index': len(blockchain) + 1, 'data': data['data']}
