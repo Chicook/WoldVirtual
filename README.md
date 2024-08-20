@@ -1,88 +1,87 @@
 # Wold Virtual
 
-## Overview
+## Descripción general
 
-Wold Virtual is a blockchain project with multiple functionalities. It includes a cryptocurrency called WoldcoinVirtual (WLCV) with a maximum supply of 30,000,000.000 WLCV. The project aims to provide a secure and efficient platform for various blockchain-based applications.
+Wold Virtual es un proyecto de blockchain con múltiples funcionalidades. Incluye una criptomoneda llamada WoldcoinVirtual (WLCV) con un suministro máximo de 30,000,000.000 WLCV. El proyecto tiene como objetivo proporcionar una plataforma segura y eficiente para diversas aplicaciones basadas en blockchain.
 
-## Features
+## Características
 
-- **Cryptocurrency**: WoldcoinVirtual (WLCV) with a maximum supply of 30,000,000.000 WLCV.
-- **Commissions**: Commissions will vary based on the connected network (e.g., Ethereum, Binance Smart Chain, Polygon, etc.). Within the metaverse, a commission of 0.001 WLCV will be allocated to the reward guarantee pool.
-- **Balance Format**: The balance format for the metaverse is "0,000".
-- **Reward Protocol**: Ensures that rewards never drop below 50%.
-- **Proof of Work**: A second layer of security with proof of work using graphics cards for real-time rendering and improved user experience.
+- **Criptomoneda**: WoldcoinVirtual (WLCV) con un suministro máximo de 30,000,000.000 WLCV.
+- **Comisiones**: Las comisiones variarán según la red conectada (por ejemplo, Ethereum, Binance Smart Chain, Polygon, etc.). Dentro del metaverso, se asignará una comisión de 0.001 WLCV al fondo de garantía de recompensas.
+- **Formato de saldo**: El formato de saldo para el metaverso es "0,000".
+- **Protocolo de recompensas**: Asegura que las recompensas nunca caigan por debajo del 50%.
+- **Prueba de trabajo**: Una segunda capa de seguridad con prueba de trabajo utilizando tarjetas gráficas para renderizado en tiempo real y una mejor experiencia de usuario.
 
-## Directory Structure
+## Estructura del directorio
 
-The repository is organized into the following directories:
+El repositorio está organizado en los siguientes directorios:
 
-- **contracts**: Contains Solidity smart contracts.
+- **contracts**: Contiene contratos inteligentes en Solidity.
   - `Blokchain.sol`
   - `Blokchain2.sol`
-- **scripts**: Contains Python scripts for various functionalities.
+- **scripts**: Contiene scripts en Python para varias funcionalidades.
   - `blockchain.py`
   - `BSMTV.py`
   - `BSnts.py`
-- **csharp**: Contains C# projects.
+- **csharp**: Contiene proyectos en C#.
   - `Editorvirtual.cs`
 
-## Setup and Running the Code
+## Configuración y ejecución del código
 
-### Prerequisites
+### Requisitos previos
 
 - Python 3.x
 - Node.js
-- Solidity compiler
+- Compilador de Solidity
 - Web3.js
 - Flask
 
-### Installation
+### Instalación
 
-1. Clone the repository:
+1. Clona el repositorio:
    ```bash
    git clone https://github.com/Chicook/WoldVirtual.git
    cd WoldVirtual
    ```
 
-2. Install Python dependencies:
+2. Instala las dependencias de Python:
    ```bash
    pip install -r requirements.txt
    ```
 
-3. Install Node.js dependencies:
+3. Instala las dependencias de Node.js:
    ```bash
    npm install
    ```
 
-### Running the Code
+### Ejecución del código
 
-1. Start the Flask server:
+1. Inicia el servidor Flask:
    ```bash
    python scripts/blockchain.py
    ```
 
-2. Deploy the smart contracts:
+2. Despliega los contratos inteligentes:
    ```bash
    npx hardhat run scripts/deploy.js
    ```
 
-3. Start the C# project:
-   Open the `csharp/Editorvirtual.cs` file in your preferred C# IDE and run the project.
+3. Inicia el proyecto en C#:
+   Abre el archivo `csharp/Editorvirtual.cs` en tu IDE de C# preferido y ejecuta el proyecto.
 
-## Contributing
+## Contribuyendo
 
-We welcome contributions to improve Wold Virtual. Please follow these steps to contribute:
+Damos la bienvenida a contribuciones para mejorar Wold Virtual. Por favor, sigue estos pasos para contribuir:
 
-1. Fork the repository.
-2. Create a new branch for your feature or bugfix.
-3. Commit your changes and push the branch to your fork.
-4. Create a pull request with a detailed description of your changes.
+1. Clona el repositorio.
+2. Crea una nueva rama para tu característica o corrección de errores.
+3. Haz commit de tus cambios y empuja la rama a tu fork.
+4. Crea una pull request con una descripción detallada de tus cambios.
 
-## License
+## Licencia
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
 
-## Contact
+## Contacto
 
-For any questions or inquiries, please contact us at [jaldvox@yahoo.es].
-
+Para cualquier pregunta o consulta, por favor contáctanos en [jaldvox@yahoo.es].
