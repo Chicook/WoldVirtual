@@ -11,7 +11,7 @@ html_template = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WoldVirtual</title>
+    <title>Metaverso Crypto 3D</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -29,8 +29,23 @@ html_template = """
             top: 0;
             z-index: 1000;
         }
+        .nav {
+            display: flex;
+            justify-content: center;
+            background-color: #0056b3;
+            padding: 10px 0;
+        }
+        .nav a {
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .nav a:hover {
+            background-color: #003d80;
+        }
         .container {
-            margin-top: 60px;
+            margin-top: 100px;
             padding: 20px;
         }
         .section {
@@ -47,30 +62,43 @@ html_template = """
 </head>
 <body>
     <div class="header">
-        <h1>WoldVirtual</h1>
+        <h1>Metaverso Crypto 3D</h1>
+    </div>
+    <div class="nav">
+        <a href="#home">Inicio</a>
+        <a href="#usuarios">Usuarios</a>
+        <a href="#recursos">Recursos</a>
+        <a href="#blockchain">Blockchain</a>
+        <a href="#database">Base de Datos</a>
+        <a href="#compresion">Compresión</a>
+        <a href="#servidor">Servidor</a>
     </div>
     <div class="container">
-        <div class="section">
+        <div id="home" class="section">
+            <h2>Metaverso Crypto 3D descentralizado</h2>
+            <p>Próximamente en esta página principal, se darán más detalles sobre el proyecto. Tenemos diferentes secciones que explicarán su función, dentro de cada módulo programado en Python.</p>
+        </div>
+        <div id="usuarios" class="section">
             <h2>Usuarios</h2>
             <p>El módulo de usuarios permite registrar nuevos usuarios, verificar credenciales y manejar acciones específicas para cada usuario.</p>
         </div>
-        <div class="section">
+        <div id="recursos" class="section">
             <h2>Recursos</h2>
             <p>El módulo de recursos gestiona la asignación de recursos como CPU y ancho de banda a los usuarios, y monitorea el uso de estos recursos.</p>
         </div>
-        <div class="section">
+        <div id="blockchain" class="section">
             <h2>Blockchain</h2>
             <p>El módulo de blockchain permite crear y gestionar una cadena de bloques, añadiendo transacciones y validando la integridad de la cadena.</p>
         </div>
-        <div class="section">
+        <div id="database" class="section">
             <h2>Base de Datos</h2>
             <p>El módulo de base de datos se encarga de conectar a una base de datos PostgreSQL, ejecutar consultas y manejar los resultados.</p>
         </div>
-        <div class="section">
+        <div id="compresion" class="section">
             <h2>Compresión</h2>
             <p>El módulo de compresión permite comprimir y guardar datos en archivos, así como cargar y descomprimir estos datos cuando sea necesario.</p>
         </div>
-        <div class="section">
+        <div id="servidor" class="section">
             <h2>Servidor</h2>
             <p>El módulo de servidor utiliza Flask y Socket.IO para manejar las rutas web y la transmisión de datos en tiempo real.</p>
         </div>
