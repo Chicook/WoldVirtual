@@ -42,7 +42,8 @@ def main():
     print("Transacción añadida a la blockchain.")
 
     # Iniciar servidor
+    print("Iniciando servidor web...")
     socketio.run(app, debug=True)
 
-if __name__ == "main":
+if __name__ == "__main__":
     main()
