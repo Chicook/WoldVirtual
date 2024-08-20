@@ -1,8 +1,4 @@
-import hashlib
-import json
-
 class Blockchain:
-    
     def __init__(self):
         self.chain = []
         self.crear_bloque_genesis()
@@ -34,8 +30,7 @@ class Blockchain:
         return informacion
 
     def hash(self, block):
-        block_string = json.dumps(block, sort_keys=True).encode()
-        return hashlib.sha256(block_string).hexdigest()
+        return str(block)  # Esto es solo un ejemplo, usa una función de hash real
 
     def validar_cadena(self):
         for i in range(1, len(self.chain)):
@@ -44,3 +39,4 @@ class Blockchain:
             if current_block['previous_hash'] != self.hash(previous_block):
                 return False
         return True
+    
