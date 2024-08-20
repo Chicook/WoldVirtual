@@ -45,5 +45,5 @@ def main():
     print("Iniciando servidor web...")
     socketio.run(app, debug=True)
 
-if __name__ == "__main__":
+if __name__ == "main":
     main()
