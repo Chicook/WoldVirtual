@@ -6,3 +6,4 @@ __pycache__/
 *.zip
 
 # Ignorar otros archivos o carpetas según sea necesario
+* datos_comprimidos.gz
