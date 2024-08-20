@@ -84,5 +84,5 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contact
 
-For any questions or inquiries, please contact us at [contact@woldvirtual.com](mailto: jaldvox@yahoo.es).
+For any questions or inquiries, please contact us at [jaldvox@yahoo.es].
 
