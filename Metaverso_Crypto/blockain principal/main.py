@@ -15,7 +15,7 @@ import usuarios
 
 def main():
         # Inicializar recursos
-            recursos.inicializar()
+        recursos.inicializar()
 
         # Conectar a la base de datos
         db = database.conectar()
