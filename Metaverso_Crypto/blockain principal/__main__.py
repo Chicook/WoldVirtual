@@ -8,4 +8,4 @@ from servidor import app, socketio
 if __name__ == "__main__":
     # Aquí puedes iniciar la aplicación, el servidor, o cualquier otro componente
         app.run(debug=True)
-            socketio.run(app)
+        socketio.run(app)
