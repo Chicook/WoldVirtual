@@ -7,34 +7,34 @@ from servidor import app, socketio
 
 def main():
         # Inicializar recursos
-         recursos.inicializar()
+         RecursosUsuario ()
 
         # Conectar a la base de datos
-        db = database.conectar()
+        db = conectar_base_datos ()
 
         # Crear un nuevo usuario
-        usuario = usuarios.crear_usuario("nombre", "contraseña")
+        usuario = registrar_usuario ("nombre", "contraseña")
 
          # Ejecutar compresión de datos
-        compresion.comprimir_datos(usuario.datos)
+        comprimir_y_guardar_datos (usuario.datos)
 
        # Procesar transacción en la blockchain
-        blockchain.procesar_transaccion(usuario.transaccion)
+        Blockchain (usuario.transaccion)
 
     # Iniciar servidor
-    servidor.iniciar()
+        socketio  ()
 
 
  # Iniciar la aplicación principal
-            app.ejecutar()
+            socketio ()
 
-            if __name__ == "__main__":
-            main()
-
-
+            if __name__ == "main":
+            main ()
 
 
-if __name__ == "__main__":
+
+
+if __name__ == "main":
     # Aquí puedes iniciar la aplicación, el servidor, o cualquier otro componente
         app.run(debug=True)
         socketio.run(app)
