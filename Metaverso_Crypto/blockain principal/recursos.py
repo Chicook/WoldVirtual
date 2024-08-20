@@ -23,4 +23,6 @@ class RecursosUsuario:
 
         def obtener_informacion(self):
             return self.recursos_usuarios
-                                                                        
+         def inicializar():
+        # Código para inicializar recursos
+            print("Recursos inicializados")
