@@ -65,7 +65,7 @@ html_template = """
         <h1>Metaverso Crypto 3D</h1>
     </div>
     <div class="nav">
-        <a href="./Metaverso_Crypto/Blockchain_Principal/secciones/inicio.html">Inicio</a>
+        <a href="./Metaverso_Crypto/inicio/Blockchain_Principal/secciones/inicio.html">Inicio</a>
         <a href="#usuarios">Usuarios</a>
         <a href="#recursos">Recursos</a>
         <a href="#blockchain">Blockchain</a>
