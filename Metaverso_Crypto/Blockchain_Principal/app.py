@@ -1,39 +1,30 @@
-from flask import Flask, request, jsonify
 from usuarios import registrar_usuario, verificar_credenciales, manejar_accion
 from recursos import RecursosUsuario, asignar_recursos_a_usuario, MonitoreoRecursos
 from blockchain import Blockchain
 from database import conectar_base_datos
 from compresion import comprimir_y_guardar_datos, cargar_y_descomprimir_datos
+from servidor import app, socketio
 
-app = Flask(__name__)
+def main():
+    # Inicializar recursos
+    recursos_usuario = RecursosUsuario(50, 50)  # Ejemplo de inicialización con 50% de CPU y ancho de banda
 
-# Ruta para registrar un usuario
-@app.route('/registrar', methods=['POST'])
-def registrar():
-    datos = request.get_json()
-    try:
-        resultado = registrar_usuario(datos['username'], datos['password'])
-        return jsonify({'status': 'success', 'data': resultado}), 201
-    except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)}), 400
+    # Conectar a la base de datos
+    db = conectar_base_datos()
 
-# Ruta para verificar credenciales de usuario
-@app.route('/verificar', methods=['POST'])
-def verificar():
-    datos = request.get_json()
-    if verificar_credenciales(datos['username'], datos['password']):
-        return jsonify({'status': 'success', 'message': 'Credenciales válidas'}), 200
-    else:
-        return jsonify({'status': 'error', 'message': 'Credenciales inválidas'}), 401
+    # Crear un nuevo usuario
+    registrar_usuario("nombre", "contraseña")
 
-# Ruta para asignar recursos a un usuario
-@app.route('/asignar_recursos', methods=['POST'])
-def asignar_recursos():
-    datos = request.get_json()
-    usuario = RecursosUsuario(datos['porcentaje_cpu'], datos['porcentaje_ancho_banda'])
-    recursos_comunitarios = {'cpu': 100, 'ancho_banda': 100}  # Ejemplo de recursos comunitarios
-    recursos_asignados = asignar_recursos_a_usuario(usuario, recursos_comunitarios)
-    return jsonify({'status': 'success', 'recursos_asignados': recursos_asignados}), 200
+    # Ejecutar compresión de datos
+    datos_usuario = {"nombre": "nombre", "datos": "datos_ejemplo"}
+    comprimir_y_guardar_datos(datos_usuario, "datos_comprimidos.gz")
 
-if __name__ == '__main__':
-    app.run(debug=True)
+    # Procesar transacción en la blockchain
+    blockchain = Blockchain()
+    blockchain.agregar_bloque("transaccion_ejemplo")
+
+    # Iniciar servidor
+    socketio.run(app, debug=True)
+
+if __name__ == "main":
+    main()
