@@ -39,7 +39,7 @@ conectar_base_datos()
    # password="tu_contraseña",
       #  host="tu_host",
        # port="tu_puerto"
-                                                                                )
+      #                                                                          )
        # with conexion.cursor() as cursor:
        # cursor.execute("SELECT * FROM usuarios")
       #  resultados = cursor.fetchall()

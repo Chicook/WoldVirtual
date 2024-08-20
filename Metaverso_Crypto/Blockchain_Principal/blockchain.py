@@ -53,6 +53,6 @@ class Blockchain:
        # informacion = {
         #'longitud': len(self.chain),
         #'bloques': [block.__dict__ for block in self.chain],
-                                                        }
+       #                                                 }
        # return informacion
             

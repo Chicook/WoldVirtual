@@ -69,7 +69,7 @@ class MonitoreoRecursos:
        # recursos_asignados = {
        # 'cpu': recursos_comunitarios['cpu'] * (usuario.porcentaje_cpu / 100),
        # 'ancho_banda': recursos_comunitarios['ancho_banda'] * (usuario.porcentaje_ancho_banda / 100),
-                                            }
+          #                                  }
        # return recursos_asignados
 
    # class MonitoreoRecursos:
@@ -81,7 +81,7 @@ class MonitoreoRecursos:
           #  self.recursos_usuarios[nombre_usuario] = {
           #  'uso_cpu': uso_cpu,
          #   'uso_ancho_banda': uso_ancho_banda
-                                                                                                        }
+          #                                                                                              }
 
        # def obtener_informacion(self):
          #   return self.recursos_usuarios
