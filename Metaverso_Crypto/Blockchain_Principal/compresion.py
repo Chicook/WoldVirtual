@@ -1,5 +1,9 @@
 import json
 import gzip
+import logging
+
+# Configurar el registro
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def comprimir_y_guardar_datos(datos, archivo_salida):
     """
@@ -13,9 +17,9 @@ def comprimir_y_guardar_datos(datos, archivo_salida):
         datos_comprimidos = gzip.compress(datos_serializados)
         with open(archivo_salida, 'wb') as archivo:
             archivo.write(datos_comprimidos)
-        print(f"Datos comprimidos y guardados en {archivo_salida}")
+        logging.info(f"Datos comprimidos y guardados en {archivo_salida}")
     except Exception as e:
-        print(f"Error al comprimir y guardar datos: {e}")
+        logging.error(f"Error al comprimir y guardar datos: {e}")
 
 def cargar_y_descomprimir_datos(archivo_entrada):
     """
@@ -28,25 +32,8 @@ def cargar_y_descomprimir_datos(archivo_entrada):
         with open(archivo_entrada, 'rb') as archivo:
             datos_comprimidos = archivo.read()
         datos_descomprimidos = gzip.decompress(datos_comprimidos)
+        logging.info(f"Datos cargados y descomprimidos de {archivo_entrada}")
         return json.loads(datos_descomprimidos)
     except Exception as e:
-        print(f"Error al cargar y descomprimir datos: {e}")
+        logging.error(f"Error al cargar y descomprimir datos: {e}")
         return None
-
-# código reservado por si
-# hace falta mas adelante.
-
-# import json
-# import gzip
-
-# def comprimir_y_guardar_datos(datos, archivo_salida):
-   # datos_serializados = json.dumps(datos).encode('utf-8')
-   # datos_comprimidos = gzip.compress(datos_serializados)
-   # with open(archivo_salida, 'wb') as archivo:
-   # archivo.write(datos_comprimidos)
-
-# def cargar_y_descomprimir_datos(archivo_entrada):
-  #  with open(archivo_entrada, 'rb') as archivo:
-  #  datos_comprimidos = archivo.read()
-  #  datos_descomprimidos = gzip.decompress(datos_comprimidos)
-  # return json.loads(datos_descomprimidos)

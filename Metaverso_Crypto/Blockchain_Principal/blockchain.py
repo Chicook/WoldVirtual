@@ -1,3 +1,6 @@
+import hashlib
+import json
+
 class Blockchain:
     
     def __init__(self):
@@ -31,8 +34,8 @@ class Blockchain:
         return informacion
 
     def hash(self, block):
-        # Aquí puedes implementar una función de hash adecuada
-        return str(block)  # Esto es solo un ejemplo, usa una función de hash real
+        block_string = json.dumps(block, sort_keys=True).encode()
+        return hashlib.sha256(block_string).hexdigest()
 
     def validar_cadena(self):
         for i in range(1, len(self.chain)):
@@ -41,18 +44,3 @@ class Blockchain:
             if current_block['previous_hash'] != self.hash(previous_block):
                 return False
         return True
-
-        # reservado para modificaciónes 
-        # o actualizaciones de este módulo.
-        
-# class Blockchain:
-    # def __init__(self):
-           # self.chain = []
-
-   # def obtener_informacion_cadena(self):
-       # informacion = {
-        #'longitud': len(self.chain),
-        #'bloques': [block.__dict__ for block in self.chain],
-       #                                                 }
-       # return informacion
-            
