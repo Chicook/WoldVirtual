@@ -2,9 +2,6 @@ import psycopg2
 from psycopg2 import sql
 
 def conectar_base_datos():
-    """
-    Conecta a la base de datos PostgreSQL y obtiene todos los registros de la tabla 'usuarios'.
-    """
     conexion = None
     try:
         conexion = psycopg2.connect(
@@ -19,7 +16,7 @@ def conectar_base_datos():
             resultados = cursor.fetchall()
             for resultado in resultados:
                 print(resultado)
-    except psycopg2.Error as e:
+    except Exception as e:
         print(f"Error en la conexión a la base de datos: {e}")
     finally:
         if conexion:
