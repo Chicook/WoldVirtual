@@ -85,5 +85,5 @@ def index():
 def handle_audio(data):
     socketio.emit('audio_stream', data)
 
-if __name__ == 'main':
+if __name__ == '__main__':
     socketio.run(app, debug=True)
