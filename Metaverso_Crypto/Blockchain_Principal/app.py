@@ -22,6 +22,8 @@ def registrar():
 if __name__ == '__main__':
     app.run(debug=True)
 
+# (Dejar para mas adelante o para modificar código.)
+
 # from flask import Flask, request, jsonify
 # from usuarios import registrar_usuario, verificar_credenciales, manejar_accion
 # from recursos import RecursosUsuario, asignar_recursos_a_usuario, MonitoreoRecursos
