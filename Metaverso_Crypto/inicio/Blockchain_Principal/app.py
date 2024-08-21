@@ -1,4 +1,4 @@
-# app
+# app.py
 
 from usuarios import registrar_usuario, verificar_credenciales, manejar_accion
 from recursos import RecursosUsuario, asignar_recursos_a_usuario, MonitoreoRecursos
@@ -9,6 +9,11 @@ from servidor import app, socketio
 from almacenamiento import guardar_datos, cargar_datos  # Nuevo módulo de Almacenamiento
 
 def main():
+    """
+    Función principal para inicializar recursos, conectar a la base de datos,
+    registrar un usuario, comprimir y almacenar datos, procesar transacciones
+    en la blockchain e iniciar el servidor.
+    """
     # Inicializar recursos
     recursos_usuario = RecursosUsuario(50, 50)  # Ejemplo de inicialización con 50% de CPU y ancho de banda
 
@@ -37,5 +42,5 @@ def main():
     # Iniciar servidor
     socketio.run(app, debug=True)
 
-if __name__ == "__main__":  # Se debe usar "__main__" en lugar de "main" para que se ejecute correctamente.
+if __name__ == "__main__":
     main()
