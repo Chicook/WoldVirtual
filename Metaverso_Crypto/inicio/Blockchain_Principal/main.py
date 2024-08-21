@@ -1,6 +1,6 @@
 from usuarios import registrar_usuario, verificar_credenciales, manejar_accion
 from recursos import RecursosUsuario, MonitoreoRecursos
-from blockchain import Blockchain
+from blockchain import Blockchain,
 from database import conectar_base_datos
 from compresion import comprimir_y_guardar_datos, cargar_y_descomprimir_datos
 from servidor import app, socketio,
@@ -49,7 +49,7 @@ def main():
     decompress_file('archivos_comprimidos.tar.gz')
 
     # Iniciar el servidor Flask
-    socketio.run(app, debug=True)
+    socketio.run (app, debug=True)
 
 if __name__ == '__main__':
      main()
