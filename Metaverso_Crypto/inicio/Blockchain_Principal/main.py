@@ -13,20 +13,21 @@ storage_path = '/workspaces/WoldVirtual.github.io/Metaverso_Crypto/inicio/Blockc
 # Función para comprimir archivos
 def compress_files(files, output_filename):
     with tarfile.open(os.path.join(storage_path, output_filename), 'w:gz') as tar:
-    for file in files:
-     tar.add(file, arcname=os.path.basename(file))
+        for file in files:
+            tar.add(file, arcname=os.path.basename(file))
     print(f'Archivos comprimidos en {output_filename}')
 
-    # Función para descomprimir archivos
+# Función para descomprimir archivos
 def decompress_file(input_filename):
     with tarfile.open(os.path.join(storage_path, input_filename), 'r:gz') as tar:
-    tar.extractall(path=storage_path)
+        tar.extractall(path=storage_path)
     print(f'Archivos descomprimidos en {storage_path}')
 
-    # Ejemplo de uso
-    files_to_compress = ['/ruta/de/archivo1', '/ruta/de/archivo2']
-    compress_files(files_to_compress, 'archivo_comprimido.tar.gz')
-    decompress_file('archivo_comprimido.tar.gz')
+# Ejemplo de uso
+files_to_compress = ['/ruta/de/archivo1', '/ruta/de/archivo2']
+compress_files(files_to_compress, 'archivo_comprimido.tar.gz')
+decompress_file('archivo_comprimido.tar.gz')
+
                                         
 def main():
     # Inicializar recursos
