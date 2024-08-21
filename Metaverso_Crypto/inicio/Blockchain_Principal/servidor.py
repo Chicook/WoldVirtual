@@ -66,12 +66,12 @@ def index():
     """
     return render_template_string(html_template)
 
-@socketio.on('audio_stream')
-def handle_audio(data):
-    """
-    Maneja el evento de transmisión de audio.
-    """
-    socketio.emit('audio_stream', data)
+# @socketio.on('audio_stream')
+# def handle_audio(data):
+   # """
+   # Maneja el evento de transmisión de audio.
+   # """
+    # socketio.emit('audio_stream', data)
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

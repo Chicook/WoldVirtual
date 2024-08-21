@@ -1,9 +1,0 @@
-# Ignorar la carpeta __pycache__
-* __pycache__/
-
-# Ignorar archivos comprimidos
-*.gz
-*.zip
-
-# Ignorar otros archivos o carpetas según sea necesario
-* datos_comprimidos.gz
