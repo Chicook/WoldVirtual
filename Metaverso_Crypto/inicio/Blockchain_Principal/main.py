@@ -4,7 +4,17 @@ from blockchain import Blockchain
 from database import conectar_base_datos
 from compresion import comprimir_y_guardar_datos, cargar_y_descomprimir_datos
 from servidor import app, socketio
-                                       
+from Almacenamiento import compress_files, decompress_file
+
+# Ejemplo de uso
+files_to_compress = [
+    '/workspaces/WoldVirtual.github.io/Metaverso_Crypto/inicio/Blockchain_Principal/Almacenamiento/archivo1',
+        '/workspaces/WoldVirtual.github.io/Metaverso_Crypto/inicio/Blockchain_Principal/Almacenamiento/archivo2'
+        ]
+        compress_files(files_to_compress, 'archivo_comprimido.tar.gz')
+        decompress_file('archivo_comprimido.tar.gz')
+
+
 def main():
     # Inicializar recursos
     recursos_usuario = RecursosUsuario(50, 50)  # Ejemplo de inicialización con 50% de CPU y ancho de banda
