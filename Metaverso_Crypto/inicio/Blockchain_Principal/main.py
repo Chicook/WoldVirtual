@@ -48,6 +48,10 @@ def main():
     compress_files(files_to_compress, 'archivos_comprimidos.tar.gz')
     decompress_file('archivos_comprimidos.tar.gz')
 
+    blockchain = Blockchain()
+    blockchain.agregar_bloque("transaccion_ejemplo")
+    print("Cadena válida:", blockchain.validar_cadena())
+
     # Iniciar el servidor Flask
     socketio.run (app, debug=True)
 
