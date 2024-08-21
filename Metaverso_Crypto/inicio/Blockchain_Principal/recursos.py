@@ -5,11 +5,10 @@ class RecursosUsuario:
 
     @staticmethod
     def asignar_recursos_a_usuario(usuario, recursos_comunitarios):
-        recursos_asignados = {
+        return {
             'cpu': recursos_comunitarios['cpu'] * (usuario.porcentaje_cpu / 100),
             'ancho_banda': recursos_comunitarios['ancho_banda'] * (usuario.porcentaje_ancho_banda / 100),
         }
-        return recursos_asignados
 
 class MonitoreoRecursos:
     def __init__(self):
