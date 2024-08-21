@@ -4,6 +4,7 @@ from blockchain import Blockchain
 from database import conectar_base_datos
 from compresion import comprimir_y_guardar_datos, cargar_y_descomprimir_datos
 from servidor import app, socketio
+from almacenamiento import guardar_datos, cargar_datos  # Nuevo módulo de Almacenamiento
 
 def main():
     # Inicializar recursos
@@ -17,7 +18,15 @@ def main():
 
     # Ejecutar compresión de datos
     datos_usuario = {"nombre": "nombre", "datos": "datos_ejemplo"}
-    comprimir_y_guardar_datos(datos_usuario, "datos_comprimidos.gz")
+    archivo_comprimido = "datos_comprimidos.gz"
+    comprimir_y_guardar_datos(datos_usuario, archivo_comprimido)
+
+    # Almacenar los datos comprimidos en el sistema de almacenamiento
+    guardar_datos(archivo_comprimido, "/ruta/almacenamiento")  # Se debe definir la ruta de almacenamiento
+
+    # Cargar los datos desde el sistema de almacenamiento y descomprimirlos
+    archivo_cargado = cargar_datos("/ruta/almacenamiento", archivo_comprimido)
+    datos_descomprimidos = cargar_y_descomprimir_datos(archivo_cargado)
 
     # Procesar transacción en la blockchain
     blockchain = Blockchain()
@@ -26,5 +35,5 @@ def main():
     # Iniciar servidor
     socketio.run(app, debug=True)
 
-if __name__ == "main":
+if __name__ == "__main__":  # Se debe usar "__main__" en lugar de "main" para que se ejecute correctamente.
     main()
