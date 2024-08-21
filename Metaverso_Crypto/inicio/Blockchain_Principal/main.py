@@ -29,11 +29,15 @@ def main():
     comprimir_y_guardar_datos(datos_usuario, archivo_comprimido)
 
     # Almacenar los datos comprimidos en el sistema de almacenamiento
-    compress_files(["datos_comprimidos.gz"], "datos_comprimidos.tar.gz")
+    compress_files([archivo_comprimido], "datos_comprimidos.tar.gz")
 
-    # Cargar los datos desde el sistema de almacenamiento y descomprimirlos
-    decompress_file("datos_comprimidos.tar.gz")
-    datos_descomprimidos = cargar_y_descomprimir_datos("datos_comprimidos.gz")
+    # Verificar que el archivo comprimido existe antes de descomprimirlo
+    if os.path.isfile("/workspaces/WoldVirtual.github.io/Metaverso_Crypto/inicio/Blockchain_Principal/Almacenamiento/datos_comprimidos.tar.gz"):
+        # Cargar los datos desde el sistema de almacenamiento y descomprimirlos
+        decompress_file("datos_comprimidos.tar.gz")
+        datos_descomprimidos = cargar_y_descomprimir_datos(archivo_comprimido)
+    else:
+        print("El archivo datos_comprimidos.tar.gz no existe en la ruta especificada.")
 
     # Procesar transacción en la blockchain
     blockchain = Blockchain()
@@ -44,4 +48,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
