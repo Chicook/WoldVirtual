@@ -4,7 +4,7 @@ from blockchain import Blockchain
 from database import conectar_base_datos
 from compresion import comprimir_y_guardar_datos, cargar_y_descomprimir_datos
 from servidor import app, socketio
-from Almacenamiento import compress_files, decompress_file
+from  Almacenamiento.Almacenamiento import compress_files, decompress_file
 
 def main():
     # Inicializar recursos
@@ -52,4 +52,4 @@ def main():
     socketio.run(app, debug=True)
 
 if __name__ == '__main__':
-    main()
+     main()
