@@ -1,3 +1,5 @@
+# recursos 
+
 class RecursosUsuario:
     def __init__(self, porcentaje_cpu, porcentaje_ancho_banda):
         self.porcentaje_cpu = porcentaje_cpu
