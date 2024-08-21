@@ -1,3 +1,5 @@
+# main
+
 from usuarios import registrar_usuario, verificar_credenciales, manejar_accion
 from recursos import RecursosUsuario, asignar_recursos_a_usuario, MonitoreoRecursos,
 from blockchain import Blockchain
