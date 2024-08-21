@@ -18,7 +18,7 @@ def main():
     registrar_usuario("nombre", "contraseña")
 
     # Ejecutar compresión de datos
-    datos_usuario = ["file1.txt", "file2.txt"]
+    datos_usuario = ["archivo.txt", "archivo.txt"]
     compress_files(datos_usuario, "datos_comprimidos.tar.gz")
 
     # Procesar transacción en la blockchain

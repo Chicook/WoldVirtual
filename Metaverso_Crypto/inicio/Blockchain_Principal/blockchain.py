@@ -81,6 +81,6 @@ class Blockchain:
 if __name__ == "__main__":
     blockchain = Blockchain()
     blockchain.agregar_bloque("Primer Bloque Después del Génesis")
-    blockchain.agregar_bloque("Segundo Bloque Después del Génesis")
+    blockchain.agregar_bloque("Segundo bloque Woldcoinvirtual wcv")
     blockchain.imprimir_cadena()
     print("Cadena válida:", blockchain.validar_cadena())

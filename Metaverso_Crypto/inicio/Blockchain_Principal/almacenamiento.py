@@ -4,7 +4,7 @@ import os
 import tarfile
 
 # Ruta donde se almacenan los archivos comprimidos y descomprimidos
-storage_path = '/workspaces/WoldVirtual.github.io/Metaverso_Crypto/inicio/Blockchain_Principal/Almacenamiento'
+storage_path = '/workspaces/WoldVirtual.github.io/Metaverso_Crypto/inicio/Blockchain_Principal/Almacenamiento/almacenamiento.py"
 
 def compress_files(files, output_filename):
     """

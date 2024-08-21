@@ -29,10 +29,10 @@ def main():
     comprimir_y_guardar_datos(datos_usuario, archivo_comprimido)
 
     # Almacenar los datos comprimidos en el sistema de almacenamiento
-    guardar_datos(archivo_comprimido, "/ruta/almacenamiento")  # Se debe definir la ruta de almacenamiento
+    guardar_datos(archivo_comprimido, "/workspaces/WoldVirtual.github.io/Metaverso_Crypto/inicio/Blockchain_Principal/Almacenamiento/almacenamiento.py")   # Se debe definir la ruta de almacenamiento
 
     # Cargar los datos desde el sistema de almacenamiento y descomprimirlos
-    archivo_cargado = cargar_datos("/ruta/almacenamiento", archivo_comprimido)
+    archivo_cargado = cargar_datos("/workspaces/WoldVirtual.github.io/Metaverso_Crypto/inicio/Blockchain_Principal/Almacenamiento/almacenamiento.py" archivo_comprimido)
     datos_descomprimidos = cargar_y_descomprimir_datos(archivo_cargado)
 
     # Procesar transacción en la blockchain
