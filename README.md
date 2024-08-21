@@ -85,3 +85,11 @@ Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo [LICENS
 ## Contacto
 
 Para cualquier pregunta o consulta, por favor contáctanos en [jaldvox@yahoo.es].
+
+Para cargar la web de prueba necesitaras previamente hacer lo siguiente.
+
+pip install flask-socketio
+ psycopg2-binary
+ flask
+
+todo junto y asi se cargara la web de prueba.

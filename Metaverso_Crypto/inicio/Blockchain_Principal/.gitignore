@@ -1,5 +1,5 @@
 # Ignorar la carpeta __pycache__
-__pycache__/
+* __pycache__/
 
 # Ignorar archivos comprimidos
 *.gz
