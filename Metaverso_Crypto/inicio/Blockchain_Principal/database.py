@@ -1,4 +1,4 @@
-# database 
+# database.py
 
 import psycopg2
 from psycopg2 import sql
@@ -18,7 +18,7 @@ def conectar_base_datos():
             resultados = cursor.fetchall()
             for resultado in resultados:
                 print(resultado)
-    except Exception as e:
+    except psycopg2.DatabaseError as e:
         print(f"Error en la conexión a la base de datos: {e}")
     finally:
         if conexion:

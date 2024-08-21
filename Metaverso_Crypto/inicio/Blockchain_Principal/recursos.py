@@ -1,4 +1,4 @@
-# recursos 
+# recursos.py
 
 class RecursosUsuario:
     def __init__(self, porcentaje_cpu, porcentaje_ancho_banda):
@@ -28,3 +28,4 @@ class MonitoreoRecursos:
     @staticmethod
     def inicializar():
         print("Recursos inicializados")
+    

@@ -1,11 +1,13 @@
-# servidor 
+# servidor.py
 
 from flask import Flask, render_template_string
 from flask_socketio import SocketIO
 
+# Inicializar la aplicación Flask y SocketIO
 app = Flask(__name__)
 socketio = SocketIO(app)
 
+# Plantilla HTML para la interfaz web
 html_template = """
 <!DOCTYPE html>
 <html lang="en">
@@ -59,11 +61,17 @@ html_template = """
 
 @app.route('/')
 def index():
+    """
+    Renderiza la plantilla HTML para la página principal.
+    """
     return render_template_string(html_template)
 
-@socketio.on('audio_stream')
-def handle_audio(data):
-    socketio.emit('audio_stream', data)
+# @socketio.on('audio_stream')
+# def handle_audio(data):
+   # """
+   # Maneja el evento de transmisión de audio.
+   # """
+    # socketio.emit('audio_stream', data)
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

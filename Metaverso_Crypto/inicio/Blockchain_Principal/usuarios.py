@@ -1,7 +1,8 @@
-# usuarios 
+# usuarios.py
 
 import hashlib
 
+# Diccionario para almacenar usuarios y contraseñas
 usuarios = {}
 
 def registrar_usuario(username, password):

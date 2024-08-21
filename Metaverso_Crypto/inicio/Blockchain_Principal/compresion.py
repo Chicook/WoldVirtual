@@ -1,4 +1,4 @@
-# compresion 
+# compresion.py
 
 import json
 import gzip

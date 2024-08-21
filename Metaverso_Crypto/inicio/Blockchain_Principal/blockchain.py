@@ -1,4 +1,4 @@
-# blockchain 
+# blockchain.py
 
 import hashlib
 import datetime
@@ -44,10 +44,8 @@ class Blockchain:
         for i in range(1, len(self.chain)):
             current_block = self.chain[i]
             previous_block = self.chain[i - 1]
-            # Verificar que el hash del bloque anterior sea el mismo
             if current_block['previous_hash'] != previous_block['hash']:
                 return False
-            # Verificar que el hash del bloque actual sea válido
             if current_block['hash'] != self.hash_block(current_block['index'], current_block['timestamp'], current_block['data'], previous_block['hash']):
                 return False
         return True
@@ -55,11 +53,4 @@ class Blockchain:
     def imprimir_cadena(self):
         for block in self.chain:
             print(block)
-
-# Ejemplo de uso en caso de ser ejecutado directamente
-if __name__ == "__main__":
-    blockchain = Blockchain()
-    blockchain.agregar_bloque("Primer Bloque Después del Génesis")
-    blockchain.agregar_bloque("Segundo Bloque Después del Génesis")
-    blockchain.imprimir_cadena()
-    print("Cadena válida:", blockchain.validar_cadena()
+    
