@@ -4,7 +4,6 @@ from blockchain import Blockchain
 from database import conectar_base_datos
 from compresion import comprimir_y_guardar_datos, cargar_y_descomprimir_datos
 from servidor import app, socketio
-import os
 import tarfile
 
 # Definir la ruta de almacenamiento
@@ -27,7 +26,6 @@ def decompress_file(input_filename):
 files_to_compress = ['/ruta/de/archivo1', '/ruta/de/archivo2']
 compress_files(files_to_compress, 'archivo_comprimido.tar.gz')
 decompress_file('archivo_comprimido.tar.gz')
-
                                         
 def main():
     # Inicializar recursos
