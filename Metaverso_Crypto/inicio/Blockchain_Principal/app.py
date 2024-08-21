@@ -6,7 +6,7 @@ from blockchain import Blockchain
 from database import conectar_base_datos
 from compresion import comprimir_y_guardar_datos, cargar_y_descomprimir_datos
 from servidor import app, socketio
-from almacenamiento import compress_files, decompress_file
+# from almacenamiento import compress_files, decompress_file
 
 def main():
     """
@@ -29,10 +29,10 @@ def main():
     comprimir_y_guardar_datos(datos_usuario, archivo_comprimido)
 
     # Almacenar los datos comprimidos en el sistema de almacenamiento
-    compress_files(["datos_comprimidos.gz"], "datos_comprimidos.tar.gz")
+    # compress_files(["datos_comprimidos.gz"], "datos_comprimidos.tar.gz")
 
     # Cargar los datos desde el sistema de almacenamiento y descomprimirlos
-    decompress_file("datos_comprimidos.tar.gz")
+    # decompress_file("datos_comprimidos.tar.gz")
     datos_descomprimidos = cargar_y_descomprimir_datos("datos_comprimidos.gz")
 
     # Procesar transacción en la blockchain
