@@ -1,6 +1,5 @@
 # main.py
 
-import os
 from usuarios import registrar_usuario, verificar_credenciales, manejar_accion
 from recursos import RecursosUsuario, MonitoreoRecursos
 from blockchain import Blockchain
