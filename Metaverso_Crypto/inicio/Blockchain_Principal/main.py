@@ -9,6 +9,14 @@ from servidor import app, socketio
 # from almacenamiento import compress_files, decompress_file
 
 def main():
+
+     if __name__ == "__main__":
+    blockchain = Blockchain()  # Crear una instancia de Blockchain
+    blockchain.agregar_bloque("Primer Bloque Después del Génesis")
+    blockchain.agregar_bloque("Segundo Bloque Después del Génesis")
+    blockchain.imprimir_cadena()
+    print("Cadena válida:", blockchain.validar_cadena())
+    
     """
     Función principal para inicializar recursos, conectar a la base de datos,
     registrar un usuario, comprimir y almacenar datos, procesar transacciones
