@@ -2,7 +2,7 @@
 
 from usuarios import registrar_usuario, verificar_credenciales, manejar_accion
 from recursos import RecursosUsuario, MonitoreoRecursos
-from blockchain import Blockchain
+# from blockchain import Blockchain
 from database import conectar_base_datos
 from compresion import comprimir_y_guardar_datos, cargar_y_descomprimir_datos
 from servidor import app, socketio
@@ -10,14 +10,14 @@ from servidor import app, socketio
 
 def main():
 
-     if __name__ == "__main__":
+   #  if __name__ == "__main__":
           
-         blockchain = Blockchain()  # Crear una instancia de Blockchain
-         blockchain.agregar_bloque("Primer Bloque Después del Génesis")
-         blockchain.agregar_bloque("Segundo Bloque Después del Génesis")
-         blockchain.imprimir_cadena()
+        # blockchain = Blockchain()  # Crear una instancia de Blockchain
+        # blockchain.agregar_bloque("Primer Bloque Después del Génesis")
+        # blockchain.agregar_bloque("Segundo Bloque Después del Génesis")
+        # blockchain.imprimir_cadena()
     
-     print("Cadena válida:", blockchain.validar_cadena())
+    # print("Cadena válida:", blockchain.validar_cadena())
     
     """
     Función principal para inicializar recursos, conectar a la base de datos,
