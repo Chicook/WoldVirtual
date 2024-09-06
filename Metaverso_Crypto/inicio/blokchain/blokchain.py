@@ -3,11 +3,11 @@
 #__version__ = "0.0.1"
 
 #class MyCode:
-    #def __init__(self):
+    # def __init__(self):
         #pass
 
-    #def run(self):
-        print(f"Ejecutando la versión: {__version__}")
+   # def run(self):
+        # print(f"Ejecutando la versión: {__version__}")
 
 #if __name__ == "__main__":
     #my_code_instance = MyCode()
