@@ -14,10 +14,10 @@ html_template = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Metaverso Crypto 3D</title>
+    <title>Wold Virtual 3D</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f9f9f9; }
-        .header { background-color: #4CAF50; color: white; padding: 15px 0; text-align: center; }
+        .header { background-color: #0CAF50; color: white; padding: 15px 0; text-align: center; }
         .nav { display: flex; justify-content: center; background-color: #333; }
         .nav a { color: white; padding: 14px 20px; text-decoration: none; text-align: center; }
         .nav a:hover { background-color: #ddd; color: black; }
