@@ -2,11 +2,7 @@
 
 import hashlib
 import time
-from usuarios import registrar_usuario, manejar_accion
-from recursos import RecursosUsuario, MonitoreoRecursos
-from database import conectar_base_datos
-from compresion import comprimir_y_guardar_datos, cargar_y_descomprimir_datos
-from servidor import app, socketio
+from database import insertar_bloque, insertar_transaccion
 
 class Bloque:
     """
@@ -17,8 +13,8 @@ class Bloque:
         self.timestamp = timestamp
         self.datos = datos
         self.hash_anterior = hash_anterior
-      #  self.hash = self.generar_hash()
         self.nonce = 0
+        self.hash = self.generar_hash()
 
     def generar_hash(self):
         """
@@ -28,9 +24,9 @@ class Bloque:
         sha.update((str(self.index) + str(self.timestamp) + str(self.datos) + str(self.hash_anterior) + str(self.nonce)).encode())
         return sha.hexdigest()
 
-    def proof_of_work(self, dificultad):
+    def proof_of_work(self, dificultad=4):
         """
-        Prueba de trabajo para encontrar un hash válido con la dificultad indicada.
+        Realiza una prueba de trabajo (Proof of Work) para encontrar un hash válido con la dificultad indicada.
         """
         while self.hash[:dificultad] != "0" * dificultad:
             self.nonce += 1
@@ -46,27 +42,37 @@ class Blockchain:
 
     def crear_bloque_genesis(self):
         """
-        Crea el bloque génesis de la cadena.
+        Crea el bloque génesis (el primer bloque de la cadena).
         """
-        return Bloque(0, time.time(), "Bloque Génesis", "0")
+        bloque_genesis = Bloque(0, time.time(), "Bloque Génesis", "0")
+        bloque_genesis.proof_of_work()
+        return bloque_genesis
 
     def agregar_bloque(self, datos):
         """
-        Agrega un bloque con los datos proporcionados a la cadena.
+        Agrega un nuevo bloque con los datos proporcionados a la cadena de bloques.
         """
         ultimo_bloque = self.cadena[-1]
         nuevo_bloque = Bloque(len(self.cadena), time.time(), datos, ultimo_bloque.hash)
-        nuevo_bloque.proof_of_work(dificultad=4)  # Ajusta la dificultad según tus necesidades
+        nuevo_bloque.proof_of_work(dificultad=4)  # Ajustar la dificultad si es necesario
         self.cadena.append(nuevo_bloque)
+        return nuevo_bloque
 
     def validar_cadena(self):
         """
-        Valida que la cadena de bloques no haya sido manipulada.
+        Valida la integridad de la cadena de bloques.
+        Comprueba que no se haya manipulado ningún bloque.
         """
         for i in range(1, len(self.cadena)):
             bloque_actual = self.cadena[i]
             bloque_anterior = self.cadena[i - 1]
-            if bloque_actual.hash_anterior != bloque_anterior.hash or bloque_actual.hash != bloque_actual.generar_hash():
+            # Verificar la integridad de la referencia al hash anterior
+            if bloque_actual.hash_anterior != bloque_anterior.hash:
+                print(f"Error: El bloque {i} tiene un hash anterior incorrecto.")
+                return False
+            # Verificar que el hash actual sea correcto
+            if bloque_actual.hash != bloque_actual.generar_hash():
+                print(f"Error: El bloque {i} tiene un hash incorrecto.")
                 return False
         return True
 
@@ -77,70 +83,188 @@ class Blockchain:
         Args:
             modulos (list): Lista de nombres de los módulos a confirmar.
         """
-        data = f"Conexión de módulos: {', '.join(modulos)}"
+        data = f"Conexión de módulos confirmada: {', '.join(modulos)}"
         self.agregar_bloque(data)
 
     def imprimir_cadena(self):
         """
-        Imprime la cadena de bloques.
+        Imprime la cadena de bloques completa.
         """
         for bloque in self.cadena:
-            print(bloque)
+            print(f"Bloque {bloque.index} - Hash: {bloque.hash}")
+            print(f"Timestamp: {bloque.timestamp}")
+            print(f"Datos: {bloque.datos}")
+            print(f"Hash Anterior: {bloque.hash_anterior}\n")
 
-def inicializar_recursos(cpu: int = 50, ancho_banda: int = 50):
-    """
-    Inicializa los recursos asignados a un usuario y devuelve los recursos asignados.
-    """
-    recursos_usuario = RecursosUsuario(cpu, ancho_banda)
-    recursos_comunitarios = {'cpu': 100, 'ancho_banda': 100}
-    recursos_asignados = recursos_usuario.asignar_recursos(recursos_comunitarios)
-    return recursos_asignados
+    def obtener_informacion_cadena(self):
+        """
+        Obtiene información detallada de la cadena de bloques.
+        Devuelve la longitud de la cadena y el contenido de los bloques.
+        """
+        informacion = {
+            'longitud': len(self.cadena),
+            'bloques': [{'index': bloque.index, 'timestamp': bloque.timestamp, 'hash': bloque.hash, 'hash_anterior': bloque.hash_anterior} for bloque in self.cadena]
+        }
+        return informacion
 
-def procesar_transacciones(datos_usuario, blockchain):
-    """
-    Procesa las transacciones de usuario en la cadena de bloques.
-    """
-    blockchain.agregar_bloque(datos_usuario)
+    def almacenar_bloque_en_base_datos(self, conexion, bloque):
+        """
+        Almacena un bloque en la base de datos.
+        """
+        insertar_bloque(conexion, bloque)
 
-def gestionar_compresion(datos_usuario, archivo_comprimido):
-    """
-    Comprime y descomprime los datos del usuario para su almacenamiento.
-    """
-    comprimir_y_guardar_datos(datos_usuario, archivo_comprimido)
-    datos_descomprimidos = cargar_y_descomprimir_datos(archivo_comprimido)
-    return datos_descomprimidos
+    def procesar_transaccion_y_almacenar(self, conexion, remitente, destinatario, cantidad, datos_bloque):
+        """
+        Procesa una transacción, agrega un bloque y almacena tanto el bloque como la transacción en la base de datos.
+        """
+        nuevo_bloque = self.agregar_bloque(datos_bloque)
+        insertar_transaccion(conexion, remitente, destinatario, cantidad)
+        self.almacenar_bloque_en_base_datos(conexion, nuevo_bloque)
+        print(f"Transacción entre {remitente} y {destinatario} por {cantidad} procesada y almacenada en la base de datos.")
+        
+# modulo Blockchain #
 
-def main():
-    """
-    Función principal para ejecutar la aplicación.
-    """
-    try:
+# import hashlib
+# import time
+# from usuarios import registrar_usuario, manejar_accion
+# from recursos import RecursosUsuario, MonitoreoRecursos
+# from database import conectar_base_datos
+# from compresion import comprimir_y_guardar_datos, cargar_y_descomprimir_datos
+# from servidor import app, socketio
+
+# class Bloque:
+   # """
+   # Clase que representa un bloque en la cadena de bloques.
+   # """
+   # def __init__(self, index, timestamp, datos, hash_anterior):
+       # self.index = index
+        # self.timestamp = timestamp
+      #  self.datos = datos
+       # self.hash_anterior = hash_anterior
+      #  self.hash = self.generar_hash()
+       # self.nonce = 0
+
+  #  def generar_hash(self):
+      #  """
+       # Genera el hash del bloque usando SHA-256.
+        # """
+      #  sha = hashlib.sha256()
+       # sha.update((str(self.index) + str(self.timestamp) + str(self.datos) + str(self.hash_anterior) + str(self.nonce)).encode())
+       # return sha.hexdigest()
+
+  #  def proof_of_work(self, dificultad):
+       # """
+      #  Prueba de trabajo para encontrar un hash válido con la dificultad indicada.
+       # """
+      #  while self.hash[:dificultad] != "0" * dificultad:
+           # self.nonce += 1
+          #  self.hash = self.generar_hash()
+
+# class Blockchain:
+   # """
+   # Clase que representa una cadena de bloques.
+   # """
+   # def __init__(self):
+       # self.cadena = [self.crear_bloque_genesis()]
+       # self.transacciones_pendientes = []
+
+  #  def crear_bloque_genesis(self):
+       # """
+       # Crea el bloque génesis de la cadena.
+       # """
+       # return Bloque(0, time.time(), "Bloque Génesis", "0")
+
+   # def agregar_bloque(self, datos):
+       # """
+        # Agrega un bloque con los datos proporcionados a la cadena.
+      #  """
+      #  ultimo_bloque = self.cadena[-1]
+      #  nuevo_bloque = Bloque(len(self.cadena), time.time(), datos, ultimo_bloque.hash)
+      #  nuevo_bloque.proof_of_work(dificultad=4)  # Ajusta la dificultad según tus necesidades
+      #  self.cadena.append(nuevo_bloque)
+
+ #   def validar_cadena(self):
+       # """
+      #  Valida que la cadena de bloques no haya sido manipulada.
+       # """
+       # for i in range(1, len(self.cadena)):
+           # bloque_actual = self.cadena[i]
+          #  bloque_anterior = self.cadena[i - 1]
+          #  if bloque_actual.hash_anterior != bloque_anterior.hash or bloque_actual.hash != bloque_actual.generar_hash():
+              #  return False
+     #   return True
+
+  #  def confirmar_conexion_modulos(self, modulos):
+       # """
+      #  Confirma la conexión de los módulos y agrega un bloque con la información.
+        
+        # Args:
+          #  modulos (list): Lista de nombres de los módulos a confirmar.
+      #  """
+      #  data = f"Conexión de módulos: {', '.join(modulos)}"
+      #  self.agregar_bloque(data)
+
+  #  def imprimir_cadena(self):
+       # """
+       # Imprime la cadena de bloques.
+      #  """
+      #  for bloque in self.cadena:
+         #   print(bloque)
+
+# def inicializar_recursos(cpu: int = 50, ancho_banda: int = 50):
+  #  """
+   # Inicializa los recursos asignados a un usuario y devuelve los recursos asignados.
+  #  """
+  #  recursos_usuario = RecursosUsuario(cpu, ancho_banda)
+  #  recursos_comunitarios = {'cpu': 100, 'ancho_banda': 100}
+   # recursos_asignados = recursos_usuario.asignar_recursos(recursos_comunitarios)
+   # return recursos_asignados
+
+# def procesar_transacciones(datos_usuario, blockchain):
+  #  """
+  #  Procesa las transacciones de usuario en la cadena de bloques.
+  #  """
+  #  blockchain.agregar_bloque(datos_usuario)
+
+# def gestionar_compresion(datos_usuario, archivo_comprimido):
+   # """
+  #  Comprime y descomprime los datos del usuario para su almacenamiento.
+   # """
+ #   comprimir_y_guardar_datos(datos_usuario, archivo_comprimido)
+   # datos_descomprimidos = cargar_y_descomprimir_datos(archivo_comprimido)
+  #  return datos_descomprimidos
+
+# def main():
+   # """
+  #  Función principal para ejecutar la aplicación.
+   # """
+   # try:
         # Inicialización de recursos
-        recursos_asignados = inicializar_recursos()
+       # recursos_asignados = inicializar_recursos()
 
         # Conexión a la base de datos
-        conectar_base_datos()
+       # conectar_base_datos()
 
         # Registro de un nuevo usuario
-        registrar_usuario("nombre", "contraseña")
+       # registrar_usuario("nombre", "contraseña")
 
         # Compresión y almacenamiento de datos
-        datos_usuario = {"nombre": "nombre", "datos": "datos_ejemplo"}
-        archivo_comprimido = "datos_comprimidos.gz"
-        datos_descomprimidos = gestionar_compresion(datos_usuario, archivo_comprimido)
+       # datos_usuario = {"nombre": "nombre", "datos": "datos_ejemplo"}
+      #  archivo_comprimido = "datos_comprimidos.gz"
+       # datos_descomprimidos = gestionar_compresion(datos_usuario, archivo_comprimido)
 
         # Procesamiento de transacciones en la blockchain
-        blockchain = Blockchain()
-        procesar_transacciones("transaccion_ejemplo", blockchain)
+      #  blockchain = Blockchain()
+       # procesar_transacciones("transaccion_ejemplo", blockchain)
 
         # Iniciar el servidor con Flask y SocketIO
-        socketio.run(app, debug=True)
+       # socketio.run(app, debug=True)
 
-    except Exception as e:
-        print(f"Error durante la ejecución: {e}")
+  #  except Exception as e:
+      #  print(f"Error durante la ejecución: {e}")
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+   # main()
     
 # modulo Blockchain #
 
