@@ -11,8 +11,6 @@ Wold Virtual es un proyecto de blockchain con múltiples funcionalidades. Incluy
 - **Protocolo de recompensas**: Asegura que las recompensas nunca caigan por debajo del 50%.
 - **Prueba de trabajo**: Una segunda capa de seguridad con prueba de trabajo utilizando tarjetas gráficas para renderizado en tiempo real y una mejor experiencia de usuario.
 
-- vista previa., de lo que hay por el momento: (https://studious-train-wqqv746xvqjh7jp-5000.app.github.dev/)
-
 ## Estructura del directorio
 
 El repositorio está organizado en los siguientes directorios:
