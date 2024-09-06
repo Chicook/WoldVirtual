@@ -9,6 +9,29 @@ from database import conectar_base_datos, insertar_bloque, insertar_transaccion
 from compresion import comprimir_y_guardar_datos, cargar_y_descomprimir_datos
 from almacenamiento import listar_archivos, eliminar_archivo
 import time
+from blockchain import Blockchain
+from database import conectar_base_datos
+
+# Inicializar la blockchain
+blockchain = Blockchain()
+
+# Conectar a la base de datos
+conexion = conectar_base_datos()
+
+# Confirmar la conexión de los módulos y agregarlo a la blockchain
+blockchain.confirmar_conexion_modulos(['usuarios', 'recursos', 'database', 'compresion', 'servidor'])
+
+# Procesar una transacción y almacenarla
+blockchain.procesar_transaccion_y_almacenar(conexion, 'Usuario1', 'Usuario2', 100, 'Datos de la transacción')
+
+# Validar la cadena de bloques
+if blockchain.validar_cadena():
+    print("La cadena de bloques es válida.")
+else:
+    print("La cadena de bloques ha sido modificada.")
+
+# Imprimir la cadena de bloques
+blockchain.imprimir_cadena()
 
 # Inicializar la aplicación Flask y SocketIO
 app = Flask(__name__)
