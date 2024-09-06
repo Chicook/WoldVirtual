@@ -78,4 +78,3 @@ def handle_audio(data):
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
-
