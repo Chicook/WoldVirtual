@@ -1,4 +1,4 @@
-# modulo de database #
+# modulo database #
 
 import psycopg2
 from psycopg2 import sql
@@ -111,36 +111,94 @@ def cerrar_conexion(conexion):
         conexion.close()
         print("Conexión con la base de datos cerrada.")
 
+# modulo database #
+
+# import psycopg2
+# from psycopg2 import sql
+
+# def conectar_base_datos():
+   #  """
+  #  Conecta a la base de datos PostgreSQL y devuelve la conexión.
+
+ #   Returns:
+       # conexion: Objeto de conexión a la base de datos.
+   # """
+  #  try:
+       # conexion = psycopg2.connect(
+           # database="tu_base_datos",
+           # user="tu_usuario",
+         #   password="tu_contraseña",
+           # host="tu_host",
+          #  port="tu_puerto"
+      #  )
+      #  print("Conexión a la base de datos establecida.")
+       # return conexion
+  #  except psycopg2.DatabaseError as e:
+       # print(f"Error en la conexión a la base de datos: {e}")
+        # return None
+
+# def obtener_usuarios(conexion):
+   # """
+   # Obtiene todos los usuarios de la base de datos.
+
+   # Args:
+       # conexion: Objeto de conexión a la base de datos.
+
+ #   Returns:
+       # list: Lista de usuarios.
+  #  """
+    # try:
+       # with conexion.cursor() as cursor:
+          #  cursor.execute(sql.SQL("SELECT * FROM {}").format(sql.Identifier('usuarios')))
+           # resultados = cursor.fetchall()
+          #  return resultados
+  #  except psycopg2.DatabaseError as e:
+       # print(f"Error al obtener usuarios: {e}")
+      #  return []
+
+# def cerrar_conexion(conexion):
+   # """
+  #  Cierra la conexión a la base de datos.
+
+  #  Args:
+      #  conexion: Objeto de conexión a la base de datos.
+  #  """
+    # if conexion:
+      #  conexion.close()
+     #   print("Conexión cerrada.")
+
 # Ejemplo de uso
-if __name__ == "__main__":
-    conexion = conectar_base_datos()
-    if conexion:
-        # Crear instancia de la blockchain
-        blockchain = Blockchain()
+# if __name__ == "__main__":
+  #  conexion = conectar_base_datos()
+  #  if conexion:
+     #   usuarios = obtener_usuarios(conexion)
+    #    for usuario in usuarios:
+         #   print(usuario)
+      #  cerrar_conexion(conexion)
 
-        # Procesar una transacción y agregar un bloque
-        remitente = "Usuario1"
-        destinatario = "Usuario2"
-        cantidad = 150.0
+# database.py
 
-        # Agregar bloque a la blockchain
-        nuevo_bloque = blockchain.agregar_bloque(f"Transacción de {remitente} a {destinatario} por {cantidad} unidades")
+# import psycopg2
+# from psycopg2 import sql
 
-        # Insertar el bloque y la transacción en la base de datos
-        insertar_bloque(conexion, nuevo_bloque)
-        insertar_transaccion(conexion, remitente, destinatario, cantidad)
-
-        # Obtener bloques almacenados
-        bloques = obtener_bloques(conexion)
-        print("Bloques en la base de datos:")
-        for bloque in bloques:
-            print(bloque)
-
-        # Obtener transacciones almacenadas
-        transacciones = obtener_transacciones(conexion)
-        print("Transacciones en la base de datos:")
-        for transaccion in transacciones:
-            print(transaccion)
-
-        # Cerrar conexión
-        cerrar_conexion(conexion)
+# def conectar_base_datos():
+   #  conexion = None
+   # try:
+       # conexion = psycopg2.connect(
+        # database="tu_base_datos",
+          #  user="tu_usuario",
+          #  password="tu_contraseña",
+          #  host="tu_host",
+           # port="tu_puerto"
+      #  )
+       # with conexion.cursor() as cursor:
+           # cursor.execute(sql.SQL("SELECT * FROM {}").format(sql.Identifier('usuarios')))
+           # resultados = cursor.fetchall()
+            # for resultado in resultados:
+             #   print(resultado)
+  #  except psycopg2.DatabaseError as e:
+       # print(f"Error en la conexión a la base de datos: {e}")
+   # finally:
+      #  if conexion:
+           # conexion.close()
+           # print("Conexión cerrada.")
