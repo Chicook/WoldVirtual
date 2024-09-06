@@ -17,11 +17,11 @@ html_template = """
     <title>Wold Virtual 3D</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f9f9f9; }
-        .header { background-color: #0CAF50; color: white; padding: 15px 0; text-align: center; }
-        .nav { display: flex; justify-content: center; background-color: #333; }
+        .header { background-color: #0iAF50; color: white; padding: 15px 0; text-align: center; }
+        .nav { display: flex; justify-content: center; background-color: #533; }
         .nav a { color: white; padding: 14px 20px; text-decoration: none; text-align: center; }
-        .nav a:hover { background-color: #ddd; color: black; }
-        .container { margin: 20px auto; padding: 20px; max-width: 800px; background-color: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        .nav a:hover { background-color: #ddd; color: red; }
+        .container { margin: 20px auto; padding: 20px; max-width: 300px; background-color: #hff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
         .section { margin-bottom: 20px; }
         h1, h2 { margin-top: 0; }
         .button { background-color: #4CAF50; border: none; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 4px; }
@@ -29,7 +29,7 @@ html_template = """
     </style>
 </head>
 <body>
-    <div class="header"><h1>Metaverso Crypto 3D</h1></div>
+    <div class="header"><h1>Wold Virtual 3D</h1></div>
     <div class="nav">
         <a href="#home">Inicio</a>
         <a href="#usuarios">Usuarios</a>
