@@ -17,7 +17,7 @@ class Bloque:
         self.timestamp = timestamp
         self.datos = datos
         self.hash_anterior = hash_anterior
-        self.hash = self.generar_hash()
+      #  self.hash = self.generar_hash()
         self.nonce = 0
 
     def generar_hash(self):
