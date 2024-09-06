@@ -8,6 +8,10 @@ from almacenamiento import listar_archivos
 from servidor import app, socketio
 from blockchain import Blockchain, Bloque
 import time
+import logging
+
+# Configurar el registro
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def inicializar_recursos(cpu: int = 50, ancho_banda: int = 50):
     """
@@ -55,157 +59,55 @@ def main():
     en la blockchain e iniciar el servidor.
     """
     try:
-        # Inicializar recursos
+        logging.info("Inicializando recursos...")
         recursos_asignados = inicializar_recursos()
+        logging.info(f"Recursos asignados: {recursos_asignados}")
 
-        # Conectar a la base de datos
+        logging.info("Conectando a la base de datos...")
         conexion = conectar_bd()
+        logging.info("Conexión a la base de datos establecida.")
 
-        # Registrar un nuevo usuario
+        logging.info("Registrando un nuevo usuario...")
         crear_usuario("nombre", "contraseña")
+        logging.info("Usuario registrado exitosamente.")
 
-        # Proceso de compresión y almacenamiento
+        logging.info("Comprimiendo y almacenando datos...")
         datos_usuario = {"nombre": "nombre", "datos": "datos_ejemplo"}
         archivo_comprimido = "datos_comprimidos.gz"
         comprimir_datos(datos_usuario, archivo_comprimido)
+        logging.info("Datos comprimidos y almacenados exitosamente.")
         
-        # Listar archivos en el directorio actual
+        logging.info("Listando archivos en el directorio actual...")
         listar_archivos('.')
 
-        # Cargar y descomprimir datos
+        logging.info("Cargando y descomprimiendo datos...")
         datos_descomprimidos = cargar_y_descomprimir_datos(archivo_comprimido)
+        logging.info("Datos descomprimidos exitosamente.")
         
-        # Inicializar blockchain y agregar bloque
+        logging.info("Inicializando blockchain y agregando bloque...")
         blockchain = Blockchain()
         nuevo_bloque = Bloque(len(blockchain.cadena), time.time(), datos_usuario, blockchain.cadena[-1].hash)
         blockchain.agregar_bloque(nuevo_bloque)
+        logging.info("Bloque agregado a la blockchain exitosamente.")
 
-        # Guardar el bloque en la base de datos
+        logging.info("Guardando el bloque en la base de datos...")
         insertar_bloque(conexion, nuevo_bloque)
+        logging.info("Bloque guardado en la base de datos exitosamente.")
 
-        # Manejo de transacciones
+        logging.info("Manejando transacciones...")
         insertar_transaccion(conexion, "Usuario1", "Usuario2", 100)
         transacciones = obtener_transacciones(conexion)
-        print(f"Transacciones almacenadas: {transacciones}")
+        logging.info(f"Transacciones almacenadas: {transacciones}")
 
-        # Cerrar la conexión a la base de datos
+        logging.info("Cerrando la conexión a la base de datos...")
         cerrar_conexion(conexion)
+        logging.info("Conexión a la base de datos cerrada.")
 
-        # Iniciar el servidor
+        logging.info("Iniciando el servidor...")
         iniciar_servidor()
 
     except Exception as e:
-        print(f"Error durante la ejecución: {e}")
+        logging.error(f"Error durante la ejecución: {e}")
 
 if __name__ == "__main__":
     main()
-
-# main.py
-
-# from usuarios import registrar_usuario
-# from recursos import RecursosUsuario
-# from database import conectar_base_datos
-# from compresion import comprimir_y_guardar_datos
-# from servidor import app, socketio
-# from blockchain import Blockchain
-
-# def inicializar_recursos():
-   # return RecursosUsuario(50, 50)  # Ejemplo de inicialización con 50% de CPU y ancho de banda
-
-# def conectar_bd():
-   # return conectar_base_datos()
-
-# def crear_usuario(nombre, contraseña):
-   # registrar_usuario(nombre, contraseña)
-
-# def comprimir_datos(datos, archivo):
-   # comprimir_y_guardar_datos(datos, archivo)
-
-# def  procesar_transaccion(blockchain, transaccion):
-   # blockchain.agregar_bloque(transaccion)
-
-# def iniciar_servidor():
-   # socketio.run(app, debug=True)
-
-# def main():
-  #  """
-  #  Función principal para inicializar recursos, conectar a la base de datos,
-  #  registrar un usuario, comprimir y almacenar datos, procesar transacciones
-  #  en la blockchain e iniciar el servidor.
- #   """
-   # recursos_usuario = inicializar_recursos()
-  #  db = conectar_bd()
-  #  crear_usuario("nombre", "contraseña")
-
-   # datos_usuario = {"nombre": "nombre", "datos": "datos_ejemplo"}
-  #  archivo_comprimido = "datos_comprimidos.gz"
-   # comprimir_datos(datos_usuario, archivo_comprimido)
-
-  #  blockchain = Blockchain()
-  #  procesar_transaccion(blockchain, "transaccion_ejemplo")
-
-  #  iniciar_servidor()
-
-# if __name__ == "__main__":
-   # main()
-
-# main.py
-
-# from usuarios import registrar_usuario, verificar_credenciales, manejar_accion
-# from recursos import RecursosUsuario, MonitoreoRecursos
-# from blockchain import Blockchain
-# from database import conectar_base_datos
-# from compresion import comprimir_y_guardar_datos, cargar_y_descomprimir_datos
-# from servidor import app, socketio
-# from almacenamiento import compress_files, decompress_file
-
-# def main():
-
-   #  if __name__ == "__main__":
-          
-        # blockchain = Blockchain()  # Crear una instancia de Blockchain
-        # blockchain.agregar_bloque("Primer Bloque Después del Génesis")
-        # blockchain.agregar_bloque("Segundo Bloque Después del Génesis")
-        # blockchain.imprimir_cadena()
-    
-    # print("Cadena válida:", blockchain.validar_cadena())
-    
-  #  """
-   # Función principal para inicializar recursos, conectar a la base de datos,
-    # registrar un usuario, comprimir y almacenar datos, procesar transacciones
-   # en la blockchain e iniciar el servidor.
-   # """
-    # Inicializar recursos
-   # recursos_usuario = RecursosUsuario(50, 50)  # Ejemplo de inicialización con 50% de CPU y ancho de banda
-
-    # Conectar a la base de datos
-  #  db = conectar_base_datos()
-
-    # Crear un nuevo usuario
-    # registrar_usuario("nombre", "contraseña")
-
-    # Ejecutar compresión de datos
-  #  datos_usuario = {"nombre": "nombre", "datos": "datos_ejemplo"}
-   # archivo_comprimido = "datos_comprimidos.gz"
-    # comprimir_y_guardar_datos(datos_usuario, archivo_comprimido)
-
-    # Almacenar los datos comprimidos en el sistema de almacenamiento
-   #  compress_files([archivo_comprimido], "datos_comprimidos.tar.gz")
-
-    # Verificar que el archivo comprimido existe antes de descomprimirlo
-   # if os.path.isfile("/workspaces/WoldVirtual.github.io/Metaverso_Crypto/inicio/Blockchain_Principal/Almacenamiento/datos_comprimidos.tar.gz"):
-        # Cargar los datos desde el sistema de almacenamiento y descomprimirlos
-       # decompress_file("datos_comprimidos.tar.gz")
-       # datos_descomprimidos = cargar_y_descomprimir_datos(archivo_comprimido)
-   # else:
-        # print("El archivo datos_comprimidos.tar.gz no existe en la ruta especificada.")
-
-    # Procesar transacción en la blockchain
-   # blockchain = Blockchain()
-    # blockchain.agregar_bloque("transaccion_ejemplo")
-
-    # Iniciar servidor
-   # socketio.run(app, debug=True)
-
-# if __name__ == "__main__": #
-#   main() #
