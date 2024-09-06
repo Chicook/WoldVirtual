@@ -11,21 +11,11 @@ Wold Virtual es un proyecto de blockchain con múltiples funcionalidades. Incluy
 - **Protocolo de recompensas**: Asegura que las recompensas nunca caigan por debajo del 50%.
 - **Prueba de trabajo**: Una segunda capa de seguridad con prueba de trabajo utilizando tarjetas gráficas para renderizado en tiempo real y una mejor experiencia de usuario.
 
-## Estructura del directorio
 
-El repositorio está organizado en los siguientes directorios:
-
-- **contracts**: Contiene contratos inteligentes en Solidity.
-  - `Blokchain.sol`
-  - `Blokchain2.sol`
-- **scripts**: Contiene scripts en Python para varias funcionalidades.
-  - `blockchain.py`
-  - `BSMTV.py`
-  - `BSnts.py`
-- **csharp**: Contiene proyectos en C#.
-  - `Editorvirtual.cs`
 
 ## Configuración y ejecución del código
+
+(pip install flask flask_socketio psycopg2-binary web3)
 
 ### Requisitos previos
 
@@ -42,13 +32,7 @@ El repositorio está organizado en los siguientes directorios:
    git clone https://github.com/Chicook/WoldVirtual.git
    cd WoldVirtual
    ```
-
-2. Instala las dependencias de Python:
-   ```bash
-   pip install -r requirements.txt flask-socketio psycopg2-binary flask
-   ```
-
-3. Instala las dependencias de Node.js:
+Instala las dependencias de Node.js:
    ```bash
    npm install
    ```
