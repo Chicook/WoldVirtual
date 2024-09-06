@@ -3,6 +3,35 @@
 from flask import Flask, render_template_string
 from flask_socketio import SocketIO
 from blockchain import Blockchain
+from usuarios import registrar_usuario
+from recursos import RecursosUsuario, MonitoreoRecursos
+from database import conectar_base_datos, insertar_bloque, insertar_transaccion
+from compresion import comprimir_y_guardar_datos, cargar_y_descomprimir_datos
+from almacenamiento import listar_archivos, eliminar_archivo
+import time
+from blockchain import Blockchain
+from database import conectar_base_datos
+
+# Inicializar la blockchain
+blockchain = Blockchain()
+
+# Conectar a la base de datos
+conexion = conectar_base_datos()
+
+# Confirmar la conexión de los módulos y agregarlo a la blockchain
+blockchain.confirmar_conexion_modulos(['usuarios', 'recursos', 'database', 'compresion', 'servidor'])
+
+# Procesar una transacción y almacenarla
+blockchain.procesar_transaccion_y_almacenar(conexion, 'Usuario1', 'Usuario2', 100, 'Datos de la transacción')
+
+# Validar la cadena de bloques
+if blockchain.validar_cadena():
+    print("La cadena de bloques es válida.")
+else:
+    print("La cadena de bloques ha sido modificada.")
+
+# Imprimir la cadena de bloques
+blockchain.imprimir_cadena()
 
 # Inicializar la aplicación Flask y SocketIO
 app = Flask(__name__)
@@ -49,7 +78,6 @@ html_template = """
             <p>Próximamente en esta página principal, se darán más detalles sobre el proyecto...</p>
             <button class="button">Más Información</button>
         </div>
-        <!-- Secciones adicionales aquí -->
     </div>
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
     <script>
@@ -73,123 +101,112 @@ def index():
     """
     return render_template_string(html_template)
 
-# @socketio.on('audio_stream')
-# def handle_audio(data):
-#     """
-#     Maneja el evento de transmisión de audio.
-#     """
-#     socketio.emit('audio_stream', data)
+# Función para inicializar recursos
+def inicializar_recursos(cpu=50, ancho_banda=50):
+    """
+    Inicializa y asigna los recursos a un usuario.
+    """
+    recursos_usuario = RecursosUsuario(cpu, ancho_banda)
+    recursos_asignados = recursos_usuario.asignar_recursos({
+        'cpu': 100,
+        'ancho_banda': 100
+    })
+    print(f"Recursos asignados: {recursos_asignados}")
+    return recursos_usuario
 
-if __name__ == '__main__':
-    # Confirmar la conexión de los módulos
-    blockchain.confirmar_conexion_modulos(['usuarios', 'recursos', 'database', 'compresion', 'servidor'])
-    blockchain.imprimir_cadena()
+# Función para conectar a la base de datos
+def conectar_bd():
+    """
+    Establece conexión con la base de datos.
+    """
+    return conectar_base_datos()
+
+# Función para crear un nuevo usuario
+def crear_usuario(nombre, contraseña):
+    """
+    Registra un nuevo usuario.
+    """
+    registrar_usuario(nombre, contraseña)
+    print(f"Usuario {nombre} registrado exitosamente.")
+
+# Función para comprimir los datos del usuario
+def comprimir_datos(datos, archivo):
+    """
+    Comprime los datos del usuario y los guarda en un archivo.
+    """
+    comprimir_y_guardar_datos(datos, archivo)
+    print(f"Datos comprimidos y guardados en {archivo}.")
+
+# Función para descomprimir datos
+def descomprimir_datos(archivo):
+    """
+    Carga y descomprime los datos de un archivo .gz.
+    """
+    datos = cargar_y_descomprimir_datos(archivo)
+    print(f"Datos descomprimidos: {datos}")
+    return datos
+
+# Función para procesar transacción en la blockchain
+def procesar_transaccion(blockchain, datos):
+    """
+    Procesa una transacción y agrega un bloque a la blockchain.
+    """
+    nuevo_bloque = blockchain.agregar_bloque(datos)
+    print(f"Bloque añadido: {nuevo_bloque}")
+
+# Función para gestionar almacenamiento de bloques y transacciones en la base de datos
+def almacenar_bloque_transaccion(db_conn, bloque, remitente, destinatario, cantidad):
+    """
+    Almacena un bloque y una transacción en la base de datos.
+    """
+    insertar_bloque(db_conn, bloque)
+    insertar_transaccion(db_conn, remitente, destinatario, cantidad)
+    print(f"Bloque y transacción almacenados en la base de datos.")
+
+# Función para iniciar el servidor
+def iniciar_servidor():
+    """
+    Inicia el servidor con SocketIO y Flask.
+    """
     socketio.run(app, debug=True)
 
+def main():
+    """
+    Función principal para inicializar recursos, conectar a la base de datos,
+    registrar un usuario, comprimir y almacenar datos, procesar transacciones
+    en la blockchain, y ejecutar el servidor.
+    """
+    try:
+        # Inicializar recursos
+        recursos_usuario = inicializar_recursos()
 
+        # Conectar a la base de datos
+        db_conn = conectar_bd()
 
+        # Crear un nuevo usuario
+        crear_usuario("nombre_usuario", "contraseña_secreta")
 
+        # Procesar compresión de datos
+        datos_usuario = {"nombre": "nombre_usuario", "datos": "información_ejemplo"}
+        archivo_comprimido = "datos_comprimidos.gz"
+        comprimir_datos(datos_usuario, archivo_comprimido)
 
+        # Descomprimir datos
+        datos_descomprimidos = descomprimir_datos(archivo_comprimido)
 
+        # Procesar transacción en la blockchain
+        procesar_transaccion(blockchain, datos_descomprimidos)
 
+        # Almacenar bloque y transacción en la base de datos
+        almacenar_bloque_transaccion(db_conn, blockchain.cadena[-1], "Usuario1", "Usuario2", 100)
 
+        # Iniciar servidor
+        iniciar_servidor()
+
+    except Exception as e:
+        print(f"Error en la ejecución: {e}")
+
+if __name__ == '__main__':
+    main()
 
 # modulo app #
-
-# from usuarios import registrar_usuario
-# from recursos import RecursosUsuario
-# from blockchain import Blockchain
-# from database import conectar_base_datos
-# from compresion import comprimir_y_guardar_datos, cargar_y_descomprimir_datos
-# from servidor import app, socketio
-
-# def inicializar_recursos(cpu, ancho_banda):
-   # return RecursosUsuario(cpu, ancho_banda)
-
-# def conectar_bd():
-   # return conectar_base_datos()
-
-# def crear_usuario(nombre, contraseña):
-    # registrar_usuario(nombre, contraseña)
-
-# def comprimir_datos(datos, archivo):
-    # comprimir_y_guardar_datos(datos, archivo)
-
-# def descomprimir_datos(archivo):
-   # return cargar_y_descomprimir_datos(archivo)
-
-# def procesar_transaccion(blockchain, transaccion):
-   # blockchain.agregar_bloque(transaccion)
-
-# def iniciar_servidor():
-   # socketio.run(app, debug=True)
-
-# def main():
-   # """
-   # Función principal para inicializar recursos, conectar a la base de datos,
-   # registrar un usuario, comprimir y almacenar datos, procesar transacciones
-   # en la blockchain e iniciar el servidor.
-   # """
-   # recursos_usuario = inicializar_recursos(50, 50)
-   # db = conectar_bd()
-   # crear_usuario("nombre", "contraseña")
-
-   # datos_usuario = {"nombre": "nombre", "datos": "datos_ejemplo"}
-   # archivo_comprimido = "datos_comprimidos.gz"
-    # comprimir_datos(datos_usuario, archivo_comprimido)
-
-    # datos_descomprimidos = descomprimir_datos(archivo_comprimido)
-
-   # blockchain = Blockchain()
-  #  procesar_transaccion(blockchain, "transaccion_ejemplo")
-
-   # iniciar_servidor()
-
-# if __name__ == "__main__":
-   # main()
-
-# app.py
-# from usuarios import registrar_usuario, verificar_credenciales, manejar_accion
-# from recursos import RecursosUsuario, MonitoreoRecursos
-# from blockchain import Blockchain
-# from database import conectar_base_datos
-# from compresion import comprimir_y_guardar_datos, cargar_y_descomprimir_datos
-# from servidor import app, socketio
-# from almacenamiento import compress_files, decompress_file
-
-# def main():
-   # """
-   # Función principal para inicializar recursos, conectar a la base de datos,
-    # registrar un usuario, comprimir y almacenar datos, procesar transacciones
-   #  en la blockchain e iniciar el servidor.
-  #   """
-    # Inicializar recursos
-   #  recursos_usuario = RecursosUsuario(50, 50)  # Ejemplo de inicialización con 50% de CPU y ancho de banda
-
-    # Conectar a la base de datos
-   #  db = conectar_base_datos()
-
-    # Crear un nuevo usuario
-    # registrar_usuario("nombre", "contraseña")
-
-    # Ejecutar compresión de datos
-   #  datos_usuario = {"nombre": "nombre", "datos": "datos_ejemplo"}
-   #  archivo_comprimido = "datos_comprimidos.gz"
-   #  comprimir_y_guardar_datos(datos_usuario, archivo_comprimido)
-
-    # Almacenar los datos comprimidos en el sistema de almacenamiento
-    # compress_files(["datos_comprimidos.gz"], "datos_comprimidos.tar.gz")
-
-    # Cargar los datos desde el sistema de almacenamiento y descomprimirlos
-    # decompress_file("datos_comprimidos.tar.gz")
-    datos_descomprimidos = cargar_y_descomprimir_datos("datos_comprimidos.gz")
-
-    # Procesar transacción en la blockchain
-   #  blockchain = Blockchain()
-   #  blockchain.agregar_bloque("transaccion_ejemplo")
-
-    # Iniciar servidor
-    # socketio.run(app, debug=True)
-
-# if __name__ == "__main__":
-   #  main()
