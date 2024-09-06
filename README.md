@@ -15,7 +15,8 @@ Wold Virtual es un proyecto de blockchain con múltiples funcionalidades. Incluy
 
 ## Configuración y ejecución del código
 
-```pip install flask flask_socketio psycopg2-binary web3```
+```pip install flask flask_socketio psycopg2-binary web3
+   ```
 
 ### Requisitos previos
 
