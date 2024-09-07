@@ -19,7 +19,7 @@ def crear_usuario(nombre, contraseña):
 def comprimir_datos(datos, archivo):
     comprimir_y_guardar_datos(datos, archivo)
 
-# def  procesar_transaccion(blockchain, transaccion):
+def procesar_transaccion(blockchain, transaccion):
     blockchain.agregar_bloque(transaccion)
 
 def iniciar_servidor():
@@ -45,4 +45,4 @@ def main():
     iniciar_servidor()
 
 if __name__ == "__main__":
- main()
+    main()
