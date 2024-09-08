@@ -1,7 +1,9 @@
+from blockchain import Blockchain_principal 
 import hashlib
 import json
 import os
-import datetime
+import time
+import random
 
 class Blockchain:
     def __init__(self):
@@ -11,11 +13,12 @@ class Blockchain:
         self.data_dir = 'blockchain_principal'
         if not os.path.exists(self.data_dir):
             os.makedirs(self.data_dir)
+        self.new_block(previous_hash='1', proof=100)
 
     def new_block(self, proof, previous_hash=None):
         block = {
             'index': len(self.chain) + 1,
-            'timestamp': time(),
+            'timestamp': time.time(),
             'transactions': self.current_transactions,
             'proof': proof,
             'previous_hash': previous_hash or self.hash(self.chain[-1]),
@@ -89,6 +92,34 @@ class Blockchain:
         else:
             return "3/3 confirmaciones"
 
-# Ejemplo de uso
-blockchain = Blockchain()
-blockchain.create_user_json('usuario_ejemplo')
+    def hash_confirmacion(self, actividad):
+        actividad_string = json.dumps(actividad, sort_keys=True).encode()
+        return hashlib.sha256(actividad_string).hexdigest()
+
+    def registrar_actividad(self, actividad):
+        hash_actividad = self.hash_confirmacion(actividad)
+        self.log_action(f"Actividad registrada: {actividad} con hash {hash_actividad}")
+        return hash_actividad
+
+    def verificar_sistema(self):
+        for block in self.chain:
+            if not self.valid_proof(block['proof'], block['proof']):
+                return False
+        return True
+
+    def log_action(self, data):
+        new_block = self.new_block(len(self.chain), data, self.chain[-1]['previous_hash'] if self.chain else "0")
+        self.chain.append(new_block)
+        print(f"Acción registrada: {data}")
+
+    def generar_codigo_temporal(self):
+        codigo = str(random.randint(100000, 999999))
+        codigos_temporales[codigo] = time.time()
+        return codigo
+
+    def verificar_codigo_temporal(self, codigo):
+        return time.time() - codigos_temporales.get(codigo, 0) < 30
+
+    def confirmar_conexion_modulos(self, modulos):
+        data = f"Conexión de módulos: {', '.join(modulos)}"
+        self.new_block(data)
