@@ -1,11 +1,9 @@
 from flask import Flask, render_template_string
 from flask_socketio import SocketIO
 
-# Inicializar la aplicación Flask y SocketIO
 app = Flask(__name__)
 socketio = SocketIO(app)
 
-# Plantilla HTML para la interfaz web
 html_template = """
 <!DOCTYPE html>
 <html lang="en">
@@ -40,39 +38,46 @@ html_template = """
     <div class="container">
         <div id="home" class="section">
             <h2>Metaverso Crypto 3D descentralizado</h2>
-            <p>Próximamente en esta página principal, se darán más detalles sobre el proyecto...</p>
-            <button class="button">Más Información</button>
+            <div id="unityContainer" style="width: 960px; height: 600px"></div>
+            <script>
+                var buildUrl = "{{ url_for('static', filename='unity/Build') }}";
+                var loaderUrl = buildUrl + "/{{ 'Build.loader.js' }}";
+                var config = {
+                    dataUrl: buildUrl + "/{{ 'Build.data' }}",
+                    frameworkUrl: buildUrl + "/{{ 'Build.framework.js' }}",
+                    codeUrl: buildUrl + "/{{ 'Build.wasm' }}",
+                    streamingAssetsUrl: "StreamingAssets",
+                    companyName: "DefaultCompany",
+                    productName: "MyProduct",
+                    productVersion: "0.1",
+                };
+
+                var container = document.querySelector("#unityContainer");
+                var canvas = document.createElement("canvas");
+                container.appendChild(canvas);
+
+                var script = document.createElement("script");
+                script.src = loaderUrl;
+                script.onload = () => {
+                    createUnityInstance(canvas, config, (progress) => {
+                        console.log(progress);
+                    }).then((unityInstance) => {
+                        console.log("Unity instance created");
+                    }).catch((message) => {
+                        console.error(message);
+                    });
+                };
+                document.body.appendChild(script);
+            </script>
         </div>
-        <!-- Secciones adicionales aquí -->
     </div>
-    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
-    <script>
-        const socket = io();
-        document.getElementById('sendButton').addEventListener('click', () => {
-            const audioData = document.getElementById('audioInput').value;
-            socket.emit('audio_stream', audioData);
-        });
-        socket.on('audio_stream', (data) => {
-            console.log('Received audio data:', data);
-        });
-    </script>
 </body>
 </html>
 """
 
 @app.route('/')
 def index():
-    """
-    Renderiza la plantilla HTML para la página principal.
-    """
     return render_template_string(html_template)
-
-# @socketio.on('audio_stream')
-# def handle_audio(data):
-#     """
-#     Maneja el evento de transmisión de audio.
-#     """
-#     socketio.emit('audio_stream', data)
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
