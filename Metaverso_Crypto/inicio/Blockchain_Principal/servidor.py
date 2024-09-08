@@ -35,7 +35,7 @@ html_template = """
     <div class="header"><h1>Metaverso Crypto 3D</h1></div>
     <div class="nav">
 
-        <a href="#">metaverso</a>
+        <a href="/workspaces/WoldVirtual/Metaverso_Crypto/inicio/Blockchain_Principal/w3D/w3D.html">metaverso</a>
         <a href="#usuarios">Usuarios</a>
         <a href="#recursos">Recursos</a>
         <a href="#blockchain">Blockchain</a>

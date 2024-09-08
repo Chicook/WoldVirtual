@@ -1,5 +1,6 @@
 # main.py
 
+from w3D       import w3D
 from usuarios import registrar_usuario
 from recursos import RecursosUsuario
 from database import conectar_base_datos
