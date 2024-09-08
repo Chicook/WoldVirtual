@@ -17,13 +17,14 @@ class Blockchain:
             'timestamp': timestamp,
             'data': data,
             'previous_hash': previous_hash,
-            'hash': self.hash_block(index, timestamp, data, previous_hash)
+            'hash_admin': self.hash_block(index, timestamp, data, previous_hash, 'admin'),
+            'hash_internal': self.hash_block(index, timestamp, data, previous_hash, 'internal')
         }
         return block
 
     def agregar_bloque(self, data):
         previous_block = self.chain[-1]
-        new_block = self.crear_bloque(len(self.chain), data, previous_block['hash'])
+        new_block = self.crear_bloque(len(self.chain), data, previous_block['hash_admin'])
         self.chain.append(new_block)
 
     def confirmar_conexion_modulos(self, modulos):
@@ -43,17 +44,19 @@ class Blockchain:
         }
         return informacion
 
-    def hash_block(self, index, timestamp, data, previous_hash):
-        block_string = f"{index}{timestamp}{data}{previous_hash}"
+    def hash_block(self, index, timestamp, data, previous_hash, hash_type):
+        block_string = f"{index}{timestamp}{data}{previous_hash}{hash_type}"
         return hashlib.sha256(block_string.encode()).hexdigest()
 
     def validar_cadena(self):
         for i in range(1, len(self.chain)):
             current_block = self.chain[i]
             previous_block = self.chain[i - 1]
-            if current_block['previous_hash'] != previous_block['hash']:
+            if current_block['previous_hash'] != previous_block['hash_admin']:
                 return False
-            if current_block['hash'] != self.hash_block(current_block['index'], current_block['timestamp'], current_block['data'], previous_block['hash']):
+            if current_block['hash_admin'] != self.hash_block(current_block['index'], current_block['timestamp'], current_block['data'], previous_block['hash_admin'], 'admin'):
+                return False
+            if current_block['hash_internal'] != self.hash_block(current_block['index'], current_block['timestamp'], current_block['data'], previous_block['hash_admin'], 'internal'):
                 return False
         return True
 
@@ -66,4 +69,3 @@ if __name__ == "__main__":
     blockchain = Blockchain()
     blockchain.confirmar_conexion_modulos(['usuarios', 'recursos', 'database', 'compresion', 'servidor'])
     blockchain.imprimir_cadena()
-    
