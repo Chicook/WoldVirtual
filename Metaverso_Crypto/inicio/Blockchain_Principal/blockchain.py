@@ -61,9 +61,37 @@ class Blockchain:
         for block in self.chain:
             print(block)
 
+    def actualizar_bloque(self, index, new_data):
+        """
+        Actualiza un bloque existente con nuevos datos.
+
+        Args:
+            index (int): Índice del bloque a actualizar.
+            new_data (str): Nuevos datos para el bloque.
+
+        Returns:
+            bool: True si la actualización fue exitosa, False en caso contrario.
+        """
+        if index < 0 or index >= len(self.chain):
+            return False
+
+        block = self.chain[index]
+        block['data'] = new_data
+        block['hash'] = self.hash_block(block['index'], block['timestamp'], block['data'], block['previous_hash'])
+
+        # Validar la cadena después de la actualización
+        if not self.validar_cadena():
+            # Revertir la actualización si la cadena no es válida
+            block['data'] = self.chain[index]['data']
+            block['hash'] = self.chain[index]['hash']
+            return False
+
+        return True
+
 # Ejemplo de uso
 if __name__ == "__main__":
     blockchain = Blockchain()
     blockchain.confirmar_conexion_modulos(['usuarios', 'recursos', 'database', 'compresion', 'servidor'])
     blockchain.imprimir_cadena()
-    
+    blockchain.actualizar_bloque(1, 'Datos actualizados del bloque')
+    blockchain.imprimir_cadena()

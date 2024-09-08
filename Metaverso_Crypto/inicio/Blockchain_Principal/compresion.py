@@ -42,3 +42,31 @@ def cargar_y_descomprimir_datos(archivo_entrada):
     except Exception as e:
         print(f"Error al cargar y descomprimir datos: {e}")
         return None
+
+def actualizar_datos_comprimidos(archivo_entrada, nuevos_datos):
+    """
+    Actualiza los datos comprimidos en un archivo con nuevos datos.
+
+    Args:
+        archivo_entrada (str): Ruta del archivo de entrada.
+        nuevos_datos (dict): Nuevos datos para actualizar en el archivo.
+    """
+    try:
+        # Cargar y descomprimir los datos existentes
+        datos_existentes = cargar_y_descomprimir_datos(archivo_entrada)
+        if datos_existentes is None:
+            datos_existentes = {}
+
+        # Validar los nuevos datos
+        if not isinstance(nuevos_datos, dict):
+            print("Error: Los nuevos datos deben ser un diccionario.")
+            return
+
+        # Actualizar los datos existentes con los nuevos datos
+        datos_existentes.update(nuevos_datos)
+
+        # Comprimir y guardar los datos actualizados
+        comprimir_y_guardar_datos(datos_existentes, archivo_entrada)
+        print(f"Datos actualizados en el archivo {archivo_entrada}")
+    except Exception as e:
+        print(f"Error al actualizar datos comprimidos: {e}")

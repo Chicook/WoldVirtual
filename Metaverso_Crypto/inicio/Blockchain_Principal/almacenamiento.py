@@ -44,4 +44,21 @@ def decompress_file(input_filename):
         tar.extractall(path=storage_path)
     
     print(f'Archivos descomprimidos en {storage_path}')
+
+def update_stored_data(file_path, new_data):
+    """
+    Actualiza los datos almacenados en un archivo con nuevos datos.
+
+    Args:
+        file_path (str): Ruta del archivo a actualizar.
+        new_data (str): Nuevos datos para actualizar en el archivo.
+    """
+    if not os.path.isfile(file_path):
+        print(f"Error: El archivo {file_path} no existe.")
+        return
+
+    with open(file_path, 'w') as file:
+        file.write(new_data)
+
+    print(f'Datos actualizados en el archivo {file_path}')
     

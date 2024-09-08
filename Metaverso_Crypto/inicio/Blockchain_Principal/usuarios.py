@@ -51,14 +51,39 @@ def manejar_accion(usuario, accion):
     }
     print(acciones.get(accion, "Acción no reconocida."))
 
+def actualizar_usuario(username, new_data):
+    """
+    Actualiza los datos de un usuario existente.
+
+    Args:
+        username (str): Nombre de usuario.
+        new_data (dict): Nuevos datos para actualizar el usuario.
+
+    Raises:
+        ValueError: Si el usuario no existe.
+    """
+    if username not in usuarios:
+        raise ValueError("El usuario no existe.")
+    
+    if 'password' in new_data:
+        hashed_password = hashlib.sha256(new_data['password'].encode()).hexdigest()
+        usuarios[username] = hashed_password
+        print(f"Contraseña de {username} actualizada con éxito.")
+    else:
+        print("No se proporcionaron datos válidos para actualizar.")
+
 # Ejemplo de uso
 if __name__ == "__main__":
     try:
         registrar_usuario("nombre", "contraseña")
         if verificar_credenciales("nombre", "contraseña"):
             manejar_accion("nombre", "explorar")
+            actualizar_usuario("nombre", {"password": "nueva_contraseña"})
+            if verificar_credenciales("nombre", "nueva_contraseña"):
+                print("Contraseña actualizada y verificada con éxito.")
+            else:
+                print("Error al verificar la nueva contraseña.")
         else:
             print("Credenciales incorrectas.")
     except ValueError as e:
         print(e)
-    

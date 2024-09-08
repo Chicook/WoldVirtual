@@ -26,6 +26,25 @@ def procesar_transaccion(blockchain, transaccion):
 def iniciar_servidor():
     socketio.run(app, debug=True)
 
+def actualizar_recursos(recursos_usuario, nuevos_datos):
+    """
+    Actualiza los recursos inicializados con nuevos datos.
+
+    Args:
+        recursos_usuario (RecursosUsuario): Instancia de recursos del usuario.
+        nuevos_datos (dict): Nuevos datos para actualizar los recursos.
+    """
+    if not isinstance(nuevos_datos, dict):
+        print("Error: Los nuevos datos deben ser un diccionario.")
+        return
+
+    if 'porcentaje_cpu' in nuevos_datos:
+        recursos_usuario.porcentaje_cpu = nuevos_datos['porcentaje_cpu']
+    if 'porcentaje_ancho_banda' in nuevos_datos:
+        recursos_usuario.porcentaje_ancho_banda = nuevos_datos['porcentaje_ancho_banda']
+
+    print("Recursos actualizados:", recursos_usuario)
+
 def main():
     """
     Función principal para inicializar recursos, conectar a la base de datos,
@@ -42,6 +61,9 @@ def main():
 
     blockchain = Blockchain()
     procesar_transaccion(blockchain, "transaccion_ejemplo")
+
+    nuevos_datos = {"porcentaje_cpu": 60, "porcentaje_ancho_banda": 70}
+    actualizar_recursos(recursos_usuario, nuevos_datos)
 
     iniciar_servidor()
 
