@@ -1,10 +1,8 @@
 import hashlib
 import json
 import os
-import datetime
 import time
 import random
-from flask import Flask, jsonify, request
 
 class Blockchain:
     def __init__(self):
@@ -124,94 +122,3 @@ class Blockchain:
     def confirmar_conexion_modulos(self, modulos):
         data = f"Conexión de módulos: {', '.join(modulos)}"
         self.new_block(data)
-
-# Inicializar la blockchain
-blockchain = Blockchain()
-codigos_temporales = {}
-
-app = Flask(__name__)
-
-@app.route('/mine', methods=['GET'])
-def mine():
-    last_block = blockchain.last_block
-    last_proof = last_block['proof']
-    proof = blockchain.proof_of_work(last_proof)
-
-    blockchain.new_transaction(
-        sender="0",
-        recipient="node_address",
-        amount=1,
-    )
-
-    previous_hash = blockchain.hash(last_block)
-    block = blockchain.new_block(proof, previous_hash)
-
-    response = {
-        'message': "New Block Forged",
-        'index': block['index'],
-        'transactions': block['transactions'],
-        'proof': block['proof'],
-        'previous_hash': block['previous_hash'],
-    }
-    return jsonify(response), 200
-
-@app.route('/transactions/new', methods=['POST'])
-def new_transaction():
-    values = request.get_json()
-
-    required = ['sender', 'recipient', 'amount']
-    if not all(k in values for k in required):
-        return 'Missing values', 400
-
-    index = blockchain.new_transaction(values['sender'], values['recipient'], values['amount'])
-
-    response = {'message': f'Transaction will be added to Block {index}'}
-    return jsonify(response), 201
-
-@app.route('/chain', methods=['GET'])
-def full_chain():
-    response = {
-        'chain': blockchain.chain,
-        'length': len(blockchain.chain),
-    }
-    return jsonify(response), 200
-
-@app.route('/generate_code', methods=['GET'])
-def generate_code():
-    code = blockchain.generar_codigo_temporal()
-    response = {'code': code}
-    return jsonify(response), 200
-
-@app.route('/verify_code', methods=['POST'])
-def verify_code():
-    values = request.get_json()
-    code = values.get('code')
-    if blockchain.verificar_codigo_temporal(code):
-        response = {'message': 'Code is valid'}
-    else:
-        response = {'message': 'Code is invalid or expired'}
-    return jsonify(response), 200
-
-if __name__ == '__main__':
-    # Ejemplo de uso
-    blockchain.log_action("Inicio del sistema")
-    codigo = blockchain.generar_codigo_temporal()
-    print(f"Código temporal generado: {codigo}")
-
-    if blockchain.verificar_codigo_temporal(codigo):
-        print("Código temporal verificado correctamente.")
-    else:
-        print("Código temporal inválido o expirado.")
-
-    blockchain.confirmar_conexion_modulos(["bksv.py", "Bksvutills.py", "Bksvbsd.py"])
-
-    actividad = {"usuario": "usuario_ejemplo", "accion": "login"}
-    hash_actividad = blockchain.registrar_actividad(actividad)
-    print(f"Hash de la actividad: {hash_actividad}")
-
-    if blockchain.verificar_sistema():
-        print("El sistema funciona correctamente.")
-    else:
-        print("El sistema tiene problemas de seguridad.")
-
-    app.run(host='0.0.0.0', port=5000)
