@@ -17,6 +17,9 @@ usuarios = {}
 # Diccionario para almacenar códigos temporales de verificación
 codigos_temporales = {}
 
+# Cantidad total de tokens WCV
+TOTAL_WCV = 30000000.000
+
 def log_action(data):
     """
     Registra una acción en la blockchain.
@@ -103,6 +106,7 @@ html_template = """
         input[type="text"], input[type="password"] { width: 100%; padding: 8px; box-sizing: border-box; }
         .button { background-color: #4CAF50; border: none; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 4px; }
         .button:hover { background-color: #45a049; }
+        .timer { font-size: 14px; color: red; }
     </style>
 </head>
 <body>
@@ -126,6 +130,7 @@ html_template = """
                 <label for="codigo">Código Temporal de Verificación</label>
                 <input type="text" id="codigo" name="codigo" required>
                 <button type="button" class="button" onclick="generarCodigo()">Generar Código</button>
+                <div class="timer" id="timer"></div>
             </div>
             <button type="submit" class="button">Registrar</button>
         </form>
@@ -143,10 +148,52 @@ html_template = """
             fetch('/generate_code')
                 .then(response => response.json())
                 .then(data => {
-                    alert('Código generado: ' + data.codigo);
+                    document.getElementById('codigo').value = data.codigo;
+                    startTimer();
                 });
         }
+
+        function startTimer() {
+            var timer = document.getElementById('timer');
+            var timeLeft = 30;
+            var countdown = setInterval(function() {
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    timer.innerHTML = "Código expirado. Genera uno nuevo.";
+                } else {
+                    timer.innerHTML = "Tiempo restante: " + timeLeft + " segundos";
+                }
+                timeLeft -= 1;
+            }, 1000);
+        }
     </script>
+</body>
+</html>
+"""
+
+wallet_template = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billetera WCV</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f9f9f9; }
+        .header { background-color: #4CAF50; color: white; padding: 15px 0; text-align: center; }
+        .container { margin: 20px auto; padding: 20px; max-width: 400px; background-color: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        .info { font-size: 18px; }
+    </style>
+</head>
+<body>
+    <div class="header"><h1>Billetera WCV</h1></div>
+    <div class="container">
+        <div class="info">
+            <p>Bienvenido a tu billetera WCV.</p>
+            <p>Máximo total en circulación: 30,000,000.000 WCV</p>
+            <p>Balance: 0 WCV</p>
+        </div>
+    </div>
 </body>
 </html>
 """
@@ -177,12 +224,18 @@ def register():
             registrar_usuario(username, password)
             wallet = generar_wallet(username)
             log_action(f"Usuario {username} registrado con wallet {wallet}")
-            return redirect(url_for('index'))
+            return redirect(url_for('wallet'))
         except ValueError as e:
             return str(e)
     else:
         return "Código de verificación inválido o expirado."
 
+@app.route('/wallet')
+def wallet():
+    log_action("Billetera WCV cargada")
+    return render_template_string(wallet_template)
+
 if __name__ == '__main__':
     log_action("Servidor iniciado")
     socketio.run(app, debug=True)
+    
