@@ -7,11 +7,14 @@ socketio = SocketIO(app)
 html_template = """
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Metaverso Crypto 3D</title>
+    <title>Wold Virtual</title>
+
     <style>
+
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f9f9f9; }
         .header { background-color: #4CAF50; color: white; padding: 15px 0; text-align: center; }
         .nav { display: flex; justify-content: center; background-color: #333; }
@@ -23,10 +26,12 @@ html_template = """
         .button { background-color: #4CAF50; border: none; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 4px; }
         .button:hover { background-color: #45a049; }
     </style>
+
 </head>
 <body>
     <div class="header"><h1>Metaverso Crypto 3D</h1></div>
     <div class="nav">
+
         <a href="#">metaverso</a>
         <a href="#usuarios">Usuarios</a>
         <a href="#recursos">Recursos</a>
@@ -34,10 +39,11 @@ html_template = """
         <a href="#database">Base de Datos</a>
         <a href="#compresion">Compresión</a>
         <a href="#servidor">Servidor</a>
+
     </div>
     <div class="container">
         <div id="home" class="section">
-            <h2>Metaverso Crypto 3D descentralizado</h2>
+            <h2>Entorno 3D</h2>
             <div id="unityContainer" style="width: 960px; height: 600px"></div>
             <script>
                 var buildUrl = "{{ url_for('static', filename='unity/Build') }}";
