@@ -10,4 +10,4 @@ if verificar_codigo_temporal(codigo):
 else:
     print("Código temporal inválido o expirado.")
 
-confirmar_conexion_modulos(["Módulo1", "Módulo2"])
+confirmar_conexion_modulos(["bksv.py", "Módulo2"])
