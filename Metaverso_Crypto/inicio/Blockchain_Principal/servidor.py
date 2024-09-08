@@ -11,6 +11,7 @@ html_template = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Wold Virtual</title>
 
     <style>
@@ -25,9 +26,11 @@ html_template = """
         h1, h2 { margin-top: 0; }
         .button { background-color: #4CAF50; border: none; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 4px; }
         .button:hover { background-color: #45a049; }
+
     </style>
 
 </head>
+
 <body>
     <div class="header"><h1>Metaverso Crypto 3D</h1></div>
     <div class="nav">
@@ -77,6 +80,7 @@ html_template = """
             </script>
         </div>
     </div>
+    En desarrollo, un metaverso crypto 3D descentralizado.
 </body>
 </html>
 """
