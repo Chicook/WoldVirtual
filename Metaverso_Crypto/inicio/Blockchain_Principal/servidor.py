@@ -1,21 +1,32 @@
 from flask import Flask, render_template_string
 from flask_socketio import SocketIO
+from blockchain import Blockchain
 
 app = Flask(__name__)
 socketio = SocketIO(app)
 
+# Inicializar la blockchain
+blockchain = Blockchain()
+
+def log_action(data):
+    """
+    Registra una acción en la blockchain.
+    
+    Args:
+        data (str): Descripción de la acción a registrar.
+    """
+    new_block = blockchain.crear_bloque(len(blockchain.chain), data, blockchain.chain[-1]['hash_admin'] if blockchain.chain else "0")
+    blockchain.chain.append(new_block)
+    print(f"Acción registrada: {data}")
+
 html_template = """
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Wold Virtual</title>
-
+    <title>Metaverso Crypto 3D</title>
     <style>
-
         body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f9f9f9; }
         .header { background-color: #4CAF50; color: white; padding: 15px 0; text-align: center; }
         .nav { display: flex; justify-content: center; background-color: #333; }
@@ -26,27 +37,22 @@ html_template = """
         h1, h2 { margin-top: 0; }
         .button { background-color: #4CAF50; border: none; color: white; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border-radius: 4px; }
         .button:hover { background-color: #45a049; }
-
     </style>
-
 </head>
-
 <body>
     <div class="header"><h1>Metaverso Crypto 3D</h1></div>
     <div class="nav">
-
-        <a href="/workspaces/WoldVirtual/Metaverso_Crypto/inicio/Blockchain_Principal/w3D/w3D.html">metaverso</a>
+        <a href="#home">Inicio</a>
         <a href="#usuarios">Usuarios</a>
         <a href="#recursos">Recursos</a>
         <a href="#blockchain">Blockchain</a>
         <a href="#database">Base de Datos</a>
         <a href="#compresion">Compresión</a>
         <a href="#servidor">Servidor</a>
-
     </div>
     <div class="container">
         <div id="home" class="section">
-            <h2>Entorno 3D</h2>
+            <h2>Metaverso Crypto 3D descentralizado</h2>
             <div id="unityContainer" style="width: 960px; height: 600px"></div>
             <script>
                 var buildUrl = "{{ url_for('static', filename='unity/Build') }}";
@@ -72,23 +78,33 @@ html_template = """
                         console.log(progress);
                     }).then((unityInstance) => {
                         console.log("Unity instance created");
+                        log_action("Unity instance created")
                     }).catch((message) => {
                         console.error(message);
+                        log_action("Error creating Unity instance: " + message)
                     });
                 };
                 document.body.appendChild(script);
             </script>
         </div>
     </div>
-    En desarrollo, un metaverso crypto 3D descentralizado.
 </body>
 </html>
 """
 
 @app.route('/')
 def index():
+    log_action("Página principal cargada")
+    return render_template_string(html_template)
+
+@app.route('/inicio')
+def inicio():
+    log_action("Sección de inicio cargada")
+    # Aquí se puede cargar el módulo de usuarios y validar la actividad
+    log_action("Módulo de usuarios cargado y validado")
     return render_template_string(html_template)
 
 if __name__ == '__main__':
+    log_action("Servidor iniciado")
     socketio.run(app, debug=True)
     
