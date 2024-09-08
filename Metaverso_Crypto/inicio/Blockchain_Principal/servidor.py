@@ -1,8 +1,23 @@
 from flask import Flask, render_template_string
 from flask_socketio import SocketIO
+from blockchain import Blockchain
 
 app = Flask(__name__)
 socketio = SocketIO(app)
+
+# Inicializar la blockchain
+blockchain = Blockchain()
+
+def log_action(data):
+    """
+    Registra una acción en la blockchain.
+    
+    Args:
+        data (str): Descripción de la acción a registrar.
+    """
+    new_block = blockchain.crear_bloque(len(blockchain.chain), data, blockchain.chain[-1]['hash_admin'])
+    blockchain.chain.append(new_block)
+    print(f"Acción registrada: {data}")
 
 html_template = """
 <!DOCTYPE html>
@@ -63,8 +78,10 @@ html_template = """
                         console.log(progress);
                     }).then((unityInstance) => {
                         console.log("Unity instance created");
+                        log_action("Unity instance created")
                     }).catch((message) => {
                         console.error(message);
+                        log_action("Error creating Unity instance: " + message)
                     });
                 };
                 document.body.appendChild(script);
@@ -77,8 +94,9 @@ html_template = """
 
 @app.route('/')
 def index():
+    log_action("Página principal cargada")
     return render_template_string(html_template)
 
 if __name__ == '__main__':
+    log_action("Servidor iniciado")
     socketio.run(app, debug=True)
-    
