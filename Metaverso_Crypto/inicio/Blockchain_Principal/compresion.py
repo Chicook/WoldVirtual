@@ -1,5 +1,22 @@
 import json
 import gzip
+import hashlib
+import time
+from blockchain import Blockchain
+
+# Inicializar la blockchain
+blockchain = Blockchain()
+
+def log_action(data):
+    """
+    Registra una acción en la blockchain.
+    
+    Args:
+        data (str): Descripción de la acción a registrar.
+    """
+    new_block = blockchain.crear_bloque(len(blockchain.chain), data, blockchain.chain[-1]['hash_admin'])
+    blockchain.chain.append(new_block)
+    print(f"Acción registrada: {data}")
 
 def comprimir_y_guardar_datos(datos, archivo_salida):
     """
@@ -19,6 +36,7 @@ def comprimir_y_guardar_datos(datos, archivo_salida):
             archivo.write(datos_comprimidos)
         
         print(f"Datos comprimidos y guardados en {archivo_salida}")
+        log_action(f"Datos comprimidos y guardados en {archivo_salida}")
     except Exception as e:
         print(f"Error al comprimir y guardar datos: {e}")
 
@@ -38,7 +56,20 @@ def cargar_y_descomprimir_datos(archivo_entrada):
             datos_comprimidos = archivo.read()
         datos_descomprimidos = gzip.decompress(datos_comprimidos)
         
+        log_action(f"Datos descomprimidos de {archivo_entrada}")
         return json.loads(datos_descomprimidos)
     except Exception as e:
         print(f"Error al cargar y descomprimir datos: {e}")
         return None
+
+# Ejemplo de uso
+if __name__ == "__main__":
+    datos = {"nombre": "ejemplo", "valor": 123}
+    archivo = "datos_comprimidos.gz"
+    
+    comprimir_y_guardar_datos(datos, archivo)
+    datos_descomprimidos = cargar_y_descomprimir_datos(archivo)
+    
+    # Mostrar la cadena de bloques
+    for block in blockchain.chain:
+        print(f"Índice: {block['index']}, Hash Admin: {block['hash_admin']}, Hash Interno: {block['hash_internal']}, Datos: {block['data']}")
