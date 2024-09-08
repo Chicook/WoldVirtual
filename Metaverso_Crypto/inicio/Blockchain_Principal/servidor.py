@@ -161,4 +161,4 @@ def send_wcv():
 if __name__ == '__main__':
     log_action("Servidor iniciado")
     socketio.run(app, debug=True)
-            
+    
