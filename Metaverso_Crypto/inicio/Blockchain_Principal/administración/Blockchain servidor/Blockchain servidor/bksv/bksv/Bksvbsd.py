@@ -1,5 +1,6 @@
 import hashlib
 import json
+import os
 from time import time
 
 class Blockchain:
@@ -7,6 +8,10 @@ class Blockchain:
         self.chain = []
         self.current_transactions = []
         self.new_block(previous_hash='1', proof=100)
+        self.reward = 0.001  # Recompensa en WCV
+        self.data_dir = 'blockchain_principal'
+        if not os.path.exists(self.data_dir):
+            os.makedirs(self.data_dir)
 
     def new_block(self, proof, previous_hash=None):
         block = {
@@ -48,3 +53,21 @@ class Blockchain:
         guess = f'{last_proof}{proof}'.encode()
         guess_hash = hashlib.sha256(guess).hexdigest()
         return guess_hash[:4] == "0000"
+
+    def create_user_json(self, username):
+        user_hash = hashlib.sha256(username.encode()).hexdigest()
+        user_data = {
+            'username': username,
+            'hash': user_hash
+        }
+        self.new_transaction(sender="0", recipient=user_hash, amount=self.reward)
+        proof = self.proof_of_work(self.last_block['proof'])
+        self.new_block(proof)
+        file_path = os.path.join(self.data_dir, f'{username}.json')
+        with open(file_path, 'w') as json_file:
+            json.dump(user_data, json_file)
+        return user_data
+
+# Ejemplo de uso
+blockchain = Blockchain()
+blockchain.create_user_json('usuario_ejemplo')
