@@ -1,5 +1,3 @@
-import hashlib
-import datetime
 from flask import Flask, redirect, url_for
 from usuarios import registrar_usuario, generar_wallet, blockchain, log_action
 from recursos import RecursosUsuario
@@ -9,46 +7,6 @@ from servidor import app, socketio
 
 # Cantidad total de tokens WCV
 TOTAL_WCV = 30000000.000
-
-class Block:
-    def __init__(self, index, timestamp, data, previous_hash):
-        self.index = index
-        self.timestamp = timestamp
-        self.data = data
-        self.previous_hash = previous_hash
-        self.hash = self.calculate_hash()
-
-    def calculate_hash(self):
-        block_string = f"{self.index}{self.timestamp}{self.data}{self.previous_hash}"
-        return hashlib.sha256(block_string.encode()).hexdigest()
-
-class Blockchain:
-    def __init__(self):
-        self.chain = [self.crear_bloque_genesis()]
-
-    def crear_bloque_genesis(self):
-        return Block(0, str(datetime.datetime.now()), 'Bloque Génesis', '0')
-
-    def crear_bloque(self, index, data, previous_hash):
-        timestamp = str(datetime.datetime.now())
-        block = Block(index, timestamp, data, previous_hash)
-        return block
-
-    def agregar_bloque(self, data):
-        previous_block = self.chain[-1]
-        new_block = self.crear_bloque(len(self.chain), data, previous_block.hash)
-        self.chain.append(new_block)
-
-    def confirmar_conexion_modulos(self, modulos):
-        data = f"Conexión de módulos: {', '.join(modulos)}"
-        self.agregar_bloque(data)
-
-    def imprimir_cadena(self):
-        for block in self.chain:
-            print(f"Índice: {block.index}, Hash: {block.hash}, Datos: {block.data}")
-
-# Inicializar la blockchain
-blockchain = Blockchain()
 
 def inicializar_recursos():
     recursos = RecursosUsuario(50, 50)  # Ejemplo de inicialización con 50% de CPU y ancho de banda
@@ -79,8 +37,8 @@ def iniciar_servidor():
 
 @app.route('/inicio')
 def inicio():
-    log_action("Página de inicio cargada")
-    return redirect(url_for('registro'))
+    log_action("Sección de inicio cargada")
+    return redirect(url_for('index'))
 
 def main():
     """
