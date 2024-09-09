@@ -1,13 +1,15 @@
-import hashlib
-import prb4
+blockchain = []
 
-usuarios = {}
+def obtener_blockchain():
+    return blockchain
 
-def registrar_usuario(username, password, wallet_id):
-    hashed_password = hashlib.sha256(password.encode()).hexdigest()
-    usuarios[username] = {'password': hashed_password, 'wallet': wallet_id}
-    prb4.registrar_actividad_css(f"Usuario registrado: {username}")
+def agregar_bloque(data):
+    new_block = {'index': len(blockchain) + 1, 'data': data}
+    blockchain.append(new_block)
+    return new_block
 
-def verificar_credenciales(username, password):
-    hashed_password = hashlib.sha256(password.encode()).hexdigest()
-    return usuarios.get(username, {}).get('password') == hashed_password
+def obtener_bloque(block_index):
+    if 0 < block_index <= len(blockchain):
+        return blockchain[block_index - 1]
+    else:
+        return None
