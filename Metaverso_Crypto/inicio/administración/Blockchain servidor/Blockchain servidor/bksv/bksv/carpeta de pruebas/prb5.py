@@ -1,21 +1,11 @@
-import hashlib
-import json
+import random
+import time
 
-def validar_datos():
-    # Código para validar datos con JavaScript
+def crear_wallet():
+    wallet_id = f"wallet_{random.randint(1000, 9999)}"
+    wallet = {'id': wallet_id, 'timestamp': time.time()}
+    return wallet
+
+def validar_registro(forks):
+    # Código para validar el registro
     pass
-
-def generar_hash(datos):
-    return hashlib.sha256(json.dumps(datos, sort_keys=True).encode()).hexdigest()
-
-def crear_bloque(datos, bloque_anterior):
-    bloque = {
-        'datos': datos,
-        'hash_anterior': bloque_anterior['hash'],
-        'hash': generar_hash(datos)
-    }
-    return bloque
-
-def guardar_bloque(bloque, ruta):
-    with open(ruta, 'w') as archivo:
-        json.dump(bloque, archivo)
