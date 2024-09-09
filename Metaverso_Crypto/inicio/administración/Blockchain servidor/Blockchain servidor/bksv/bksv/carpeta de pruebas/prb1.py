@@ -1,6 +1,6 @@
 from prb2 import app, registrar_usuario, verificar_credenciales
 from prb3 import manejar_accion
-import prb4
+from prb4 import get_blockchain, add_block, get_block
 import prb5
 
 # Puedes agregar más rutas y lógica aquí
