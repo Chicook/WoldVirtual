@@ -1,9 +1,11 @@
 from flask import Flask, jsonify, request, render_template_string
 import hashlib
 import json
+import random
+import time
 
 # Importar funciones de otros módulos
-from prb2 import registrar_usuario, verificar_credenciales
+from prb2 import registrar_usuario, verificar_credenciales, generar_codigo_temporal, registrar_actividad
 from prb3 import manejar_accion
 from prb4 import get_blockchain, add_block, get_block
 from prb5 import crear_wallet, validar_registro
@@ -16,19 +18,15 @@ blockchain = []
 # Usuarios registrados (simulación)
 usuarios = {}
 
-# Funciones de blockchain
-def registrar_actividad(actividad):
-    new_block = {'index': len(blockchain) + 1, 'data': actividad}
-    blockchain.append(new_block)
-
 # Rutas de la API
 @app.route('/registro', methods=['POST'])
 def registro():
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
-    if username and password:
-        registrar_usuario(username, password)
+    wallet = data.get('wallet')
+    if username and password and wallet:
+        registrar_usuario(username, password, wallet)
         registrar_actividad(f"Usuario registrado: {username}")
         return jsonify({"message": "Usuario registrado exitosamente"}), 201
     return jsonify({"error": "Datos incompletos"}), 400
@@ -126,8 +124,11 @@ def index():
         <h1>Ejemplo de Aplicación</h1>
         <div id="content">
             <h2>Registro de Usuario</h2>
+            <button onclick="generarWallet()">Generar Wallet</button>
+            <input type="text" id="wallet" placeholder="Wallet ID" readonly>
             <input type="text" id="username" placeholder="Nombre de usuario">
             <input type="password" id="password" placeholder="Contraseña">
+            <input type="text" id="codigo" placeholder="Código Temporal" readonly>
             <button onclick="registrarUsuario()">Registrar</button>
 
             <h2>Inicio de Sesión</h2>
@@ -150,15 +151,37 @@ def index():
             <button onclick="validarRegistro()">Validar Registro</button>
         </div>
         <script>
+            let codigoTemporal;
+            let timer;
+
+            function generarWallet() {
+                const walletId = "bkmv" + Math.random().toString(36).substring(2, 10);
+                document.getElementById('wallet').value = walletId;
+                generarCodigoTemporal();
+            }
+
+            function generarCodigoTemporal() {
+                clearInterval(timer);
+                codigoTemporal = Math.floor(100000 + Math.random() * 900000);
+                document.getElementById('codigo').value = codigoTemporal;
+                timer = setInterval(generarCodigoTemporal, 30000);
+            }
+
             async function registrarUsuario() {
                 const username = document.getElementById('username').value;
                 const password = document.getElementById('password').value;
+                const wallet = document.getElementById('wallet').value;
+                const codigo = document.getElementById('codigo').value;
+                if (codigo != codigoTemporal) {
+                    alert("Código temporal incorrecto");
+                    return;
+                }
                 const response = await fetch('/registro', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ username, password })
+                    body: JSON.stringify({ username, password, wallet })
                 });
                 const data = await response.json();
                 alert(data.message);
