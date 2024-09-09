@@ -32,12 +32,24 @@ button:hover {
 blockchain = []
 
 def get_blockchain():
+    """
+    Devuelve la blockchain completa.
+    """
     return blockchain
 
 def add_block():
-    # Código para añadir un bloque a la blockchain
+    """
+    Añade un nuevo bloque a la blockchain.
+    """
+    # Implementación de la función para añadir un bloque
     pass
 
 def get_block(block_index):
-    # Código para obtener un bloque específico de la blockchain
+    """
+    Devuelve un bloque específico de la blockchain.
+    
+    Args:
+        block_index (int): Índice del bloque a obtener.
+    """
+    # Implementación de la función para obtener un bloque específico
     pass
