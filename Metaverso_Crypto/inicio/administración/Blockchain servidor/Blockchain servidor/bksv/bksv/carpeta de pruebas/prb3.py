@@ -1,8 +1,11 @@
-import uuid
-import prb4
+import hashlib
 
-def generar_codigo_temporal():
-    return str(uuid.uuid4())
+usuarios = {}
 
-def manejar_accion(nombre_usuario, accion):
-    prb4.registrar_actividad_css(f"Acción realizada: {accion} por {nombre_usuario}")
+def registrar_usuario(username, password):
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+    usuarios[username] = hashed_password
+
+def verificar_credenciales(username, password):
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+    return usuarios.get(username) == hashed_password
