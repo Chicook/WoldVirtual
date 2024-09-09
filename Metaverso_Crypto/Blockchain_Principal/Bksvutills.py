@@ -1,5 +1,5 @@
 from flask import jsonify, request
-from prb2 import obtener_blockchain, agregar_bloque, obtener_bloque
+from BSnts import obtener_blockchain, agregar_bloque, obtener_bloque
 
 def configurar_rutas(app):
     @app.route('/')
