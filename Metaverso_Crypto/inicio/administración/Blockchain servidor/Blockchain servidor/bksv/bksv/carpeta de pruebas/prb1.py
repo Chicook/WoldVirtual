@@ -1,11 +1,9 @@
-from flask import Flask
 from prb2 import obtener_blockchain, agregar_bloque, obtener_bloque
 from prb3 import registrar_usuario, verificar_credenciales
 from prb4 import manejar_accion
-from prb5 import configurar_rutas
-
-app = Flask(__name__)
-configurar_rutas(app)
+from prb5 import generar_caracteristicas_faciales, renderizar_avatar_3d
+import pytorch3d
+import torch
 
 if __name__ == '__main__':
     # Ejemplo de registro de usuario
@@ -22,4 +20,21 @@ if __name__ == '__main__':
     else:
         print("Credenciales incorrectas")
 
-    app.run(debug=True)
+    # Ejemplo de agregar un bloque a la blockchain
+    nuevo_bloque = agregar_bloque("Datos del bloque")
+    print(f"Nuevo bloque agregado: {nuevo_bloque}")
+
+    # Ejemplo de consultar un bloque específico
+    bloque = obtener_bloque(1)
+    if bloque:
+        print(f"Bloque consultado: {bloque}")
+    else:
+        print("Índice de bloque inválido")
+
+    # Ejemplo de generar características faciales y renderizar un avatar 3D
+    image_path = 'ruta/a/tu/imagen/facial.jpg'
+    facial_features = generar_caracteristicas_faciales(image_path)
+    mesh = pytorch3d.utils.create_sphere(radius=1.0, device='cuda')
+    images = renderizar_avatar_3d(mesh, facial_features)
+    pytorch3d.vis.plot_image(images[0, ..., :3].cpu().numpy())
+    
