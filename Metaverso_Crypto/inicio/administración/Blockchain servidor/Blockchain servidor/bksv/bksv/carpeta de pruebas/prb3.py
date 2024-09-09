@@ -4,6 +4,9 @@ from prb2 import registrar_actividad_css
 def generar_codigo_temporal():
     """
     Genera un código temporal de 6 dígitos.
+    
+    Returns:
+        int: Código temporal de 6 dígitos.
     """
     return random.randint(100000, 999999)
 
