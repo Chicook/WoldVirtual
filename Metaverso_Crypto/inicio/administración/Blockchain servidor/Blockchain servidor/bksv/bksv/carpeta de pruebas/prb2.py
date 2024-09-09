@@ -1,18 +1,15 @@
-import hashlib
-from prb5 import blockchain
+import prb5
 
-# Usuarios registrados (simulación)
 usuarios = {}
 
-def registrar_usuario(username, password, wallet_id):
-    hashed_password = hashlib.sha256(password.encode()).hexdigest()
-    usuarios[username] = {'password': hashed_password, 'wallet': wallet_id}
-    registrar_actividad_css(f"Usuario registrado: {username}")
+def registrar_usuario(nombre_usuario, contraseña, wallet):
+    usuarios[nombre_usuario] = {
+        'contraseña': contraseña,
+        'wallet_id': wallet
+    }
+    prb5.registrar_en_blockchain(f"Usuario registrado: {nombre_usuario}")
 
-def verificar_credenciales(username, password):
-    hashed_password = hashlib.sha256(password.encode()).hexdigest()
-    return usuarios.get(username, {}).get('password') == hashed_password
-
-def registrar_actividad_css(actividad):
-    new_block = {'index': len(blockchain) + 1, 'data': actividad, 'hash': hashlib.sha256(actividad.encode()).hexdigest()}
-    blockchain.append(new_block)
+def verificar_credenciales(nombre_usuario, contraseña):
+    if nombre_usuario in usuarios and usuarios[nombre_usuario]['contraseña'] == contraseña:
+        return True
+    return False
