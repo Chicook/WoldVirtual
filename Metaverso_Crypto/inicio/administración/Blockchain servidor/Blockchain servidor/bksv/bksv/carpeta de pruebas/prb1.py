@@ -1,8 +1,8 @@
 from flask import Flask, jsonify, request, render_template_string
-from prb2 import registrar_usuario, verificar_credenciales, registrar_actividad_css
-from prb3 import generar_codigo_temporal, manejar_accion
-from prb4 import css_content, get_blockchain, add_block, get_block
-from prb5 import crear_wallet, validar_registro, blockchain
+import prb2
+import prb3
+import prb4
+import prb5
 
 app = Flask(__name__)
 
@@ -13,8 +13,8 @@ def registro():
     password = data.get('password')
     wallet = data.get('wallet')
     if username and password and wallet:
-        registrar_usuario(username, password, wallet)
-        registrar_actividad_css(f"Usuario registrado: {username}")
+        prb2.registrar_usuario(username, password, wallet)
+        prb4.registrar_actividad_css(f"Usuario registrado: {username}")
         return jsonify({"message": "Usuario registrado exitosamente"}), 201
     return jsonify({"error": "Datos incompletos"}), 400
 
@@ -23,8 +23,8 @@ def login():
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
-    if verificar_credenciales(username, password):
-        registrar_actividad_css(f"Inicio de sesión: {username}")
+    if prb2.verificar_credenciales(username, password):
+        prb4.registrar_actividad_css(f"Inicio de sesión: {username}")
         return jsonify({"message": "Inicio de sesión exitoso"}), 200
     return jsonify({"error": "Credenciales incorrectas"}), 401
 
@@ -34,36 +34,36 @@ def accion():
     username = data.get('username')
     password = data.get('password')
     accion = data.get('accion')
-    if verificar_credenciales(username, password):
-        manejar_accion(username, accion)
-        registrar_actividad_css(f"Acción realizada: {accion} por {username}")
+    if prb2.verificar_credenciales(username, password):
+        prb3.manejar_accion(username, accion)
+        prb4.registrar_actividad_css(f"Acción realizada: {accion} por {username}")
         return jsonify({"message": "Acción realizada"}), 200
     return jsonify({"error": "Credenciales incorrectas"}), 401
 
 @app.route('/blockchain', methods=['GET'])
 def blockchain_route():
-    return jsonify({'blockchain': blockchain})
+    return jsonify({'blockchain': prb5.get_blockchain()})
 
 @app.route('/add_block', methods=['POST'])
 def add_block_route():
-    return add_block()
+    return prb4.add_block()
 
 @app.route('/block/<int:block_index>', methods=['GET'])
 def block_route(block_index):
-    return get_block(block_index)
+    return prb4.get_block(block_index)
 
 @app.route('/crear_wallet', methods=['POST'])
 def crear_wallet_route():
-    wallet = crear_wallet()
-    registrar_actividad_css(f"Wallet creada: {wallet['id']}")
+    wallet = prb5.crear_wallet()
+    prb4.registrar_actividad_css(f"Wallet creada: {wallet['id']}")
     return jsonify({"message": "Wallet creada", "wallet": wallet}), 201
 
 @app.route('/validar_registro', methods=['POST'])
 def validar_registro_route():
     data = request.get_json()
     forks = data.get('forks')
-    valor = validar_registro(forks)
-    registrar_actividad_css(f"Registro validado: forks={forks}, valor={valor}")
+    valor = prb5.validar_registro(forks)
+    prb4.registrar_actividad_css(f"Registro validado: forks={forks}, valor={valor}")
     return jsonify({"message": "Registro validado", "valor": valor}), 200
 
 @app.route('/')
@@ -210,5 +210,5 @@ def script_js():
     """
     return js_content
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
