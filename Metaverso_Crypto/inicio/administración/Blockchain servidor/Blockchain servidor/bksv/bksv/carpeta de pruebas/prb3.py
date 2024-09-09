@@ -1,4 +1,4 @@
-from prb2 import verificar_credenciales
+from prb2 import verificar_credenciales, registrar_actividad
 
 def manejar_accion(usuario, accion):
     if accion == "explorar":
@@ -7,6 +7,7 @@ def manejar_accion(usuario, accion):
         print(f"Realizando intercambio para {usuario}.")
     else:
         print("Acción no reconocida.")
+    registrar_actividad(f"Acción realizada: {accion} por {usuario}")
 
 # Ejemplo de verificación de credenciales y manejo de entorno virtual
 usuario_actual = "usuario1"
