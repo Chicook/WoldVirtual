@@ -1,28 +1,29 @@
-import time
-import random
-import string
-import prb4
+from flask import jsonify, request
+from prb2 import obtener_blockchain, agregar_bloque, obtener_bloque
 
-def crear_wallet():
-    """
-    Crea una nueva wallet con un ID único.
-    """
-    wallet_id = "wbrs" + ''.join(random.choices(string.ascii_lowercase + string.digits, k=12))
-    wallet = {'id': wallet_id, 'timestamp': time.time()}
-    prb4.add_block(wallet)
-    return wallet
+def configurar_rutas(app):
+    @app.route('/')
+    def index():
+        return "El servidor está funcionando correctamente."
 
-def validar_registro(forks):
-    """
-    Valida un registro basado en el número de forks.
-    """
-    valor = forks * 2  # Ejemplo de validación
-    registro = {'forks': forks, 'valor': valor, 'timestamp': time.time()}
-    prb4.add_block(registro)
-    return valor
+    @app.route('/blockchain', methods=['GET'])
+    def get_blockchain():
+        return jsonify({'blockchain': obtener_blockchain()})
 
-def guardar_en_json():
-    """
-    Guarda la blockchain en una carpeta llamada blockchain_JSON en formato JSON.
-    """
-    prb4.guardar_en_json()
+    @app.route('/add_block', methods=['POST'])
+    def add_block():
+        data = request.get_json()
+        if 'data' in data:
+            new_block = agregar_bloque(data['data'])
+            return jsonify({'message': 'Bloque agregado correctamente', 'block': new_block})
+        else:
+            return jsonify({'error': 'Datos no proporcionados'})
+
+    @app.route('/block/<int:block_index>', methods=['GET'])
+    def get_block(block_index):
+        block = obtener_bloque(block_index)
+        if block:
+            return jsonify({'block': block})
+        else:
+            return jsonify({'error': 'Índice de bloque inválido'})
+            
