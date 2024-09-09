@@ -1,29 +1,18 @@
 import hashlib
-import json
+from prb5 import blockchain
 
-def registrar_usuario(username, password, wallet):
-    # Código para registrar usuario
-    pass
+# Usuarios registrados (simulación)
+usuarios = {}
+
+def registrar_usuario(username, password, wallet_id):
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+    usuarios[username] = {'password': hashed_password, 'wallet': wallet_id}
+    registrar_actividad_css(f"Usuario registrado: {username}")
 
 def verificar_credenciales(username, password):
-    # Código para verificar credenciales
-    pass
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+    return usuarios.get(username, {}).get('password') == hashed_password
 
-def registrar_actividad_css(mensaje):
-    # Código para registrar actividad en CSS
-    pass
-
-def generar_hash(datos):
-    return hashlib.sha256(json.dumps(datos, sort_keys=True).encode()).hexdigest()
-
-def crear_bloque(datos, bloque_anterior):
-    bloque = {
-        'datos': datos,
-        'hash_anterior': bloque_anterior['hash'],
-        'hash': generar_hash(datos)
-    }
-    return bloque
-
-def guardar_bloque(bloque, ruta):
-    with open(ruta, 'w') as archivo:
-        json.dump(bloque, archivo)
+def registrar_actividad_css(actividad):
+    new_block = {'index': len(blockchain) + 1, 'data': actividad, 'hash': hashlib.sha256(actividad.encode()).hexdigest()}
+    blockchain.append(new_block)
