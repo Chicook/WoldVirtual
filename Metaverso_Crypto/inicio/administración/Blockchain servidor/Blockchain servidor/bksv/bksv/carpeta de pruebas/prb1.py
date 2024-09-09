@@ -113,5 +113,102 @@ def index():
     """
     return render_template_string(html_content)
 
+@app.route('/static/script.js')
+def script_js():
+    js_content = """
+    let codigoTemporal;
+    let timer;
+
+    function generarWallet() {
+        const walletId = "bkmv" + Math.random().toString(36).substring(2, 10);
+        document.getElementById('wallet').value = walletId;
+        generarCodigoTemporal();
+    }
+
+    function generarCodigoTemporal() {
+        clearInterval(timer);
+        codigoTemporal = Math.floor(100000 + Math.random() * 900000);
+        document.getElementById('codigo').value = codigoTemporal;
+        timer = setInterval(generarCodigoTemporal, 30000);
+    }
+
+    async function registrarUsuario() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const wallet = document.getElementById('wallet').value;
+        const codigo = document.getElementById('codigo').value;
+        if (codigo != codigoTemporal) {
+            alert("Código temporal incorrecto");
+            return;
+        }
+        const response = await fetch('/registro', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password, wallet })
+        });
+        const data = await response.json();
+        alert(data.message);
+    }
+
+    async function iniciarSesion() {
+        const username = document.getElementById('loginUsername').value;
+        const password = document.getElementById('loginPassword').value;
+        const response = await fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        });
+        const data = await response.json();
+        alert(data.message);
+    }
+
+    async function realizarAccion() {
+        const username = document.getElementById('loginUsername').value;
+        const password = document.getElementById('loginPassword').value;
+        const accion = document.getElementById('accion').value;
+        const response = await fetch('/accion', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password, accion })
+        });
+        const data = await response.json();
+        alert(data.message);
+    }
+
+    async function verBlockchain() {
+        const response = await fetch('/blockchain');
+        const data = await response.json();
+        alert(JSON.stringify(data.blockchain, null, 2));
+    }
+
+    async function crearWallet() {
+        const response = await fetch('/crear_wallet', {
+            method: 'POST'
+        });
+        const data = await response.json();
+        alert(data.message);
+    }
+
+    async function validarRegistro() {
+        const forks = document.getElementById('forks').value;
+        const response = await fetch('/validar_registro', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ forks })
+        });
+        const data = await response.json();
+        alert(data.message);
+    }
+    """
+    return js_content
+
 if __name__ == '__main__':
     app.run(debug=True)
