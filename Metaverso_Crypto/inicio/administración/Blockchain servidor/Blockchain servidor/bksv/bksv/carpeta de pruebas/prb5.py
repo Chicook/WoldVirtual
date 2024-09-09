@@ -1,28 +1,29 @@
-import random
+import hashlib
 import time
+import prb4
 
 blockchain = []
 
 def crear_wallet():
     """
     Crea una nueva wallet con un ID único.
-    
-    Returns:
-        dict: Diccionario con el ID de la wallet y el timestamp de creación.
     """
-    wallet_id = f"wallet_{random.randint(1000, 9999)}"
+    wallet_id = "wbrs" + ''.join(random.choices(string.ascii_lowercase + string.digits, k=12))
     wallet = {'id': wallet_id, 'timestamp': time.time()}
+    prb4.add_block(wallet)
     return wallet
 
 def validar_registro(forks):
     """
-    Valida el registro basado en el número de forks.
-    
-    Args:
-        forks (int): Número de forks para validar.
-    
-    Returns:
-        bool: Resultado de la validación.
+    Valida un registro basado en el número de forks.
     """
-    # Implementación de la función para validar el registro
-    pass
+    valor = forks * 2  # Ejemplo de validación
+    registro = {'forks': forks, 'valor': valor, 'timestamp': time.time()}
+    prb4.add_block(registro)
+    return valor
+
+def registrar_en_blockchain(data):
+    """
+    Registra datos en la blockchain.
+    """
+    prb4.add_block(data)
