@@ -1,7 +1,7 @@
 from flask import Flask
 from BSMTV import obtener_blockchain, agregar_bloque, obtener_bloque
 from Bksvbsd import registrar_usuario, verificar_credenciales
-from prb4 import manejar_accion
+from Bksvmain import manejar_accion
 from prb5 import configurar_rutas
 
 app = Flask(__name__)
