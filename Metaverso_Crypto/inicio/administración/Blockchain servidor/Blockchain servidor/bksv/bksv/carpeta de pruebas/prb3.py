@@ -1,3 +1,5 @@
+from prb2 import verificar_credenciales
+
 def manejar_accion(usuario, accion):
     if accion == "explorar":
         print(f"Bienvenido/a {usuario} al entorno de exploración.")
