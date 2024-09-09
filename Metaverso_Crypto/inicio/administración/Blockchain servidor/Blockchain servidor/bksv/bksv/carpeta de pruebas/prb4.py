@@ -34,15 +34,27 @@ blockchain = []
 def get_blockchain():
     """
     Devuelve la blockchain completa.
+    
+    Returns:
+        list: Lista de bloques en la blockchain.
     """
     return blockchain
 
 def add_block():
     """
     Añade un nuevo bloque a la blockchain.
+    
+    Returns:
+        dict: Diccionario con el mensaje y el nuevo bloque.
     """
-    # Implementación de la función para añadir un bloque
-    pass
+    data = request.get_json()
+    if 'data' in data:
+        new_block = {'index': len(blockchain) + 1, 'data': data['data'], 'hash': hashlib.sha256(data['data'].encode()).hexdigest()}
+        blockchain.append(new_block)
+        registrar_actividad_css(f"Bloque agregado: {new_block}")
+        return jsonify({'message': 'Bloque agregado correctamente', 'block': new_block})
+    else:
+        return jsonify({'error': 'Datos no proporcionados'})
 
 def get_block(block_index):
     """
@@ -50,6 +62,12 @@ def get_block(block_index):
     
     Args:
         block_index (int): Índice del bloque a obtener.
+    
+    Returns:
+        dict: Diccionario con el bloque solicitado o un mensaje de error.
     """
-    # Implementación de la función para obtener un bloque específico
-    pass
+    if 0 < block_index <= len(blockchain):
+        return jsonify({'block': blockchain[block_index - 1]})
+    else:
+        return jsonify({'error': 'Índice de bloque inválido'})
+        
