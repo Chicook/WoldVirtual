@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request, render_template_string
 import hashlib
 import json
+
+# Importar funciones de otros módulos
 from prb2 import registrar_usuario, verificar_credenciales
 from prb3 import manejar_accion
 from prb4 import get_blockchain, add_block, get_block
