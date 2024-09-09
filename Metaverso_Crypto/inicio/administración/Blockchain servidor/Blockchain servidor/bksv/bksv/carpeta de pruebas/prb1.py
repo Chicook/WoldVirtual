@@ -1,5 +1,5 @@
 from prb2 import app, registrar_usuario, verificar_credenciales
-import prb3
+from prb3 import manejar_accion
 import prb4
 import prb5
 
