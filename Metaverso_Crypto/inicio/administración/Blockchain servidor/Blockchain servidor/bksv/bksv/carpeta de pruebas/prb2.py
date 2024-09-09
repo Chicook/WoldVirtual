@@ -58,7 +58,7 @@ button:hover {
 }
 """
 
-@app.route('/static/style.css')
+@app.route('/')
 def style_css():
     return css_content
     
