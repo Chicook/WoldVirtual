@@ -1,5 +1,6 @@
 import json
 import hashlib
+from prb2 import registrar_actividad
 
 def crear_wallet():
     wallet_id = "bkmv" + hashlib.sha256().hexdigest()[:8]
@@ -16,7 +17,3 @@ def validar_registro(forks):
         valor = 0.001
     registrar_actividad(f"Registro validado: forks={forks}, valor={valor}")
     return valor
-
-def registrar_actividad(actividad):
-    new_block = {'index': len(blockchain) + 1, 'data': actividad}
-    blockchain.append(new_block)
