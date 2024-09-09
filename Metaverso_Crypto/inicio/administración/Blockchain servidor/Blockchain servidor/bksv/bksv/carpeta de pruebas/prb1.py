@@ -1,16 +1,10 @@
 from flask import Flask, jsonify, request, render_template_string
 from prb2 import registrar_usuario, verificar_credenciales, registrar_actividad_css
-from prb3 import manejar_accion
-from prb4 import get_blockchain, add_block, get_block
-from prb5 import crear_wallet, validar_registro
+from prb3 import generar_codigo_temporal, manejar_accion
+from prb4 import css_content, get_blockchain, add_block, get_block
+from prb5 import crear_wallet, validar_registro, blockchain
 
 app = Flask(__name__)
-
-# Datos simulados de una blockchain (para fines de ejemplo)
-blockchain = []
-
-# Usuarios registrados (simulación)
-usuarios = {}
 
 @app.route('/registro', methods=['POST'])
 def registro():
