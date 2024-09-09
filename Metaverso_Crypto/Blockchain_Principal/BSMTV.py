@@ -1,6 +1,6 @@
 from flask import Flask
 from BSMTV import obtener_blockchain, agregar_bloque, obtener_bloque
-from prb3 import registrar_usuario, verificar_credenciales
+from Bksvbsd import registrar_usuario, verificar_credenciales
 from prb4 import manejar_accion
 from prb5 import configurar_rutas
 
