@@ -1,42 +1,25 @@
-import prb2
+# prb5.py
+from prb3 import log_action
 
-def generate_new_block(data):
-    """
-    Genera un nuevo bloque en la blockchain con los datos proporcionados.
-    
-    Args:
-        data (str): Datos a incluir en el nuevo bloque.
-    """
-    blockchain = prb2.Blockchain()
-    new_block = prb2.Block(len(blockchain.chain), prb2.time.time(), data, blockchain.get_latest_block().hash)
-    blockchain.add_block(new_block)
-    print(f"Nuevo bloque generado: Índice: {new_block.index}, Hash: {new_block.hash}, Datos: {new_block.data}")
+def procesar_transaccion(transaccion):
+    log_action(f"Procesada transacción: {transaccion}")
 
-def validate_blockchain():
-    """
-    Valida la integridad de la blockchain verificando los hashes de cada bloque.
-    
-    Returns:
-        bool: True si la blockchain es válida, False en caso contrario.
-    """
-    blockchain = prb2.Blockchain()
-    for i in range(1, len(blockchain.chain)):
-        current_block = blockchain.chain[i]
-        previous_block = blockchain.chain[i - 1]
-        
-        # Verifica el hash del bloque actual
-        if current_block.hash != current_block.calculate_hash():
-            print(f"Error: El hash del bloque {current_block.index} no es válido.")
-            return False
-        
-        # Verifica el hash del bloque anterior
-        if current_block.previous_hash != previous_block.hash:
-            print(f"Error: El hash del bloque anterior {current_block.index} no coincide.")
-            return False
-    
-    print("La blockchain es válida.")
-    return True
+def validar_transaccion(transaccion):
+    # Aquí iría la lógica para validar la transacción
+    es_valida = True  # Supongamos que la validación es exitosa
+    log_action(f"Transacción validada: {transaccion} - Válida: {es_valida}")
+    return es_valida
 
-# Ejemplo de uso de las funciones adicionales
-generate_new_block("Datos del nuevo bloque")
-validate_blockchain()
+def gestionar_usuario(accion, nombre):
+    if accion == "registrar":
+        log_action(f"Usuario registrado: {nombre}")
+    elif accion == "verificar":
+        log_action(f"Usuario verificado: {nombre}")
+    elif accion == "eliminar":
+        log_action(f"Usuario eliminado: {nombre}")
+    else:
+        log_action(f"Acción desconocida para el usuario: {nombre}")
+
+def auditar_transacciones():
+    # Aquí iría la lógica para auditar las transacciones
+    log_action("Auditoría de transacciones realizada")
