@@ -1,10 +1,21 @@
 # prb3.py
-import time
-from prb2 import Block, Blockchain
+import os
+import tarfile
+from prb2 import log_action
 
-blockchain = Blockchain()
+storage_path = '/workspaces/WoldVirtual.github.io/Metaverso_Crypto/inicio/Blockchain_Principal/Almacenamiento'
 
-def log_action(data):
-    new_block = Block(len(blockchain.chain), time.time(), data, blockchain.get_latest_block().hash if blockchain.chain else "0")
-    blockchain.add_block(new_block)
-    print(f"Acción registrada: {data}")
+def comprimir_datos(datos, archivo):
+    output_filepath = os.path.join(storage_path, archivo)
+    with tarfile.open(output_filepath, 'w:gz') as tar:
+        for file in datos:
+            if os.path.isfile(file):
+                tar.add(file, arcname=os.path.basename(file))
+    log_action(f"Datos comprimidos en {archivo}")
+
+def descomprimir_datos(archivo):
+    input_filepath = os.path.join(storage_path, archivo)
+    with tarfile.open(input_filepath, 'r:gz') as tar:
+        tar.extractall(path=storage_path)
+    log_action(f"Datos descomprimidos de {archivo}")
+    
