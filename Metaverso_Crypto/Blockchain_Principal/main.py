@@ -11,7 +11,7 @@ from recursos import RecursosUsuario
 from compresion import comprimir_y_guardar_datos
 from servidor import app, socketio
 # from 3D1 
-# from 
+# from BSMTV
 # from 
 
 # Cantidad total de tokens WCV
