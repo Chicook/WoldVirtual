@@ -1,16 +1,29 @@
-import hashlib
-import tkinter as tk
+class TokenICO:
+    def __init__(self, total_tokens):
+        self.owner = "owner_address"
+        self.total_tokens = total_tokens
+        self.tokens_sold = 0
+        self.balances = {}
 
-def gestionar_usuarios():
-    # Lógica de gestión de usuarios
-    return "Datos de usuarios"
+    def only_owner(func):
+        def wrapper(self, *args, **kwargs):
+            if "caller_address" != self.owner:
+                raise PermissionError("Only the owner can call this function")
+            return func(self, *args, **kwargs)
+        return wrapper
 
-def calcular_hash(data, previous_hash):
-    # Calcula el hash del bloque
-    block_string = f"{data}{previous_hash}".encode()
-    return hashlib.sha256(block_string).hexdigest()
+    def purchase_tokens(self, caller_address, amount, value):
+        if self.tokens_sold + amount > self.total_tokens:
+            raise ValueError("Not enough tokens available")
+        if value != amount * 1:
+            raise ValueError("Incorrect Ether amount")
 
-def crear_etiqueta(master, text):
-    etiqueta = tk.Label(master, text=text)
-    etiqueta.pack()
-    return etiqueta
+        if caller_address not in self.balances:
+            self.balances[caller_address] = 0
+        self.balances[caller_address] += amount
+        self.tokens_sold += amount
+        print(f"TokenPurchased: {caller_address}, {amount}, {self.tokens_sold}")
+
+    @only_owner
+    def withdraw_funds(self):
+        print(f"Funds withdrawn by {self.owner}")
