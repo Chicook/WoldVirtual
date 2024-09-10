@@ -1,5 +1,6 @@
 # prb2.py
 import hashlib
+import time
 
 class Block:
     def __init__(self, index, timestamp, data, previous_hash):
@@ -27,4 +28,11 @@ class Blockchain:
             new_block.previous_hash = "0"
         new_block.hash = new_block.calculate_hash()
         self.chain.append(new_block)
-        
+
+blockchain = Blockchain()
+
+def log_action(data):
+    new_block = Block(len(blockchain.chain), time.time(), data, blockchain.get_latest_block().hash if blockchain.chain else "0")
+    blockchain.add_block(new_block)
+    print(f"Acción registrada: {data}")
+    
