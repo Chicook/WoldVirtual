@@ -16,6 +16,7 @@ from servidor import app, socketio
 # from SBlokchain1
 # from almacenamiento1
 # from app1
+# from avatarbs1
 
 # Cantidad total de tokens WCV
 TOTAL_WCV = 30000000.000
