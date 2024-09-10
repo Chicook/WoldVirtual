@@ -1,4 +1,4 @@
-from prb2 import calcular_hash
+from svdc2 import calcular_hash
 import tkinter as tk
 
 def gestionar_recursos():
