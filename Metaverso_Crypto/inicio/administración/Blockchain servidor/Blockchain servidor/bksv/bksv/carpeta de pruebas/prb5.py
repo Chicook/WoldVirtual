@@ -1,72 +1,51 @@
-# prb5.py
-from prb2 import log_action
-import bpy
+import tkinter as tk
+from flask import Flask, request, jsonify
 
-def cambiar_estructura_avatar():
-    bpy.ops.object.armature_add(enter_editmode=False, location=(0, 0, 0))
-    armature = bpy.context.object.data
+def iniciar_interfaz():
+    class InterfazCompartirRecursos:
+        def __init__(self, master):
+            self.master = master
+            master.title("Compartir Recursos")
 
-    bpy.ops.object.mode_set(mode='EDIT')
-    bone_head = (0, 0, 0)
-    bone_tail = (0, 0, 1)
-    armature.edit_bones.new('Head').head = bone_head
-    armature.edit_bones.new('Neck').head = bone_head
-    armature.edit_bones.new('Shoulder.L').head = bone_head
-    armature.edit_bones.new('Arm.L').head = bone_head
-    armature.edit_bones.new('Hand.L').head = bone_head
-    armature.edit_bones.new('Shoulder.R').head = bone_head
-    armature.edit_bones.new('Arm.R').head = bone_head
-    armature.edit_bones.new('Hand.R').head = bone_head
-    armature.edit_bones.new('Spine').head = bone_head
-    armature.edit_bones.new('Pelvis').head = bone_head
-    armature.edit_bones.new('Thigh.L').head = bone_head
-    armature.edit_bones.new('Shin.L').head = bone_head
-    armature.edit_bones.new('Foot.L').head = bone_head
-    armature.edit_bones.new('Thigh.R').head = bone_head
-    armature.edit_bones.new('Shin.R').head = bone_head
-    armature.edit_bones.new('Foot.R').head = bone_head
+            from prb2 import crear_etiqueta
+            from prb4 import crear_etiqueta_nombre, crear_entrada_nombre, crear_etiqueta_descripcion, crear_entrada_descripcion
 
-    bpy.ops.mesh.primitive_uv_sphere_add(location=(0, 0, 1))
-    bpy.ops.object.modifier_add(type='SKIN')
-    bpy.context.object.modifiers["Skin"].use_smooth_shade = True
-    bpy.context.object.modifiers["Skin"].show_in_editmode = True
-    bpy.ops.object.modifier_apply(modifier="Skin")
-    bpy.ops.object.editmode_toggle()
+            crear_etiqueta(master, "Ingrese la información del recurso:")
+            self.etiqueta_nombre = crear_etiqueta_nombre(master)
+            self.entry_nombre = crear_entrada_nombre(master)
+            self.etiqueta_descripcion = crear_etiqueta_descripcion(master)
+            self.entry_descripcion = crear_entrada_descripcion(master)
 
-    bpy.context.view_layer.objects.active = bpy.data.objects["Armature"]
-    bpy.ops.object.parent_set(type='ARMATURE_NAME')
+            self.boton_compartir = tk.Button(master, text="Compartir Recurso", command=self.compartir_recurso)
+            self.boton_compartir.pack()
+	    
+        def compartir_recurso(self):
+            nombre = self.entry_nombre.get()
+            descripcion = self.entry_descripcion.get()
 
-    bpy.ops.transform.resize(value=(1, 1, 2))
+            # Aquí puedes realizar las acciones necesarias para agregar el recurso a la cadena de bloques
+            print(f"Recurso compartido - Nombre: {nombre}, Descripción: {descripcion}")
 
-    class AvatarSettingsPanel(bpy.types.Panel):
-        bl_label = "Configuración del Avatar"
-        bl_idname = "OBJECT_PT_avatar_settings"
-        bl_space_type = 'PROPERTIES'
-        bl_region_type = 'WINDOW'
-        bl_context = "object"
+    # Crear la ventana principal
+    root = tk.Tk()
+    interfaz = InterfazCompartirRecursos(root)
 
-        def draw(self, context):
-            layout = self.layout
-            obj = context.object
+    # Mantener la ventana abierta
+    root.mainloop()
 
-            row = layout.row()
-            row.prop(obj, "scale", index=2)
+    return "Interfaz del servidor"
 
-            row = layout.row()
-            row.prop(obj, "scale", index=0)
+# Integración con Flask
+app = Flask(__name__)
 
-            row.prop(obj, "scale", index=1)
+@app.route('/compartir_recurso', methods=['POST'])
+def compartir_recurso():
+    data = request.get_json()
+    nombre = data['nombre']
+    descripcion = data['descripcion']
+    # Aquí puedes realizar las acciones necesarias para agregar el recurso a la cadena de bloques
+    return jsonify({'message': f"Recurso compartido - Nombre: {nombre}, Descripción: {descripcion}"})
 
-    bpy.utils.register_class(AvatarSettingsPanel)
-
-    bpy.context.scene.frame_start = 0
-    bpy.context.scene.frame_end = 10
-
-    bpy.ops.object.mode_set(mode='POSE')
-    for bone in armature.bones:
-        bone.rotation_mode = 'XYZ'
-        if bone.name.endswith('.L'):
-            bone.rotation_euler.x = 0.5
-
-    log_action("Estructura del avatar cambiada")
+if __name__ == "__main__":
+    app.run(debug=True)
     
