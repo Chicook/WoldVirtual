@@ -1,21 +1,16 @@
-# prb3.py
-import os
-import tarfile
-from prb2 import log_action
+from prb2 import calcular_hash
+import tkinter as tk
 
-storage_path = '/workspaces/WoldVirtual.github.io/Metaverso_Crypto/inicio/Blockchain_Principal/Almacenamiento'
+def gestionar_recursos():
+    # Lógica de gestión de recursos
+    return "Datos de recursos"
 
-def comprimir_datos(datos, archivo):
-    output_filepath = os.path.join(storage_path, archivo)
-    with tarfile.open(output_filepath, 'w:gz') as tar:
-        for file in datos:
-            if os.path.isfile(file):
-                tar.add(file, arcname=os.path.basename(file))
-    log_action(f"Datos comprimidos en {archivo}")
+def validar_bloque(block):
+    # Valida el bloque
+    expected_hash = calcular_hash(block['data'], block['previous_hash'])
+    return block['hash'] == expected_hash
 
-def descomprimir_datos(archivo):
-    input_filepath = os.path.join(storage_path, archivo)
-    with tarfile.open(input_filepath, 'r:gz') as tar:
-        tar.extractall(path=storage_path)
-    log_action(f"Datos descomprimidos de {archivo}")
-    
+def crear_entrada(master):
+    entrada = tk.Entry(master)
+    entrada.pack()
+    return entrada
