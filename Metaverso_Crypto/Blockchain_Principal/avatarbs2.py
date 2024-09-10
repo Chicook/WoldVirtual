@@ -1,4 +1,3 @@
-# prb2.py
 import hashlib
 import time
 
