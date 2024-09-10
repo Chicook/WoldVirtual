@@ -8,7 +8,7 @@ import time
 
 
 # colocar código en blender., 
-primero antes de integrar aqui.#
+# primero antes de integrar aqui.#
 
 
 # import bpy
@@ -39,89 +39,89 @@ primero antes de integrar aqui.#
 # Guardar el archivo de Blender
 # bpy.ops.wm.save_as_mainfile(filepath='/ruta/a/tu/archivo.blend')
 
-class Minero:
-    def __init__(self, blockchain):
-        self.blockchain = blockchain
+# class Minero:
+   #  def __init__(self, blockchain):
+        # self.blockchain = blockchain
 
-    def minar_bloque(self, datos):
-        nuevo_bloque = Bloque(len(self.blockchain.cadena), time.time(), datos, self.blockchain.cadena[-1].hash)
-        self.proof_of_work(nuevo_bloque)
-        self.blockchain.agregar_bloque(nuevo_bloque)
+   # def minar_bloque(self, datos):
+       # nuevo_bloque = Bloque(len(self.blockchain.cadena), time.time(), datos, self.blockchain.cadena[-1].hash)
+        # self.proof_of_work(nuevo_bloque)
+        # self.blockchain.agregar_bloque(nuevo_bloque)
 
-    def proof_of_work(self, bloque):
-        while bloque.hash[:4] != "0000":
-            bloque.marca_tiempo = time.time()
-            bloque.hash = bloque.generar_hash()
+   # def proof_of_work(self, bloque):
+       # while bloque.hash[:4] != "0000":
+          #  bloque.marca_tiempo = time.time()
+           # bloque.hash = bloque.generar_hash()
 
 # Crear una instancia de la cadena de bloques y del minero
-mi_blockchain = Blockchain()
-minero = Minero(mi_blockchain)
+# mi_blockchain = Blockchain()
+# minero = Minero(mi_blockchain)
 
 # Minar un bloque
-minero.minar_bloque("Datos del bloque 1")
+# minero.minar_bloque("Datos del bloque 1")
 
-class blokchain:
+# class blokchain:
 
-     def minar_bloque(self, datos):
-        nuevo_bloque = Bloque(
-            index=len(self.cadena),
-            timestamp=time.time(),
-            datos=datos,
-            hash_anterior=self.cadena[-1].hash
-        )
-        nuevo_bloque.proof_of_work()
-        self.cadena.append(nuevo_bloque)
+     # def minar_bloque(self, datos):
+        # nuevo_bloque = Bloque(
+            # index=len(self.cadena),
+           #  timestamp=time.time(),
+           # datos=datos,
+          #  hash_anterior=self.cadena[-1].hash
+        #)
+        # nuevo_bloque.proof_of_work()
+        # self.cadena.append(nuevo_bloque)
 
 # Uso de la función para minar un bloque
-datos_a_guardar = "Datos importantes"
-mi_blockchain.minar_bloque(datos_a_guardar)
+# datos_a_guardar = "Datos importantes"
+# mi_blockchain.minar_bloque(datos_a_guardar)
 
-    def validar_cadena(self):
-        for i in range(1, len(self.cadena)):
-            bloque_actual = self.cadena[i]
-            bloque_anterior = self.cadena[i - 1]
+   # def validar_cadena(self):
+       # for i in range(1, len(self.cadena)):
+           # bloque_actual = self.cadena[i]
+          #  bloque_anterior = self.cadena[i - 1]
 
-            if bloque_actual.hash != bloque_actual.generar_hash():
-                return False
+            # if bloque_actual.hash != bloque_actual.generar_hash():
+               # return False
 
-            if bloque_actual.hash_anterior != bloque_anterior.hash:
-                return False
+          #  if bloque_actual.hash_anterior != bloque_anterior.hash:
+                # return False
 
-        return True
+      #  return True
 
 # Uso de la función para validar la cadena
-if mi_blockchain.validar_cadena():
-    print("La cadena de bloques es válida.")
-else:
-    print("La cadena de bloques no es válida. ¡Alerta de manipulación!")
+# if mi_blockchain.validar_cadena():
+   # print("La cadena de bloques es válida.")
+# else:
+   #  print("La cadena de bloques no es válida. ¡Alerta de manipulación!")
 
-     def minar_bloque(self, datos):
-        nuevo_bloque = Bloque(
-            index=len(self.bloques),
-            datos=datos,
-            timestamp=time(),
-            hash_anterior=self.bloques[-1].hash,
-        )
+    # def minar_bloque(self, datos):
+      #  nuevo_bloque = Bloque(
+           # index=len(self.bloques),
+          #  datos=datos,
+          #  timestamp=time(),
+          #  hash_anterior=self.bloques[-1].hash,
+       # )
 
-        nuevo_bloque.proof_of_work(self.dificultad)
-        self.bloques.append(nuevo_bloque)
+      #  nuevo_bloque.proof_of_work(self.dificultad)
+       # self.bloques.append(nuevo_bloque)
 
-      def __init__(self):
-        self.cadena = []
-        self.agregar_bloque(self.crear_bloque_genesis())
+    #  def __init__(self):
+      #  self.cadena = []
+      #  self.agregar_bloque(self.crear_bloque_genesis())
 
-    def crear_bloque_genesis(self):
-        return Bloque(0, time.time(), "Bloque Génesis", "0")
+ #   def crear_bloque_genesis(self):
+       # return Bloque(0, time.time(), "Bloque Génesis", "0")
 
-    def agregar_bloque(self, nuevo_bloque):
-        nuevo_bloque.hash_anterior = self.cadena[-1].hash
-        self.cadena.append(nuevo_bloque)
+  #  def agregar_bloque(self, nuevo_bloque):
+       # nuevo_bloque.hash_anterior = self.cadena[-1].hash
+      #  self.cadena.append(nuevo_bloque)
 
 # Crear una instancia de la cadena de bloques
-mi_blockchain = Blockchain()
+# mi_blockchain = Blockchain()
 
-app = Flask(__name__)
-class InterfazCompartirRecursos:
+  #  app = Flask(__name__)
+     #    Class InterfazCompartirRecursos:
     def __init__(self, master):
         self.master = master
         master.title("Compartir Recursos")
