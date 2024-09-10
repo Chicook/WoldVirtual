@@ -1,5 +1,4 @@
-# prb5.py
-from prb2 import log_action
+from avatarbs2 import log_action
 import bpy
 
 def cambiar_estructura_avatar():
