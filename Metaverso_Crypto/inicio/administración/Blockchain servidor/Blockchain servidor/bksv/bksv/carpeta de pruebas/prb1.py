@@ -2,7 +2,7 @@ from vpython import *
 from prb2 import create_scene
 from prb3 import create_structure
 from prb4 import create_sphere
-from prb5 import animate_sphere
+from prb5 import animate_sphere, create_block, validate_block
 
 # Crear la escena
 scene = create_scene()
@@ -15,3 +15,15 @@ sphere = create_sphere()
 
 # Animar la esfera
 animate_sphere(sphere)
+
+# Crear y validar bloques en la blockchain
+block1 = create_block('prb1', 'Genesis Block')
+block2 = create_block('prb2', block1['hash'])
+block3 = create_block('prb3', block2['hash'])
+block4 = create_block('prb4', block3['hash'])
+block5 = create_block('prb5', block4['hash'])
+
+blocks = [block1, block2, block3, block4, block5]
+
+for block in blocks:
+    validate_block(block)
