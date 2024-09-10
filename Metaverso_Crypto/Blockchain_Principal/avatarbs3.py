@@ -1,7 +1,6 @@
-# prb3.py
 import os
 import tarfile
-from prb2 import log_action
+from avatarbs2 import log_action
 
 storage_path = '/workspaces/WoldVirtual.github.io/Metaverso_Crypto/inicio/Blockchain_Principal/Almacenamiento'
 
