@@ -1,20 +1,10 @@
 # prb4.py
-import os
-import tarfile
-from prb3 import log_action
+from prb2 import log_action
 
-storage_path = '/workspaces/WoldVirtual.github.io/Metaverso_Crypto/inicio/Blockchain_Principal/Almacenamiento'
+def procesar_transaccion(transaccion):
+    log_action(f"Procesada transacción: {transaccion}")
 
-def comprimir_datos(datos, archivo):
-    output_filepath = os.path.join(storage_path, archivo)
-    with tarfile.open(output_filepath, 'w:gz') as tar:
-        for file in datos:
-            if os.path.isfile(file):
-                tar.add(file, arcname=os.path.basename(file))
-    log_action(f"Datos comprimidos en {archivo}")
-
-def descomprimir_datos(archivo):
-    input_filepath = os.path.join(storage_path, archivo)
-    with tarfile.open(input_filepath, 'r:gz') as tar:
-        tar.extractall(path=storage_path)
-    log_action(f"Datos descomprimidos de {archivo}")
+def validar_transaccion(transaccion):
+    es_valida = True  # Supongamos que la validación es exitosa
+    log_action(f"Transacción validada: {transaccion} - Válida: {es_valida}")
+    return es_valida
