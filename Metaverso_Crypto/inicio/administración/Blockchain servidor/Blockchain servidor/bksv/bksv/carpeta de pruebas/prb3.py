@@ -1,12 +1,10 @@
-class User:
-    def __init__(self, user_id, wallet):
-        self.user_id = user_id
-        self.wallet = wallet
+# prb3.py
+import time
+from prb2 import Block, Blockchain
 
-    def send_wcv(self, amount, recipient_wallet):
-        # Lógica para enviar WCV
-        print(f"{self.user_id} envió {amount} WCV a {recipient_wallet}")
+blockchain = Blockchain()
 
-    def receive_wcv(self, amount, sender_wallet):
-        # Lógica para recibir WCV
-        print(f"{self.user_id} recibió {amount} WCV de {sender_wallet}")
+def log_action(data):
+    new_block = Block(len(blockchain.chain), time.time(), data, blockchain.get_latest_block().hash if blockchain.chain else "0")
+    blockchain.add_block(new_block)
+    print(f"Acción registrada: {data}")
