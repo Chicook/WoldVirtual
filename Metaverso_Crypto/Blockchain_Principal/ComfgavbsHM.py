@@ -1,76 +1,40 @@
-//pip install vpython
-//Primero, es necesario instalar VPython.
- Puedes hacerlo mediante el siguiente
- comando en la terminal:///
+#from 3D2 import obtener_blockchain, agregar_bloque, obtener_bloque
+#from 3D3 import registrar_usuario, verificar_credenciales
+#from 3D4 import manejar_accion
+#from 3D5 import generar_caracteristicas_faciales, renderizar_avatar_3d
+#import pytorch3d
+#import torch
 
+#if __name__ == '__main__':
+    # Ejemplo de registro de usuario
+    #registrar_usuario("usuario1", "contrasena_segura")
 
-import bpy
+    # Ejemplo de verificación de credenciales y manejo de entorno virtual
+   # usuario_actual = "usuario1"
+   # contrasena_ingresada = "contrasena_segura"
 
-# Función para crear un esqueleto humano
-def crear_esqueleto():
-    bpy.ops.object.armature_add(enter_editmode=False, location=(0, 0, 0))
-    armature = bpy.context.object.data
-    
-    bpy.ops.object.mode_set(mode='EDIT')
-    bone_head = (0, 0, 0)
-    bone_tail = (0, 0, 1)
-    armature.edit_bones.new('Head').head = bone_head
-    armature.edit_bones.new('Neck').head = bone_head
-    armature.edit_bones.new('Shoulder.L').head = bone_head
-    armature.edit_bones.new('Arm.L').head = bone_head
-    armature.edit_bones.new('Hand.L').head = bone_head
-    armature.edit_bones.new('Shoulder.R').head = bone_head
-    armature.edit_bones.new('Arm.R').head = bone_head
-    armature.edit_bones.new('Hand.R').head = bone_head
-    armature.edit_bones.new('Spine').head = bone_head
-    armature.edit_bones.new('Pelvis').head = bone_head
-    armature.edit_bones.new('Thigh.L').head = bone_head
-    armature.edit_bones.new('Shin.L').head = bone_head
-    armature.edit_bones.new('Foot.L').head = bone_head
-    armature.edit_bones.new('Thigh.R').head = bone_head
-    armature.edit_bones.new('Shin.R').head = bone_head
-    armature.edit_bones.new('Foot.R').head = bone_head
-    
-    bpy.context.object.show_in_front = True
-    bpy.context.object.show_x_ray = True
-    
-    return armature
+    #if verificar_credenciales(usuario_actual, contrasena_ingresada):
+       # print("Inicio de sesión exitoso")
+       # accion_usuario = "explorar"
+       # manejar_accion(usuario_actual, accion_usuario)
+  #  else:
+       # print("Credenciales incorrectas")
 
-# Función para crear una figura humana básica
-def crear_figura_humana(armature):
-    bpy.context.view_layer.objects.active = bpy.data.objects["Armature"]
-    bpy.ops.object.mode_set(mode='POSE')
-    
-    for bone in armature.bones:
-        bone.rotation_mode = 'XYZ'
-        if bone.name.endswith('.L'):
-            bone.rotation_euler.x = 0.5
-    
-    bpy.ops.object.mode_set(mode='OBJECT')
-    
-    bpy.ops.mesh.primitive_uv_sphere_add(location=(0, 0, 1))
-    bpy.ops.object.modifier_add(type='SKIN')
-    bpy.context.object.modifiers["Skin"].use_smooth_shade = True
-    bpy.context.object.modifiers["Skin"].show_in_editmode = True
-    bpy.ops.object.modifier_apply(modifier="Skin")
-    
-    bpy.context.object.parent = armature
-    
-    bpy.ops.transform.resize(value=(1, 1, 2))
-    
-    bpy.ops.object.origin_set(type='ORIGIN_CENTER_OF_VOLUME')
-    
-    bpy.context.object.name = 'Figura Humana'
+    # Ejemplo de agregar un bloque a la blockchain
+   # nuevo_bloque = agregar_bloque("Datos del bloque")
+   # print(f"Nuevo bloque agregado: {nuevo_bloque}")
 
-# Creamos un avatar hombre
-hombre_armature = crear_esqueleto()
-crear_figura_humana(hombre_armature)
+    # Ejemplo de consultar un bloque específico
+    #bloque = obtener_bloque(1)
+   # if bloque:
+       # print(f"Bloque consultado: {bloque}")
+   # else:
+       # print("Índice de bloque inválido")
 
-# Creamos un avatar mujer
-mujer_armature = crear_esqueleto()
-crear_figura_humana(mujer_armature)
+    # Ejemplo de generar características faciales y renderizar un avatar 3D
+    #image_path = 'ruta/a/tu/imagen/facial.jpg'
+    #facial_features = generar_caracteristicas_faciales(image_path)
+    #mesh = pytorch3d.utils.create_sphere(radius=1.0, device='cuda')
+    #images = renderizar_avatar_3d(mesh, facial_features)
+   # pytorch3d.vis.plot_image(images[0, ..., :3].cpu().numpy())
 
-# Modificamos el tamaño de la figura de la mujer
-bpy.context.view_layer.objects.active = bpy.data.objects["Figura Humana.001"]
-bpy.ops.transform.resize(value=(0.9, 0.9, 0.9))
-bpy.context.object.name = 'Figura Humana Muj
