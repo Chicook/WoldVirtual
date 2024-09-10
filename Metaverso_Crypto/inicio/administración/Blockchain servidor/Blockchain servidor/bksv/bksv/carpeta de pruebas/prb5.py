@@ -1,29 +1,31 @@
-from flask import jsonify, request
-from prb2 import obtener_blockchain, agregar_bloque, obtener_bloque
+import torch
+from PIL import Image
+from torchvision import models, transforms
+from pytorch3d.renderer import (
+    MeshRenderer,
+    MeshRasterizer,
+    SoftPhongShader,
+    RasterizationSettings,
+    OpenGLPerspectiveCameras,
+)
 
-def configurar_rutas(app):
-    @app.route('/')
-    def index():
-        return "El servidor está funcionando correctamente."
+def generar_caracteristicas_faciales(image_path):
+    facial_model = models.resnet18(pretrained=True)
+    facial_model = torch.nn.Sequential(*(list(facial_model.children())[:-1])).cuda()
+    facial_model.eval()
 
-    @app.route('/blockchain', methods=['GET'])
-    def get_blockchain():
-        return jsonify({'blockchain': obtener_blockchain()})
+    input_image = Image.open(image_path).convert("RGB")
+    input_tensor = transforms.ToTensor()(input_image).unsqueeze(0).cuda()
+    facial_features = facial_model(input_tensor)
+    return facial_features
 
-    @app.route('/add_block', methods=['POST'])
-    def add_block():
-        data = request.get_json()
-        if 'data' in data:
-            new_block = agregar_bloque(data['data'])
-            return jsonify({'message': 'Bloque agregado correctamente', 'block': new_block})
-        else:
-            return jsonify({'error': 'Datos no proporcionados'})
+def renderizar_avatar_3d(mesh, facial_features):
+    cameras = OpenGLPerspectiveCameras(device='cuda')
+    raster_settings = RasterizationSettings(image_size=256, blur_radius=0.0, faces_per_pixel=1)
+    renderer = MeshRenderer(
+        rasterizer=MeshRasterizer(cameras=cameras, raster_settings=raster_settings),
+        shader=SoftPhongShader(device='cuda')
+    )
 
-    @app.route('/block/<int:block_index>', methods=['GET'])
-    def get_block(block_index):
-        block = obtener_bloque(block_index)
-        if block:
-            return jsonify({'block': block})
-        else:
-            return jsonify({'error': 'Índice de bloque inválido'})
-            
+    images = renderer(meshes_world=mesh, cameras=cameras)
+    return images
