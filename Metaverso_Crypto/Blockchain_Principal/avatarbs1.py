@@ -1,10 +1,12 @@
-# prb1.py
+# en un principio toca revisar primero 
+# antes de la implementación.
+
 from flask import Flask, request, jsonify
 from flask_socketio import SocketIO
-from prb2 import Blockchain
-from prb3 import log_action
-from prb4 import comprimir_datos, descomprimir_datos
-from prb5 import procesar_transaccion, cambiar_estructura_avatar
+from avatarbs2 import Blockchain
+from avatarbs3 import log_action
+from avatarbs4 import comprimir_datos, descomprimir_datos
+from avatarbs5 import procesar_transaccion, cambiar_estructura_avatar
 
 app = Flask(__name__)
 socketio = SocketIO(app)
