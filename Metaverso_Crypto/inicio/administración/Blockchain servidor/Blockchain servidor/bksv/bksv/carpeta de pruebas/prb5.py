@@ -1,38 +1,31 @@
-import json
-import hashlib
-from flask import Flask, request, jsonify
-from prb2 import registrar_actividad_css
+import torch
+from PIL import Image
+from torchvision import models, transforms
+from pytorch3d.renderer import (
+    MeshRenderer,
+    MeshRasterizer,
+    SoftPhongShader,
+    RasterizationSettings,
+    OpenGLPerspectiveCameras,
+)
 
-app = Flask(__name__)
+def generar_caracteristicas_faciales(image_path):
+    facial_model = models.resnet18(pretrained=True)
+    facial_model = torch.nn.Sequential(*(list(facial_model.children())[:-1])).cuda()
+    facial_model.eval()
 
-def crear_wallet():
-    wallet_id = "bkmv" + hashlib.sha256().hexdigest()[:8]
-    wallet = {'id': wallet_id, 'balance': 0}
-    with open(f'{wallet_id}.json', 'w') as f:
-        json.dump(wallet, f)
-    registrar_actividad_css(f"Wallet creada: {wallet_id}")
-    return wallet
+    input_image = Image.open(image_path).convert("RGB")
+    input_tensor = transforms.ToTensor()(input_image).unsqueeze(0).cuda()
+    facial_features = facial_model(input_tensor)
+    return facial_features
 
-def validar_registro(forks):
-    if forks == 4:
-        valor = 30000000.000
-    else:
-        valor = 0.001
-    registrar_actividad_css(f"Registro validado: forks={forks}, valor={valor}")
-    return valor
+def renderizar_avatar_3d(mesh, facial_features):
+    cameras = OpenGLPerspectiveCameras(device='cuda')
+    raster_settings = RasterizationSettings(image_size=256, blur_radius=0.0, faces_per_pixel=1)
+    renderer = MeshRenderer(
+        rasterizer=MeshRasterizer(cameras=cameras, raster_settings=raster_settings),
+        shader=SoftPhongShader(device='cuda')
+    )
 
-@app.route('/crear_wallet', methods=['POST'])
-def crear_wallet_route():
-    wallet = crear_wallet()
-    return jsonify({"message": "Wallet creada", "wallet": wallet}), 201
-
-@app.route('/validar_registro', methods=['POST'])
-def validar_registro_route():
-    data = request.get_json()
-    forks = data.get('forks')
-    valor = validar_registro(forks)
-    return jsonify({"message": "Registro validado", "valor": valor}), 200
-
-if __name__ == '__main__':
-    app.run(debug=True)
-    
+    images = renderer(meshes_world=mesh, cameras=cameras)
+    return images
