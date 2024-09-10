@@ -17,6 +17,7 @@ from servidor import app, socketio
 # from almacenamiento1
 # from app1
 # from avatarbs1
+# from svdc1
 
 # Cantidad total de tokens WCV
 TOTAL_WCV = 30000000.000
