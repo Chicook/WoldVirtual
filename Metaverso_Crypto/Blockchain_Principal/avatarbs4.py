@@ -1,5 +1,4 @@
-# prb4.py
-from prb2 import log_action
+from avatarbs2 import log_action
 
 def procesar_transaccion(transaccion):
     log_action(f"Procesada transacción: {transaccion}")
