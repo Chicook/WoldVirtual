@@ -1,34 +1,55 @@
-import prb2
-import prb3
-import prb4
-import prb5
+# prb1.py
+import time
+from flask import Flask, request, jsonify
+from flask_socketio import SocketIO
+from prb2 import Blockchain, Block
+from prb3 import log_action
+from prb4 import comprimir_datos, descomprimir_datos
+from prb5 import procesar_transaccion, validar_transaccion, gestionar_usuario, auditar_transacciones
 
-# Inicializar la blockchain
-blockchain = prb2.Blockchain()
+app = Flask(__name__)
+socketio = SocketIO(app)
 
-def log_action(data):
-    """
-    Registra una acción en la blockchain.
-    
-    Args:
-        data (str): Descripción de la acción a registrar.
-    """
-    new_block = prb2.Block(len(blockchain.chain), prb2.time.time(), data, blockchain.get_latest_block().hash)
-    blockchain.add_block(new_block)
-    print(f"Acción registrada: {data}")
+blockchain = Blockchain()
 
-# Ejemplo de uso
-user1 = prb3.User("user1", "wallet1")
-user2 = prb3.User("user2", "wallet2")
+@app.route('/registrar', methods=['POST'])
+def registrar():
+    data = request.json
+    nombre = data['nombre']
+    contraseña = data['contraseña']
+    gestionar_usuario("registrar", nombre)
+    return jsonify({"mensaje": "Usuario registrado exitosamente"}), 201
 
-# Simular una transacción
-user1.send_wcv(100, user2.wallet)
-log_action("User1 envió 100 WCV a User2")
+@app.route('/verificar', methods=['POST'])
+def verificar():
+    data = request.json
+    nombre = data['nombre']
+    gestionar_usuario("verificar", nombre)
+    return jsonify({"mensaje": "Usuario verificado"}), 200
 
-# Mostrar la cadena de bloques
-for block in blockchain.chain:
-    print(f"Índice: {block.index}, Hash: {block.hash}, Datos: {block.data}")
+@app.route('/eliminar', methods=['DELETE'])
+def eliminar():
+    data = request.json
+    nombre = data['nombre']
+    gestionar_usuario("eliminar", nombre)
+    return jsonify({"mensaje": "Usuario eliminado"}), 200
 
-# Ejemplo de compresión y descompresión
-prb4.compress_files(['file1.txt', 'file2.txt'], 'output.tar.gz')
-prb4.decompress_file('output.tar.gz')
+@app.route('/auditar', methods=['GET'])
+def auditar():
+    auditar_transacciones()
+    return jsonify({"mensaje": "Auditoría de transacciones realizada"}), 200
+
+def iniciar_servidor():
+    log_action("Servidor iniciado")
+    socketio.run(app, debug=True)
+
+def main():
+    datos_usuario = ["file1.txt", "file2.txt"]
+    archivo_comprimido = "datos_comprimidos.gz"
+    comprimir_datos(datos_usuario, archivo_comprimido)
+    descomprimir_datos(archivo_comprimido)
+    procesar_transaccion("transaccion_ejemplo")
+    iniciar_servidor()
+
+if __name__ == "__main__":
+    main()
