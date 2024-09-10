@@ -1,37 +1,34 @@
-import hashlib
-import datetime
-import time
-from prb2 import create_interface
-from prb3 import app
-from prb4 import connect_to_web3
-from prb5 import get_current_time, sleep
+import prb2
+import prb3
+import prb4
+import prb5
 
-class Blockchain:
-    def __init__(self):
-        self.chain = []
-        self.current_transactions = []
+# Inicializar la blockchain
+blockchain = prb2.Blockchain()
 
-    def new_block(self):
-        # Implementación para añadir un bloque a la cadena
-        pass
+def log_action(data):
+    """
+    Registra una acción en la blockchain.
+    
+    Args:
+        data (str): Descripción de la acción a registrar.
+    """
+    new_block = prb2.Block(len(blockchain.chain), prb2.time.time(), data, blockchain.get_latest_block().hash)
+    blockchain.add_block(new_block)
+    print(f"Acción registrada: {data}")
 
-    def new_transaction(self):
-        # Implementación para añadir una transacción
-        pass
+# Ejemplo de uso
+user1 = prb3.User("user1", "wallet1")
+user2 = prb3.User("user2", "wallet2")
 
-    def hash_function(self, data):
-        return hashlib.sha256(data.encode()).hexdigest()
+# Simular una transacción
+user1.send_wcv(100, user2.wallet)
+log_action("User1 envió 100 WCV a User2")
 
-if __name__ == '__main__':
-    # Crear instancia de Blockchain
-    blockchain = Blockchain()
+# Mostrar la cadena de bloques
+for block in blockchain.chain:
+    print(f"Índice: {block.index}, Hash: {block.hash}, Datos: {block.data}")
 
-    # Conectar a Web3
-    connect_to_web3()
-
-    # Crear interfaz gráfica
-    create_interface()
-
-    # Iniciar servidor web
-    app.run(debug=True)
-  
+# Ejemplo de compresión y descompresión
+prb4.compress_files(['file1.txt', 'file2.txt'], 'output.tar.gz')
+prb4.decompress_file('output.tar.gz')
