@@ -12,7 +12,7 @@ from compresion import comprimir_y_guardar_datos
 from servidor import app, socketio
 # from 3D1 
 # from BSMTV
-# from 
+# from Entorno3DBS1
 
 # Cantidad total de tokens WCV
 TOTAL_WCV = 30000000.000
