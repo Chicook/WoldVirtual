@@ -1,5 +1,4 @@
-# prb5.py
-from prb3 import log_action
+from app3 import log_action
 
 def procesar_transaccion(transaccion):
     log_action(f"Procesada transacción: {transaccion}")

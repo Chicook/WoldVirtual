@@ -1,4 +1,3 @@
-# prb2.py
 import hashlib
 
 class Block:
@@ -27,4 +26,3 @@ class Blockchain:
             new_block.previous_hash = "0"
         new_block.hash = new_block.calculate_hash()
         self.chain.append(new_block)
-        

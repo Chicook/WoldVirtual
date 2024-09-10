@@ -1,6 +1,5 @@
-# prb3.py
 import time
-from prb2 import Block, Blockchain
+from app2 import Block, Blockchain
 
 blockchain = Blockchain()
 

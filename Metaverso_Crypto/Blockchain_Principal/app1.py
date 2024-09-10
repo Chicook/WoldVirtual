@@ -1,11 +1,10 @@
-# prb1.py
 import time
 from flask import Flask, request, jsonify
 from flask_socketio import SocketIO
-from prb2 import Blockchain, Block
-from prb3 import log_action
-from prb4 import comprimir_datos, descomprimir_datos
-from prb5 import procesar_transaccion, validar_transaccion, gestionar_usuario, auditar_transacciones
+from app2 import Blockchain, Block
+from app3 import log_action
+from app4 import comprimir_datos, descomprimir_datos
+from app5 import procesar_transaccion, validar_transaccion, gestionar_usuario, auditar_transacciones
 
 app = Flask(__name__)
 socketio = SocketIO(app)
