@@ -1,51 +1,48 @@
-import tkinter as tk
-from flask import Flask, request, jsonify
+import hashlib
+import time
 
-def iniciar_interfaz():
-    class InterfazCompartirRecursos:
-        def __init__(self, master):
-            self.master = master
-            master.title("Compartir Recursos")
+class Block:
+    def __init__(self, index, previous_hash, transactions, timestamp):
+        self.index = index
+        self.previous_hash = previous_hash
+        self.transactions = transactions
+        self.timestamp = timestamp
+        self.hash = self.calculate_hash()
 
-            from prb2 import crear_etiqueta
-            from prb4 import crear_etiqueta_nombre, crear_entrada_nombre, crear_etiqueta_descripcion, crear_entrada_descripcion
+    def calculate_hash(self):
+        block_string = f"{self.index}{self.previous_hash}{self.transactions}{self.timestamp}"
+        return hashlib.sha256(block_string.encode()).hexdigest()
 
-            crear_etiqueta(master, "Ingrese la información del recurso:")
-            self.etiqueta_nombre = crear_etiqueta_nombre(master)
-            self.entry_nombre = crear_entrada_nombre(master)
-            self.etiqueta_descripcion = crear_etiqueta_descripcion(master)
-            self.entry_descripcion = crear_entrada_descripcion(master)
+class Blockchain:
+    def __init__(self):
+        self.chain = []
 
-            self.boton_compartir = tk.Button(master, text="Compartir Recurso", command=self.compartir_recurso)
-            self.boton_compartir.pack()
-	    
-        def compartir_recurso(self):
-            nombre = self.entry_nombre.get()
-            descripcion = self.entry_descripcion.get()
+    def get_latest_block(self):
+        return self.chain[-1] if self.chain else None
 
-            # Aquí puedes realizar las acciones necesarias para agregar el recurso a la cadena de bloques
-            print(f"Recurso compartido - Nombre: {nombre}, Descripción: {descripcion}")
+    def get_latest_block_hash(self):
+        return self.get_latest_block().hash if self.get_latest_block() else "0"
 
-    # Crear la ventana principal
-    root = tk.Tk()
-    interfaz = InterfazCompartirRecursos(root)
+    def add_block(self, new_block):
+        if self.chain:
+            new_block.previous_hash = self.get_latest_block().hash
+        else:
+            new_block.previous_hash = "0"
+        new_block.hash = new_block.calculate_hash()
+        self.chain.append(new_block)
 
-    # Mantener la ventana abierta
-    root.mainloop()
+    def is_chain_valid(self):
+        for i in range(1, len(self.chain)):
+            current_block = self.chain[i]
+            previous_block = self.chain[i - 1]
 
-    return "Interfaz del servidor"
+            if current_block.hash != current_block.calculate_hash():
+                return False
 
-# Integración con Flask
-app = Flask(__name__)
+            if current_block.previous_hash != previous_block.hash:
+                return False
 
-@app.route('/compartir_recurso', methods=['POST'])
-def compartir_recurso():
-    data = request.get_json()
-    nombre = data['nombre']
-    descripcion = data['descripcion']
-    # Aquí puedes realizar las acciones necesarias para agregar el recurso a la cadena de bloques
-    return jsonify({'message': f"Recurso compartido - Nombre: {nombre}, Descripción: {descripcion}"})
+        return True
 
-if __name__ == "__main__":
-    app.run(debug=True)
-    
+# Ejemplo de uso
+blockchain = Blockchain()
