@@ -1,7 +1,6 @@
-def manejar_accion(usuario, accion):
-    if accion == "explorar":
-        print(f"Bienvenido/a {usuario} al entorno de exploración.")
-    elif accion == "intercambiar":
-        print(f"Realizando intercambio para {usuario}.")
-    else:
-        print("Acción no reconocida.")
+from vpython import vec, sphere, color
+
+def create_sphere():
+    sphere_pos = vec(0, 0, 0)
+    return sphere(pos=sphere_pos, radius=1, color=color.red)
+    
