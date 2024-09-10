@@ -1,4 +1,4 @@
-import prb2
+import almacenamiento2
 
 def generate_new_block(data):
     """
@@ -7,8 +7,8 @@ def generate_new_block(data):
     Args:
         data (str): Datos a incluir en el nuevo bloque.
     """
-    blockchain = prb2.Blockchain()
-    new_block = prb2.Block(len(blockchain.chain), prb2.time.time(), data, blockchain.get_latest_block().hash)
+    blockchain = almacenamiento2.Blockchain()
+    new_block = almacenamiento2.Block(len(blockchain.chain), almacenamiento2.time.time(), data, blockchain.get_latest_block().hash)
     blockchain.add_block(new_block)
     print(f"Nuevo bloque generado: Índice: {new_block.index}, Hash: {new_block.hash}, Datos: {new_block.data}")
 
@@ -19,7 +19,7 @@ def validate_blockchain():
     Returns:
         bool: True si la blockchain es válida, False en caso contrario.
     """
-    blockchain = prb2.Blockchain()
+    blockchain = almacenamiento2.Blockchain()
     for i in range(1, len(blockchain.chain)):
         current_block = blockchain.chain[i]
         previous_block = blockchain.chain[i - 1]

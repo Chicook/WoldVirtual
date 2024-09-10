@@ -14,6 +14,7 @@ from servidor import app, socketio
 # from BSMTV
 # from Entorno3DBS1
 # from SBlokchain1
+# from almacenamiento1
 
 # Cantidad total de tokens WCV
 TOTAL_WCV = 30000000.000
