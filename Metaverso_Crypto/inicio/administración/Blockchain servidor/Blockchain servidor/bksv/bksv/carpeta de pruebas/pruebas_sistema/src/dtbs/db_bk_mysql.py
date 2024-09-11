@@ -1,1 +1,0 @@
-## desarrollar mas adelante MySQL en desarrollo una blockchain con su base de datos interna ##
