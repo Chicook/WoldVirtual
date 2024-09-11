@@ -1,9 +1,9 @@
 ## modulo principal ##
 
-from ci2 import LiquidityPool
-from ci3 import add_liquidity
-from ci4 import remove_liquidity
-from ci5 import buy_tokens, sell_tokens
+from Metaverso_Crypto.inicio.contracts_py.boveda_de_seguridad.ci2 import LiquidityPool
+from Metaverso_Crypto.inicio.contracts_py.boveda_de_seguridad.ci3 import add_liquidity
+from Metaverso_Crypto.inicio.contracts_py.boveda_de_seguridad.ci4 import remove_liquidity
+from Metaverso_Crypto.inicio.contracts_py.boveda_de_seguridad.ci5 import buy_tokens, sell_tokens
 
 # Ejemplo de uso
 if __name__ == "__main__":

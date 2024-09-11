@@ -1,4 +1,4 @@
-from ci2 import LiquidityPool
+from Metaverso_Crypto.inicio.contracts_py.boveda_de_seguridad.ci2 import LiquidityPool
 
 def remove_liquidity(self, user, liquidity):
     if liquidity <= 0:

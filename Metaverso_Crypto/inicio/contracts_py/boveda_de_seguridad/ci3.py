@@ -1,4 +1,4 @@
-from ci2 import LiquidityPool
+from Metaverso_Crypto.inicio.contracts_py.boveda_de_seguridad.ci2 import LiquidityPool
 
 def add_liquidity(self, user, amount1, amount2):
     if amount1 <= 0 or amount2 <= 0:

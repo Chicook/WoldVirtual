@@ -1,4 +1,4 @@
-from ci2 import LiquidityPool
+from Metaverso_Crypto.inicio.contracts_py.boveda_de_seguridad.ci2 import LiquidityPool
 
 def buy_tokens(self, user, amount):
     if amount <= 0:
