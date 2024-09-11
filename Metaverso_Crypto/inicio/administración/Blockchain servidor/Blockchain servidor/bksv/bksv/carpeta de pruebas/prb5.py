@@ -1,4 +1,29 @@
+from prb2 import calculate_hash
 
+def validate_blockchain(blockchain):
+    for i in range(1, len(blockchain)):
+        current_block = blockchain[i]
+        previous_block = blockchain[i - 1]
+
+        # Validar el hash del bloque actual
+        if current_block.hash != calculate_hash(current_block.index, current_block.previous_hash, current_block.timestamp, current_block.data):
+            return False
+
+        # Validar el hash del bloque anterior
+        if current_block.previous_hash != previous_block.hash:
+            return False
+
+    return True
+
+def validate_block(block):
+    return block.hash == calculate_hash(block.index, block.previous_hash, block.timestamp, block.data)
+
+def explain_prb5():
+    print("Sección prb5: Validación de la Blockchain")
+    print("Funciones:")
+    print("1. validate_blockchain: Función para validar toda la blockchain.")
+    print("2. validate_block: Función para validar un bloque específico.")
+    input("Presione Enter para volver al menú principal...")
 
 
 
