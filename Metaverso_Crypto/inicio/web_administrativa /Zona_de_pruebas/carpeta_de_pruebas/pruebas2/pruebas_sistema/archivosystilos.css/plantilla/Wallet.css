@@ -1,0 +1,61 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f8f8;
+}
+
+#app {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+  margin-bottom: 15px;
+}
+
+button {
+  padding: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.btn {
+  padding: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+#transaccion {
+  margin-top: 20px;
+}
+
+#transaccion label, #transaccion input {
+  margin-bottom: 10px;
+  display: block;
+}
+
+#historial {
+  margin-top: 20px;
+}
+
+#historial h2 {
+  margin-bottom: 10px;
+}
+
+#transaccionesLista {
+  list-style: none;
+  padding: 0;
+}
+
+#transaccionesLista li {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
+
+
