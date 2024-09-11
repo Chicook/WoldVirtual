@@ -1,7 +1,7 @@
-from prb2 import explain_prb2
-from prb3 import explain_prb3
-from prb4 import explain_prb4
-from prb5 import explain_prb5
+from Metaverso_Crypto.inicio.Zona_de_pruebas.carpeta_de_pruebas.pruebas2.pruebas3.prb12 import explain_prb2
+from Metaverso_Crypto.inicio.Zona_de_pruebas.carpeta_de_pruebas.pruebas2.pruebas3.prb13 import explain_prb3
+from Metaverso_Crypto.inicio.Zona_de_pruebas.carpeta_de_pruebas.pruebas2.pruebas3.prb14 import explain_prb4
+from Metaverso_Crypto.inicio.Zona_de_pruebas.carpeta_de_pruebas.pruebas2.pruebas3.prb15 import explain_prb5
 
 def main():
     while True:

@@ -1,4 +1,4 @@
-from prb2 import create_block
+from Metaverso_Crypto.inicio.Zona_de_pruebas.carpeta_de_pruebas.pruebas2.pruebas3.prb12 import create_block
 
 def add_data_to_blockchain(blockchain, data):
     previous_block = blockchain[-1]
