@@ -1,5 +1,5 @@
 import time
-from app2 import Block, Blockchain
+from Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.app2 import Block, Blockchain
 
 blockchain = Blockchain()
 

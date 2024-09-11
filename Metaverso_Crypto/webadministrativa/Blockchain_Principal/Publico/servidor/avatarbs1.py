@@ -3,10 +3,10 @@
 
 from flask import Flask, request, jsonify
 from flask_socketio import SocketIO
-from avatarbs2 import Blockchain
-from avatarbs3 import log_action
-from avatarbs4 import comprimir_datos, descomprimir_datos
-from avatarbs5 import procesar_transaccion, cambiar_estructura_avatar
+from Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.avatarbs2 import Blockchain
+from Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.avatarbs3 import log_action
+from Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.avatarbs4 import comprimir_datos, descomprimir_datos
+from Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.avatarbs5 import procesar_transaccion, cambiar_estructura_avatar
 
 app = Flask(__name__)
 socketio = SocketIO(app)

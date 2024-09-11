@@ -1,10 +1,10 @@
 import hashlib
 import datetime
 import time
-from SBlokchain2 import create_interface
-from SBlokchain3  import app
-from SBlokchain4 import connect_to_web3
-from SBlokchain5 import get_current_time, sleep
+from Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.SBlokchain2 import create_interface
+from Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.SBlokchain3  import app
+from Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.SBlokchain4 import connect_to_web3
+from Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.SBlokchain5 import get_current_time, sleep
 
 class Blockchain:
     def __init__(self):

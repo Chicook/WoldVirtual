@@ -5,10 +5,10 @@ import datetime
 import time
 import random
 from flask import Flask, jsonify, request, redirect, url_for
-from usuarios import registrar_usuario, generar_wallet, blockchain, log_action
-from recursos import RecursosUsuario
+from Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.usuarios import registrar_usuario, generar_wallet, blockchain, log_action
+from Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.recursos import RecursosUsuario
 # from database import conectar_base_datos  # Comentado para futuras implementaciones
-from compresion import comprimir_y_guardar_datos
+from Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.compresion import comprimir_y_guardar_datos
 from servidor import app, socketio
 # from 3D1 
 # from BSMTV

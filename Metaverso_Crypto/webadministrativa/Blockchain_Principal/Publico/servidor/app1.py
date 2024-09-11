@@ -1,10 +1,10 @@
 import time
 from flask import Flask, request, jsonify
 from flask_socketio import SocketIO
-from app2 import Blockchain, Block
-from app3 import log_action
-from app4 import comprimir_datos, descomprimir_datos
-from app5 import procesar_transaccion, validar_transaccion, gestionar_usuario, auditar_transacciones
+from Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.app2 import Blockchain, Block
+from Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.app3 import log_action
+from Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.app4 import comprimir_datos, descomprimir_datos
+from Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.app5 import procesar_transaccion, validar_transaccion, gestionar_usuario, auditar_transacciones
 
 app = Flask(__name__)
 socketio = SocketIO(app)

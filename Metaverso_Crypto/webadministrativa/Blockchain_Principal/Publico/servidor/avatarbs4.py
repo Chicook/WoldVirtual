@@ -1,4 +1,4 @@
-from avatarbs2 import log_action
+from Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.avatarbs2 import log_action
 
 def procesar_transaccion(transaccion):
     log_action(f"Procesada transacción: {transaccion}")

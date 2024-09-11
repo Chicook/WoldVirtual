@@ -1,4 +1,4 @@
-from avatarbs2 import log_action
+from Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.avatarbs2 import log_action
 import bpy
 
 def cambiar_estructura_avatar():

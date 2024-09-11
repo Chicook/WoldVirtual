@@ -1,7 +1,7 @@
-from svdc2 import gestionar_usuarios, calcular_hash, crear_etiqueta
-from svdc3 import gestionar_recursos, validar_bloque, crear_entrada
-from svdc4 import comunicacion_nodos, crear_etiqueta_nombre, crear_entrada_nombre, crear_etiqueta_descripcion, crear_entrada_descripcion
-from svdc5 import iniciar_interfaz, compartir_recurso
+from Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.svdc2 import gestionar_usuarios, calcular_hash, crear_etiqueta
+from Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.svdc3 import gestionar_recursos, validar_bloque, crear_entrada
+from Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.svdc4 import comunicacion_nodos, crear_etiqueta_nombre, crear_entrada_nombre, crear_etiqueta_descripcion, crear_entrada_descripcion
+from Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.svdc5 import iniciar_interfaz, compartir_recurso
 from web3 import Web3
 
 class Blockchain:

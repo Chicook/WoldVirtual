@@ -1,6 +1,6 @@
 import os
 import tarfile
-import almacenamiento2
+import Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.almacenamiento2 as almacenamiento2
 
 # Ruta donde se almacenan los archivos comprimidos y descomprimidos
 storage_path = '/workspaces/WoldVirtual.github.io/Metaverso_Crypto/inicio/Blockchain_Principal/Almacenamiento'

@@ -1,5 +1,5 @@
 from flask import jsonify, request
-from BSnts import obtener_blockchain, agregar_bloque, obtener_bloque
+from Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.BSnts import obtener_blockchain, agregar_bloque, obtener_bloque
 
 def configurar_rutas(app):
     @app.route('/')

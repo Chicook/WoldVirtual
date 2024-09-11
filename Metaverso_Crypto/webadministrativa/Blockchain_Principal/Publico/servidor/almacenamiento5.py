@@ -1,4 +1,4 @@
-import almacenamiento2
+import Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.almacenamiento2 as almacenamiento2
 
 def generate_new_block(data):
     """

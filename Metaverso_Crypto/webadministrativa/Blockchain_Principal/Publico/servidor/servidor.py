@@ -1,7 +1,7 @@
 from flask import Flask, render_template_string, request, jsonify
 from flask_socketio import SocketIO
-from blockchain import Blockchain
-from usuarios import registrar_usuario, generar_wallet, enviar_wcv, generar_codigo_temporal, verificar_codigo_temporal, log_action
+from Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.blockchain import Blockchain
+from Metaverso_Crypto.webadministrativa.Blockchain_Principal.Publico.servidor.usuarios import registrar_usuario, generar_wallet, enviar_wcv, generar_codigo_temporal, verificar_codigo_temporal, log_action
 
 app = Flask(__name__)
 socketio = SocketIO(app)
