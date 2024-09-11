@@ -1,29 +1,28 @@
-class TokenICO:
-    def __init__(self, total_tokens):
-        self.owner = "owner_address"
-        self.total_tokens = total_tokens
-        self.tokens_sold = 0
-        self.balances = {}
+import hashlib
+import time
 
-    def only_owner(func):
-        def wrapper(self, *args, **kwargs):
-            if "caller_address" != self.owner:
-                raise PermissionError("Only the owner can call this function")
-            return func(self, *args, **kwargs)
-        return wrapper
+class Block:
+    def __init__(self, index, previous_hash, timestamp, data, hash):
+        self.index = index
+        self.previous_hash = previous_hash
+        self.timestamp = timestamp
+        self.data = data
+        self.hash = hash
 
-    def purchase_tokens(self, caller_address, amount, value):
-        if self.tokens_sold + amount > self.total_tokens:
-            raise ValueError("Not enough tokens available")
-        if value != amount * 1:
-            raise ValueError("Incorrect Ether amount")
+def calculate_hash(index, previous_hash, timestamp, data):
+    value = str(index) + str(previous_hash) + str(timestamp) + str(data)
+    return hashlib.sha256(value.encode('utf-8')).hexdigest()
 
-        if caller_address not in self.balances:
-            self.balances[caller_address] = 0
-        self.balances[caller_address] += amount
-        self.tokens_sold += amount
-        print(f"TokenPurchased: {caller_address}, {amount}, {self.tokens_sold}")
+def create_block(index, previous_hash, data):
+    timestamp = int(time.time())
+    hash = calculate_hash(index, previous_hash, timestamp, data)
+    return Block(index, previous_hash, timestamp, data, hash)
 
-    @only_owner
-    def withdraw_funds(self):
-        print(f"Funds withdrawn by {self.owner}")
+def explain_prb2():
+    print("Sección prb2: Creación de Bloques")
+    print("Funciones:")
+    print("1. Block: Clase que representa un bloque en la blockchain.")
+    print("2. calculate_hash: Función para calcular el hash de un bloque.")
+    print("3. create_block: Función para crear un nuevo bloque.")
+    input("Presione Enter para volver al menú principal...")
+    
