@@ -8,3 +8,4 @@ def register_user(blockchain, user):
     }
     block['hash'] = hash_block(block)
     blockchain.add_block(block)
+

@@ -5,3 +5,4 @@ class Blockchain:
 
     def add_block(self, block):
         self.chain.append(block)
+
