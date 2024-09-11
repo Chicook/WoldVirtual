@@ -1,4 +1,4 @@
-from prb2 import calculate_hash
+from Metaverso_Crypto.inicio.Zona_de_pruebas.carpeta_de_pruebas.pruebas2.pruebas3.prb12 import calculate_hash
 
 def validate_blockchain(blockchain):
     for i in range(1, len(blockchain)):
