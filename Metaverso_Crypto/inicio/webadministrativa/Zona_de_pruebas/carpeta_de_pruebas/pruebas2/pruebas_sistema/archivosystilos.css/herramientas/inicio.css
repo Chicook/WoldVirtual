@@ -1,0 +1,59 @@
+/* Estilos generales */
+
+body {
+
+  font-family: Arial, sans-serif;
+
+  margin: 0;
+
+  padding: 0;
+
+}
+
+/* Estilos del encabezado */
+
+h1 {
+
+  text-align: center;
+
+  color: #333;
+
+}
+
+/* Estilos de los párrafos */
+
+p {
+
+  margin: 0 0 10px;
+
+  line-height: 1.5;
+
+}
+
+/* Estilos de los enlaces */
+
+a {
+
+  display: inline-block;
+
+  padding: 3px 5px;
+
+  background-color: #333;
+
+  color: #fff;
+
+  text-decoration: none;
+
+  margin-right: 1px;
+
+  border-radius: 2px;
+
+  transition: background-color 0.3s ease;
+
+}
+
+a:hover {
+
+  background-color: #555;
+
+}
