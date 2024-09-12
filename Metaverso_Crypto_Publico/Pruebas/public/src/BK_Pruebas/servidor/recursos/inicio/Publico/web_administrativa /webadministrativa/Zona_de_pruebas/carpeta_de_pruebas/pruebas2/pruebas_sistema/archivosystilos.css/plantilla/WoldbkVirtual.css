@@ -1,0 +1,90 @@
+/* styles.css */
+
+
+/* plataforma principal */
+
+
+/* Añade esto a tu archivo styles.css */
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#contenedor {
+    border: 15px solid #939e53;
+    width: 100%;
+    height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+#encabezado {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #dab94f;
+}
+
+nav {
+    display: flex;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav li {
+    margin-right: 15px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.3s ease-in-out;
+}
+
+nav a:hover {
+    color: #555;
+}
+
+#chat {
+    padding: 10px;
+    overflow-y: auto;
+    flex-grow: 1;
+    position: relative;
+}
+
+.mensaje {
+    background-color: #a0ada6;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 0;
+    opacity: 1;
+    transition: opacity 5s ease-in-out;
+}
+
+#pie {
+    padding: 10px;
+    background-color: #ddd;
+    display: flex;
+    justify-content: space-between;
+}
+
+input {
+    padding: 5px;
+    flex-grow: 1;
+}
+
+button {
+    margin-left: 10px;
+}
