@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+    <link rel="stylesheet" href="/inicio/blokchain/plantilla/WoldbkVirtual.css">
+</head>
+
+<body>
+
+    <div id="contenedor">
+        <div id="encabezado">
+            <h1>World Virtual</h1>
+
+            <nav>
+                <ul>
+                    <li><a href="/inicio/herramientas/descripción.html">Inicio</a></li>
+                    <li><a href="/inicio/herramientas/web.html">segunda seccion</a></li>
+                    <li><a href="/recursos/Ejemploswebs/Webejemplo.html">tercera seccion</a></li>
+
+
+
+                    <li>
+                        <a href="/inicio/blokchain/plantilla/Plataforma.html">
+                            <h1>principal</h1>
+                        </a>
+                    </li>
+
+                    <!-- Agrega más enlaces según las secciones y páginas de tu sitio -->
+                </ul>
+            </nav>
+
+
+            <p>Iniciar sesión con metamask </p>
+        </div>
+        <div id="chat"></div>
+        <div id="pie">
+            <form onsubmit="enviarMensaje(); return false;">
+                <input type="text" id="mensajeInput" placeholder="Escribe tu mensaje">
+                <button type="submit">Enviar</button>
+            </form>
+
+        </div>
+    </div>
+
+    <script>
+        function enviarMensaje() {
+            var mensajeInput = document.getElementById('mensajeInput');
+            var mensaje = mensajeInput.value.trim();
+
+            if (mensaje !== '') {
+                var chatDiv = document.getElementById('chat');
+                var nuevoMensaje = document.createElement('div');
+                nuevoMensaje.className = 'mensaje';
+                nuevoMensaje.textContent = mensaje;
+                chatDiv.appendChild(nuevoMensaje);
+                mensajeInput.value = '';
+
+                // Desvanecer después de 5 segundos
+                setTimeout(function() {
+                    nuevoMensaje.style.opacity = '0';
+                    setTimeout(function() {
+                        nuevoMensaje.style.display = 'none';
+                    }, 1000); // Retraso adicional para permitir que termine la transición
+                }, 5000);
+            }
+        }
+    </script>
+    <script src="script.js"></script>
+
+    <!--<form action="save_message.php" method="post" onsubmit="enviarMensaje(); return false;">
+            <input type="text" id="mensajeInput" name="message" placeholder="Escribe tu mensaje">
+        <button type="submit">Enviar</button>
+        </form> -->
+
+
+
+
+
+</body>
+
+</html>
