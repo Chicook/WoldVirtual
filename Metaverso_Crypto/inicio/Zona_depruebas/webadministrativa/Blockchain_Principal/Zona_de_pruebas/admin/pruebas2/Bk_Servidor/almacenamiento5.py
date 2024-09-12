@@ -1,4 +1,4 @@
-import almacenamiento2
+import Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_mdsl.BK_Almacenamiento2 as BK_Almacenamiento2
 
 def generate_new_block(data):
     """
@@ -7,8 +7,8 @@ def generate_new_block(data):
     Args:
         data (str): Datos a incluir en el nuevo bloque.
     """
-    blockchain = almacenamiento2.Blockchain()
-    new_block = almacenamiento2.Block(len(blockchain.chain), almacenamiento2.time.time(), data, blockchain.get_latest_block().hash)
+    blockchain = BK_Almacenamiento2.Blockchain()
+    new_block = BK_Almacenamiento2.Block(len(blockchain.chain), BK_Almacenamiento2.time.time(), data, blockchain.get_latest_block().hash)
     blockchain.add_block(new_block)
     print(f"Nuevo bloque generado: Índice: {new_block.index}, Hash: {new_block.hash}, Datos: {new_block.data}")
 
@@ -19,7 +19,7 @@ def validate_blockchain():
     Returns:
         bool: True si la blockchain es válida, False en caso contrario.
     """
-    blockchain = almacenamiento2.Blockchain()
+    blockchain = BK_Almacenamiento2.Blockchain()
     for i in range(1, len(blockchain.chain)):
         current_block = blockchain.chain[i]
         previous_block = blockchain.chain[i - 1]

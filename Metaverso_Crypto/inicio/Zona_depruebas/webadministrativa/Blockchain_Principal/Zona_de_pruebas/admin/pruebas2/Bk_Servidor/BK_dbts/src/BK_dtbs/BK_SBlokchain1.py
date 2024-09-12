@@ -1,7 +1,7 @@
 import hashlib
 import datetime
 import time
-from SBlokchain2 import create_interface
+from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_mdsl.BK_SBlokchain2 import create_interface
 from SBlokchain3  import app
 from SBlokchain4 import connect_to_web3
 from SBlokchain5 import get_current_time, sleep

@@ -1,6 +1,6 @@
 import os
 import tarfile
-import almacenamiento2
+import Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_mdsl.BK_Almacenamiento2 as BK_Almacenamiento2
 
 # Ruta donde se almacenan los archivos comprimidos y descomprimidos
 storage_path = '/workspaces/WoldVirtual.github.io/Metaverso_Crypto/inicio/Blockchain_Principal/Almacenamiento'
@@ -26,7 +26,7 @@ def compress_files(files, output_filename):
                 tar.add(file, arcname=os.path.basename(file))
     
     print(f'Archivos comprimidos en {output_filename}, guardado en {output_filepath}')
-    almacenamiento2.log_action(f"Comprimidos archivos en {output_filename}")
+    BK_Almacenamiento2.log_action(f"Comprimidos archivos en {output_filename}")
 
 def decompress_file(input_filename):
     """
@@ -46,5 +46,5 @@ def decompress_file(input_filename):
         tar.extractall(path=storage_path)
     
     print(f'Archivos descomprimidos en {storage_path}')
-    almacenamiento2.log_action(f"Descomprimido archivo {input_filename}")
+    BK_Almacenamiento2.log_action(f"Descomprimido archivo {input_filename}")
     

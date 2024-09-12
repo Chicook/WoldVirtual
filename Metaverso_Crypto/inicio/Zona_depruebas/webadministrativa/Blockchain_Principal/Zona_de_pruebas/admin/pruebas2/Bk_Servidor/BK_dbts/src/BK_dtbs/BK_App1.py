@@ -1,7 +1,7 @@
 import time
 from flask import Flask, request, jsonify
 from flask_socketio import SocketIO
-from app2 import Blockchain, Block
+from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_mdsl.BK_app2 import Blockchain, Block
 from app3 import log_action
 from app4 import comprimir_datos, descomprimir_datos
 from app5 import procesar_transaccion, validar_transaccion, gestionar_usuario, auditar_transacciones
