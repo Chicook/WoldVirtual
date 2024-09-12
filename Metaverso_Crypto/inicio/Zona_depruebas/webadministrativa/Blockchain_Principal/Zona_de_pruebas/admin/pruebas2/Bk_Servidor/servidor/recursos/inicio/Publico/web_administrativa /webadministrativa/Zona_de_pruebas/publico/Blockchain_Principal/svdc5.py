@@ -7,7 +7,7 @@ def iniciar_interfaz():
             self.master = master
             master.title("Compartir Recursos")
 
-            from prb2 import crear_etiqueta
+            from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_Scv.prb2 import crear_etiqueta
             from prb4 import crear_etiqueta_nombre, crear_entrada_nombre, crear_etiqueta_descripcion, crear_entrada_descripcion
 
             crear_etiqueta(master, "Ingrese la información del recurso:")

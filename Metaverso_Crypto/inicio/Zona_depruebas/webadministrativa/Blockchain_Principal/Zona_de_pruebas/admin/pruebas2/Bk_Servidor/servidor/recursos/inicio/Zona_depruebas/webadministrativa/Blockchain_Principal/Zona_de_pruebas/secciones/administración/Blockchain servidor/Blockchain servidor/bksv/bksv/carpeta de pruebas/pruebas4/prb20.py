@@ -1,4 +1,4 @@
-from prb2 import calculate_hash
+from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_Scv.prb2 import calculate_hash
 
 def validate_blockchain(blockchain):
     for i in range(1, len(blockchain)):

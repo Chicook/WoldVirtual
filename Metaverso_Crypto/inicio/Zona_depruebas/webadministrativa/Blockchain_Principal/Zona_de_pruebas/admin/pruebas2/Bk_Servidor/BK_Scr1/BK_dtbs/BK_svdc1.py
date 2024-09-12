@@ -1,5 +1,5 @@
 from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_mdsl.BK_svdc2 import gestionar_usuarios, calcular_hash, crear_etiqueta
-from svdc3 import gestionar_recursos, validar_bloque, crear_entrada
+from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_Scv.BK_Svdc import gestionar_recursos, validar_bloque, crear_entrada
 from svdc4 import comunicacion_nodos, crear_etiqueta_nombre, crear_entrada_nombre, crear_etiqueta_descripcion, crear_entrada_descripcion
 from svdc5 import iniciar_interfaz, compartir_recurso
 from web3 import Web3

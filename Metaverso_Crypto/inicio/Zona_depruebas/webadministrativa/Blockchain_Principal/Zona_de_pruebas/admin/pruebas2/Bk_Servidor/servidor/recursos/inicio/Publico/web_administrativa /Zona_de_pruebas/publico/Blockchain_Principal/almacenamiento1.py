@@ -1,4 +1,4 @@
-import prb2
+import Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_Scv.prb2 as prb2
 import prb3
 import prb4
 import prb5

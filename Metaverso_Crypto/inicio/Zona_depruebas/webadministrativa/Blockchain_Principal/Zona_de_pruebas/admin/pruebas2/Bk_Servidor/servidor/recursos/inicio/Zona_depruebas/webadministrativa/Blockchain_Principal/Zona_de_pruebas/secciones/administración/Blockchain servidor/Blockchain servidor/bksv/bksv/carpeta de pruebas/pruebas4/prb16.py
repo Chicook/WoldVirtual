@@ -1,4 +1,4 @@
-from prb2 import explain_prb2
+from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_Scv.prb2 import explain_prb2
 from prb3 import explain_prb3
 from prb4 import explain_prb4
 from prb5 import explain_prb5

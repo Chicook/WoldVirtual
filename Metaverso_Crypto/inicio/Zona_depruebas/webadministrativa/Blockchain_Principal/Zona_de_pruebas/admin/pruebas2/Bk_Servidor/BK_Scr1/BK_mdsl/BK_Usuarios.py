@@ -1,7 +1,7 @@
 import hashlib
 import time
 import random
-from blockchain import Blockchain
+from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_Scv.BK_Blockchain import Blockchain
 
 # Inicializar la blockchain
 blockchain = Blockchain()

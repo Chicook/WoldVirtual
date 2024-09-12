@@ -1,7 +1,7 @@
 # prb3.py
 from OpenGL.GL import *
 from OpenGL.GLU import *
-from prb2 import create_blockchain_connection, create_block
+from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_Scv.prb2 import create_blockchain_connection, create_block
 
 def init_opengl(display):
     gluPerspective(45, (display[0] / display[1]), 0.1, 50.0)

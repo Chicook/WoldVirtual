@@ -9,7 +9,7 @@ from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Princip
 from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_rts.BK_Recursos import RecursosUsuario
 # from database import conectar_base_datos  # Comentado para futuras implementaciones
 from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_rts.BK_Compresion import comprimir_y_guardar_datos
-from servidor import app, socketio
+from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_Stst.servidor import app, socketio
 # from 3D1 
 # from BSMTV
 # from Entorno3DBS1

@@ -1,5 +1,5 @@
 # prb1.py
-from prb2 import Blockchain
+from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_Scv.prb2 import Blockchain
 from prb3 import User
 from prb4 import hash_block
 from prb5 import register_user

@@ -1,4 +1,4 @@
-from prb2 import create_block
+from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_Scv.prb2 import create_block
 
 def add_data_to_blockchain(blockchain, data):
     previous_block = blockchain[-1]

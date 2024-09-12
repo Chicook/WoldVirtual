@@ -1,6 +1,6 @@
 from flask import Flask, render_template_string, request, jsonify
 from flask_socketio import SocketIO
-from blockchain import Blockchain
+from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_Scv.BK_Blockchain import Blockchain
 from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_mdsl.BK_Usuarios import registrar_usuario, generar_wallet, enviar_wcv, generar_codigo_temporal, verificar_codigo_temporal, log_action
 
 app = Flask(__name__)
