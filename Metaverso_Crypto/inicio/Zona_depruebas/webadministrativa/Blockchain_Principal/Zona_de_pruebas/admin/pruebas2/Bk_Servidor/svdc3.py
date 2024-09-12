@@ -1,4 +1,4 @@
-from svdc2 import calcular_hash
+from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_mdsl.BK_svdc2 import calcular_hash
 import tkinter as tk
 
 def gestionar_recursos():

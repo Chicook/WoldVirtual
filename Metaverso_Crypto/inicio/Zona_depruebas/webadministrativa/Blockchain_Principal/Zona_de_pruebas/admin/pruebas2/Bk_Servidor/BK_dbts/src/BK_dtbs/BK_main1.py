@@ -5,10 +5,10 @@ import datetime
 import time
 import random
 from flask import Flask, jsonify, request, redirect, url_for
-from usuarios import registrar_usuario, generar_wallet, blockchain, log_action
+from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_mdsl.BK_Usuarios import registrar_usuario, generar_wallet, blockchain, log_action
 from recursos import RecursosUsuario
 # from database import conectar_base_datos  # Comentado para futuras implementaciones
-from compresion import comprimir_y_guardar_datos
+from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_rts.BK_Compresion import comprimir_y_guardar_datos
 from servidor import app, socketio
 # from 3D1 
 # from BSMTV
