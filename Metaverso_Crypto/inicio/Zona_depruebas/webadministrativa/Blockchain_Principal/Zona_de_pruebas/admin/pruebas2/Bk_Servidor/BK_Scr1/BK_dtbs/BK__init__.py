@@ -21,6 +21,7 @@ from ..config import BLOCK_REWARD, DIFFICULTY
 from ..mining import Miner
 
 __all__ = [
+    
     "Block",
     "Blockchain",
     "Transaction",
