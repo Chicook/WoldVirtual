@@ -1,4 +1,4 @@
-from app3 import log_action
+from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_rts.BK_app3 import log_action
 
 def procesar_transaccion(transaccion):
     log_action(f"Procesada transacción: {transaccion}")
