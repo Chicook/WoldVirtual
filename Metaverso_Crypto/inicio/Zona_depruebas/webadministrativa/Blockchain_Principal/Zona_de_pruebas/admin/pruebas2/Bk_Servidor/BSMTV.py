@@ -1,8 +1,8 @@
 from flask import Flask
 from BSnts import obtener_blockchain, agregar_bloque, obtener_bloque
-from Bksvbsd import registrar_usuario, verificar_credenciales
-from Bksvmain import manejar_accion
-from Bksvutills import configurar_rutas
+from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_Scr1.BK_otras_secciones.BK_Bksvbsd import registrar_usuario, verificar_credenciales
+from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_Scr1.BK_otras_secciones.BK_Bksvmain import manejar_accion
+from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_Scr1.BK_otras_secciones.BK_Bksvutills import configurar_rutas
 
 app = Flask(__name__)
 configurar_rutas(app)
