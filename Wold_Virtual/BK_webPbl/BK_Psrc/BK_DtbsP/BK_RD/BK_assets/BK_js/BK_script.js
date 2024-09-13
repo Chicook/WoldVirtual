@@ -1,2 +1,2 @@
-// assets/js/script.js
+// BK_assets/js/script.js
 console.log('JavaScript está funcionando correctamente.');

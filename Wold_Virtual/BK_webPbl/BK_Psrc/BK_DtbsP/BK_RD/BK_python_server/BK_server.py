@@ -1,19 +1,7 @@
-# python_server/server.py
-from flask import Flask, send_from_directory
-# python_server/server.py
+# BK_pyth/server.py
 from flask import Flask, send_from_directory
 
-app = Flask(__name__, static_folder='../assets')
-
-@app.route('/')
-def serve_index():
-    return send_from_directory(app.static_folder + '/html', 'index.html')
-
-    if __name__ == '__main__':
-        app.run(debug=True)
-        
-
-app = Flask(__name__, static_folder='../assets')
+app = Flask(__name__, static_folder='../BK_assets')
 
 @app.route('/')
 def serve_index():
@@ -25,3 +13,4 @@ def serve_index():
 
         if __name__ == '__main__':
             app.run(debug=True)
+            
