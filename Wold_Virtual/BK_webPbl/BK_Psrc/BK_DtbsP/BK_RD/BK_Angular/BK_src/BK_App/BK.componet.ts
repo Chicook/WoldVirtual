@@ -1,4 +1,4 @@
-// angular/src/app/app.component.ts
+// BK_Angular/src/app/app.component.ts
 import { Component, AfterViewInit } from '@angular/core';
 
 @Component({
@@ -11,9 +11,10 @@ import { Component, AfterViewInit } from '@angular/core';
 
           ngAfterViewInit() {
               // Cargar el componente React después de que la vista de Angular esté inicializada
-                  import('../../../../react/src/index.jsx').then(module => {
+                  import('../../../../BK_React/src/index.jsx').then(module => {
                         module.renderReactComponent();
                             });
                               }
                               }
+                              
                               
