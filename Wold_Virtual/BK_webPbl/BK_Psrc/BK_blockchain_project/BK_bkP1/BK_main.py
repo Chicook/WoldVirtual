@@ -21,19 +21,19 @@ def get_blocks():
         @app.route('/mine_block', methods=['POST'])
         def mine_block():
             data = request.json['data']
-                new_block = Block(len(blockchain.chain), blockchain.get_latest_block().hash, time.time(), data, "")
-                    blockchain.add_block(new_block)
-                        db.add_block(new_block)
-                            return jsonify(new_block.__dict__), 201
+            new_block = Block(len(blockchain.chain), blockchain.get_latest_block().hash, time.time(), data, "")
+            blockchain.add_block(new_block)
+            db.add_block(new_block)
+            return jsonify(new_block.__dict__), 201
 
-                            @app.route('/validate_chain', methods=['GET'])
-                            def validate_chain():
-                                is_valid = BlockchainValidator.is_chain_valid(blockchain)
-                                    return jsonify({"is_valid": is_valid})
+            @app.route('/validate_chain', methods=['GET'])
+            def validate_chain():
+            is_valid = BlockchainValidator.is_chain_valid(blockchain)
+            return jsonify({"is_valid": is_valid})
 
-                                    if __name__ == '__main__':
-                                        # Añadir el bloque génesis a la base de datos interna
-                                            db.add_block(blockchain.chain[0])
-                                                # Ejecutar la API
-                                                    app.run(debug=True)
+        if __name__ == '__main__':
+        # Añadir el bloque génesis a la base de datos interna
+        db.add_block(blockchain.chain[0])
+        # Ejecutar la API
+        app.run(debug=True)
                                             
