@@ -4,7 +4,7 @@ from flask_socketio import SocketIO
 from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_mdsl.BK_app2 import Blockchain, Block
 from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_rts.BK_app3 import log_action
 from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_Scv.BK_app4 import comprimir_datos, descomprimir_datos
-from app5 import procesar_transaccion, validar_transaccion, gestionar_usuario, auditar_transacciones
+from Wold_Virtual.BK_Adm_prb.BK_Inicio.BK_Blockchain_Principal.Bk_Servidor.BK_RCS.BK_Admin_web.BK_Scr1.BK_Stst.BK_App5 import procesar_transaccion, validar_transaccion, gestionar_usuario, auditar_transacciones
 
 app = Flask(__name__)
 socketio = SocketIO(app)

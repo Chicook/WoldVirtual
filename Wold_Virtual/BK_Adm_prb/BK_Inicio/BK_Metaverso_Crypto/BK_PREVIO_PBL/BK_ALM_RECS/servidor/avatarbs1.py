@@ -6,7 +6,7 @@ from flask_socketio import SocketIO
 from avatarbs2 import Blockchain
 from avatarbs3 import log_action
 from avatarbs4 import comprimir_datos, descomprimir_datos
-from avatarbs5 import procesar_transaccion, cambiar_estructura_avatar
+from Wold_Virtual.BK_Adm_prb.BK_Inicio.BK_Blockchain_Principal.Bk_Servidor.BK_RCS.BK_Admin_web.BK_Scr1.BK_Stst.BK_Service.BK_Avtr5 import procesar_transaccion, cambiar_estructura_avatar
 
 app = Flask(__name__)
 socketio = SocketIO(app)

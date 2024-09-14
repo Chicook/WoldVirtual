@@ -3,8 +3,8 @@ import datetime
 import time
 from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_dbts.src.BK_mdsl.BK_SBlokchain2 import create_interface
 from SBlokchain3  import app
-from SBlokchain4 import connect_to_web3
-from SBlokchain5 import get_current_time, sleep
+from Wold_Virtual.BK_Adm_prb.BK_Inicio.BK_Blockchain_Principal.Bk_Servidor.BK_RCS.BK_Admin_web.BK_Scr1.BK_Utils.BK_log.SBlokchain4 import connect_to_web3
+from Wold_Virtual.BK_Adm_prb.BK_Inicio.BK_Blockchain_Principal.Bk_Servidor.BK_RCS.BK_Admin_web.BK_Scr1.BK_Utils.BK_log.SBlokchain5 import get_current_time, sleep
 
 class Blockchain:
     def __init__(self):

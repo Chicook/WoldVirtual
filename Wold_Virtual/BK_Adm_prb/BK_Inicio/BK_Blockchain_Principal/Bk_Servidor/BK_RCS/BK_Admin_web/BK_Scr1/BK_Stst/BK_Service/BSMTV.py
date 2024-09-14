@@ -1,5 +1,5 @@
 from flask import Flask
-from BSnts import obtener_blockchain, agregar_bloque, obtener_bloque
+from Wold_Virtual.BK_Adm_prb.BK_Inicio.BK_Blockchain_Principal.Bk_Servidor.BK_RCS.BK_Admin_web.BK_Scr1.BK_Stst.BK_Service.BSnts import obtener_blockchain, agregar_bloque, obtener_bloque
 from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_Scr1.BK_otras_secciones.BK_Bksvbsd import registrar_usuario, verificar_credenciales
 from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_Scr1.BK_otras_secciones.BK_Bksvmain import manejar_accion
 from Metaverso_Crypto.inicio.Zona_depruebas.webadministrativa.Blockchain_Principal.Zona_de_pruebas.admin.pruebas2.Bk_Servidor.BK_Scr1.BK_otras_secciones.BK_Bksvutills import configurar_rutas
