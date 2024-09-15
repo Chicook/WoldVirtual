@@ -1,3 +1,4 @@
+"""
 # import tkinter as tk
 # import hashlib
 # from flask import Flask, render_template
@@ -100,7 +101,7 @@
            # index=len(self.bloques),
           #  datos=datos,
           #  timestamp=time(),
-          #  hash_anterior=self.bloques[-1].hash,
+          # hash_anterior=self.bloques[-1].hash,
        # )
 
       #  nuevo_bloque.proof_of_work(self.dificultad)
@@ -262,7 +263,7 @@ pragma solidity >= 0.8.23;
    
   # }
 #}
-
+"""
 contract sueldo {
     address public owner;
     mapping(address => uint256) public salaries;
@@ -649,7 +650,7 @@ contract_abi = "
 ]
 
 "  # Reemplaza con el ABI de tu contrato
-
+"""
 contract = web3.eth.contract(abi=contract_abi, bytecode=contract_bytecode)
 
 # Configuración de la blockchain simple
@@ -676,7 +677,7 @@ class Bloque:
 class CadenaBloques:
 
 def agregar_bloque(self, proof, hash_anterior=None, stake=None, espacio=None):
-        """
+        
         Agregar un nuevo bloque a la cadena.
 
         :param proof: Prueba asociada al bloque
@@ -684,7 +685,7 @@ def agregar_bloque(self, proof, hash_anterior=None, stake=None, espacio=None):
         :param stake: Participación del participante (opcional)
         :param espacio: Espacio del participante (opcional)
         :return: Nuevo bloque
-        """
+        
         bloque = {
             'index': len(self.bloques) + 1,
             'timestamp': time(),
@@ -710,45 +711,45 @@ def agregar_bloque(self, proof, hash_anterior=None, stake=None, espacio=None):
         return bloque
 	
 def prueba_de_espacio(self, espacio):
-    """
+    
         Validar la prueba de espacio: Comprobar si el participante tiene el espacio requerido.
 
         :param espacio: Espacio requerido para la prueba
         :return: True si tiene suficiente espacio, False si no lo tiene
-        """
+        
         # Aquí puedes implementar la lógica para validar el espacio del participante
         # Puedes utilizar la capacidad de almacenamiento del participante u otros factores.
         # Devuelve True si tiene suficiente espacio y False si no lo tiene.
         pass	
 
 def prueba_de_participacion(self, participante):
-        """
+        
         Determinar la cantidad de participación que un participante tiene en la cadena.
 
         :param participante: Dirección del participante
         :return: Cantidad de participación del participante
-        """
+
         # Aquí puedes implementar la lógica para determinar la participación del participante
         # Puede involucrar consultar su saldo, historial de participación, etc.
         # Devuelve la cantidad de participación.
         pass
 
     def prueba_de_participacion_y_trabajo(self, prev_proof, hash_anterior, participante):
-        """
+        
         Algoritmo de prueba de trabajo y participación combinado.
 
         :param prev_proof: Prueba previa
         :param hash_anterior: Hash del bloque anterior
         :param participante: Dirección del participante
         :return: Prueba válida
-        """
+        
         proof = 0
         while not self.validar_prueba(prev_proof, proof, hash_anterior, participante):
             proof += 1
         return proof
 
     def validar_prueba(self, prev_proof, proof, hash_anterior, participante):
-        """
+
         Validar la prueba de trabajo y participación: Comprobar si el hash cumple con los requisitos.
 
         :param prev_proof: Prueba previa
@@ -756,20 +757,20 @@ def prueba_de_participacion(self, participante):
         :param hash_anterior: Hash del bloque anterior
         :param participante: Dirección del participante
         :return: True si es válido, False si no lo es
-        """
+        
         # Aquí debes implementar la lógica de validación que incluye la participación
         # Puedes utilizar la cantidad de participación y otros factores en la validación.
         # Devuelve True si la prueba es válida y False si no lo es.
         pass
 
 def nuevo_bloque(self, prueba, hash_anterior=None):
-        """
+        
         Crea un nuevo bloque en la cadena de bloques.
 
         :param prueba: Prueba de trabajo para este bloque
         :param hash_anterior: Hash del bloque anterior (opcional)
         :return: Nuevo bloque
-        """
+        
         bloque = {
             'indice': len(self.cadena) + 1,
             'marca_tiempo': time(),
@@ -786,13 +787,13 @@ def nuevo_bloque(self, prueba, hash_anterior=None):
 
 @staticmethod
     def prueba_de_trabajo(ultimo_proof):
-        """
+
         Encuentra un número p' tal que hash(pp') contiene 4 ceros al principio, donde p es la prueba anterior
         y p' es la nueva prueba.
 
         :param ultimo_proof: Prueba anterior
         :return: Nueva prueba
-        """
+
         prueba = 0
         while not CadenaBloques.validar_prueba(ultimo_proof, prueba):
             prueba += 1
@@ -800,25 +801,25 @@ def nuevo_bloque(self, prueba, hash_anterior=None):
 
     @staticmethod
     def validar_prueba(ultimo_proof, prueba):
-        """
+
         Verifica si el hash(ultimo_proof, prueba) contiene 4 ceros al principio.
 
         :param ultimo_proof: Prueba anterior
         :param prueba: Prueba actual
         :return: True si es válido, False si no
-        """
+        
         conjetura = f'{ultimo_proof}{prueba}'.encode()
         hash_conjetura = hashlib.sha256(conjetura).hexdigest()
         return hash_conjetura[:4] == "0000"
 	    
 def nuevo_bloque(self, proof, hash_anterior=None):
-        """
+
         Crear un nuevo bloque en la cadena.
 
         :param proof: Prueba de trabajo para el nuevo bloque
         :param hash_anterior: Hash del bloque anterior (opcional)
         :return: Nuevo bloque
-        """
+        
         bloque = {
             'index': len(self.bloques) + 1,
             'timestamp': time(),
@@ -835,39 +836,39 @@ def nuevo_bloque(self, proof, hash_anterior=None):
 
 @staticmethod
     def validar_prueba(prev_proof, proof, hash_anterior):
-        """
+        
         Validar la prueba de trabajo: Comprobar si el hash cumple con los requisitos.
 
         :param prev_proof: Prueba previa
         :param proof: Prueba actual
         :param hash_anterior: Hash del bloque anterior
         :return: True si es válido, False si no lo es
-        """
+
         guess = f'{prev_proof}{proof}{hash_anterior}'.encode()
         guess_hash = hashlib.sha256(guess).hexdigest()
         return guess_hash[:4] == "0000"  # Personaliza según los requisitos de tu cadena
 
     def prueba_de_trabajo(self, prev_proof, hash_anterior):
-        """
+        
         Algoritmo de prueba de trabajo: Encontrar un número (proof) tal que cumpla con las condiciones.
 
         :param prev_proof: Prueba previa
         :param hash_anterior: Hash del bloque anterior
         :return: Prueba válida
-        """
+        
         proof = 0
         while not self.validar_prueba(prev_proof, proof, hash_anterior):
             proof += 1
         return proof
 	    
 def agregar_bloque(self, proof, hash_anterior=None):
-        """
+
         Agregar un nuevo bloque a la cadena
 
         :param proof: Prueba asociada al bloque
         :param hash_anterior: Hash del bloque anterior (opcional para el bloque génesis)
         :return: Nuevo bloque
-        """
+        
         bloque = {
             'indice': len(self.cadena) + 1,
             'timestamp': time(),
@@ -885,25 +886,25 @@ def agregar_bloque(self, proof, hash_anterior=None):
 
 @staticmethod
     def hash(bloque):
-        """
+        
         Crear un hash SHA-256 del bloque
 
         :param bloque: Bloque
         :return: Hash del bloque
-        """
+
         # Asegurarnos de que el diccionario esté ordenado para obtener el mismo hash
         bloque_string = json.dumps(bloque, sort_keys=True).encode()
         return hashlib.sha256(bloque_string).hexdigest()
 
     def prueba_de_trabajo(self, last_proof):
-        """
+
         Algoritmo simple de prueba de trabajo:
         - Encuentra un número p' tal que hash(pp') contenga 4 ceros al principio, donde p es la prueba anterior
         - p es la prueba actual, p' es la nueva prueba
 
         :param last_proof: Prueba anterior
         :return: Nueva prueba
-        """
+        
         proof = 0
         while self.validar_prueba(last_proof, proof) is False:
             proof += 1
@@ -911,27 +912,27 @@ def agregar_bloque(self, proof, hash_anterior=None):
 
     @staticmethod
     def validar_prueba(last_proof, proof):
-        """
+        
         Verificar si la prueba es válida:
         - ¿El hash(last_proof, proof) contiene 4 ceros al principio?
 
         :param last_proof: Prueba anterior
         :param proof: Prueba actual
         :return: True si es válido, False si no lo es
-        """
+        
         guess = f'{last_proof}{proof}'.encode()
         guess_hash = hashlib.sha256(guess).hexdigest()
         return guess_hash[:4] == "0000"
 
     def agregar_transaccion(self, remitente, destinatario, cantidad):
-        """
+        
         Agregar una transacción al bloque actual
 
         :param remitente: Dirección del remitente
         :param destinatario: Dirección del destinatario
         :param cantidad: Cantidad transferida
         :return: El índice del bloque que contendrá esta transacción
-        """
+        
         self.transacciones.append({
             'remitente': remitente,
             'destinatario': destinatario,
@@ -940,13 +941,13 @@ def agregar_bloque(self, proof, hash_anterior=None):
         return self.obtener_ultimo_bloque()['indice'] + 1
 
     def agregar_bloque(self, prueba, previous_hash=None):
-        """
+        
         Agregar un nuevo bloque a la cadena de bloques
 
         :param prueba: Prueba del nuevo bloque
         :param previous_hash: Hash del bloque anterior
         :return: Nuevo bloque agregado
-        """
+        
         bloque = {
             'indice': len(self.cadena) + 1,
             'timestamp': time(),
@@ -967,32 +968,32 @@ def agregar_bloque(self, proof, hash_anterior=None):
         :param proof: Prueba actual
         :param previous_hash: Hash del bloque anterior
         :return: True si es válido, False si no lo es
-        """
+        
         guess = f"{previous_proof}{proof}{previous_hash}".encode()
         guess_hash = hashlib.sha256(guess).hexdigest()
         return guess_hash[:4] == "0000"  # Puedes ajustar el requisito según la dificultad
 
     def prueba_de_trabajo(self, previous_proof, previous_hash):
-        """
+        
         Algoritmo de prueba de trabajo: Encontrar un número que cumpla con la validación
 
         :param previous_proof: Prueba del bloque anterior
         :param previous_hash: Hash del bloque anterior
         :return: Nueva prueba
-        """
+        
         proof = 0
         while not self.validar_prueba(previous_proof, proof, previous_hash):
             proof += 1
         return proof 
 
   def agregar_bloque(self, proof, previous_hash=None):
-        """
+        
         Añadir un bloque a la cadena de bloques
 
         :param proof: Prueba generada por el algoritmo de prueba de trabajo
         :param previous_hash: Hash del bloque anterior
         :return: Nuevo bloque
-        """
+        
         bloque = Bloque(
             index=len(self.chain) + 1,
             timestamp=time(),
@@ -1004,14 +1005,14 @@ def agregar_bloque(self, proof, hash_anterior=None):
         return bloque
 	
 def prueba_trabajo(self, last_proof):
-        """
+        
         Algoritmo de prueba de trabajo:
         - Encontrar un número p' tal que hash(pp') contiene 4 ceros al inicio, donde p es la prueba anterior
         - p es la prueba actual
 
         :param last_proof: Prueba anterior
         :return: Prueba actual
-        """
+        
         proof = 0
         while self.validar_prueba(last_proof, proof) is False:
             proof += 1
@@ -1020,13 +1021,13 @@ def prueba_trabajo(self, last_proof):
 
     @staticmethod
     def validar_prueba(last_proof, proof):
-        """
+
         Validar si encontrar una prueba es exitoso, es decir, hash(last_proof, proof) contiene 4 ceros al inicio.
 
         :param last_proof: Prueba anterior
         :param proof: Prueba actual
         :return: True si es válido, False si no lo es
-        """
+        
         guess = f'{last_proof}{proof}'.encode()
         guess_hash = hashlib.sha256(guess).hexdigest()
         return guess_hash[:4] == "0000"	
@@ -1099,13 +1100,13 @@ print(f"La cadena es válida: {es_valida}")
 class CadenaBloques:
 
 def nuevo_bloque(self, proof, previous_hash=None):
-        """
+
         Crea un nuevo bloque en la cadena
 
         :param proof: La prueba dada por el algoritmo de prueba de trabajo
         :param previous_hash: Hash del bloque anterior
         :return: Nuevo bloque
-        """
+        
         bloque = {
             'index': len(self.cadena) + 1,
             'timestamp': time(),
@@ -1122,9 +1123,9 @@ def nuevo_bloque(self, proof, previous_hash=None):
 
   @staticmethod
     def prueba_de_trabajo(last_proof):
-        """
+        
         Encuentra un número p' tal que hash(pp') contenga 4 ceros al principio, donde p es el proof anterior
-        """
+        
         proof = 0
         while not CadenaBloques.validar_prueba(last_proof, proof):
             proof += 1
@@ -1133,9 +1134,9 @@ def nuevo_bloque(self, proof, previous_hash=None):
 
     @staticmethod
     def validar_prueba(last_proof, proof):
-        """
+        
         Valida la prueba: ¿hash(last_proof, proof) contiene 4 ceros al principio?
-        """
+        
         guess = f'{last_proof}{proof}'.encode()
         guess_hash = hashlib.sha256(guess).hexdigest()
         return guess_hash[:4] == "0000"
@@ -1483,10 +1484,10 @@ def index():
 
 if __name__ == '__main__':
     app.run(debug=True)
---------------------------------------
+    
 # Configuración del contrato inteligente en Solidity
-contract_source_code = """
-// ...
+contract_source_code = 
+
 
 # Desplegar el contrato
 contract_bytecode = "..."  # Reemplaza con el bytecode de tu contrato
@@ -1520,10 +1521,8 @@ def index():
 
 if __name__ == '__main__':
     app.run(debug=True)
-"""
 
 # Comentarios que indican lo que falta
-"""
 # 1. Reemplazar '...' con el bytecode real de tu contrato en contract_bytecode.
 # 2. Reemplazar '...' con el ABI real de tu contrato en contract_abi.
 # 3. Integrar las funciones de cadena de bloques (proof_of_work, is_valid_proof, propose_block) en la lógica de tu cadena de bloques.
