@@ -1,9 +1,9 @@
-import tkinter as tk
-import hashlib
-from flask import Flask, render_template
-from web3 import Web3
-import datetime
-import time
+# import tkinter as tk
+# import hashlib
+# from flask import Flask, render_template
+# from web3 import Web3
+# import datetime
+# import time
 
 
 
@@ -121,138 +121,147 @@ import time
 # mi_blockchain = Blockchain()
 
   #  app = Flask(__name__)
-     #    Class InterfazCompartirRecursos:
-    def __init__(self, master):
-        self.master = master
-        master.title("Compartir Recursos")
 
-        self.etiqueta = tk.Label(master, text="Ingrese la información del recurso:")
-        self.etiqueta.pack()
+#  Class InterfazCompartirRecursos:
+    # def __init__(self, master):
+        # self.master = master
+        # master.title("Compartir Recursos")
 
-        self.etiqueta_nombre = tk.Label(master, text="Nombre:")
-        self.etiqueta_nombre.pack()
+        # self.etiqueta = tk.Label(master, text="Ingrese la información del recurso:")
+        # self.etiqueta.pack()
 
-        self.entry_nombre = tk.Entry(master)
-        self.entry_nombre.pack()
+        # self.etiqueta_nombre = tk.Label(master, text="Nombre:")
+        # self.etiqueta_nombre.pack()
 
-        self.etiqueta_descripcion = tk.Label(master, text="Descripción:")
-        self.etiqueta_descripcion.pack()
+        # self.entry_nombre = tk.Entry(master)
+        # self.entry_nombre.pack()
 
-        self.entry_descripcion = tk.Entry(master)
-        self.entry_descripcion.pack()
+        # self.etiqueta_descripcion = tk.Label(master, text="Descripción:")
+        # self.etiqueta_descripcion.pack()
 
-        self.boton_compartir = tk.Button(master, text="Compartir Recurso", command=self.compartir_recurso)
-        self.boton_compartir.pack()
+        # self.entry_descripcion = tk.Entry(master)
+        # self.entry_descripcion.pack()
+
+        # self.boton_compartir = tk.Button(master, text="Compartir Recurso", command=self.compartir_recurso)
+        # self.boton_compartir.pack()
 	    
-    def compartir_recurso(self):
-        nombre = self.entry_nombre.get()
-        descripcion = self.entry_descripcion.get()
+    # def compartir_recurso(self):
+           # nombre = self.entry_nombre.get()
+      # descripcion = self.entry_descripcion.get()
 
-        # Aquí puedes realizar las acciones necesarias para agregar el recurso a la cadena de bloques
-        print(f"Recurso compartido - Nombre: {nombre}, Descripción: {descripcion}")
+        # Aquí puedes realizar 
+        # las acciones necesarias para agregar 
+        # el recurso a la cadena de bloques.
+
+   # print(f"Recurso compartido - Nombre: {nombre}, Descripción: {descripcion}")
 
 # Crear la ventana principal
-root = tk.Tk()
-interfaz = InterfazCompartirRecursos(root)
+# root = tk.Tk()
+# interfaz = InterfazCompartirRecursos(root)
 
 # Mantener la ventana abierta
-root.mainloop()
+# root.mainloop()
 
-web3 = Web3(Web3.HTTPProvider('http://localhost:8545'))
+# web3 = Web3(Web3.HTTPProvider('http://localhost:8545'))
 
 # Configuración del contrato inteligente en Solidity
-contract_source_code = """
+# contract_source_code = """
 
-//este es un ejemplo de contrato solidity//
+# //este es un ejemplo de contrato solidity//
 
-//SPDX-License-Identifier: MIT
+# //SPDX-License-Identifier: MIT
 pragma solidity >= 0.8.23;
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@pancakeswap/pancake-swap-lib/contracts/token/BEP20/IBEP20.sol";
+# import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+# import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+# import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+# import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+# import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+# import "@openzeppelin/contracts/access/Ownable.sol";
+# import "@openzeppelin/contracts/security/Pausable.sol";
+# import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+# import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+# import "@openzeppelin/contracts/access/Ownable.sol";
+# import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+# import "@openzeppelin/contracts/security/Pausable.sol";
+# import "@openzeppelin/contracts/access/AccessControl.sol";
+# import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+# import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+# import "@openzeppelin/contracts/access/Ownable.sol";
+# import "@openzeppelin/contracts/security/Pausable.sol";
+# import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+# import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+# import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+# import "@openzeppelin/contracts/access/Ownable.sol";
+# import "@pancakeswap/pancake-swap-lib/contracts/token/BEP20/IBEP20.sol";
 
-contract  Micontrato{
+# contract  Micontrato{
 
-using SafeMath for uint256;
-using SafeERC20 for IERC20;
-    using SafeMath for uint256;
-    using SafeERC20 for IERC20;
-event Deposit(address indexed user, uint256 amount);
-    event Withdrawal(address indexed user, uint256 amount);
-        event EmergencyWithdrawal(address indexed user, uint256 amount);
+# using SafeMath for uint256;
+# using SafeERC20 for IERC20;
+   #  using SafeMath for uint256;
+   #  using SafeERC20 for IERC20;
+# event Deposit(address indexed user, uint256 amount);
+      # event Withdrawal(address indexed user, uint256 amount);
+     #  event EmergencyWithdrawal(address indexed user, uint256 amount);
 
-constructor(){
-    btcbAddress = 0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c;
-    allowedWallet = 0xA8E670588bbB447c1e98557C64f740016d908085;
-    name = "WoldcoinVirtual";
-    symbol = "WCV";
-    decimals = 3;
-    totalSupply = 30000000;  
-}
-  function transfer(address to, uint256 amount) external {
-    require(amount > 0, "Amount must be greater than 0");
-    require(balanceOf[msg.sender] >= amount, "Insufficient balance");
+# constructor(){
+   # btcbAddress = 0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c;
+   # allowedWallet = 0xA8E670588bbB447c1e98557C64f740016d908085;
+   # name = "WoldcoinVirtual";
+   #  symbol = "WCV";
+   # decimals = 3;
+   # totalSupply = 30000000;  
+#}
+ # function transfer(address to, uint256 amount) external {
+   # require(amount > 0, "Amount must be greater than 0");
+   # require(balanceOf[msg.sender] >= amount, "Insufficient balance");
 
-    balanceOf[msg.sender] -= amount;
-    balanceOf[to] += amount;
+   # balanceOf[msg.sender] -= amount;
+   # balanceOf[to] += amount;
 
-    emit Transfer(msg.sender, to, amount);
-  }
+   # emit Transfer(msg.sender, to, amount);
+ # }
 
-event Transfer(address indexed from, address indexed to, uint256 amount);
-bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
-using SafeMath for uint256;
-using SafeERC20 for IERC20;
- address public btcbAddress = 0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c;
- address public allowedWallet
-=0xA8E670588bbB447c1e98557C64f740016d908085;
-string public name = "WoldcoinVirtual";
- string public symbol = "WCV";
- uint8 public decimals = 3;
-uint256 public totalSupply = 30000000  ;
-mapping(address => uint256) public balanceOf;
-    mapping(address => uint256) public liquidityPool;
-    event LiquidityAdded(address indexed provider, uint256 amount);
-    event LiquidityRemoved(address indexed provider, uint256 amount);
-    function addLiquidity(uint256 amount) external {
-        require(amount > 0, "Amount must be greater than 0");
-        balanceOf[msg.sender] -= amount;
-        totalSupply += amount;
-        liquidityPool[msg.sender] += amount;
-        emit LiquidityAdded(msg.sender, amount);
-    }
-    function removeLiquidity(uint256 amount) external {
-        require(amount > 0, "Amount must be greater than 0");
-        require(liquidityPool[msg.sender] >= amount, "Insufficient liquidity");
-        balanceOf[msg.sender] += amount;
-        totalSupply -= amount;
-        liquidityPool[msg.sender] -= amount;
+# event Transfer(address indexed from, address indexed to, uint256 amount);
+# bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
+# using SafeMath for uint256;
+# using SafeERC20 for IERC20;
+#  address public btcbAddress = 0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c;
+#  address public allowedWallet
+# =0xA8E670588bbB447c1e98557C64f740016d908085;
+# string public name = "WoldcoinVirtual";
+#  string public symbol = "WCV";
+# uint8 public decimals = 3;
+# uint256 public totalSupply = 30000000  ;
+# mapping(address => uint256) public balanceOf;
+  
+   #  mapping(address => uint256) public liquidityPool;
+   #  event LiquidityAdded(address indexed provider, uint256 amount);
+   #  event LiquidityRemoved(address indexed provider, uint256 amount);
+   #  function addLiquidity(uint256 amount) external {
+       
+     #  require(amount > 0, "Amount must be greater than 0");
+    #   balanceOf[msg.sender] -= amount;
+     #  totalSupply += amount;
+     #  liquidityPool[msg.sender] += amount;
+     #  emit LiquidityAdded(msg.sender, amount);
+  # }
 
-        emit LiquidityRemoved(msg.sender, amount);
-        }
-    event LiquidityAddedWithBTCB(address indexed provider, uint256 amount);
-    function getTokenPrice() external view returns (uint256) {
-    }
-}
+   # function removeLiquidity(uint256 amount) external {
+   #    require(amount > 0, "Amount must be greater than 0");
+    #   require(liquidityPool[msg.sender] >= amount, "Insufficient liquidity");
+     #  balanceOf[msg.sender] += amount;
+      # totalSupply -= amount;
+   #    liquidityPool[msg.sender] -= amount;
+
+    #   emit LiquidityRemoved(msg.sender, amount);
+        # }
+
+ #  event LiquidityAddedWithBTCB(address indexed provider, uint256 amount);
+#   function getTokenPrice() external view returns (uint256) {
+   
+  # }
+#}
 
 contract sueldo {
     address public owner;
