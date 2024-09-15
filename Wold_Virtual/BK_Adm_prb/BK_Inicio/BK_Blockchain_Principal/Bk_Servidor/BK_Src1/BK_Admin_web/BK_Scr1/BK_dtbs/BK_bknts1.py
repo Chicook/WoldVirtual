@@ -166,7 +166,7 @@
 # web3 = Web3(Web3.HTTPProvider('http://localhost:8545'))
 
 # Configuración del contrato inteligente en Solidity
-# contract_source_code = """
+# contract_source_code = 
 
 # //este es un ejemplo de contrato solidity//
 
