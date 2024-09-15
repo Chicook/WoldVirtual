@@ -1,3 +1,4 @@
+"""
 # bloque central de la plataforma #
 
 #__version__ = "0.0.1"
@@ -189,9 +190,9 @@ print("Información de monitoreo de usuarios:")
 print(informacion_monitoreo)
 
 def conectar_base_datos():
-    """
+    
     Establece una conexión a la base de datos y ejecuta una consulta de ejemplo.
-    """
+    
     try:
         # Configuración de conexión
         conexion = psycopg2.connect(
