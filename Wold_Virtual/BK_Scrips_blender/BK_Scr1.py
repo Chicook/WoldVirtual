@@ -1,6 +1,32 @@
+"""
+Descripción de lo que hace este código Python en blender;
 
+1. **Crear el Planeta y su Capa de Ozono**:
+   - **Planeta**: Se crea una esfera en el centro de la escena para representar el planeta. Se le aplica una textura azul para simular el mar.
+   - **Casquetes Polares**: Se añaden dos esferas pequeñas en la parte superior e inferior del planeta para simular los casquetes polares.
+   - **Capa de Ozono**: Se crea una segunda esfera ligeramente más grande que el planeta para representar la capa de ozono. Se le aplica una textura blanca tenue para simular nubes.
 
+2. **Crear la Estación Espacial**:
+   - **Estación Espacial**: Se crea una esfera grande alrededor del planeta, que representa la estación espacial. Se le aplica una textura metálica básica.
+   - **Suelo y Niveles**: Se añaden varios planos alrededor del planeta para simular el suelo y diferentes niveles de infraestructura dentro de la estación espacial.
+   - **Cúpula**: Se añade una esfera pequeña en el centro de la estación espacial, por encima del planeta, para representar una cúpula.
 
+3. **Añadir el Sol Artificial**:
+   - **Sol Artificial**: Se crea una esfera pequeña dentro de la estación espacial, en una posición elevada, para simular un sol artificial. Se le aplica una textura amarilla.
+
+4. **Animar la Estación Espacial**:
+   - **Configuración de la Animación**: Se define el rango de fotogramas para la animación (de 1 a 250).
+   - **Curvas de Animación**: Se añaden curvas de animación para la posición de la estación espacial, asegurando que se mueva en una órbita circular alrededor del planeta.
+   - **Curva de Órbita**: Se crea una curva NURBS que define la trayectoria de la órbita.
+   - **Modificador de Seguimiento de Curva**: Se añade un modificador a la estación espacial para que siga la curva de órbita.
+
+5. **Función Principal**:
+   - **Ejecución de Funciones**: La función principal (`main`) llama a todas las funciones anteriores en el orden adecuado para construir y animar toda la escena.
+
+En resumen, el script crea un planeta con su capa de ozono, una estación espacial que lo rodea, un sol artificial dentro de la estación espacial, y anima la estación espacial para que orbite alrededor del planeta. Todo esto se hace utilizando texturas básicas para simular el mar, los casquetes 
+polares y las nubes.
+
+"""
 
 import bpy
 
