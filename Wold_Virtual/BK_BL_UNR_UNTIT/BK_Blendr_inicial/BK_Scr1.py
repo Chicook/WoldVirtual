@@ -29,7 +29,7 @@ polares y las nubes.
 """
 
 import bpy
-
+##
 def crear_planeta():
     # Crear el planeta
     bpy.ops.mesh.primitive_uv_sphere_add(radius=2, location=(0, 0, 0))
