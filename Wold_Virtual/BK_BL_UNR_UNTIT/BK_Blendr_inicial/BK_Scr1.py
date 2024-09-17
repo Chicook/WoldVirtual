@@ -27,9 +27,9 @@ En resumen, el script crea un planeta con su capa de ozono, una estación espaci
 polares y las nubes.
 
 """
-
+""""
 import bpy
-##
+
 def crear_planeta():
     # Crear el planeta
     bpy.ops.mesh.primitive_uv_sphere_add(radius=2, location=(0, 0, 0))
@@ -164,3 +164,8 @@ def main():
 
 if __name__ == "__main__":
     main()
+"""
+"""
+este código, 
+es para blender.
+"""
