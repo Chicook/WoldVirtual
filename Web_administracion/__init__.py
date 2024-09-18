@@ -1,3 +1,9 @@
+"""
+para tener comi referencia.
+"""
+
+"""
+
 import os
 import subprocess
 
@@ -36,3 +42,4 @@ if __name__ == "__main__":
     mostrar_menu()
     seccion = input("Selecciona una sección (1-5): ")
     iniciar_seccion(seccion)
+"""
