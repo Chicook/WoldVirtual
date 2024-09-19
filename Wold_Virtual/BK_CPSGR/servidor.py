@@ -1,4 +1,231 @@
+from flask import Flask, render_template_string, request, redirect, url_for
+from flask_socketio import SocketIO, emit
+import hashlib
+import random
+import string
+import threading
 
+app = Flask(__name__)
+socketio = SocketIO(app)
+
+# Simulación de base de datos en memoria
+users_db = {}
+
+# HTML, CSS y JavaScript incluidos en una plantilla de cadena
+html_template = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        .form-container h2 {
+            margin-top: 0;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+        .timer {
+            text-align: center;
+            margin: 10px 0;
+        }
+        .hash-container {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Registro de Usuario</h2>
+        <form id="registrationForm">
+            <input type="text" id="username" placeholder="Nombre de Usuario" required>
+            <input type="password" id="password" placeholder="Contraseña" required>
+            <button type="button" id="generateWallet">Generar Wallet</button>
+            <input type="text" id="wallet" placeholder="Wallet" readonly>
+            <div class="timer">
+                <span id="timer">30</span> segundos restantes
+            </div>
+            <input type="text" id="tempCode" placeholder="Código Temporal" required>
+            <button type="submit">Enviar</button>
+        </form>
+        <div class="hash-container" id="hashContainer">
+            <!-- Aquí se mostrarán los hashes -->
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script>
+        const socket = io();
+        let timerInterval;
+        let tempCode = generateTempCode();
+
+        document.getElementById('generateWallet').addEventListener('click', () => {
+            const wallet = 'bkwv' + Math.random().toString(36).substring(2, 15);
+            document.getElementById('wallet').value = wallet;
+        });
+
+        document.getElementById('registrationForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const wallet = document.getElementById('wallet').value;
+            const tempCodeInput = document.getElementById('tempCode').value;
+
+            if (tempCodeInput !== tempCode) {
+                alert('Código temporal incorrecto.');
+                return;
+            }
+
+            socket.emit('register', { username, password, wallet });
+        });
+
+        socket.on('start_timer', () => {
+            let timeLeft = 30;
+            timerInterval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    tempCode = generateTempCode();
+                    alert('Tiempo agotado. Se ha generado un nuevo código temporal.');
+                } else {
+                    document.getElementById('timer').textContent = timeLeft;
+                    timeLeft--;
+                }
+            }, 1000);
+        });
+
+        socket.on('registration_success', (data) => {
+            const hashContainer = document.getElementById('hashContainer');
+            hashContainer.innerHTML = `
+                <table>
+                    <tr>
+                        <th>Hash</th>
+                        <th>Usuario</th>
+                        <th>Hash de Contraseña y Wallet</th>
+                    </tr>
+                    ${data.users.map(user => `
+                        <tr>
+                            <td>${user.userHash}</td>
+                            <td>${user.username}</td>
+                            <td>${user.passwordWalletHash}</td>
+                        </tr>
+                    `).join('')}
+                </table>
+            `;
+        });
+
+        function generateTempCode() {
+            const code = Math.random().toString(36).substring(2, 8).toUpperCase();
+            document.getElementById('tempCode').value = code;
+            return code;
+        }
+
+        socket.emit('start_timer');
+    </script>
+</body>
+</html>
+"""
+
+@app.route('/')
+def index():
+    return render_template_string(html_template)
+
+@app.route('/admin_panel')
+def admin_panel():
+    return "Bienvenido al panel de administración"
+
+@socketio.on('register')
+def handle_register(data):
+    username = data['username']
+    password = data['password']
+    wallet = data['wallet']
+
+    if username in users_db:
+        emit('registration_failed', {'message': 'Usuario ya registrado'})
+        return
+
+    # Generar hashes
+    password_hash = hashlib.sha256(password.encode()).hexdigest()
+    user_hash = hashlib.sha256((username + wallet).encode()).hexdigest()
+    password_wallet_hash = hashlib.sha256((password + wallet).encode()).hexdigest()
+
+    # Almacenar en la base de datos simulada
+    users_db[username] = {
+        'username': username,
+        'wallet': wallet,
+        'password_hash': password_hash,
+        'user_hash': user_hash,
+        'password_wallet_hash': password_wallet_hash
+    }
+
+    emit('registration_success', {'users': list(users_db.values())})
+
+if __name__ == '__main__':
+    socketio.run(app, debug=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"""
 from flask import Flask, render_template_string, request, redirect, url_for
 from flask_socketio import SocketIO, emit
 import hashlib
@@ -12,6 +239,7 @@ socketio = SocketIO(app)
 
 # HTML, CSS y JavaScript incluidos en una plantilla de cadena
 html_template = """
+"""
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -149,7 +377,7 @@ html_template = """
 </body>
 </html>
 """
-
+"""
 @app.route('/')
 def index():
     return render_template_string(html_template)
@@ -181,7 +409,7 @@ def handle_register(data):
 if __name__ == '__main__':
     socketio.run(app, debug=True)
     
-"""
+
 from flask import Flask, render_template_string, request, redirect, url_for
 from flask_socketio import SocketIO, emit
 import hashlib
