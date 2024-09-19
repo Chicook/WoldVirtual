@@ -1,3 +1,155 @@
+
+from flask import Flask, render_template_string, request, redirect, url_for
+from flask_socketio import SocketIO, emit
+import hashlib
+import time
+import threading
+
+app = Flask(__name__)
+socketio = SocketIO(app)
+
+# HTML, CSS y JavaScript incluidos en una plantilla de cadena
+html_template = """
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        .form-container h2 {
+            margin-top: 0;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+        .timer {
+            text-align: center;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Registro de Usuario</h2>
+        <form id="registrationForm">
+            <input type="text" id="username" placeholder="Nombre de Usuario" required>
+            <input type="password" id="password" placeholder="Contraseña" required>
+            <button type="button" id="generateWallet">Generar Wallet</button>
+            <input type="text" id="wallet" placeholder="Wallet" readonly>
+            <div class="timer">
+                <span id="timer">30</span> segundos restantes
+            </div>
+            <input type="text" id="tempCode" placeholder="Código Temporal" required>
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script>
+        const socket = io();
+        let timerInterval;
+
+        document.getElementById('generateWallet').addEventListener('click', () => {
+            const wallet = 'bkwv' + Math.random().toString(36).substring(2, 15);
+            document.getElementById('wallet').value = wallet;
+        });
+
+        document.getElementById('registrationForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const wallet = document.getElementById('wallet').value;
+            const tempCode = document.getElementById('tempCode').value;
+
+            socket.emit('register', { username, password, wallet, tempCode });
+        });
+
+        socket.on('start_timer', () => {
+            let timeLeft = 30;
+            timerInterval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    alert('Tiempo agotado para ingresar el código temporal.');
+                } else {
+                    document.getElementById('timer').textContent = timeLeft;
+                    timeLeft--;
+                }
+            }, 1000);
+        });
+
+        socket.on('registration_success', () => {
+            window.location.href = '/admin_panel';
+        });
+    </script>
+</body>
+</html>
+"""
+
+@app.route('/')
+def index():
+    return render_template_string(html_template)
+
+@app.route('/admin_panel')
+def admin_panel():
+    return "Bienvenido al panel de administración"
+
+@socketio.on('register')
+def handle_register(data):
+    username = data['username']
+    password = data['password']
+    wallet = data['wallet']
+    temp_code = data['tempCode']
+
+    # Aquí puedes agregar la lógica para verificar el código temporal y manejar el registro del usuario
+    # Por ejemplo, puedes generar un hash de la contraseña y almacenar los datos en la base de datos
+
+    password_hash = hashlib.sha256(password.encode()).hexdigest()
+    user_hash = hashlib.sha256((username + wallet).encode()).hexdigest()
+
+    # Simulación de almacenamiento en base de datos
+    print(f"Usuario: {username}, Wallet: {wallet}, Password Hash: {password_hash}, User Hash: {user_hash}")
+
+    emit('registration_success')
+
+if __name__ == '__main__':
+    socketio.run(app, debug=True)
+
+"""
+
+
 from flask import Flask, render_template_string
 from flask_socketio import SocketIO
 
@@ -6,7 +158,7 @@ socketio = SocketIO(app)
 
 # HTML, CSS y JavaScript incluidos en una plantilla de cadena
 html_template = """
-
+"""
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -121,7 +273,7 @@ html_template = """
 </body>
 </html>
 """
-
+"""
 @app.route('/')
 def index():
     return render_template_string(html_template)
@@ -132,7 +284,7 @@ def handle_audio(data):
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
-
+"""
 
 
 
