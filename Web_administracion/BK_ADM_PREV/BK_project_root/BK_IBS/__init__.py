@@ -9,18 +9,22 @@ from BK_App import BK_App, MainApp, BK_2App, BK_3App, BK_4App, BK_5App
 
 class MainPlatform(ReflexApp):
     def __init__(self):
-            super().__init__()
-                    self.title = "Main Platform"
-                            self.modules = {
-                                        "Overview": BK_App(),
-                                                    "Usuarios": BK_2App(),
-                                                                "Recursos": BK_3App(),
-                                                                            "Blockchain": BK_4App(),
-                                                                                        "Compresión": BK_5App()
-                                                                                                }
+            
+        super().__init__()
 
-                                                                                                    def render(self):
-                                                                                                            menu = "<ul>"
+                    self.title = "Main Platform"
+                    self.modules = {
+                                        
+                    "Overview":   BK_App(),
+                    "Usuarios":   BK_2App(),
+                    "Recursos":   BK_3App(),
+                    "Blockchain": BK_4App(),
+                    "Compresión": BK_5App()
+                                                                                               
+}
+
+     def render(self):
+         menu = "<ul>"
                                                                                                                     for name, module in self.modules.items():
                                                                                                                                 menu += f"<li><a href='#{name}'>{name}</a></li>"
                                                                                                                                         menu += "</ul>"
