@@ -1,0 +1,9 @@
+{
+  "dataUrl": "Build.data.unityweb",
+  "frameworkUrl": "Build.framework.js.unityweb",
+  "codeUrl": "Build.wasm.unityweb",
+  "streamingAssetsUrl": "StreamingAssets",
+  "companyName": "DefaultCompany",
+  "productName": "MyUnityApp",
+  "productVersion": "1.0"
+}
