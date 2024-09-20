@@ -2,7 +2,7 @@
 
 ## Descripción general
 
-Wold Virtual es un proyecto de blockchain con múltiples funcionalidades. Incluye una criptomoneda llamada WoldcoinVirtual (WLCV) con un suministro máximo de 30,000,000.000 WLCV. El proyecto tiene como objetivo proporcionar una plataforma segura y eficiente para diversas aplicaciones basadas en blockchain.
+Wold Virtual es un proyecto de blockchain con múltiples funcionalidades. Incluye una criptomoneda llamada WoldcoinVirtual (WLCV) con un suministro máximo de 30.000.000,000 WLCV. El proyecto tiene como objetivo proporcionar una plataforma segura y eficiente para diversas aplicaciones basadas en blockchain.
 
 será un proyecto de código abierto.
 ## Características
