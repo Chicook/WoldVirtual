@@ -1,4 +1,5 @@
 
+"""
 
 # Wold_Virtual/__init__.py
 
@@ -14,5 +15,5 @@ from .BK_WebPbl    as BK_D import *
 # Configuración adicional
 import logging
 logging.basicConfig(level=logging.INFO)
-
+"""
 
