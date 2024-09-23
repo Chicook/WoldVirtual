@@ -1,7 +1,7 @@
 import hashlib
 import time
-from BK_BSINT4 import users_db
-from BK_BSINT5 import add_block
+from Wold_Virtual.BK_webPbl.BK_MRGTRS.BK_BSINT4 import users_db
+from Wold_Virtual.BK_webPbl.BK_MRGTRS.BK_BSINT5 import add_block
 from flask_socketio import emit
 
 def handle_register(data):
