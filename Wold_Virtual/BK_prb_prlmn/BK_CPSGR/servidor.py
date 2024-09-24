@@ -14,7 +14,7 @@ def layout():
             class_name="header"
         ),
         rx.nav(
-            rx.a("Inicio", href="./Metaverso_Crypto/inicio/Blockchain_Principal/secciones/inicio.html"),
+            rx.a("Inicio", href="#"),
             rx.a("Usuarios", href="#usuarios"),
             rx.a("Recursos", href="#recursos"),
             rx.a("Blockchain", href="#blockchain"),
@@ -78,5 +78,5 @@ def handle_audio(data):
     socketio.emit('audio_stream', data)
 
 if __name__ == '__main__':
-   # app.run()
+    app.run()
     socketio.run(app, debug=True)
