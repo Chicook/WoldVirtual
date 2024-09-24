@@ -1,5 +1,5 @@
 """
-# bloque central de la plataforma #
+# bloque central de la plataforma Notas #
 
 #__version__ = "0.0.1"
 
