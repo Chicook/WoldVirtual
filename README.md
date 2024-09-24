@@ -1,4 +1,12 @@
 # Wold Virtual
+# Patrocina Este proyecto 
+
+https://www.paypal.com/paypalme/Chicook?country.x=ES&locale.x=es_ES
+
+esta haun en desarrollo esta parte del
+código Abierto., para ser como los demas proyectos.
+
+pero desde ya puedes hacer algun aporte.
 
 ## Descripción general
 
