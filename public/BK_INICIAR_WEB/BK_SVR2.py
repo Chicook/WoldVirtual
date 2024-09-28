@@ -1,3 +1,12 @@
+"""
+
+Refactorizar, antes de utilizar.,
+para evitar errores.
+
+"""
+
+"""
+
 import socket
 import requests
 import json
@@ -6,6 +15,7 @@ import json
 
 # import psutil
 
+"""
 """
 def get_processor_info():
     cpu_info = {
@@ -59,6 +69,7 @@ send_transaction('cliente', 'servidor', 10)
 send_socket_message()
 
 """
+"""
 # Dirección del servidor Flask
 server_ip = '192.168.1.10'
 
@@ -97,3 +108,5 @@ send_transaction('cliente', 'servidor', 10)
 
 # Enviar un mensaje a través de sockets
 send_socket_message()
+
+"""
