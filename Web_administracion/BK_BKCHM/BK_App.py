@@ -1,7 +1,7 @@
 # app.py
 
 from BK_BCHPM import BK_BCHPM
-from transactions import Transaction
+from BK_TRSC import BK_TRSC
 
 def main():
     # Crear blockchain
