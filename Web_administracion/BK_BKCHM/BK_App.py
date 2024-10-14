@@ -1,6 +1,6 @@
 # app.py
 
-from blockchain import Blockchain
+from BK_BCHPM import BK_BCHPM
 from transactions import Transaction
 
 def main():
