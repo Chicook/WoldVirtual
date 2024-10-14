@@ -1,6 +1,6 @@
 # blockchain.py
 
-from block import Block
+from BK_BLK import BK_BLK
 
 class Blockchain:
     difficulty = 2  # Dificultad de la prueba de trabajo
