@@ -2,7 +2,6 @@
 # en desarrollo #
 
 """
-
 import hashlib
 import datetime
 from BK_FN2 import *
