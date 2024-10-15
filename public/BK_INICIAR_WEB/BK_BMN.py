@@ -9,6 +9,7 @@ from BK_FN3 import *
 
 # Clase Block para manejar los bloques
 class Block:
+
     def __init__(self, index, timestamp, data, previous_hash):
         self.index = index
         self.timestamp = timestamp
@@ -22,6 +23,7 @@ class Block:
 
 # Clase SimpleBlockchain
 class SimpleBlockchain:
+
     def __init__(self):
         self.chain = []
         self.create_genesis_block()
@@ -61,11 +63,13 @@ class SimpleBlockchain:
         print("Nuevo bloque creado desde módulo 2 con funciones ejecutadas")
 
     # Mostrar la cadena de bloques
+    
     def show_chain(self):
         for block in self.chain:
-            print(f"Índice: {block.index}, Data: {block.data}, Hash: {block.hash}")
+        print(f"Índice: {block.index}, Data: {block.data}, Hash: {block.hash}")
 
 # Ejecución
+
 if __name__ == "__main__":
     blockchain = SimpleBlockchain()
     blockchain.create_block_from_BK_FN2()  # Llama a las funciones del módulo 1 y crea un bloque
